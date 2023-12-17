@@ -1,15 +1,25 @@
 package inicio_sesion.controller;
 
+import model.Cuenta;
+
 public class userController {
-    // Atributos
+    private ListaEnlazada<Cuenta> cuentas;
+    private Cuenta cuenta;
 
+    public ListaEnlazada<Cuenta> getCuentas() {
+        return cuentas;
+    }
 
-    //Constructor
+    public void setCuentas(ListaEnlazada<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
 
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
 
-
-    // Metodos
-
-
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
 }
 
