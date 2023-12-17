@@ -9,6 +9,9 @@ public class Persona {
     private String telefono;
     private String dni;
 
+    private Integer id_cuenta;
+    private Integer id_rol;
+
     public Persona() {
     }
 
