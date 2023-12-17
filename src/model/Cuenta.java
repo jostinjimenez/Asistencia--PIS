@@ -3,22 +3,13 @@ package model;
 public class Cuenta {
     // Atributos
     private Integer id;
-    private String usuario;
+    private String correo;
     private String clave;
+    private Boolean estado;
 
-    private Integer id_rol;
+    private Integer idPersona;
 
-    //Constructor
-    public Cuenta() {
-    }
-
-    public Cuenta(Integer id, String usuario, String clave) {
-        this.id = id;
-        this.usuario = usuario;
-        this.clave = clave;
-    }
-
-    // Getters y Setters
+    //Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -27,12 +18,12 @@ public class Cuenta {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getClave() {
@@ -43,16 +34,27 @@ public class Cuenta {
         this.clave = clave;
     }
 
-    public Integer getId_rol() {
-        return id_rol;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setId_rol(Integer id_rol) {
-        this.id_rol = id_rol;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
-    // Metodos
+    public Integer getIdPersona() {
+        return idPersona;
+    }
 
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
 
+    @Override
+    public String toString() {
+        return "Cuenta{" +
+                "correo='" + correo + '\'' +
+                '}';
+    }
 }
 

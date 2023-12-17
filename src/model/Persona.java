@@ -4,22 +4,20 @@ public class Persona {
 
     private Integer id;
     private String nombre;
+    private String apellido;
     private String correo_personal;
     private String fecha_nacimiento;
     private String telefono;
     private String dni;
 
-    private Integer id_cuenta;
+    private Integer idRol;
 
-
-    public Persona() {
-    }
-
-    public Persona(Integer id, String nombre, String correo_personal, String fecha_nacimiento, String telefono, String dni) {
+    public Persona(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni) {
         this.id = id;
         this.nombre = nombre;
-        this.correo_personal = correo_personal;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.apellido = apellido;
+        this.correo_personal = correoPersonal;
+        this.fecha_nacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.dni = dni;
     }
@@ -72,11 +70,24 @@ public class Persona {
         this.dni = dni;
     }
 
-    public Integer getId_cuenta() {
-        return id_cuenta;
+    public Integer getIdRol() {
+        return idRol;
     }
 
-    public void setId_cuenta(Integer id_cuenta) {
-        this.id_cuenta = id_cuenta;
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido;
     }
 }
