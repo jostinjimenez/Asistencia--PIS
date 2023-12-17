@@ -10,7 +10,7 @@ public class Persona {
     private String dni;
 
     private Integer id_cuenta;
-    private Integer id_rol;
+
 
     public Persona() {
     }
@@ -72,4 +72,11 @@ public class Persona {
         this.dni = dni;
     }
 
+    public Integer getId_cuenta() {
+        return id_cuenta;
+    }
+
+    public void setId_cuenta(Integer id_cuenta) {
+        this.id_cuenta = id_cuenta;
+    }
 }

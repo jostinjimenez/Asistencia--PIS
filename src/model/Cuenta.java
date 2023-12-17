@@ -6,6 +6,8 @@ public class Cuenta {
     private String usuario;
     private String clave;
 
+    private Integer id_rol;
+
     //Constructor
     public Cuenta() {
     }
@@ -41,6 +43,13 @@ public class Cuenta {
         this.clave = clave;
     }
 
+    public Integer getId_rol() {
+        return id_rol;
+    }
+
+    public void setId_rol(Integer id_rol) {
+        this.id_rol = id_rol;
+    }
 
     // Metodos
 
