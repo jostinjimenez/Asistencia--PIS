@@ -1,7 +1,6 @@
 package inicio_sesion.controller;
 
 import DAO.DataAccessObject;
-import model.Cuenta;
 import model.Rol;
 import tda_listas.ListaEnlazada;
 
@@ -56,17 +55,17 @@ public class RolController extends DataAccessObject<Rol> {
     }
 
 
-    public static void main(String[] args) {
-        RolController rc = new RolController();
-        rc.getRol().setId(1);
-        rc.getRol().setNombre("Administrador");
-        rc.save();
-        rc.getRol().setId(2);
-        rc.getRol().setNombre("Estudiante");
-        rc.save();
-        rc.getRol().setId(3);
-        rc.getRol().setNombre("Docente");
-        rc.save();
-    }
+//    public static void main(String[] args) {
+//        RolController rc = new RolController();
+//        rc.getRol().setId(1);
+//        rc.getRol().setNombre("Administrador");
+//        rc.save();
+//        rc.getRol().setId(2);
+//        rc.getRol().setNombre("Estudiante");
+//        rc.save();
+//        rc.getRol().setId(3);
+//        rc.getRol().setNombre("Docente");
+//        rc.save();
+//    }
 }
 
