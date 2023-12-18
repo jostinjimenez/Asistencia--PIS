@@ -22,7 +22,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        roundPanel1 = new com.raven.swing.RoundPanel();
+        roundPanel1 = new plantilla.swing.RoundPanel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         txtClave = new javax.swing.JPasswordField();
@@ -121,7 +121,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private com.raven.swing.RoundPanel roundPanel1;
+    private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
