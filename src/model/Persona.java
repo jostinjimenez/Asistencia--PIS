@@ -11,6 +11,7 @@ public class Persona {
     private String dni;
 
     private Integer idRol;
+    private Integer idCuenta;
 
     public Persona(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni) {
         this.id = id;

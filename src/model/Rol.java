@@ -1,10 +1,14 @@
 package model;
 
+import tda_listas.ListaEnlazada;
+
 public class Rol {
     // Atributos
     private Integer id;
     private String nombre;
     private String descripcion;
+
+    private ListaEnlazada<Persona> personas;
 
     //Constructor
     public Rol() {
@@ -17,6 +21,15 @@ public class Rol {
     }
 
     // Getters y Setters
+    public ListaEnlazada<Persona> getPersonas() {
+        if (personas == null)
+            personas = new ListaEnlazada<>();
+        return personas;
+    }
+
+    public void setPersonas(ListaEnlazada<Persona> personas) {
+        this.personas = personas;
+    }
 
     public Integer getId() {
         return id;
