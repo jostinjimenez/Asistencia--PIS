@@ -309,7 +309,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
                 matriz[i] = aux.getData();
                 aux = aux.getNext();
             }
-
         }
         return matriz;
     }
