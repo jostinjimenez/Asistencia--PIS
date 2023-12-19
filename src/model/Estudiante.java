@@ -9,6 +9,9 @@ public class Estudiante extends Persona {
 
     private ListaEnlazada<Matricula> matriculas;
 
+    public Estudiante() {
+    }
+
     public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller) {
         super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
         this.direccion = direccion;

@@ -9,6 +9,10 @@ public class Cuenta {
 
     private Integer idPersona;
 
+    //Constructor
+    public Cuenta() {
+    }
+
     //Getters y Setters
     public Integer getId() {
         return id;

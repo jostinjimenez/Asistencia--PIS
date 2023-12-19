@@ -23,6 +23,17 @@ public class Persona {
         this.dni = dni;
     }
 
+    public Persona() {
+    }
+
+    public Integer getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(Integer idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -23,16 +23,16 @@ public class Menu extends javax.swing.JPanel {
     }
 
     public void initMenu() {
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/1.png")), "Menu Principal", 0);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/2.png")), "Application", 1);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/3.png")), "Staff", 2);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/4.png")), "Report", 3);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/5.png")), "Note", 4);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/6.png")), "Export", 5);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/7.png")), "Import", 6);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/8.png")), "Setting", 7);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/menu.png")), "Menu Principal", 0);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/user.png")), "Usuarios", 1);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/roles.png")), "Roles", 2);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/estudiante.png")), "Estudiantes", 3);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/docente.png")), "Docentes", 4);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/matricula.png")), "Matriculas", 5);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/asignatura.png")), "Asignaturas", 6);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/periodo.png")), "Periodos Academicos", 7);
         addEmpty();
-        //addMenu(new ImageIcon(getClass().getResource("/com/raven/icon/logout.png")), "Logout", 8);
+        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/salir.png")), "Cerrar Sesión", 8);
     }
 
     private void addEmpty() {
