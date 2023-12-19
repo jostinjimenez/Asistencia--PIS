@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
+import plantilla.swing.scrollbar.ScrollBarCustom;
 
 
 public class Menu extends javax.swing.JPanel {
