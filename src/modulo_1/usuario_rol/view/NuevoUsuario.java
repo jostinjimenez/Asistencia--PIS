@@ -111,6 +111,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
                         if (pc.update(pc.getIndex())) {
                             JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
                             this.dispose();
+
                         } else {
                             JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                         }

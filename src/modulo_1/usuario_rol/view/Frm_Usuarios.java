@@ -18,24 +18,39 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         this.setResizable(false);
         cargarTabla();
 
-        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                btnEditar.setEnabled(true);
-                btnEliminar.setEnabled(true);
-            }
+        jTable1.getSelectionModel().addListSelectionListener(e -> {
+            btnEditar.setEnabled(true);
+            btnEliminar.setEnabled(true);
         });
 
-        btnEliminar.addActionListener(e -> darDeBaja());
-
+        btnEliminar.addActionListener(e -> eliminarRegistro());
     }
 
     ModeloTablaPersona mtp = new ModeloTablaPersona();
     PersonaController pc = new PersonaController();
 
     // Metodos
-    public void darDeBaja() {
-
+    public void eliminarRegistro() {
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow >= 0) {
+            try {
+                pc.setPersona(mtp.getPersonas().get(selectedRow));
+                if (pc.delete(selectedRow)) {
+                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    mtp.getPersonas().delete(selectedRow);
+                    mtp.fireTableDataChanged();
+                    jTable1.updateUI();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void cargarTabla() {
@@ -151,7 +166,8 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         NuevoUsuario nu = new NuevoUsuario(this, true, mtp, jTable1);
         nu.setVisible(true);
-        cargarTabla();
+        mtp.fireTableDataChanged();
+        jTable1.updateUI();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -161,7 +177,8 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         NuevoUsuario nu = new NuevoUsuario(this, true);
         nu.setVisible(true);
-        cargarTabla();
+        mtp.fireTableDataChanged();
+        jTable1.updateUI();
     }
 
     public static void main(String args[]) {

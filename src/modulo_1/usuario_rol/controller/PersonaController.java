@@ -5,6 +5,8 @@ import model.Cuenta;
 import model.Persona;
 import tda_listas.ListaEnlazada;
 
+import java.io.FileOutputStream;
+
 public class PersonaController extends DataAccessObject<Persona> {
     // Atributos
     private ListaEnlazada<Persona> personas;
@@ -55,5 +57,21 @@ public class PersonaController extends DataAccessObject<Persona> {
         return update(persona, index);
     }
 
-
+//public Boolean delete(Integer index) {
+//    ListaEnlazada<Persona> list = getPersonas();
+//
+//    if (index >= 0 && index < list.getSize()) {
+//        try {
+//            Persona persona = list.get(index);
+//            persona.setActivo(false);
+//            this.xStream.toXML(list, new FileOutputStream(URL));
+//            return true;
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return false;
+//        }
+//    } else {
+//        return false;
+//    }
+//}
 }
