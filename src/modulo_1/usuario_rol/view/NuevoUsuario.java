@@ -3,25 +3,74 @@ package modulo_1.usuario_rol.view;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
 import modulo_1.usuario_rol.controller.CuentaController;
 import modulo_1.usuario_rol.controller.PersonaController;
+import modulo_1.usuario_rol.view.tablas.ModeloTablaPersona;
 
 import javax.swing.*;
 
 import static modulo_1.usuario_rol.view.util.Utiles.cargaRol;
+import static modulo_1.usuario_rol.view.util.Utiles.validadorDeCedula;
 
 public class NuevoUsuario extends javax.swing.JDialog {
+
+    public NuevoUsuario(java.awt.Frame parent, boolean modal, ModeloTablaPersona mtp, JTable jTable1) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        cargaRol(cbxRol);
+
+        pc.setIndex(-1);
+        cc.setIndex(-1);
+
+        cargarVista(mtp, jTable1);
+        btnGuardar.addActionListener(e -> guardar());
+        btnCancelar.addActionListener(e -> this.dispose());
+    }
 
     public NuevoUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         cargaRol(cbxRol);
         cargarPh();
+
+        btnGuardar.addActionListener(e -> guardar());
+        btnCancelar.addActionListener(e -> this.dispose());
     }
 
     //Variables
     private PersonaController pc = new PersonaController();
     private CuentaController cc = new CuentaController();
+    private boolean isEditing = false;
 
     //Metodos
+
+    public void cargarVista(ModeloTablaPersona mtp, JTable jTable1) {
+        pc.setIndex(jTable1.getSelectedRow());
+        if (pc.getIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                isEditing = true;
+                pc.setPersona(mtp.getPersonas().get(pc.getIndex()));
+                txtNombre.setText(pc.getPersona().getNombre());
+                txtApellido.setText(pc.getPersona().getApellido());
+                txtDni.setText(pc.getPersona().getDni());
+                txtCorreoPersonal.setText(pc.getPersona().getCorreo_personal());
+                txtFechaNac.setText(pc.getPersona().getFecha_nacimiento());
+                txtTelefono.setText(pc.getPersona().getTelefono());
+                cbxRol.setSelectedItem(pc.getPersona().getIdRol() - 1);
+                txtCorreoInstitucional.setText(cc.getCuentas().get(pc.getIndex()).getCorreo());
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public void cargarPh() {
         TextPrompt tp = new TextPrompt("Nombre", txtNombre);
         TextPrompt tp1 = new TextPrompt("Apellido", txtApellido);
@@ -44,27 +93,42 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
     public void guardar() {
         if (validar()) {
-            // Guardar Persona
-            pc.getPersona().setNombre(txtNombre.getText().trim());
-            pc.getPersona().setApellido(txtApellido.getText().trim());
-            pc.getPersona().setDni(txtDni.getText().trim());
-            pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
-            pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
-            pc.getPersona().setTelefono(txtTelefono.getText().trim());
-            pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
+            try {
+//                if (validadorDeCedula(txtDni.getText().trim())) {
+                    pc.getPersona().setNombre(txtNombre.getText().trim());
+                    pc.getPersona().setApellido(txtApellido.getText().trim());
+                    pc.getPersona().setDni(txtDni.getText().trim());
+                    pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
+                    pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
+                    pc.getPersona().setTelefono(txtTelefono.getText().trim());
+                    pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
 
-            // Guardar Cuenta
-            cc.getCuenta().setClave(txtDni.getText().trim());
-            cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
-            cc.getCuenta().setIdPersona(pc.getPersona().getId());
+                    cc.getCuenta().setClave(txtDni.getText().trim());
+                    cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
+                    cc.getCuenta().setIdPersona(pc.getPersona().getId());
 
-            if (pc.save() && cc.save()) {
-                JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                    if (isEditing) {
+                        if (pc.update(pc.getIndex())) {
+                            JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        if (pc.save() && cc.save()) {
+                            JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    //}
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
             }
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -146,31 +210,31 @@ public class NuevoUsuario extends javax.swing.JDialog {
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, 110, 30));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbxRol.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 270, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        guardar();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
 
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */

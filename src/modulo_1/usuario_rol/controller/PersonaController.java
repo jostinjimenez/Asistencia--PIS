@@ -54,4 +54,6 @@ public class PersonaController extends DataAccessObject<Persona> {
     public Boolean update(Integer index) {
         return update(persona, index);
     }
+
+
 }

@@ -1,15 +1,13 @@
 package modulo_1.usuario_rol.view;
 
-import modulo_1.inicio_sesion.view.util.TextPrompt;
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import modulo_1.usuario_rol.controller.PersonaController;
 import modulo_1.usuario_rol.view.tablas.ModeloTablaPersona;
-import plantilla.forms.*;
-import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 public class Frm_Usuarios extends javax.swing.JFrame {
 
@@ -20,6 +18,30 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         this.setResizable(false);
         cargarTabla();
 
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                btnEditar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+            }
+        });
+
+        btnEliminar.addActionListener(e -> darDeBaja());
+
+    }
+
+    ModeloTablaPersona mtp = new ModeloTablaPersona();
+    PersonaController pc = new PersonaController();
+
+    // Metodos
+    public void darDeBaja() {
+
+    }
+
+    public void cargarTabla() {
+        mtp.setPersonas(pc.getPersonas());
+        jTable1.setModel(mtp);
+        jTable1.updateUI();
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -29,20 +51,9 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(3).setCellRenderer(tcr);
         jTable1.getColumnModel().getColumn(4).setCellRenderer(tcr);
         jTable1.getColumnModel().getColumn(5).setCellRenderer(tcr);
-
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-
     }
 
-    ModeloTablaPersona mtp = new ModeloTablaPersona();
-    PersonaController pc = new PersonaController();
-
-    // Metodos
-    public void cargarTabla() {
-        mtp.setPersonas(pc.getPersonas());
-        jTable1.setModel(mtp);
-        jTable1.updateUI();
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -53,10 +64,12 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCriterio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -77,12 +90,13 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Buscar");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, 60, 30));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 70, 60, 30));
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 240, 30));
+        txtCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCriterio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        roundPanel1.add(txtCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 110, 240, 30));
 
+        jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {null, null, null, null},
@@ -96,7 +110,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 1000, 390));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 1000, 360));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnNuevo.setText("Nuevo");
@@ -105,7 +119,27 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 110, 30));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 110, 30));
+
+        btnEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 570, 110, 30));
+
+        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnEliminar.setText("Dar de Baja");
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
 
@@ -114,21 +148,25 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        NuevoUsuario nu = new NuevoUsuario(this, true, mtp, jTable1);
+        nu.setVisible(true);
+        cargarTabla();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         NuevoUsuario nu = new NuevoUsuario(this, true);
         nu.setVisible(true);
-        nu.setLocationRelativeTo(null);
-        nu.setResizable(false);
-    }//GEN-LAST:event_btnNuevoActionPerformed
+        cargarTabla();
+    }
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            UIManager.setLookAndFeel(new FlatNordIJTheme());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
@@ -142,14 +180,16 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private plantilla.components.Menu menu1;
     private plantilla.swing.RoundPanel roundPanel1;
+    private javax.swing.JTextField txtCriterio;
     // End of variables declaration//GEN-END:variables
 
 }

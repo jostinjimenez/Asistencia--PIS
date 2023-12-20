@@ -7,11 +7,27 @@
         "correo": "jostin.jimenez@unl.edu.ec",
         "clave": 1150696977,
         "idPersona": 1
+      },
+      "next": {
+        "data": {
+          "@class": "model.Cuenta",
+          "id": 2,
+          "correo": "juan.perez@unl.edu.ec",
+          "clave": 145697736
+        },
+        "next": {
+          "data": {
+            "@class": "model.Cuenta",
+            "id": 3,
+            "correo": "juis.gomez@unl.edu.ec",
+            "clave": 1104018559
+          }
+        }
       }
     },
     "last": {
-      "@reference": "..\/head"
+      "@reference": "..\/head\/next\/next"
     },
-    "size": 1
+    "size": 3
   }
 }
