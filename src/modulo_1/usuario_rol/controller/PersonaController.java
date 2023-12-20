@@ -4,6 +4,7 @@ import DAO.DataAccessObject;
 import model.Cuenta;
 import model.Persona;
 import tda_listas.ListaEnlazada;
+import tda_listas.exceptions.VacioExceptions;
 
 import java.io.FileOutputStream;
 
@@ -16,15 +17,18 @@ public class PersonaController extends DataAccessObject<Persona> {
     // Constructor
     public PersonaController() {
         super(Persona.class);
-        this.personas = new ListaEnlazada<>();
+        this.personas = this.list_All();
     }
 
     // Getters y Setters
     public ListaEnlazada<Persona> getPersonas() {
-        if (personas.isEmpty()) {
-            personas = this.list_All();
+        ListaEnlazada<Persona> personasActivas = new ListaEnlazada<>();
+        for (Persona persona : personas) {
+            if (persona.isActivo()) {
+                personasActivas.add(persona);
+            }
         }
-        return personas;
+        return personasActivas;
     }
 
     public void setPersonas(ListaEnlazada<Persona> personas) {
@@ -57,21 +61,25 @@ public class PersonaController extends DataAccessObject<Persona> {
         return update(persona, index);
     }
 
-//public Boolean delete(Integer index) {
-//    ListaEnlazada<Persona> list = getPersonas();
-//
-//    if (index >= 0 && index < list.getSize()) {
-//        try {
-//            Persona persona = list.get(index);
-//            persona.setActivo(false);
-//            this.xStream.toXML(list, new FileOutputStream(URL));
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return false;
-//        }
-//    } else {
-//        return false;
-//    }
-//}
+    public Boolean delete(Integer idPersona) {
+        for (int i = 0; i < personas.getSize(); i++) {
+            Persona persona = null;
+            try {
+                persona = personas.get(i);
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+            if (persona.getId().equals(idPersona)) {
+                try {
+                    persona.setActivo(false);
+                    this.xStream.toXML(personas, new FileOutputStream(URL));
+                    return true;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
 }

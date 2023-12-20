@@ -34,12 +34,10 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow >= 0) {
             try {
-                pc.setPersona(mtp.getPersonas().get(selectedRow));
-                if (pc.delete(selectedRow)) {
+                int idPersona = (int) jTable1.getValueAt(selectedRow, 0); // Asume que el ID de la persona está en la primera columna
+                if (pc.delete(idPersona)) {
                     JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    mtp.getPersonas().delete(selectedRow);
-                    mtp.fireTableDataChanged();
-                    jTable1.updateUI();
+                    cargarTabla();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -54,9 +52,16 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        mtp.setPersonas(pc.getPersonas());
-        jTable1.setModel(mtp);
-        jTable1.updateUI();
+//        mtp.setPersonas(pc.getPersonas());
+//        mtp.fireTableDataChanged();
+//        jTable1.setModel(mtp);
+//        jTable1.updateUI();
+
+        ModeloTablaPersona mtp = (ModeloTablaPersona) jTable1.getModel();
+        mtp.getPersonas().clear();
+        mtp.getPersonas().addAll(pc.getPersonas());
+        mtp.fireTableDataChanged();
+
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,8 +171,6 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         NuevoUsuario nu = new NuevoUsuario(this, true, mtp, jTable1);
         nu.setVisible(true);
-        mtp.fireTableDataChanged();
-        jTable1.updateUI();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -177,8 +180,6 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         NuevoUsuario nu = new NuevoUsuario(this, true);
         nu.setVisible(true);
-        mtp.fireTableDataChanged();
-        jTable1.updateUI();
     }
 
     public static void main(String args[]) {

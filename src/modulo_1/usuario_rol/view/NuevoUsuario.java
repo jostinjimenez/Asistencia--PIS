@@ -94,35 +94,39 @@ public class NuevoUsuario extends javax.swing.JDialog {
     public void guardar() {
         if (validar()) {
             try {
-//                if (validadorDeCedula(txtDni.getText().trim())) {
-                    pc.getPersona().setNombre(txtNombre.getText().trim());
-                    pc.getPersona().setApellido(txtApellido.getText().trim());
-                    pc.getPersona().setDni(txtDni.getText().trim());
-                    pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
-                    pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
-                    pc.getPersona().setTelefono(txtTelefono.getText().trim());
-                    pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
-
-                    cc.getCuenta().setClave(txtDni.getText().trim());
-                    cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
-                    cc.getCuenta().setIdPersona(pc.getPersona().getId());
-
-                    if (isEditing) {
-                        if (pc.update(pc.getIndex())) {
-                            JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose();
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                pc.getPersona().setNombre(txtNombre.getText().trim());
+                pc.getPersona().setApellido(txtApellido.getText().trim());
+                pc.getPersona().setDni(txtDni.getText().trim());
+                pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
+                pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
+                pc.getPersona().setTelefono(txtTelefono.getText().trim());
+                pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
+                pc.getPersona().setActivo(true);
+                if (isEditing) {
+                    if (pc.update(pc.getIndex())) {
+                        JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
                     } else {
-                        if (pc.save() && cc.save()) {
-                            JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose();
+                        JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    if (pc.save()) {
+                        cc.getCuenta().setClave(txtDni.getText().trim());
+                        cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
+                        cc.getCuenta().setIdPersona(pc.getPersona().getId());
+
+                        if (cc.save()) {
+                            System.out.println("Se guardó correctamente");
                         } else {
-                            JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                            System.out.println("No se pudo guardar");
                         }
-                    //}
+
+                        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        ((Frm_Usuarios) this.getParent()).cargarTabla(); // Agrega esta línea
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
