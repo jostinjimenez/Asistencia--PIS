@@ -1,10 +1,15 @@
 package modulo_1.usuario_rol.view;
 
 import modulo_1.inicio_sesion.view.util.TextPrompt;
+import modulo_1.usuario_rol.controller.PersonaController;
+import modulo_1.usuario_rol.view.tablas.ModeloTablaPersona;
 import plantilla.forms.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class Frm_Usuarios extends javax.swing.JFrame {
 
@@ -13,10 +18,31 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        cargarTabla();
+
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable1.getColumnModel().getColumn(0).setCellRenderer(tcr);
+        jTable1.getColumnModel().getColumn(1).setCellRenderer(tcr);
+        jTable1.getColumnModel().getColumn(2).setCellRenderer(tcr);
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(tcr);
+        jTable1.getColumnModel().getColumn(4).setCellRenderer(tcr);
+        jTable1.getColumnModel().getColumn(5).setCellRenderer(tcr);
+
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+
     }
 
+    ModeloTablaPersona mtp = new ModeloTablaPersona();
+    PersonaController pc = new PersonaController();
 
-
+    // Metodos
+    public void cargarTabla() {
+        mtp.setPersonas(pc.getPersonas());
+        jTable1.setModel(mtp);
+        jTable1.updateUI();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
