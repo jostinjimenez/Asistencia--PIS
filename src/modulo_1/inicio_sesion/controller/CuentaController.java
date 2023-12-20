@@ -2,7 +2,11 @@ package modulo_1.inicio_sesion.controller;
 
 import DAO.DataAccessObject;
 import model.Cuenta;
+import model.Persona;
 import tda_listas.ListaEnlazada;
+import tda_listas.exceptions.VacioExceptions;
+
+import javax.swing.*;
 
 public class CuentaController extends DataAccessObject<Cuenta> {
     // Atributos
@@ -53,5 +57,30 @@ public class CuentaController extends DataAccessObject<Cuenta> {
     public Boolean update(Integer index) {
         return update(cuenta, index);
     }
+
+//    public boolean iniciarSesion(String correoInstitucional, String clave) {
+//        System.out.println("Correo: " + correoInstitucional);
+//        System.out.println("Clave: " + clave);
+//
+//        for (Cuenta cuenta : this.getCuentas()) {
+//            if (cuenta.getCorreo().equalsIgnoreCase(correoInstitucional)) {
+//                if (cuenta.getClave().equalsIgnoreCase(clave)) {
+//                    return true;
+//                }else {
+//                    JOptionPane.showMessageDialog(null, "Clave incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+//                    return false;
+//                }
+//            }else {
+//                JOptionPane.showMessageDialog(null, "Correo incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+//                return false;
+//            }
+//        }
+//        return false;
+//    }
+
+
+    // Busqueda binaria
+
+
 }
 

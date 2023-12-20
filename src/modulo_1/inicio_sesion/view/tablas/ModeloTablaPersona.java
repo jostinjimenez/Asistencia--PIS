@@ -1,4 +1,4 @@
-package modulo_1.usuario_rol.view.tablas;
+package modulo_1.inicio_sesion.view.tablas;
 
 import model.Persona;
 import tda_listas.ListaEnlazada;

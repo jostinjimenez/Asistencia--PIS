@@ -1,12 +1,10 @@
-package modulo_1.usuario_rol.view;
+package modulo_1.inicio_sesion.view.forms;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import modulo_1.usuario_rol.controller.PersonaController;
-import modulo_1.usuario_rol.view.tablas.ModeloTablaPersona;
+import modulo_1.inicio_sesion.controller.PersonaController;
+import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class Frm_Usuarios extends javax.swing.JFrame {
@@ -52,25 +50,17 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-//        mtp.setPersonas(pc.getPersonas());
-//        mtp.fireTableDataChanged();
-//        jTable1.setModel(mtp);
-//        jTable1.updateUI();
-
-        ModeloTablaPersona mtp = (ModeloTablaPersona) jTable1.getModel();
-        mtp.getPersonas().clear();
-        mtp.getPersonas().addAll(pc.getPersonas());
+        mtp.setPersonas(pc.list_All());
+        mtp.setPersonas(pc.getPersonas());
         mtp.fireTableDataChanged();
-
+        jTable1.setModel(mtp);
+        jTable1.updateUI();
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable1.getColumnModel().getColumn(0).setCellRenderer(tcr);
-        jTable1.getColumnModel().getColumn(1).setCellRenderer(tcr);
-        jTable1.getColumnModel().getColumn(2).setCellRenderer(tcr);
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(tcr);
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(tcr);
-        jTable1.getColumnModel().getColumn(5).setCellRenderer(tcr);
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
     }
 
@@ -90,6 +80,8 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        cbxCriterio = new javax.swing.JComboBox<>();
+        cbxAscDesc = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,29 +96,29 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
         jLabel1.setText("Usuarios");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Buscar");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 70, 60, 30));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 70, 60, 20));
 
         txtCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCriterio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(txtCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 110, 240, 30));
+        roundPanel1.add(txtCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 240, 20));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
         ));
         jScrollPane1.setViewportView(jTable1);
 
@@ -139,7 +131,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 110, 30));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 110, 30));
 
         btnEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -160,6 +152,12 @@ public class Frm_Usuarios extends javax.swing.JFrame {
             }
         });
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
+
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 160, -1));
+
+        cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel1.add(cbxAscDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(856, 150, 160, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
 
@@ -201,6 +199,8 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cbxAscDesc;
+    private javax.swing.JComboBox<String> cbxCriterio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

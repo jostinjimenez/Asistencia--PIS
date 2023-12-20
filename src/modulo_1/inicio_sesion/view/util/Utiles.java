@@ -1,7 +1,7 @@
-package modulo_1.usuario_rol.view.util;
+package modulo_1.inicio_sesion.view.util;
 
 import model.Rol;
-import modulo_1.usuario_rol.controller.RolController;
+import modulo_1.inicio_sesion.controller.RolController;
 import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;

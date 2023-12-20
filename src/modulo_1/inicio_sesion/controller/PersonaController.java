@@ -1,4 +1,4 @@
-package modulo_1.usuario_rol.controller;
+package modulo_1.inicio_sesion.controller;
 
 import DAO.DataAccessObject;
 import model.Cuenta;
@@ -7,6 +7,8 @@ import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 import java.io.FileOutputStream;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getFieldValue;
 
 public class PersonaController extends DataAccessObject<Persona> {
     // Atributos
@@ -81,5 +83,53 @@ public class PersonaController extends DataAccessObject<Persona> {
             }
         }
         return false;
+    }
+
+
+    // Ordenar por QuickSort
+    public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
+        Persona[] personas = lista.toArray();
+        quickSort(personas, 0, personas.length - 1, type, field);
+        return lista.toList(personas);
+    }
+
+    private void quickSort(Persona[] p, int primero, int ultimo, Integer type, String field) throws Exception {
+        if (primero < ultimo) {
+            int pi = dividir(p, primero, ultimo, type, field);
+
+            quickSort(p, primero, pi - 1, type, field);
+            quickSort(p, pi + 1, ultimo, type, field);
+        }
+    }
+
+    private int dividir(Persona[] p, int primero, int ultimo, Integer type, String field) throws Exception {
+        Persona pivot = p[ultimo];
+        int i = (primero - 1);
+
+        for (int j = primero; j < ultimo; j++) {
+            if (type == 1) {
+                if (getFieldValue(p[j], field).compareTo(getFieldValue(pivot, field)) <= 0) {
+                    i++;
+
+                    Persona temp = p[i];
+                    p[i] = p[j];
+                    p[j] = temp;
+                }
+            } else {
+                if (getFieldValue(p[j], field).compareTo(getFieldValue(pivot, field)) >= 0) {
+                    i++;
+
+                    Persona temp = p[i];
+                    p[i] = p[j];
+                    p[j] = temp;
+                }
+            }
+        }
+
+        Persona aux = p[i + 1];
+        p[i + 1] = p[ultimo];
+        p[ultimo] = aux;
+
+        return i + 1;
     }
 }

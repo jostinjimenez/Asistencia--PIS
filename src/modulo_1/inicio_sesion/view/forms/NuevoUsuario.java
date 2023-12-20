@@ -1,14 +1,13 @@
-package modulo_1.usuario_rol.view;
+package modulo_1.inicio_sesion.view.forms;
 
 import modulo_1.inicio_sesion.view.util.TextPrompt;
-import modulo_1.usuario_rol.controller.CuentaController;
-import modulo_1.usuario_rol.controller.PersonaController;
-import modulo_1.usuario_rol.view.tablas.ModeloTablaPersona;
+import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.controller.PersonaController;
+import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 
 import javax.swing.*;
 
-import static modulo_1.usuario_rol.view.util.Utiles.cargaRol;
-import static modulo_1.usuario_rol.view.util.Utiles.validadorDeCedula;
+import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
 public class NuevoUsuario extends javax.swing.JDialog {
 
@@ -62,6 +61,8 @@ public class NuevoUsuario extends javax.swing.JDialog {
                 txtTelefono.setText(pc.getPersona().getTelefono());
                 cbxRol.setSelectedItem(pc.getPersona().getIdRol() - 1);
                 txtCorreoInstitucional.setText(cc.getCuentas().get(pc.getIndex()).getCorreo());
+                txtDni.setEnabled(false);
+                txtCorreoInstitucional.setEnabled(false);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -94,39 +95,11 @@ public class NuevoUsuario extends javax.swing.JDialog {
     public void guardar() {
         if (validar()) {
             try {
-                pc.getPersona().setNombre(txtNombre.getText().trim());
-                pc.getPersona().setApellido(txtApellido.getText().trim());
-                pc.getPersona().setDni(txtDni.getText().trim());
-                pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
-                pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
-                pc.getPersona().setTelefono(txtTelefono.getText().trim());
-                pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
-                pc.getPersona().setActivo(true);
+                setPersonaData();
                 if (isEditing) {
-                    if (pc.update(pc.getIndex())) {
-                        JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    updatePersona();
                 } else {
-                    if (pc.save()) {
-                        cc.getCuenta().setClave(txtDni.getText().trim());
-                        cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
-                        cc.getCuenta().setIdPersona(pc.getPersona().getId());
-
-                        if (cc.save()) {
-                            System.out.println("Se guardó correctamente");
-                        } else {
-                            System.out.println("No se pudo guardar");
-                        }
-
-                        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                        ((Frm_Usuarios) this.getParent()).cargarTabla(); // Agrega esta línea
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    savePersona();
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -135,6 +108,46 @@ public class NuevoUsuario extends javax.swing.JDialog {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void setPersonaData() {
+        pc.getPersona().setNombre(txtNombre.getText().trim());
+        pc.getPersona().setApellido(txtApellido.getText().trim());
+        pc.getPersona().setDni(txtDni.getText().trim());
+        pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
+        pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
+        pc.getPersona().setTelefono(txtTelefono.getText().trim());
+        pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
+        pc.getPersona().setActivo(true);
+    }
+
+    private void updatePersona() {
+        if (pc.update(pc.getIndex())) {
+            JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void savePersona() {
+        if (pc.save()) {
+            cc.getCuenta().setClave(txtDni.getText().trim());
+            cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
+            cc.getCuenta().setIdPersona(pc.getPersona().getId());
+
+            if (cc.save()) {
+                System.out.println("Se guardó correctamente");
+            } else {
+                System.out.println("No se pudo guardar");
+            }
+
+            JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+            ((Frm_Usuarios) this.getParent()).cargarTabla(); // Agrega esta línea
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
