@@ -60,5 +60,36 @@ public class Cuenta {
                 "correo='" + correo + '\'' +
                 '}';
     }
+
+    public Boolean compareTo(Cuenta c, String field, Integer type) {
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("correo")) {
+                    return this.getCorreo().compareTo(c.getCorreo()) > 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    return this.getId() > (c.getId());
+                } else if (field.equalsIgnoreCase("estado")) {
+                    return this.getEstado().compareTo(c.getEstado()) > 0;
+                } else if (field.equalsIgnoreCase("clave")) {
+                    return this.getClave().compareTo(c.getClave()) > 0;
+                } else if (field.equalsIgnoreCase("idPersona")) {
+                    return this.getIdPersona() > (c.getIdPersona());
+                }
+            case 0:
+                if (field.equalsIgnoreCase("correo")) {
+                    return this.getCorreo().compareTo(c.getCorreo()) < 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    return this.getId() < (c.getId());
+                } else if (field.equalsIgnoreCase("estado")) {
+                    return this.getEstado().compareTo(c.getEstado()) < 0;
+                } else if (field.equalsIgnoreCase("clave")) {
+                    return this.getClave().compareTo(c.getClave()) < 0;
+                } else if (field.equalsIgnoreCase("idPersona")) {
+                    return this.getIdPersona() < (c.getIdPersona());
+                }
+            default:
+                return false;
+        }
+    }
 }
 

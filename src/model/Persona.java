@@ -111,4 +111,55 @@ public class Persona {
     public String toString() {
         return nombre + " " + apellido;
     }
+
+    public Boolean compareTo(Persona c, String field, Integer type) {
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("nombre")) {
+                    return this.getNombre().compareTo(c.getNombre()) > 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    return this.getId() > (c.getId());
+                } else if (field.equalsIgnoreCase("apellido")) {
+                    return this.getApellido().compareTo(c.getApellido()) > 0;
+                } else if (field.equalsIgnoreCase("correo_personal")) {
+                    return this.getCorreo_personal().compareTo(c.getCorreo_personal()) > 0;
+                } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
+                    return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) > 0;
+                } else if (field.equalsIgnoreCase("telefono")) {
+                    return this.getTelefono().compareTo(c.getTelefono()) > 0;
+                } else if (field.equalsIgnoreCase("dni")) {
+                    return this.getDni().compareTo(c.getDni()) > 0;
+                } else if (field.equalsIgnoreCase("activo")) {
+                    return this.isActivo() == c.isActivo();
+                } else if (field.equalsIgnoreCase("idRol")) {
+                    return this.getIdRol() > (c.getIdRol());
+                } else if (field.equalsIgnoreCase("idCuenta")) {
+                    return this.getIdCuenta() > (c.getIdCuenta());
+                }
+            case 0:
+                if (field.equalsIgnoreCase("nombre")) {
+                    return this.getNombre().compareTo(c.getNombre()) < 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    return this.getId() < (c.getId());
+                } else if (field.equalsIgnoreCase("apellido")) {
+                    return this.getApellido().compareTo(c.getApellido()) < 0;
+                } else if (field.equalsIgnoreCase("correo_personal")) {
+                    return this.getCorreo_personal().compareTo(c.getCorreo_personal()) < 0;
+                } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
+                    return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) < 0;
+                } else if (field.equalsIgnoreCase("telefono")) {
+                    return this.getTelefono().compareTo(c.getTelefono()) < 0;
+                } else if (field.equalsIgnoreCase("dni")) {
+                    return this.getDni().compareTo(c.getDni()) < 0;
+                } else if (field.equalsIgnoreCase("activo")) {
+                    return this.isActivo() != c.isActivo();
+                } else if (field.equalsIgnoreCase("idRol")) {
+                    return this.getIdRol() < (c.getIdRol());
+                } else if (field.equalsIgnoreCase("idCuenta")) {
+                    return this.getIdCuenta() < (c.getIdCuenta());
+                }
+            default:
+                return false;
+        }
+    }
 }
