@@ -8,9 +8,9 @@ import java.io.FileReader;
 
 public class DataAccessObject<T> implements TransferObject {
 
-    private XStream xStream;
+    protected XStream xStream;
     private Class<T> clazz;
-    private String URL;
+    protected String URL;
 
     public DataAccessObject(Class<T> clazz) {
         this.clazz = clazz;

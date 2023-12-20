@@ -9,6 +9,7 @@ public class Persona {
     private String fecha_nacimiento;
     private String telefono;
     private String dni;
+    private boolean activo;
 
     private Integer idRol;
     private Integer idCuenta;
@@ -24,6 +25,14 @@ public class Persona {
     }
 
     public Persona() {
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Integer getIdCuenta() {
