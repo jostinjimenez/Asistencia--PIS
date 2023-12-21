@@ -32,6 +32,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         } else {
             Cuenta cuenta = cc.validarCuenta(usuario, clave);
+            cc.setCuenta(cuenta);
             if (cuenta != null) {
                 switch (cc.identificarRolPersona(cc.getPersona(cuenta.getIdPersona()))) {
                     case 1 -> {

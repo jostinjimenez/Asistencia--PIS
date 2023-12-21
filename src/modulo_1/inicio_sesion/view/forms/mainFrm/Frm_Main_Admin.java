@@ -25,14 +25,25 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
     private void initComponents() {
 
         bg_panel = new javax.swing.JPanel();
+        txtUsername = new javax.swing.JLabel();
         roundPanel1 = new plantilla.swing.RoundPanel();
         menu_Admin1 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bg_panel.setBackground(new java.awt.Color(21, 21, 21));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtUsername.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsername.setText("jLabel1");
+        bg_panel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 20));
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -43,6 +54,10 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+    }//GEN-LAST:event_formWindowOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -66,6 +81,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
     private javax.swing.JPanel bg_panel;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
+    private javax.swing.JLabel txtUsername;
     // End of variables declaration//GEN-END:variables
 
 }
