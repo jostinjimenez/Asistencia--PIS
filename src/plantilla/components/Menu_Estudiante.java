@@ -43,8 +43,26 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
+//        if (text.equals("Cerrar Sesión")) {
+//            menu.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    cerrarSesion();
+//                }
+//            });
+//        }
         panelMenu.add(menu);
     }
+
+//    private void cerrarSesion() {
+//        // Cierra la ventana actual
+//        Window currentWindow = SwingUtilities.getWindowAncestor(this);
+//        currentWindow.dispose();
+//
+//        // Abre la ventana de inicio de sesión
+//        Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();
+//        inicioSesion.setVisible(true);
+//    }
 
     private void setSelected(ButtonMenu menu) {
         for (Component com : panelMenu.getComponents()) {
