@@ -11,16 +11,19 @@ public class Utiles {
     public static void cargaRol(JComboBox cbxRol) {
         RolController rc = new RolController();
         cbxRol.removeAllItems();
+
+        cbxRol.addItem(new Rol(0, "Todos", "Todos los roles"));
+
         try {
             for (int i = 0; i < rc.getRoles().getSize(); i++) {
-                cbxRol.addItem(rc.getRoles().get(i).getNombre());
+                cbxRol.addItem(rc.getRoles().get(i));
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();
         }
     }
 
-    public static Rol getComboMarca(JComboBox cbx) {
+    public static Rol getComboRol(JComboBox cbx) {
         return (Rol) cbx.getSelectedItem();
     }
 

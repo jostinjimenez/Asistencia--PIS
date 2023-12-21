@@ -1,11 +1,18 @@
 package modulo_1.inicio_sesion.view.forms;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import model.Rol;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
+import modulo_1.inicio_sesion.view.util.Utiles;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
+import java.awt.event.ItemEvent;
+import java.util.Objects;
+
+import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
 public class Frm_Usuarios extends javax.swing.JFrame {
 
@@ -15,6 +22,8 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         cargarTabla();
+        cargaRol(cbxRol);
+        cbxRol.setVisible(false);
 
         jTable1.getSelectionModel().addListSelectionListener(e -> {
             btnEditar.setEnabled(true);
@@ -28,6 +37,25 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     PersonaController pc = new PersonaController();
 
     // Metodos
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        try {
+            if (criterio.equalsIgnoreCase("rol")) {
+                Rol rolSeleccionado = Utiles.getComboRol(cbxRol);
+                if (rolSeleccionado.getNombre().equals("Todos")) {
+                    mtp.setPersonas(pc.getPersonas());
+                } else {
+                    mtp.setPersonas(pc.buscarRol(pc.getPersonas(), "idRol", rolSeleccionado));
+                }
+                mtp.fireTableDataChanged();
+                jTable1.setModel(mtp);
+                jTable1.updateUI();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void eliminarRegistro() {
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow >= 0) {
@@ -56,6 +84,10 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         jTable1.setModel(mtp);
         jTable1.updateUI();
 
+        TableRowSorter<ModeloTablaPersona> trs = new TableRowSorter<>(mtp);
+        jTable1.setRowSorter(trs);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
@@ -82,6 +114,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         cbxCriterio = new javax.swing.JComboBox<>();
         cbxAscDesc = new javax.swing.JComboBox<>();
+        cbxRol = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -153,11 +186,27 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         });
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 160, -1));
+        cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Rol", "Nombre", "DNI" }));
+        cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCriterioItemStateChanged(evt);
+            }
+        });
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 160, -1));
 
+        cbxAscDesc.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         roundPanel1.add(cbxAscDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(856, 150, 160, -1));
+
+        cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxRol.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxRolItemStateChanged(evt);
+            }
+        });
+        roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
 
@@ -174,6 +223,23 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cbxCriterioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCriterioItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if (Objects.equals(cbxCriterio.getSelectedItem(), "Rol")) {
+                cbxRol.setVisible(true);
+                txtCriterio.setVisible(false);
+            } else {
+                cbxRol.setVisible(false);
+                txtCriterio.setVisible(true);
+            }
+
+        }
+    }//GEN-LAST:event_cbxCriterioItemStateChanged
+
+    private void cbxRolItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxRolItemStateChanged
+        buscar();
+    }//GEN-LAST:event_cbxRolItemStateChanged
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         NuevoUsuario nu = new NuevoUsuario(this, true);
@@ -201,6 +267,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbxAscDesc;
     private javax.swing.JComboBox<String> cbxCriterio;
+    private javax.swing.JComboBox<String> cbxRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

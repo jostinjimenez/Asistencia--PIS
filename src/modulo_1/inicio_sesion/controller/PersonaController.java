@@ -1,14 +1,13 @@
 package modulo_1.inicio_sesion.controller;
 
 import DAO.DataAccessObject;
-import model.Cuenta;
 import model.Persona;
+import model.Rol;
+import modulo_1.inicio_sesion.controller.util.Utilidades;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 import java.io.FileOutputStream;
-
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getFieldValue;
 
 public class PersonaController extends DataAccessObject<Persona> {
     // Atributos
@@ -85,7 +84,6 @@ public class PersonaController extends DataAccessObject<Persona> {
         return false;
     }
 
-
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
         Persona[] personas = lista.toArray();
@@ -95,34 +93,23 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     private void quickSort(Persona[] p, int primero, int ultimo, Integer type, String field) throws Exception {
         if (primero < ultimo) {
-            int pi = dividir(p, primero, ultimo, type, field);
+            int pi = partition(p, primero, ultimo, type, field);
 
             quickSort(p, primero, pi - 1, type, field);
             quickSort(p, pi + 1, ultimo, type, field);
         }
     }
 
-    private int dividir(Persona[] p, int primero, int ultimo, Integer type, String field) throws Exception {
+    private int partition(Persona[] p, int primero, int ultimo, Integer type, String field) throws Exception {
         Persona pivot = p[ultimo];
         int i = (primero - 1);
 
         for (int j = primero; j < ultimo; j++) {
-            if (type == 1) {
-                if (getFieldValue(p[j], field).compareTo(getFieldValue(pivot, field)) <= 0) {
-                    i++;
-
-                    Persona temp = p[i];
-                    p[i] = p[j];
-                    p[j] = temp;
-                }
-            } else {
-                if (getFieldValue(p[j], field).compareTo(getFieldValue(pivot, field)) >= 0) {
-                    i++;
-
-                    Persona temp = p[i];
-                    p[i] = p[j];
-                    p[j] = temp;
-                }
+            if (p[j].compareTo(pivot, field, type)) {
+                i++;
+                Persona temp = p[i];
+                p[i] = p[j];
+                p[j] = temp;
             }
         }
 
@@ -131,5 +118,54 @@ public class PersonaController extends DataAccessObject<Persona> {
         p[ultimo] = aux;
 
         return i + 1;
+    }
+
+    // Buscar por Busqueda Binaria
+    public ListaEnlazada<Persona> buscarRol(ListaEnlazada<Persona> lista, String field, Rol rol) throws Exception {
+        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, field);
+        Persona[] p = lo.toArray();
+        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+
+        int left = 0;
+        int right = lista.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (p[mid].getIdRol().intValue() == rol.getId().intValue()) {
+                result.add(p[mid]);
+
+                int temp = mid - 1;
+                while (temp >= left && p[temp].getIdRol().intValue() == rol.getId().intValue()) {
+                    result.add(p[temp]);
+                    temp--;
+                }
+
+                temp = mid + 1;
+                while (temp <= right && p[temp].getIdRol().intValue() == rol.getId().intValue()) {
+                    result.add(p[temp]);
+                    temp++;
+                }
+                return result;
+            }
+            if (p[mid].getIdRol().intValue() < rol.getId().intValue()) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        PersonaController pc = new PersonaController();
+
+        System.out.println("Ordenamiento por QuickSort");
+        System.out.println("--------------------------------");
+        try {
+            System.out.println(pc.ordenarQS(pc.getPersonas(), 0, "apellido").print());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
