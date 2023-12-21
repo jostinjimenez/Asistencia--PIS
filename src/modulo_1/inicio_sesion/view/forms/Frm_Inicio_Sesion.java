@@ -36,23 +36,24 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                 switch (cc.identificarRolPersona(cc.getPersona(cuenta.getIdPersona()))) {
                     case 1 -> {
                         JOptionPane.showMessageDialog(null, "Bienvenido " + cc.getPersona(cuenta.getIdPersona()));
-                        Frm_Main_Admin frm = new Frm_Main_Admin();
+                        Frm_Main_Admin frm = new Frm_Main_Admin(cc);
                         frm.setVisible(true);
                         this.dispose();
                     }
                     case 2 -> {
                         JOptionPane.showMessageDialog(null, "Bienvenido " + cc.getPersona(cuenta.getIdPersona()));
-                        Frm_Main_Estudiante mp = new Frm_Main_Estudiante();
+                        Frm_Main_Estudiante mp = new Frm_Main_Estudiante(cc);
                         mp.setVisible(true);
                         this.dispose();
                     }
                     case 3 -> {
                         JOptionPane.showMessageDialog(null, "Bienvenido " + cc.getPersona(cuenta.getIdPersona()));
-                        Frm_Main_Docente mp1 = new Frm_Main_Docente();
+                        Frm_Main_Docente mp1 = new Frm_Main_Docente(cc);
                         mp1.setVisible(true);
                         this.dispose();
                     }
                     default -> {
+                        JOptionPane.showMessageDialog(null, "No se pudo identificar el rol");
                     }
                 }
             }

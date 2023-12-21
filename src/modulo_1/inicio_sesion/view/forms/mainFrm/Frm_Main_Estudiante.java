@@ -1,17 +1,19 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import modulo_1.inicio_sesion.controller.CuentaController;
 
 import javax.swing.*;
 
 
 public class Frm_Main_Estudiante extends javax.swing.JFrame {
+    CuentaController cc;
 
-    public Frm_Main_Estudiante() {
+    public Frm_Main_Estudiante(CuentaController cc) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
+        this.cc = cc;
     }
 
 
@@ -23,19 +25,19 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
     private void initComponents() {
 
         bg_panel = new javax.swing.JPanel();
-        menu1 = new plantilla.components.Menu_Estudiante();
         roundPanel1 = new plantilla.swing.RoundPanel();
+        menu_Estudiante1 = new plantilla.components.Menu_Estudiante();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bg_panel.setBackground(new java.awt.Color(21, 21, 21));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        bg_panel.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
+        bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -62,7 +64,7 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private plantilla.components.Menu_Estudiante menu1;
+    private plantilla.components.Menu_Estudiante menu_Estudiante1;
     private plantilla.swing.RoundPanel roundPanel1;
     // End of variables declaration//GEN-END:variables
 

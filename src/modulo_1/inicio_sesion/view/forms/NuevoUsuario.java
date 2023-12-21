@@ -8,6 +8,7 @@ import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 import javax.swing.*;
 
 import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
+import static modulo_1.inicio_sesion.view.util.Utiles.cargaRoll;
 
 public class NuevoUsuario extends javax.swing.JDialog {
 
@@ -16,7 +17,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cargaRol(cbxRol);
+        cargaRoll(cbxRol);
 
         pc.setIndex(-1);
         cc.setIndex(-1);
@@ -31,7 +32,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cargaRol(cbxRol);
+        cargaRoll(cbxRol);
         cargarPh();
 
         btnGuardar.addActionListener(e -> guardar());
@@ -136,6 +137,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
             cc.getCuenta().setClave(txtDni.getText().trim());
             cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
             cc.getCuenta().setIdPersona(pc.getPersona().getId());
+            cc.getCuenta().setEstado(true);
 
             if (cc.save()) {
                 System.out.println("Se guardó correctamente");

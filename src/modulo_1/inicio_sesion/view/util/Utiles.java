@@ -23,6 +23,18 @@ public class Utiles {
         }
     }
 
+    public static void cargaRoll(JComboBox cbxRol) {
+        RolController rc = new RolController();
+        cbxRol.removeAllItems();
+        try {
+            for (int i = 0; i < rc.getRoles().getSize(); i++) {
+                cbxRol.addItem(rc.getRoles().get(i));
+            }
+        } catch (VacioExceptions e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Rol getComboRol(JComboBox cbx) {
         return (Rol) cbx.getSelectedItem();
     }

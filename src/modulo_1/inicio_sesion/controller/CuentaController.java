@@ -73,11 +73,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
                 }
             }
         }
-
-        if (cuenta == null) {
-            JOptionPane.showMessageDialog(null, "Usuario incorrecto");
-        }
-
+        JOptionPane.showMessageDialog(null, "Usuario incorrecto");
         return cuenta;
     }
 
@@ -89,6 +85,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
                 break;
             }
         }
+        System.out.println(idRol);
         return idRol;
     }
 

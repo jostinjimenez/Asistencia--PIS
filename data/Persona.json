@@ -4,173 +4,47 @@
       "data": {
         "@class": "model.Persona",
         "id": 1,
-        "nombre": "gbhnjm",
-        "apellido": "bhnjmk",
-        "correo_personal": "hbnjmk",
-        "fecha_nacimiento": 15151,
-        "telefono": 15151,
-        "dni": 1515151,
-        "activo": false,
-        "idRol": 3
+        "nombre": "Jostin",
+        "apellido": "Jimenez",
+        "correo_personal": "jostinjimenez16@gmail.com",
+        "fecha_nacimiento": "23 de mayo",
+        "telefono": "0999170229",
+        "dni": 1150696977,
+        "activo": true,
+        "idRol": 1
       },
       "next": {
         "data": {
           "@class": "model.Persona",
           "id": 2,
-          "nombre": "bhsbdhab",
-          "apellido": "absdhasbdah",
-          "correo_personal": "asdsda",
-          "fecha_nacimiento": 61161,
-          "telefono": 616161,
-          "dni": 155151,
-          "activo": false,
+          "nombre": "Juan",
+          "apellido": "Perez",
+          "correo_personal": "juanperez@gmail.com",
+          "fecha_nacimiento": "14 de junio",
+          "telefono": "0966475216",
+          "dni": 1150696977,
+          "activo": true,
           "idRol": 2
         },
         "next": {
           "data": {
             "@class": "model.Persona",
             "id": 3,
-            "nombre": "jostin",
-            "apellido": "asdasd",
-            "correo_personal": "sadasdas",
-            "fecha_nacimiento": "sadasda",
-            "telefono": 15151,
-            "dni": 51551,
+            "nombre": "Ana",
+            "apellido": "Flores",
+            "correo_personal": "anaflores@gmail.com",
+            "fecha_nacimiento": "18 de septiembre",
+            "telefono": "0999170229",
+            "dni": 1150696977,
             "activo": true,
-            "idRol": 1
-          },
-          "next": {
-            "data": {
-              "@class": "model.Persona",
-              "id": 4,
-              "nombre": "juan",
-              "apellido": "vbhnj",
-              "correo_personal": "bghnj",
-              "fecha_nacimiento": "sadasd",
-              "telefono": 1555,
-              "dni": 61515,
-              "activo": false,
-              "idRol": 3
-            },
-            "next": {
-              "data": {
-                "@class": "model.Persona",
-                "id": 5,
-                "nombre": "Luis",
-                "apellido": "bhnj",
-                "correo_personal": "hnjmk",
-                "fecha_nacimiento": "dsa",
-                "telefono": 15515,
-                "dni": 51515,
-                "activo": false,
-                "idRol": 2
-              },
-              "next": {
-                "data": {
-                  "@class": "model.Persona",
-                  "id": 6,
-                  "nombre": "maria",
-                  "apellido": "byhnuji",
-                  "correo_personal": "hnjmk",
-                  "fecha_nacimiento": 15151,
-                  "telefono": 611616,
-                  "dni": 151515,
-                  "activo": false,
-                  "idRol": 2
-                },
-                "next": {
-                  "data": {
-                    "@class": "model.Persona",
-                    "id": 7,
-                    "nombre": "Pedro",
-                    "apellido": "bhnjm",
-                    "correo_personal": "hbnjmk",
-                    "fecha_nacimiento": "bhnjmk",
-                    "telefono": 51661,
-                    "dni": 165151,
-                    "activo": true,
-                    "idRol": 3
-                  },
-                  "next": {
-                    "data": {
-                      "@class": "model.Persona",
-                      "id": 8,
-                      "nombre": "sandra",
-                      "apellido": "njmk",
-                      "correo_personal": "njmkl",
-                      "fecha_nacimiento": 511661,
-                      "telefono": 6161616,
-                      "dni": 1515151,
-                      "activo": false,
-                      "idRol": 2
-                    },
-                    "next": {
-                      "data": {
-                        "@class": "model.Persona",
-                        "id": 9,
-                        "nombre": "Mario",
-                        "apellido": "sdadad",
-                        "correo_personal": "asdasdasd",
-                        "fecha_nacimiento": 5454545,
-                        "telefono": 665656,
-                        "dni": 454545,
-                        "activo": false,
-                        "idRol": 2
-                      },
-                      "next": {
-                        "data": {
-                          "@class": "model.Persona",
-                          "id": 10,
-                          "nombre": "bhnjm",
-                          "apellido": "bhnujiko",
-                          "correo_personal": "hnjmk",
-                          "fecha_nacimiento": "a1515",
-                          "telefono": 51515,
-                          "dni": 115151,
-                          "activo": true,
-                          "idRol": 1
-                        },
-                        "next": {
-                          "data": {
-                            "@class": "model.Persona",
-                            "id": 11,
-                            "nombre": "domenica",
-                            "apellido": "sdadsa",
-                            "correo_personal": "asdsda",
-                            "fecha_nacimiento": "27 de septiembre",
-                            "telefono": "0999475612",
-                            "dni": 151515151,
-                            "activo": true,
-                            "idRol": 2
-                          },
-                          "next": {
-                            "data": {
-                              "@class": "model.Persona",
-                              "id": 12,
-                              "nombre": "jostin",
-                              "apellido": "jimenez",
-                              "correo_personal": "sdadasd",
-                              "fecha_nacimiento": "dsadas",
-                              "telefono": 166161,
-                              "dni": 123,
-                              "activo": true,
-                              "idRol": 2
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "idRol": 3
           }
         }
       }
     },
     "last": {
-      "@reference": "..\/head\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next"
+      "@reference": "..\/head\/next\/next"
     },
-    "size": 12
+    "size": 3
   }
 }
