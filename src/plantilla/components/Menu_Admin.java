@@ -1,11 +1,12 @@
 package plantilla.components;
 
 import com.raven.swing.ButtonMenu;
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
@@ -39,13 +40,6 @@ public class Menu_Admin extends javax.swing.JPanel {
         panelMenu.add(new JLabel(), "push");
     }
 
-    private void addMenu(Icon icon, String text, int index) {
-        ButtonMenu menu = new ButtonMenu();
-        menu.setIcon(icon);
-        menu.setText("  " + text);
-        panelMenu.add(menu);
-    }
-
     private void setSelected(ButtonMenu menu) {
         for (Component com : panelMenu.getComponents()) {
             if (com instanceof ButtonMenu) {
@@ -56,14 +50,39 @@ public class Menu_Admin extends javax.swing.JPanel {
         menu.setSelected(true);
     }
 
+    private void addMenu(Icon icon, String text, int index) {
+        ButtonMenu menu = new ButtonMenu();
+        menu.setIcon(icon);
+        menu.setText("  " + text);
+//        if (text.equals("Cerrar Sesión")) {
+//            menu.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    cerrarSesion();
+//                }
+//            });
+//        }
+        panelMenu.add(menu);
+    }
+
+//    private void cerrarSesion() {
+//        // Cierra la ventana actual
+//        Window currentWindow = SwingUtilities.getWindowAncestor(this);
+//        currentWindow.dispose();
+//
+//        // Abre la ventana de inicio de sesión
+//        Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();
+//        inicioSesion.setVisible(true);
+//    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        roundPanel1 = new com.raven.swing.RoundPanel();
+        roundPanel1 = new plantilla.swing.RoundPanel();
         imageAvatar1 = new com.raven.swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
-        roundPanel2 = new com.raven.swing.RoundPanel();
+        roundPanel2 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelMenu = new javax.swing.JPanel();
 
@@ -158,7 +177,7 @@ public class Menu_Admin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelMenu;
-    private com.raven.swing.RoundPanel roundPanel1;
-    private com.raven.swing.RoundPanel roundPanel2;
+    private plantilla.swing.RoundPanel roundPanel1;
+    private plantilla.swing.RoundPanel roundPanel2;
     // End of variables declaration//GEN-END:variables
 }
