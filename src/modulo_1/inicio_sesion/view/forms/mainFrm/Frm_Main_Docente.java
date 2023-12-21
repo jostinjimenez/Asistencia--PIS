@@ -1,6 +1,7 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
 
 import javax.swing.*;
 
@@ -23,7 +24,7 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
     private void initComponents() {
 
         bg_panel = new javax.swing.JPanel();
-        menu1 = new plantilla.components.Menu();
+        menu1 = new plantilla.components.Menu_Docente();
         roundPanel1 = new plantilla.swing.RoundPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +63,7 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private plantilla.components.Menu menu1;
+    private plantilla.components.Menu_Docente menu1;
     private plantilla.swing.RoundPanel roundPanel1;
     // End of variables declaration//GEN-END:variables
 

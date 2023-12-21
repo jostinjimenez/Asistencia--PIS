@@ -1,1 +1,116 @@
-{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Cuenta","id":1,"correo":"hbnjmk","clave":1515151,"idPersona":1},"next":{"data":{"@class":"model.Cuenta","id":2,"correo":"sdasd","clave":155151,"idPersona":2},"next":{"data":{"@class":"model.Cuenta","id":3,"correo":"sdadasda","clave":51551,"idPersona":3},"next":{"data":{"@class":"model.Cuenta","id":4,"correo":"gbhnj","clave":61515,"idPersona":4},"next":{"data":{"@class":"model.Cuenta","id":5,"correo":"hbnjmk","clave":51515,"idPersona":5},"next":{"data":{"@class":"model.Cuenta","id":6,"correo":"vgbhnjmk","clave":151515,"idPersona":6},"next":{"data":{"@class":"model.Cuenta","id":7,"correo":"bhnjm","clave":165151,"idPersona":7},"next":{"data":{"@class":"model.Cuenta","id":8,"correo":"njmkl","clave":1515151,"idPersona":8},"next":{"data":{"@class":"model.Cuenta","id":9,"correo":"asdasdas","clave":454545,"idPersona":9},"next":{"data":{"@class":"model.Cuenta","id":10,"correo":"unjmk","clave":115151,"idPersona":10},"next":{"data":{"@class":"model.Cuenta","id":11,"correo":"sddsad","clave":151515151,"idPersona":11},"next":{"data":{"@class":"model.Cuenta","id":12,"correo":"jostin","clave":123,"idPersona":12}}}}}}}}}}}}},"last":{"@reference":"..\/head\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next"},"size":12}}
+{
+  "tda_listas.ListaEnlazada": {
+    "head": {
+      "data": {
+        "@class": "model.Cuenta",
+        "id": 1,
+        "correo": "hbnjmk",
+        "clave": 1515151,
+        "idPersona": 1
+      },
+      "next": {
+        "data": {
+          "@class": "model.Cuenta",
+          "id": 2,
+          "correo": "sdasd",
+          "clave": 155151,
+          "idPersona": 2
+        },
+        "next": {
+          "data": {
+            "@class": "model.Cuenta",
+            "id": 3,
+            "correo": "sdadasda",
+            "clave": 51551,
+            "idPersona": 3
+          },
+          "next": {
+            "data": {
+              "@class": "model.Cuenta",
+              "id": 4,
+              "correo": "gbhnj",
+              "clave": 61515,
+              "idPersona": 4
+            },
+            "next": {
+              "data": {
+                "@class": "model.Cuenta",
+                "id": 5,
+                "correo": "hbnjmk",
+                "clave": 51515,
+                "idPersona": 5
+              },
+              "next": {
+                "data": {
+                  "@class": "model.Cuenta",
+                  "id": 6,
+                  "correo": "vgbhnjmk",
+                  "clave": 151515,
+                  "idPersona": 6
+                },
+                "next": {
+                  "data": {
+                    "@class": "model.Cuenta",
+                    "id": 7,
+                    "correo": "bhnjm",
+                    "clave": 165151,
+                    "idPersona": 7
+                  },
+                  "next": {
+                    "data": {
+                      "@class": "model.Cuenta",
+                      "id": 8,
+                      "correo": "njmkl",
+                      "clave": 1515151,
+                      "idPersona": 8
+                    },
+                    "next": {
+                      "data": {
+                        "@class": "model.Cuenta",
+                        "id": 9,
+                        "correo": "asdasdas",
+                        "clave": 454545,
+                        "idPersona": 9
+                      },
+                      "next": {
+                        "data": {
+                          "@class": "model.Cuenta",
+                          "id": 10,
+                          "correo": "unjmk",
+                          "clave": 115151,
+                          "idPersona": 10
+                        },
+                        "next": {
+                          "data": {
+                            "@class": "model.Cuenta",
+                            "id": 11,
+                            "correo": "sddsad",
+                            "clave": 151515151,
+                            "idPersona": 11
+                          },
+                          "next": {
+                            "data": {
+                              "@class": "model.Cuenta",
+                              "id": 12,
+                              "correo": "jostin",
+                              "clave": 123,
+                              "idPersona": 12
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "last": {
+      "@reference": "..\/head\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next"
+    },
+    "size": 12
+  }
+}

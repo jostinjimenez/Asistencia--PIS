@@ -23,7 +23,7 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
     private void initComponents() {
 
         bg_panel = new javax.swing.JPanel();
-        menu1 = new plantilla.components.Menu();
+        menu1 = new plantilla.components.Menu_Estudiante();
         roundPanel1 = new plantilla.swing.RoundPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +62,7 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private plantilla.components.Menu menu1;
+    private plantilla.components.Menu_Estudiante menu1;
     private plantilla.swing.RoundPanel roundPanel1;
     // End of variables declaration//GEN-END:variables
 
