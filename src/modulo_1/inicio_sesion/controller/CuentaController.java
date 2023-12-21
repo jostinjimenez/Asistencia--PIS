@@ -3,6 +3,7 @@ package modulo_1.inicio_sesion.controller;
 import DAO.DataAccessObject;
 import model.Cuenta;
 import model.Persona;
+import model.Rol;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -58,29 +59,49 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return update(cuenta, index);
     }
 
-//    public boolean iniciarSesion(String correoInstitucional, String clave) {
-//        System.out.println("Correo: " + correoInstitucional);
-//        System.out.println("Clave: " + clave);
-//
-//        for (Cuenta cuenta : this.getCuentas()) {
-//            if (cuenta.getCorreo().equalsIgnoreCase(correoInstitucional)) {
-//                if (cuenta.getClave().equalsIgnoreCase(clave)) {
-//                    return true;
-//                }else {
-//                    JOptionPane.showMessageDialog(null, "Clave incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
-//                    return false;
-//                }
-//            }else {
-//                JOptionPane.showMessageDialog(null, "Correo incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
-//                return false;
-//            }
-//        }
-//        return false;
-//    }
+    public Cuenta validarCuenta(String usuario, String clave) {
+        Cuenta cuenta = null;
 
+        for (Cuenta c : this.getCuentas()) {
+            if (c.getCorreo().equalsIgnoreCase(usuario)) {
+                if (c.getClave().equalsIgnoreCase(clave)) {
+                    cuenta = c;
+                    return cuenta;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Clave incorrecta");
+                    return null;
+                }
+            }
+        }
 
-    // Busqueda binaria
+        if (cuenta == null) {
+            JOptionPane.showMessageDialog(null, "Usuario incorrecto");
+        }
 
+        return cuenta;
+    }
+
+    public Integer identificarRolPersona(Persona p) {
+        Integer idRol = null;
+        for (Cuenta cuenta : getCuentas()) {
+            if (cuenta.getIdPersona().equals(p.getId())) {
+                idRol = getPersona(cuenta.getIdPersona()).getIdRol().intValue();
+                break;
+            }
+        }
+        return idRol;
+    }
+
+    public Persona getPersona(Integer idPersona) {
+        Persona persona = null;
+        for (Cuenta cuenta : getCuentas()) {
+            if (cuenta.getIdPersona().equals(idPersona)) {
+                persona = new PersonaController().getPersonaID(idPersona);
+                break;
+            }
+        }
+        return persona;
+    }
 
 }
 

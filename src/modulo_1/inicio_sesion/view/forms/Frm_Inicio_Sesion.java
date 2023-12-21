@@ -5,6 +5,9 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 import model.Cuenta;
 import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
+import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
+import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
 
 public class Frm_Inicio_Sesion extends javax.swing.JFrame {
@@ -21,23 +24,40 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
     CuentaController cc = new CuentaController();
 
-//    public void iniciarSesion() {
-//        String correo = txtUsuario.getText();
-//        String clave = txtClave.getText();
-//
-//        if (correo.isEmpty() || clave.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "Ingrese todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-//        } else {
-//
-//            if (cc.iniciarSesion(correo, clave)) {
-//                JOptionPane.showMessageDialog(null, "Bienvenido", "Información", JOptionPane.INFORMATION_MESSAGE);
-////                Frm_Menu menu = new Frm_Menu();
-////                menu.setVisible(true);
-////                this.dispose();
-//            }
-//        }
-//    }
+    public void iniciarSesion() {
+        String usuario = txtUsuario.getText();
+        String clave = txtClave.getText();
 
+        if (usuario.isEmpty() || clave.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+        } else {
+            Cuenta cuenta = cc.validarCuenta(usuario, clave);
+            if (cuenta != null) {
+                switch (cc.identificarRolPersona(cc.getPersona(cuenta.getIdPersona()))) {
+                    case 1 -> {
+                        JOptionPane.showMessageDialog(null, "Bienvenido " + cc.getPersona(cuenta.getIdPersona()));
+                        Frm_Main_Admin frm = new Frm_Main_Admin();
+                        frm.setVisible(true);
+                        this.dispose();
+                    }
+                    case 2 -> {
+                        JOptionPane.showMessageDialog(null, "Bienvenido " + cc.getPersona(cuenta.getIdPersona()));
+                        Frm_Main_Estudiante mp = new Frm_Main_Estudiante();
+                        mp.setVisible(true);
+                        this.dispose();
+                    }
+                    case 3 -> {
+                        JOptionPane.showMessageDialog(null, "Bienvenido " + cc.getPersona(cuenta.getIdPersona()));
+                        Frm_Main_Docente mp1 = new Frm_Main_Docente();
+                        mp1.setVisible(true);
+                        this.dispose();
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -98,8 +118,10 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 txtUsuarioAncestorAdded(evt);
             }
+
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
+
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
@@ -127,7 +149,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        //iniciarSesion();
+        iniciarSesion();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void txtUsuarioAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txtUsuarioAncestorAdded

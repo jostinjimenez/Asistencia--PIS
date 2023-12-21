@@ -40,6 +40,21 @@ public class PersonaController extends DataAccessObject<Persona> {
         return persona;
     }
 
+    public Persona getPersonaID(Integer id) {
+        for (int i = 0; i < personas.getSize(); i++) {
+            Persona persona = null;
+            try {
+                persona = personas.get(i);
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+            if (persona.getId().equals(id)) {
+                return persona;
+            }
+        }
+        return null;
+    }
+
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
@@ -156,6 +171,8 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
         return result;
     }
+
+
 
     public static void main(String[] args) {
         PersonaController pc = new PersonaController();

@@ -109,7 +109,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return id + " " + nombre + " " + apellido + " " + dni;
+        return nombre + " " + apellido;
     }
 
     public Boolean compareTo(Persona c, String field, Integer type) {

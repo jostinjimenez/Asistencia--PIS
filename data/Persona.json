@@ -142,6 +142,20 @@
                             "dni": 151515151,
                             "activo": true,
                             "idRol": 2
+                          },
+                          "next": {
+                            "data": {
+                              "@class": "model.Persona",
+                              "id": 12,
+                              "nombre": "jostin",
+                              "apellido": "jimenez",
+                              "correo_personal": "sdadasd",
+                              "fecha_nacimiento": "dsadas",
+                              "telefono": 166161,
+                              "dni": 123,
+                              "activo": true,
+                              "idRol": 2
+                            }
                           }
                         }
                       }
@@ -155,8 +169,8 @@
       }
     },
     "last": {
-      "@reference": "..\/head\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next"
+      "@reference": "..\/head\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next\/next"
     },
-    "size": 11
+    "size": 12
   }
 }
