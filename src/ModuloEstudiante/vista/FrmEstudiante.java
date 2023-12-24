@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import vista.tablas.ModeloTablaEstudiante;
+import ModuloEstudiante.vista.tablas.ModeloTablaEstudiante;
 
 
 
@@ -20,7 +20,7 @@ import vista.tablas.ModeloTablaEstudiante;
  */
 public class FrmEstudiante extends javax.swing.JFrame {
     
-    private EstudianteControlador estudianteControlador = new EstudianteControlador();
+    private ControladorEstudiante estudianteControlador = new ControladorEstudiante();
     private ModeloTablaEstudiante modeloEstudiante = new ModeloTablaEstudiante();
     private Integer fila = -1;
     
@@ -35,7 +35,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     }
     
     private void cargarTabla(){
-        modeloEstudiante.setEstudiante(estudianteControlador.listAll());
+        modeloEstudiante.setEstudiante(estudianteControlador.list_All());
         tblEstudiante.setModel(modeloEstudiante);
         tblEstudiante.updateUI();
     }
@@ -118,6 +118,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonBadges1 = new com.raven.swing.ButtonBadges();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -139,16 +140,20 @@ public class FrmEstudiante extends javax.swing.JFrame {
         txtEtnia = new javax.swing.JTextField();
         txtProvincia = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEstudiante = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        roundPanel1 = new com.raven.swing.RoundPanel();
+        imageAvatar1 = new com.raven.swing.ImageAvatar();
+        jLabel8 = new javax.swing.JLabel();
+        panelMenu = new javax.swing.JPanel();
+
+        buttonBadges1.setText("buttonBadges1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(null));
@@ -163,7 +168,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(404, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,19 +178,26 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 532, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 532, -1));
+
+        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombres: ");
 
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Fecha de nacimiento:");
 
+        txtNombres.setBackground(new java.awt.Color(204, 204, 204));
         txtNombres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombresActionPerformed(evt);
             }
         });
+
+        txtFechaNac.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Correo:");
@@ -196,9 +208,16 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Telefono:");
 
+        txtCorreo.setBackground(new java.awt.Color(204, 204, 204));
+
+        txtCedula.setBackground(new java.awt.Color(204, 204, 204));
+
+        txtTelefono.setBackground(new java.awt.Color(204, 204, 204));
+
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Titulo de bachiller: ");
 
+        jComboBox1.setBackground(new java.awt.Color(204, 204, 204));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         Jlabelll.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -206,6 +225,10 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         Jlabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Jlabel.setText("Etnia");
+
+        txtEtnia.setBackground(new java.awt.Color(204, 204, 204));
+
+        txtProvincia.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -230,8 +253,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtEtnia, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 261, Short.MAX_VALUE)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 201, Short.MAX_VALUE)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNombres, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtFechaNac, javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,27 +300,15 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 .addGap(0, 18, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 440, 310));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 380, 310));
 
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 670, 200));
 
-        tblEstudiante.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblEstudiante);
+        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
 
-        jPanel4.add(jScrollPane1);
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 670, 200));
-
+        btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,7 +333,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 .addContainerGap(229, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 220, 310));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 120, 220, 310));
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -331,7 +342,57 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\LENOVO\\Downloads\\volver.png")); // NOI18N
         jPanel6.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 30));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 50));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 560, 50));
+
+        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        imageAvatar1.setForeground(new java.awt.Color(231, 231, 231));
+        imageAvatar1.setBorderSize(2);
+        imageAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/profile.jpg"))); // NOI18N
+
+        jLabel8.setForeground(new java.awt.Color(203, 203, 203));
+        jLabel8.setText("Estudiante");
+
+        javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
+        roundPanel1.setLayout(roundPanel1Layout);
+        roundPanel1Layout.setHorizontalGroup(
+            roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel8)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        roundPanel1Layout.setVerticalGroup(
+            roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel1Layout.createSequentialGroup()
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel8))
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 210, -1));
+
+        panelMenu.setBackground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
+        panelMenu.setLayout(panelMenuLayout);
+        panelMenuLayout.setHorizontalGroup(
+            panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 208, Short.MAX_VALUE)
+        );
+        panelMenuLayout.setVerticalGroup(
+            panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 578, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -339,14 +400,14 @@ public class FrmEstudiante extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -401,6 +462,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel Jlabel;
     private javax.swing.JLabel Jlabelll;
     private javax.swing.JButton btnGuardar;
+    private com.raven.swing.ButtonBadges buttonBadges1;
+    private com.raven.swing.ImageAvatar imageAvatar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -410,14 +473,15 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEstudiante;
+    private javax.swing.JPanel panelMenu;
+    private com.raven.swing.RoundPanel roundPanel1;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtEtnia;

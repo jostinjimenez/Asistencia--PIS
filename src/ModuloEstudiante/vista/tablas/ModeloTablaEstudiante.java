@@ -16,7 +16,6 @@ import model.Estudiante;
 public class ModeloTablaEstudiante extends AbstractTableModel {
 
     private ListaEnlazada<Estudiante> estudiante = new ListaEnlazada<>();
-    Estudiante instancia = new Estudiante();
     
     
 
@@ -67,19 +66,19 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
             case 1:
                 return (est != null) ? est.getNombre() : " ";
             case 2:
-                return (est != null) ? est.getFechaNacimiento() : " ";
+                return (est != null) ? est.getFecha_nacimiento() : " ";
             case 3:
-                return (est != null) ? est.getCorreo() : " ";
+                return (est != null) ? est.getCorreo_personal() : " ";
             case 4:
-                return (est != null) ? est.getCedula() : " ";
+                return (est != null) ? est.getDni() : " ";
             case 5:
                 return (est != null) ? est.getTelefono() : " ";
             case 6:
                 return (est != null) ? est.getEtnia() : " ";
             case 7:
-                return (est != null) ? est.isTituloBachiller() : " ";
+                return (est != null) ? est.getTitulo_bachiller() : " ";
             case 8:
-                return (est != null) ? est.getProvincia() : " ";
+                return (est != null) ? est.getDireccion() : " ";
             
 
             default:
@@ -99,7 +98,7 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
             case 3:
                 return "Correo";
             case 4: 
-                return "Cedula";
+                return "DNI";
             case 5: 
                 return "Telefono";
             case 6: 
@@ -107,7 +106,7 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
             case 7: 
                 return "Titulo de bachiller";
             case 8: 
-                return "Provincia";
+                return "Direccion";
             default:
                 return null;
         }
