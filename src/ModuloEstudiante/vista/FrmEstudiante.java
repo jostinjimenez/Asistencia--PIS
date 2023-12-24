@@ -52,7 +52,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         txtEtnia.setText(" ");
         txtDireccion.setText(" ");
         
-        estudianteControlador.setSensor(null);
+        estudianteControlador.setEstudiante(null);
         cargarTabla();
         fila = -1;
         tblEstudiante.clearSelection();
@@ -62,10 +62,10 @@ public class FrmEstudiante extends javax.swing.JFrame {
         return !txtNombres.getText().trim().isEmpty()
                 && !txtFechaNac.getText().trim().isEmpty()
                 && !txtCorreo.getText().trim().isEmpty()
-                && txtCedula.getText().trim().isEmpty()
-                && txtTelefono.getText().trim().isEmpty()
-                && txtEtnia.getText().trim().isEmpty()
-                && txtDireccion.getText().trim().isEmpty();
+                && !txtCedula.getText().trim().isEmpty()
+                && !txtTelefono.getText().trim().isEmpty()
+                && !txtEtnia.getText().trim().isEmpty()
+                && !txtDireccion.getText().trim().isEmpty();
     }
     
     public void guardar(){
@@ -77,10 +77,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 est.setCorreo_personal(txtCorreo.getText());
                 est.setDni(txtCedula.getText());
                 est.setTelefono(txtTelefono.getText());
-                est.setEtnia(txtEtnia.getText());
-                
-                JComboBox cbxTituloBach = new JComboBox();  // Asegúrate de inicializar cbxTituloBach antes de usarlo.
-                est.setTitulo_bachiller(cbxTituloBach.getSelectedItem().toString());
+                est.setEtnia(txtEtnia.getText());  
+                est.setTitulo_bachiller(true);
                 //est.setTitulo_bachiller(cbxTituloBach.getSelectedItem().toString());
                 est.setDireccion(txtDireccion.getText());
                 
@@ -113,7 +111,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         }
     }
     
-    private void Actualizar(){
+    private void actualizar(){
         int fila = tblEstudiante.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null,
@@ -131,10 +129,14 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 txtCedula.setText(estudianteControlador.getEstudiante().getDni());
                 txtTelefono.setText(estudianteControlador.getEstudiante().getTelefono());
                 txtEtnia.setText(estudianteControlador.getEstudiante().getTelefono());
+                cbxTituloBach.setSelectedItem(true);
+                txtDireccion.setText(estudianteControlador.getEstudiante().getDireccion());
                 
-                String tituloBachiller = estudianteControlador.getEstudiante().getTitulo_bachiller();
-                cbxTituloBach.setSelectedItem();
-                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,
+                        "Error al cargar los datos",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -401,6 +403,11 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         btnModificar.setBackground(new java.awt.Color(204, 204, 204));
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
         btnEliminar.setText("Eliminar");
@@ -492,7 +499,13 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        actualizar();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
