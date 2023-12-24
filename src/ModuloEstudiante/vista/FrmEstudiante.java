@@ -11,6 +11,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import ModuloEstudiante.vista.tablas.ModeloTablaEstudiante;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import model.Estudiante;
 
 
 
@@ -53,6 +56,87 @@ public class FrmEstudiante extends javax.swing.JFrame {
         cargarTabla();
         fila = -1;
         tblEstudiante.clearSelection();
+    }
+    
+    private Boolean validar(){
+        return !txtNombres.getText().trim().isEmpty()
+                && !txtFechaNac.getText().trim().isEmpty()
+                && !txtCorreo.getText().trim().isEmpty()
+                && txtCedula.getText().trim().isEmpty()
+                && txtTelefono.getText().trim().isEmpty()
+                && txtEtnia.getText().trim().isEmpty()
+                && txtDireccion.getText().trim().isEmpty();
+    }
+    
+    public void guardar(){
+        if (validar()) {
+            try{
+                Estudiante est = new Estudiante();
+                est.setNombre(txtNombres.getText());
+                est.setFecha_nacimiento(txtFechaNac.getText());
+                est.setCorreo_personal(txtCorreo.getText());
+                est.setDni(txtCedula.getText());
+                est.setTelefono(txtTelefono.getText());
+                est.setEtnia(txtEtnia.getText());
+                
+                JComboBox cbxTituloBach = new JComboBox();  // Asegúrate de inicializar cbxTituloBach antes de usarlo.
+                est.setTitulo_bachiller(cbxTituloBach.getSelectedItem().toString());
+                //est.setTitulo_bachiller(cbxTituloBach.getSelectedItem().toString());
+                est.setDireccion(txtDireccion.getText());
+                
+                if (fila != -1) {
+                    estudianteControlador.update(est,fila);
+                    limpiar();
+                    JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", 
+                            "Mensaje",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    est.setId(estudianteControlador.generarID());
+                    estudianteControlador.save(est);
+                    limpiar();
+                    
+                    JOptionPane.showMessageDialog(null, "Estudiante registrado correctamente", 
+                            "Mensaje",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), 
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,
+                    "Por favor llene todos los campos",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void Actualizar(){
+        int fila = tblEstudiante.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Seleccione una fila",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }else{
+            try{
+                this.fila = fila;
+                
+                estudianteControlador.setEstudiante(modeloEstudiante.getEstudiante().get(fila));
+                txtNombres.setText(estudianteControlador.getEstudiante().getNombre());
+                txtFechaNac.setText(estudianteControlador.getEstudiante().getFecha_nacimiento());
+                txtCorreo.setText(estudianteControlador.getEstudiante().getCorreo_personal());
+                txtCedula.setText(estudianteControlador.getEstudiante().getDni());
+                txtTelefono.setText(estudianteControlador.getEstudiante().getTelefono());
+                txtEtnia.setText(estudianteControlador.getEstudiante().getTelefono());
+                
+                String tituloBachiller = estudianteControlador.getEstudiante().getTitulo_bachiller();
+                cbxTituloBach.setSelectedItem();
+                
+            }
+        }
     }
     
     private void setupListeners() {
@@ -142,7 +226,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         txtCedula = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtEtnia = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxTituloBach = new javax.swing.JComboBox<>();
         txtDireccion = new javax.swing.JTextField();
         roundPanel4 = new plantilla.swing.RoundPanel();
         btnGuardar = new javax.swing.JButton();
@@ -296,9 +380,9 @@ public class FrmEstudiante extends javax.swing.JFrame {
         txtEtnia.setBackground(new java.awt.Color(204, 204, 204));
         roundPanel3.add(txtEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
 
-        jComboBox1.setBackground(new java.awt.Color(204, 204, 204));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SI", "NO" }));
-        roundPanel3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 230, -1));
+        cbxTituloBach.setBackground(new java.awt.Color(204, 204, 204));
+        cbxTituloBach.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SI", "NO" }));
+        roundPanel3.add(cbxTituloBach, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 230, -1));
 
         txtDireccion.setBackground(new java.awt.Color(204, 204, 204));
         roundPanel3.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 230, -1));
@@ -453,9 +537,9 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private com.raven.swing.ButtonBadges buttonBadges1;
+    private javax.swing.JComboBox<String> cbxTituloBach;
     private com.raven.swing.ImageAvatar imageAvatar1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -28,7 +28,7 @@ public class ControladorEstudiante extends DataAccessObject<Estudiante>{
         return estudiante;
     }
 
-    public void setSensor(Estudiante estudiante) {
+    public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
     
