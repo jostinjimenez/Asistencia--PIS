@@ -120,7 +120,7 @@ public class Persona {
                 } else if (field.equalsIgnoreCase("id")) {
                     return this.getId() > (c.getId());
                 } else if (field.equalsIgnoreCase("apellido")) {
-                    return this.getApellido().compareTo(c.getApellido().toLowerCase()) > 0;
+                    return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) > 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
                     return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) > 0;
                 } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
@@ -142,7 +142,7 @@ public class Persona {
                 } else if (field.equalsIgnoreCase("id")) {
                     return this.getId() < (c.getId());
                 } else if (field.equalsIgnoreCase("apellido")) {
-                    return this.getApellido().compareTo(c.getApellido().toLowerCase()) < 0;
+                    return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) < 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
                     return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) < 0;
                 } else if (field.equalsIgnoreCase("fecha_nacimiento")) {

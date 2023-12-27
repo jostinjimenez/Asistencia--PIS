@@ -8,6 +8,9 @@ import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
 public class PersonaController extends DataAccessObject<Persona> {
     // Atributos
@@ -102,7 +105,12 @@ public class PersonaController extends DataAccessObject<Persona> {
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
         Persona[] personas = lista.toArray();
-        quickSort(personas, 0, personas.length - 1, type, field);
+        Field faux = getField(Persona.class, field);
+        if (faux != null) {
+            quickSort(personas, 0, personas.length - 1, type, field);
+        } else {
+            throw new Exception("El atributo no existe");
+        }
         return lista.toList(personas);
     }
 

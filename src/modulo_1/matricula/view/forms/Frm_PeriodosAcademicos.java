@@ -1,10 +1,13 @@
-package modulo_1.inicio_sesion.view.forms;
+package modulo_1.matricula.view.forms;
 
+import modulo_1.inicio_sesion.view.forms.*;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import model.Rol;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 import modulo_1.inicio_sesion.view.util.Utiles;
+import modulo_1.matricula.controller.PeriodoAcController;
+import modulo_1.matricula.view.tablas.ModeloTablaPeriodoAc;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -14,9 +17,9 @@ import java.util.Objects;
 
 import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
-public class Frm_Usuarios extends javax.swing.JFrame {
+public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
 
-    public Frm_Usuarios() {
+    public Frm_PeriodosAcademicos() {
         initComponents();
 
         this.setLocationRelativeTo(null);
@@ -33,28 +36,28 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         btnEliminar.addActionListener(e -> eliminarRegistro());
     }
 
-    ModeloTablaPersona mtp = new ModeloTablaPersona();
-    PersonaController pc = new PersonaController();
+    ModeloTablaPeriodoAc mtpa = new ModeloTablaPeriodoAc();
+    PeriodoAcController pc = new PeriodoAcController();
 
     // Metodos
-    private void buscar() {
-        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-        try {
-            if (criterio.equalsIgnoreCase("rol")) {
-                Rol rolSeleccionado = Utiles.getComboRol(cbxRol);
-                if (rolSeleccionado.getNombre().equals("Todos")) {
-                    mtp.setPersonas(pc.getPersonas());
-                } else {
-                    mtp.setPersonas(pc.buscarRol(pc.getPersonas(), "idRol", rolSeleccionado));
-                }
-                mtp.fireTableDataChanged();
-                jTable1.setModel(mtp);
-                jTable1.updateUI();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    private void buscar() {
+//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+//        try {
+//            if (criterio.equalsIgnoreCase("rol")) {
+//                Rol rolSeleccionado = Utiles.getComboRol(cbxRol);
+//                if (rolSeleccionado.getNombre().equals("Todos")) {
+//                    mtpa.setPersonas(pc.getPersonas());
+//                } else {
+//                    mtpa.setPersonas(pc.buscarRol(pc.getPersonas(), "idRol", rolSeleccionado));
+//                }
+//                mtpa.fireTableDataChanged();
+//                jTable1.setModel(mtpa);
+//                jTable1.updateUI();
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     public void eliminarRegistro() {
         int selectedRow = jTable1.getSelectedRow();
@@ -78,13 +81,13 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        mtp.setPersonas(pc.list_All());
-        mtp.setPersonas(pc.getPersonas());
-        mtp.fireTableDataChanged();
-        jTable1.setModel(mtp);
+        mtpa.setPeriodoAcademicos(pc.list_All());
+        mtpa.setPeriodoAcademicos(pc.getPeriodoAcademicos());
+        mtpa.fireTableDataChanged();
+        jTable1.setModel(mtpa);
         jTable1.updateUI();
 
-        TableRowSorter<ModeloTablaPersona> trs = new TableRowSorter<>(mtp);
+        TableRowSorter<ModeloTablaPeriodoAc> trs = new TableRowSorter<>(mtpa);
         jTable1.setRowSorter(trs);
         jTable1.getTableHeader().setReorderingAllowed(false);
 
@@ -125,9 +128,9 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 30)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel1.setText("Usuarios");
+        jLabel1.setText("Periodo Academico");
         roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
@@ -142,28 +145,28 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 1000, 360));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btnNuevo.setText("Nuevo");
+        btnNuevo.setText("Agregar periodo Academico");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 110, 30));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 220, 30));
 
         btnEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -186,7 +189,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Id", "Rol", "Nombre", "DNI"}));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Rol", "Nombre", "DNI" }));
         cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxCriterioItemStateChanged(evt);
@@ -195,11 +198,11 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 160, -1));
 
         cbxAscDesc.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         roundPanel1.add(cbxAscDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(856, 150, 160, -1));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxRol.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxRolItemStateChanged(evt);
@@ -216,7 +219,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        NuevoUsuario nu = new NuevoUsuario(this, true, mtp, jTable1);
+        NuevoPeriodo nu = new NuevoPeriodo(this, true, mtpa, jTable1);
         nu.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -238,11 +241,11 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCriterioItemStateChanged
 
     private void cbxRolItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxRolItemStateChanged
-        buscar();
+        //buscar();
     }//GEN-LAST:event_cbxRolItemStateChanged
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
-        NuevoUsuario nu = new NuevoUsuario(this, true);
+        NuevoPeriodo nu = new NuevoPeriodo(this, true);
         nu.setVisible(true);
     }
 
@@ -256,7 +259,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_Usuarios().setVisible(true);
+            new Frm_PeriodosAcademicos().setVisible(true);
         });
     }
 
