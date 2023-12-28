@@ -12,7 +12,7 @@ public class Matricula {
     private EstadoMatricula estado;
     private Integer idEstudiante;
     private Integer idPeriodoAcademico;
-    private ListaEnlazada<Cursa> cursas;
+    private ListaEnlazada<Integer> id_cursas;
 
     public Matricula() {
     }
@@ -40,12 +40,12 @@ public class Matricula {
         this.idPeriodoAcademico = idPeriodoAcademico;
     }
 
-    public ListaEnlazada<Cursa> getCursas() {
-        return cursas;
+    public ListaEnlazada<Integer> getId_cursas() {
+        return id_cursas;
     }
 
-    public void setCursas(ListaEnlazada<Cursa> cursas) {
-        this.cursas = cursas;
+    public void setId_cursas(ListaEnlazada<Integer> id_cursas) {
+        this.id_cursas = id_cursas;
     }
 
     public EstadoMatricula getEstado() {

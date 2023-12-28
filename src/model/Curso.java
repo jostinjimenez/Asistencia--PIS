@@ -7,20 +7,20 @@ public class Curso {
     private Integer nroEstudiante;
     private String codCurso;
 
-    private ListaEnlazada<Asignatura> asignaturas;
+    private ListaEnlazada<Integer> id_asignaturas;
     private Integer idMalla;
 
     public Curso() {
     }
 
-    public ListaEnlazada<Asignatura> getAsignaturas() {
-        if (asignaturas == null)
-            asignaturas = new ListaEnlazada<>();
-        return asignaturas;
+    public ListaEnlazada<Integer> getId_asignaturas() {
+        if (id_asignaturas == null)
+            id_asignaturas = new ListaEnlazada<>();
+        return id_asignaturas;
     }
 
-    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
-        this.asignaturas = asignaturas;
+    public void setId_asignaturas(ListaEnlazada<Integer> id_asignaturas) {
+        this.id_asignaturas = id_asignaturas;
     }
 
     public Integer getIdMalla() {
