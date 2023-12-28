@@ -9,19 +9,19 @@ public class Asignatura {
     private Integer horasTotales;
     private Integer codigo;
 
-    private ListaEnlazada<Cursa> cursas;
+    private ListaEnlazada<Integer> id_cursas;
 
 
     // Constructor
     public Asignatura() {
     }
 
-    public ListaEnlazada<Cursa> getCursas() {
-        return cursas;
+    public ListaEnlazada<Integer> getId_cursas() {
+        return id_cursas;
     }
 
-    public void setCursas(ListaEnlazada<Cursa> cursas) {
-        this.cursas = cursas;
+    public void setId_cursas(ListaEnlazada<Integer> id_cursas) {
+        this.id_cursas = id_cursas;
     }
 
     public Integer getId() {
