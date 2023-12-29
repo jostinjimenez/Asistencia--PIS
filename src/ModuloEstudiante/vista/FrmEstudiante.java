@@ -32,10 +32,12 @@ public class FrmEstudiante extends javax.swing.JFrame {
     /**
      * Creates new form FrmEstudiante
      */
-    public FrmEstudiante(java.awt.Frame parent, boolean modal) {
+    public FrmEstudiante() {
         super();
         initComponents();
         setupListeners();
+        cbxTituloBach.addItem("Si");
+        cbxTituloBach.addItem("No");
         cargarTabla();
     }
    
@@ -46,6 +48,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     }
     
     private void limpiar(){
+        
         txtNombres.setText(" ");
         txtFechaNac.setText(" ");
         txtCorreo.setText(" ");
@@ -68,6 +71,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 && !txtTelefono.getText().trim().isEmpty()
                 && !txtEtnia.getText().trim().isEmpty()
                 && !txtDireccion.getText().trim().isEmpty();
+        
     }
     
     public void guardar(){
@@ -80,10 +84,11 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 est.setDni(txtCedula.getText());
                 est.setTelefono(txtTelefono.getText());
                 est.setEtnia(txtEtnia.getText());
-                
                 String seleccion = cbxTituloBach.getSelectedItem().toString();
-                boolean tieneTituloBachiller = "Si".equals(seleccion);
-                est.setTitulo_bachiller(tieneTituloBachiller);
+                //System.out.println("Seleccin: " + seleccion);
+                Boolean tituloBachiller = seleccion.equals("Sí");
+                est.setTitulo_bachiller(tituloBachiller);
+                String valorGuardar = tituloBachiller ? "Sí" : "No";
                 est.setDireccion(txtDireccion.getText());
                 
                 if (fila != -1) {
@@ -134,7 +139,11 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 txtCedula.setText(estudianteControlador.getEstudiante().getDni());
                 txtTelefono.setText(estudianteControlador.getEstudiante().getTelefono());
                 txtEtnia.setText(estudianteControlador.getEstudiante().getEtnia());
-                cbxTituloBach.setSelectedItem(estudianteControlador.getEstudiante().getTitulo_bachiller()  /*isTitulo_bachiller()*/ ? "Si" : "No");
+                String seleccion = cbxTituloBach.getSelectedItem().toString();
+            Boolean tituloBachiller = seleccion.equals("Sí");
+            cbxTituloBach.setSelectedItem(seleccion);
+            
+             
                 txtDireccion.setText(estudianteControlador.getEstudiante().getDireccion());
                 
             }catch(Exception e){
@@ -145,6 +154,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
             }
         }
     }
+    
     
     private void setupListeners() {
         
@@ -372,7 +382,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         roundPanel3.add(txtEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
 
         cbxTituloBach.setBackground(new java.awt.Color(204, 204, 204));
-        cbxTituloBach.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SI", "NO" }));
         cbxTituloBach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTituloBachActionPerformed(evt);
