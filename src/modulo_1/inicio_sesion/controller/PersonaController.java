@@ -180,6 +180,60 @@ public class PersonaController extends DataAccessObject<Persona> {
         return result;
     }
 
+    public ListaEnlazada<Persona> buscarRolCombinado(ListaEnlazada<Persona> lista, String field, Rol rol) throws Exception {
+        long startTime = System.nanoTime();
+
+        lista = this.ordenarQS(lista, 0, field);
+
+        int n = lista.getSize();
+        int segmento = (int) Math.sqrt(n);
+        Persona[] personas = lista.toArray();
+        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+
+        int i;
+        for (i = 0; i < n; i += segmento) {
+            if (personas[Math.min(i + segmento, n) - 1].getIdRol().intValue() >= rol.getId().intValue()) {
+                break;
+            }
+        }
+
+        if (i >= n) {
+            return result;
+        }
+
+        int lo = i;
+        int hi = Math.min(i + segmento, n);
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (personas[mid].getIdRol().intValue() == rol.getId().intValue()) {
+                result.add(personas[mid]);
+
+                int aux = mid - 1;
+                while (aux >= lo && personas[aux].getIdRol().intValue() == rol.getId().intValue()) {
+                    result.add(personas[aux]);
+                    aux--;
+                }
+
+                aux = mid + 1;
+                while (aux < hi && personas[aux].getIdRol().intValue() == rol.getId().intValue()) {
+                    result.add(personas[aux]);
+                    aux++;
+                }
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime);
+                System.out.println("Tiempo de ejecución: " + duration + " nanosegundos");
+                return result;
+            } else if (personas[mid].getIdRol().intValue() < rol.getId().intValue()) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Tiempo de ejecución: " + duration + " nanosegundos");
+        return result;
+    }
 
 
     public static void main(String[] args) {
@@ -192,5 +246,8 @@ public class PersonaController extends DataAccessObject<Persona> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+
     }
+
 }
