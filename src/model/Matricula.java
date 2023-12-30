@@ -17,11 +17,15 @@ public class Matricula {
     public Matricula() {
     }
 
-    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera) {
+    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera, EstadoMatricula estado, Integer idEstudiante, Integer idPeriodoAcademico, ListaEnlazada<Integer> id_cursas) {
         this.id = id;
         this.fechaMatricula = fechaMatricula;
         this.ciclo = ciclo;
         this.carrera = carrera;
+        this.estado = estado;
+        this.idEstudiante = idEstudiante;
+        this.idPeriodoAcademico = idPeriodoAcademico;
+        this.id_cursas = id_cursas;
     }
 
     public Integer getIdEstudiante() {

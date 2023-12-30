@@ -17,6 +17,15 @@ public class PeriodoAcademico {
     public PeriodoAcademico() {
     }
 
+    public PeriodoAcademico(Integer id, Integer anio, String fechaInicio, String fechaFin, Boolean estado, ListaEnlazada<Integer> id_matriculas) {
+        this.id = id;
+        this.anio = anio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.id_matriculas = id_matriculas;
+    }
+
     public ListaEnlazada<Integer> getId_matriculas() {
         if (id_matriculas == null)
             id_matriculas = new ListaEnlazada<>();
