@@ -1,0 +1,17 @@
+{
+    "tda_listas.ListaEnlazada": {
+        "head": {
+            "data": {
+                "@class": "model.Matricula",
+                "id": 1,
+                "fechaMatricula": "30\/12\/2023",
+                "ciclo": 1,
+                "carrera": "Computacion"
+            }
+        },
+        "last": {
+            "@reference": "..\/head"
+        },
+        "size": 1
+    }
+}

@@ -1,0 +1,1 @@
+{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Cursa","id":1,"paralelo":"B","idMatricula":1,"idAsignatura":1,"idPeriodoAcademico":1,"idDocente":1}},"last":{"@reference":"..\/head"},"size":1}}
