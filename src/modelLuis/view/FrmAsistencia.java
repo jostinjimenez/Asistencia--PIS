@@ -4,9 +4,12 @@
  */
 package modelLuis.view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Asistencia;
 import model.Cursa;
+import model.Estudiante;
 import model.Matricula;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsistencia;
@@ -14,6 +17,7 @@ import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerMatricula;
 import modelLuis.controller.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
+import modelLuis.tablas.ModelTableAsistencia2;
 
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -29,7 +33,11 @@ public class FrmAsistencia extends javax.swing.JFrame {
     ModelTableAsistencia md = new ModelTableAsistencia();
     ControllerAsistencia ca = new ControllerAsistencia();
     ListaEnlazada<Cursa> mat = new ListaEnlazada<>();
+    ListaEnlazada<Asistencia> list = new ListaEnlazada<>();
     ControllerTematica ct = new ControllerTematica();
+    ListaEnlazada<Matricula> result = new ListaEnlazada<>();
+    ModelTableAsistencia2 ad = new ModelTableAsistencia2();
+    Integer idtematica;
 
     public FrmAsistencia() {
         initComponents();
@@ -38,6 +46,19 @@ public class FrmAsistencia extends javax.swing.JFrame {
     }
 
     private void limpiar() {
+        txtFecha.setText(ct.getTematica().generarFecha());
+        txtFecha.setEnabled(false);
+
+    }
+
+    private void actualizarTabla() throws VacioExceptions {
+        ListaEnlazada<Estudiante> df = md.getEstudiantes();
+        ad.setEstudiantes(df);
+        ad.setAsistencias(list);
+        ad.setMatriculas(result);
+        tblAsis.setModel(ad);
+        tblAsis.updateUI();
+        ad.fireTableDataChanged();
 
     }
 
@@ -46,38 +67,59 @@ public class FrmAsistencia extends javax.swing.JFrame {
                 && !txtNombre.getText().trim().isEmpty();
     }
 
+    public void modificar() {
+        int fila = tblAsis.getSelectedRow();
+        TipoFalta a = (TipoFalta) this.tblAsis.getValueAt(fila, 2);
+        ca.getAsistencia().setFalta(a);
+        System.out.println(a+"gagag");
+        ca.setIndex(fila);
+        if (ca.update1(ca.getIndex())) {
+            JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void guardar() {
+        if (validar()) {
+            try {
+                for (Cursa cursa : mat) {
+                    ca.getAsistencia().setIdCursa(cursa.getId());
+                    ca.getAsistencia().setIdHorario(1);
+                    ca.getAsistencia().setIdTematica(idtematica);
+                    ca.getAsistencia().setId(ca.generatedId());
+                    ca.getAsistencia().setFalta(TipoFalta.NULL);
+                    if (ca.saved()) {
+                        list.add(ca.getAsistencia());
+                        limpiar();
+                        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
+            } catch (Exception e) {
+                System.out.println(e + "Error");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+        }
+    }
+
+    public void guardarTematica() {
         if (validar()) {
             try {
                 ct.getTematica().setFecha(txtFecha.getText());
                 ct.getTematica().setNombre(txtNombre.getText());
+                idtematica = ct.generatedId();
+                ct.getTematica().setId(idtematica);
+                if (ct.saved()) {
+                    limpiar();
+                    JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
 
-//                int filaSeleccionada = tblAsis.getSelectedRow();
-//                ca.setIndex(filaSeleccionada);
-//
-//                if (ca.getIndex() < 0) {
-//                    JOptionPane.showMessageDialog(null, "No se puede guardar correctamente");
-//                } else {
-//                    // Use the table model to get the updated "Falta" value
-//                    String faltaValue = md.getNorma();
-//                    if (md.enviarA().equalsIgnoreCase("T")) {
-//                        ca.getAsistencia().setFalta(TipoFalta.ASISTIO);
-//                    } else if (md.enviarA().equalsIgnoreCase("F")) {
-//                        ca.getAsistencia().setFalta(TipoFalta.JUSTIFICADA);
-//                    } else {
-//                        ca.getAsistencia().setFalta(TipoFalta.INJUSTIFICADA);
-//                    }
-//                }
-                //      int filaSeleccionada = tblAsis.getSelectedRow();
-//                ca.setAsistencia(md.getAsistencias().get(filaSeleccionada));
-//                md.fireTableRowsUpdated(filaSeleccionada, filaSeleccionada);
-//                ac.getAuto().setId(ac.generatedId());
-//                if (ac.saved()) {
-//                    limpiar();
-//                    JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
-//                }
             } catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
@@ -93,7 +135,6 @@ public class FrmAsistencia extends javax.swing.JFrame {
         Integer ciclo = cbxCiclos.getSelectedIndex() + 1;
         String nciclo = ciclo.toString();
         ListaEnlazada<Matricula> lista1 = c.busquedaBinaria(c.list_All(), nciclo, "ciclo", "quicksort", 0);
-        ListaEnlazada<Matricula> result = new ListaEnlazada<>();
         for (Cursa cursa : listCur) {
             for (Matricula matricula : lista1) {
                 if (cursa.getIdMatricula().equals(matricula.getId())) {
@@ -103,9 +144,6 @@ public class FrmAsistencia extends javax.swing.JFrame {
                 }
             }
         }
-
-        System.out.println(mat.print());
-        System.out.println(result.print());
         md.setMatriculas(result);
         tblAsis.setModel(md);
         tblAsis.updateUI();
@@ -126,6 +164,10 @@ public class FrmAsistencia extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,6 +202,34 @@ public class FrmAsistencia extends javax.swing.JFrame {
 
         jLabel2.setText("Ciclo");
 
+        jButton2.setText("Guardar Tematica");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Asis");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
@@ -171,23 +241,32 @@ public class FrmAsistencia extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                        .addComponent(txtParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtParalelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addComponent(cbxCiclos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
                         .addGap(46, 46, 46))))
-            .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(roundPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,17 +280,22 @@ public class FrmAsistencia extends javax.swing.JFrame {
                     .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(174, 174, 174))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(122, 122, 122))))
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(jButton2)
+                .addGap(65, 65, 65))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,6 +330,26 @@ public class FrmAsistencia extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cbxCiclosItemStateChanged
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        guardarTematica();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        guardar();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            actualizarTabla();
+        } catch (VacioExceptions ex) {
+            Logger.getLogger(FrmAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        modificar();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -260,16 +364,24 @@ public class FrmAsistencia extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAsistencia.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAsistencia.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAsistencia.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAsistencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAsistencia.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -284,6 +396,10 @@ public class FrmAsistencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxCiclos;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollBar jScrollBar1;

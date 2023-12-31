@@ -13,7 +13,7 @@ import tda_listas.ListaEnlazada;
  * @author Usuario
  */
 public class ControllerAsistencia extends DataAccessObject<Asistencia> {
-    
+
     private Asistencia asistencia = new Asistencia();
     private ListaEnlazada<Asistencia> lista = new ListaEnlazada<>();
     private Integer index = -1;
@@ -30,7 +30,7 @@ public class ControllerAsistencia extends DataAccessObject<Asistencia> {
     }
 
     public void setAsistencia(Asistencia asitencia) {
-        this.asistencia= asitencia;
+        this.asistencia = asitencia;
     }
 
     public Boolean saved() {
@@ -68,6 +68,10 @@ public class ControllerAsistencia extends DataAccessObject<Asistencia> {
      */
     public void setIndex(Integer index) {
         this.index = index;
+    }
+
+    public int generatedId() {
+        return generarID();
     }
 
 }

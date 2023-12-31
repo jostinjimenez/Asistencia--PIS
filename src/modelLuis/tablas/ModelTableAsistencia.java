@@ -1,10 +1,11 @@
 package modelLuis.tablas;
 
+
 import javax.swing.table.AbstractTableModel;
 import model.Asistencia;
 import model.Estudiante;
 import model.Matricula;
-import model.catalogo.TipoFalta;
+
 import modelLuis.controller.ControllerAsistencia;
 import modelLuis.controller.ControllerEstudiante;
 import tda_listas.ListaEnlazada;
@@ -27,27 +28,8 @@ public class ModelTableAsistencia extends AbstractTableModel {
     public int getColumnCount() {
         return 3;
     }
+    
 
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 2; // Only allow editing for the "Falta" column (index 2)
-    }
-
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        switch (columnIndex) {
-            case 2:
-                // Update the norma variable with the new value from the table
-                norma = aValue.toString();
-                break;
-            default:
-            // Handle other cases if needed
-        }
-        fireTableCellUpdated(rowIndex, columnIndex);
-    }
-
-    public String getNorma() {
-        return norma;
-    }
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -58,7 +40,6 @@ public class ModelTableAsistencia extends AbstractTableModel {
             throw new RuntimeException(e);
         }
         if (estudiante != null) {
-            // La verificación debería estar dentro de este bloque
             switch (col) {
                 case 0:
                     return estudiante.getApellido();

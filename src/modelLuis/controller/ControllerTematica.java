@@ -5,7 +5,6 @@
 package modelLuis.controller;
 
 import DAO.DataAccessObject;
-import model.Asistencia;
 import model.Tematica;
 import tda_listas.ListaEnlazada;
 
@@ -70,5 +69,10 @@ public class ControllerTematica extends DataAccessObject<Tematica> {
     public void setIndex(Integer index) {
         this.index = index;
     }
+    
+     public int generatedId() {
+        return generarID();
+    }
+
 
 }
