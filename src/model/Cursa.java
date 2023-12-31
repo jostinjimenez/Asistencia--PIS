@@ -74,7 +74,32 @@ public class Cursa {
 
     @Override
     public String toString() {
-        return paralelo;
+        return id + paralelo;
+    }
+
+    public Boolean comparar(Cursa cursa, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("paralelo")) {
+                    return getParalelo().compareTo(cursa.getParalelo()) < 0;
+                }
+            case 0:
+                if (field.equalsIgnoreCase("paralelo")) {
+                    return getParalelo().compareTo(cursa.getParalelo()) > 0;
+                }
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Cursa cursa, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "paralelo":
+                return text.compareTo(cursa.getParalelo().toLowerCase());
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
     }
 
 }

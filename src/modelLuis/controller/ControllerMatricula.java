@@ -168,13 +168,12 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
     }
 
     public static void main(String[] args) throws VacioExceptions {
-//        ListaEnlazada<Integer> ids = new ListaEnlazada();
-//        ids.add(1);
-//        ids.add(2);
-//        Matricula matricula = new Matricula(1, "2023-11-01", Integer.SIZE, "Computacion", EstadoMatricula.MATRICULADO, 1, 1, ids);
+        ListaEnlazada<Integer> ids = new ListaEnlazada();
+        ids.add(3);
+        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
         ControllerMatricula c = new ControllerMatricula();
-        //        c.save(matricula);
-        System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
+        c.save(matricula);
+        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
 
     }
 

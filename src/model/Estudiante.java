@@ -3,6 +3,7 @@ package model;
 import tda_listas.ListaEnlazada;
 
 public class Estudiante extends Persona {
+
     private String direccion;
     private String etnia;
     private Boolean titulo_bachiller;
@@ -12,7 +13,7 @@ public class Estudiante extends Persona {
     public Estudiante() {
     }
 
-    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller,ListaEnlazada<Integer> id_matriculas ) {
+    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller, ListaEnlazada<Integer> id_matriculas) {
         super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
         this.direccion = direccion;
         this.etnia = etnia;
@@ -21,8 +22,9 @@ public class Estudiante extends Persona {
     }
 
     public ListaEnlazada<Integer> getId_matriculas() {
-        if (id_matriculas == null)
+        if (id_matriculas == null) {
             id_matriculas = new ListaEnlazada<>();
+        }
         return id_matriculas;
     }
 
@@ -57,5 +59,30 @@ public class Estudiante extends Persona {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public Boolean comparar(Estudiante estudiante, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() > estudiante.getId();
+                }
+            case 0:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() > estudiante.getId();
+                }
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Estudiante estudiante, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "id":
+               return Integer.compare(Integer.parseInt(text),estudiante.getId());
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
     }
 }

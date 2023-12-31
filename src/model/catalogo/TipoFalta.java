@@ -2,8 +2,8 @@ package model.catalogo;
 
 public enum TipoFalta {
     JUSTIFICADA("Justificada"),
-    INJUSTIFICADA("Injustificada");
-
+    INJUSTIFICADA("Injustificada"),
+    ASISTIO("Asistio");
     private String nombre;
 
     TipoFalta(String nombre) {

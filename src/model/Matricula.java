@@ -95,7 +95,7 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return ciclo + " ";
+        return ciclo + "" + id;
     }
 
     public Boolean comparar(Matricula c, String field, Integer type) {
@@ -103,12 +103,12 @@ public class Matricula {
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("ciclo")) {
-                    return getCiclo() > (c.getCiclo());
+                    return getCiclo() < (c.getCiclo());
                 }
 
             case 0:
                 if (field.equalsIgnoreCase("ciclo")) {
-                    return getCiclo() > (c.getCiclo());
+                    return getCiclo() < (c.getCiclo());
                 }
             default:
                 return false;
