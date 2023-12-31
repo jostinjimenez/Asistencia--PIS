@@ -1,6 +1,5 @@
 package modelLuis.tablas;
 
-
 import javax.swing.table.AbstractTableModel;
 import model.Asistencia;
 import model.Estudiante;
@@ -26,10 +25,8 @@ public class ModelTableAsistencia extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
-    
-
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -47,6 +44,8 @@ public class ModelTableAsistencia extends AbstractTableModel {
                     return estudiante.getNombre();
                 case 2:
                     return a.getAsistencia().getFalta();
+                case 3:
+                    return estudiante.getDni();
                 default:
                     return null;
             }
@@ -63,6 +62,8 @@ public class ModelTableAsistencia extends AbstractTableModel {
                 return "Nombre";
             case 2:
                 return "Falta";
+            case 3:
+                return "DNI";
             default:
                 return null;
         }

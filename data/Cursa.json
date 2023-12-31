@@ -1,1 +1,41 @@
-{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Cursa","id":1,"paralelo":"B","idMatricula":1,"idAsignatura":1,"idPeriodoAcademico":1,"idDocente":1},"next":{"data":{"@class":"model.Cursa","id":2,"paralelo":"B","idMatricula":2,"idAsignatura":1,"idPeriodoAcademico":1,"idDocente":1},"next":{"data":{"@class":"model.Cursa","id":3,"paralelo":"B","idMatricula":3,"idAsignatura":1,"idPeriodoAcademico":1,"idDocente":1}}}},"last":{"@reference":"..\/head\/next\/next"},"size":3}}
+{
+    "tda_listas.ListaEnlazada": {
+        "head": {
+            "data": {
+                "@class": "model.Cursa",
+                "id": 1,
+                "paralelo": "B",
+                "idMatricula": 1,
+                "idAsignatura": 1,
+                "idPeriodoAcademico": 1,
+                "idDocente": 1
+            },
+            "next": {
+                "data": {
+                    "@class": "model.Cursa",
+                    "id": 2,
+                    "paralelo": "B",
+                    "idMatricula": 2,
+                    "idAsignatura": 1,
+                    "idPeriodoAcademico": 1,
+                    "idDocente": 1
+                },
+                "next": {
+                    "data": {
+                        "@class": "model.Cursa",
+                        "id": 3,
+                        "paralelo": "B",
+                        "idMatricula": 3,
+                        "idAsignatura": 1,
+                        "idPeriodoAcademico": 1,
+                        "idDocente": 1
+                    }
+                }
+            }
+        },
+        "last": {
+            "@reference": "..\/head\/next\/next"
+        },
+        "size": 3
+    }
+}

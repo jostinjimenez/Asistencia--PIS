@@ -48,13 +48,13 @@ public class ModelTableAsistencia2 extends AbstractTableModel {
                                 Asistencia asistenciaJ = Asistencias.get(rowIndex);
                                 asistenciaJ.setFalta(TipoFalta.JUSTIFICADA);
                                 fireTableCellUpdated(rowIndex, columnIndex);
-                                
+
                                 break;
                             case "I":
                                 Asistencia asistenciaI = Asistencias.get(rowIndex);
                                 asistenciaI.setFalta(TipoFalta.INJUSTIFICADA);
                                 fireTableCellUpdated(rowIndex, columnIndex);
-                              
+
                                 break;
                             default:
                                 // Manejar otros casos si es necesario
@@ -77,7 +77,7 @@ public class ModelTableAsistencia2 extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -98,6 +98,8 @@ public class ModelTableAsistencia2 extends AbstractTableModel {
                     return estudiante.getNombre();
                 case 2:
                     return asis.getFalta();
+                case 3:
+                    return estudiante.getDni();
                 default:
                     return null;
             }
@@ -114,6 +116,8 @@ public class ModelTableAsistencia2 extends AbstractTableModel {
                 return "Nombre";
             case 2:
                 return "Falta";
+            case 3:
+                return "DNI";
             default:
                 return null;
         }
@@ -157,10 +161,5 @@ public class ModelTableAsistencia2 extends AbstractTableModel {
     public void setEstudiantes(ListaEnlazada<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
     }
-
-    
-    
-    
-    
 
 }

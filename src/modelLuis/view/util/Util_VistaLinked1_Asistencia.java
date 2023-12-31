@@ -1,8 +1,10 @@
 package modelLuis.view.util;
 
 import javax.swing.JComboBox;
+import model.Asignatura;
 import model.Cursa;
 import model.Matricula;
+import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerMatricula;
 import tda_listas.exceptions.VacioExceptions;
@@ -39,6 +41,22 @@ public class Util_VistaLinked1_Asistencia {
 
     public static Matricula getComboMatricula(JComboBox cbx) {
         return (Matricula) cbx.getSelectedItem();
+    }
+
+    public static void cargaMaterias(JComboBox cbxmarca) throws VacioExceptions {
+        ControllerAsignatura ac = new ControllerAsignatura();
+        cbxmarca.removeAllItems();
+        try {
+            for (int i = 0; i < ac.getLista().getSize(); i++) {
+                cbxmarca.addItem(ac.getLista().get(i));
+            }
+        } catch (VacioExceptions e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Asignatura getComboAsignatura(JComboBox cbx) {
+        return (Asignatura) cbx.getSelectedItem();
     }
 
 }

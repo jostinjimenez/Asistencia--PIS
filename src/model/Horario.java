@@ -1,27 +1,24 @@
 package model;
 
-import model.catalogo.TipoFalta;
 
-import java.util.Timer;
+
 
 public class Horario {
     private Integer id;
-    private String fecha;
-    private Timer horaInicio;
-    private Timer horaFin;
-    private TipoFalta tipo;
+    private String dia;
+    private String horaInicio;
+    private String horaFin;
 
     private Integer idAsignatura;
 
     public Horario() {
     }
 
-    public Horario(Integer id, String fecha, Timer horaInicio, Timer horaFin, TipoFalta tipo, Integer idAsignatura) {
+    public Horario(Integer id, String dia, String horaInicio, String horaFin, Integer idAsignatura) {
         this.id = id;
-        this.fecha = fecha;
+        this.dia = dia;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.tipo = tipo;
         this.idAsignatura = idAsignatura;
     }
 
@@ -33,37 +30,24 @@ public class Horario {
         this.id = id;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
 
-    public Timer getHoraInicio() {
+    public String getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Timer horaInicio) {
+    public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Timer getHoraFin() {
+    public String getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Timer horaFin) {
+    public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
     }
 
-    public TipoFalta getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoFalta tipo) {
-        this.tipo = tipo;
-    }
 
     public Integer getIdAsignatura() {
         return idAsignatura;
@@ -72,5 +56,21 @@ public class Horario {
     public void setIdAsignatura(Integer idAsignatura) {
         this.idAsignatura = idAsignatura;
     }
+
+    /**
+     * @return the dia
+     */
+    public String getDia() {
+        return dia;
+    }
+
+    /**
+     * @param dia the dia to set
+     */
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
+    
+    
 }
 

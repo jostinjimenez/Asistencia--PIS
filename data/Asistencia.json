@@ -5,7 +5,7 @@
                 "@class": "model.Asistencia",
                 "id": 3,
                 "falta": "ASISTIO",
-                "idTematica": 1,
+                "idTematica": 5,
                 "idHorario": 1,
                 "idCursa": 2
             },
@@ -14,7 +14,7 @@
                     "@class": "model.Asistencia",
                     "id": 3,
                     "falta": "JUSTIFICADA",
-                    "idTematica": 1,
+                    "idTematica": 5,
                     "idHorario": 1,
                     "idCursa": 2
                 },
@@ -22,8 +22,8 @@
                     "data": {
                         "@class": "model.Asistencia",
                         "id": 3,
-                        "falta": "ASISTIO",
-                        "idTematica": 1,
+                        "falta": "INJUSTIFICADA",
+                        "idTematica": 5,
                         "idHorario": 1,
                         "idCursa": 2
                     }
