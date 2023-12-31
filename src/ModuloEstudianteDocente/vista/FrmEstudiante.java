@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ModuloEstudiante.vista;
+package ModuloEstudianteDocente.vista;
 
-import ModuloEstudiante.controlador.ControladorEstudiante;
+import ModuloEstudianteDocente.controlador.ControladorEstudiante;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import ModuloEstudiante.vista.tablas.ModeloTablaEstudiante;
+import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import java.awt.Frame;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
