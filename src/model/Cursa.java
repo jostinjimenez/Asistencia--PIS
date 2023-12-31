@@ -14,6 +14,15 @@ public class Cursa {
     public Cursa() {
     }
 
+    public Cursa(Integer id, String paralelo, Integer idMatricula, Integer idAsignatura, Integer idPeriodoAcademico, Integer idDocente) {
+        this.id = id;
+        this.paralelo = paralelo;
+        this.idMatricula = idMatricula;
+        this.idAsignatura = idAsignatura;
+        this.idPeriodoAcademico = idPeriodoAcademico;
+        this.idDocente = idDocente;
+    }
+
     public Integer getIdMatricula() {
         return idMatricula;
     }

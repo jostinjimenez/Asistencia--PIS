@@ -16,6 +16,14 @@ public class Asignatura {
     public Asignatura() {
     }
 
+    public Asignatura(Integer id, String nombre, Integer codigo, Integer horasTotales, ListaEnlazada<Integer> id_cursas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.horasTotales = horasTotales;
+        this.id_cursas = id_cursas;
+    }
+
     public ListaEnlazada<Integer> getId_cursas() {
         return id_cursas;
     }
