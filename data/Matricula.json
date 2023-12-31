@@ -4,9 +4,30 @@
             "data": {
                 "@class": "model.Matricula",
                 "id": 1,
-                "fechaMatricula": "30\/12\/2023",
-                "ciclo": 1,
-                "carrera": "Computacion"
+                "fechaMatricula": "2023-11-01",
+                "ciclo": 32,
+                "carrera": "Computacion",
+                "estado": "MATRICULADO",
+                "idEstudiante": 1,
+                "idPeriodoAcademico": 1,
+                "id_cursas": {
+                    "head": {
+                        "data": {
+                            "@class": "int",
+                            "$": "1"
+                        },
+                        "next": {
+                            "data": {
+                                "@class": "int",
+                                "$": "2"
+                            }
+                        }
+                    },
+                    "last": {
+                        "@reference": "..\/head\/next"
+                    },
+                    "size": 2
+                }
             }
         },
         "last": {

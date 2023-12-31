@@ -73,14 +73,15 @@ public class ControllerEstudiante extends DataAccessObject<Estudiante> {
     public int generatedId() {
         return generarID();
     }
-    
+
     public static void main(String[] args) {
-        Estudiante estudiante = new Estudiante(2, "Juan", "Nose", "Juanzzz", "27272", "262662222","265252","Zamora","ahhaha", true);
-      
-        
+        ListaEnlazada<Integer> ids = new ListaEnlazada();
+        ids.add(1);
+        ids.add(2);
+        Estudiante estudiante = new Estudiante(1, "Juan", "Nose", "Juanzzz", "27272", "262662222", "265252", "Zamora", "ahhaha", true, ids);
         ControllerEstudiante c = new ControllerEstudiante();
         c.save(estudiante);
-    
+        
     }
 
 }

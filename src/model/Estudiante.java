@@ -12,11 +12,12 @@ public class Estudiante extends Persona {
     public Estudiante() {
     }
 
-    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller) {
+    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller,ListaEnlazada<Integer> id_matriculas ) {
         super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
         this.direccion = direccion;
         this.etnia = etnia;
         this.titulo_bachiller = titulo_bachiller;
+        this.id_matriculas = id_matriculas;
     }
 
     public ListaEnlazada<Integer> getId_matriculas() {

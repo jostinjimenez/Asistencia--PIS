@@ -3,6 +3,7 @@ package model;
 import tda_listas.ListaEnlazada;
 
 public class Cursa {
+
     private Integer id;
     private String paralelo;
 
@@ -13,10 +14,6 @@ public class Cursa {
 
     public Cursa() {
     }
-
-    
-
-
 
     public Integer getIdMatricula() {
         return idMatricula;
@@ -65,7 +62,7 @@ public class Cursa {
     public void setIdDocente(Integer idDocente) {
         this.idDocente = idDocente;
     }
-    
+
     public Cursa(Integer id, String paralelo, Integer idMatricula, Integer idAsignatura, Integer idPeriodoAcademico, Integer idDocente) {
         this.id = id;
         this.paralelo = paralelo;
@@ -74,5 +71,10 @@ public class Cursa {
         this.idPeriodoAcademico = idPeriodoAcademico;
         this.idDocente = idDocente;
     }
-}
 
+    @Override
+    public String toString() {
+        return paralelo;
+    }
+
+}
