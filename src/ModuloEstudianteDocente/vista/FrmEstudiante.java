@@ -155,6 +155,29 @@ public class FrmEstudiante extends javax.swing.JFrame {
         }
     }
     
+    public void eliminar() {
+    int fila = tblEstudiante.getSelectedRow();
+    if (fila < 0) {
+        JOptionPane.showMessageDialog(null,
+                "Seleccione una fila",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    } else {
+        try {
+            estudianteControlador.delete(fila);
+            limpiar();
+            JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente",
+                    "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al eliminar el estudiante: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
     
     private void setupListeners() {
         
@@ -209,7 +232,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         tblEstudiante = new javax.swing.JTable();
         panelMenu = new javax.swing.JPanel();
         roundPanel2 = new plantilla.swing.RoundPanel();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         roundPanel3 = new plantilla.swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -281,9 +303,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 153));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\LENOVO\\Downloads\\volver.png")); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Agregar estudiante");
@@ -293,22 +312,15 @@ public class FrmEstudiante extends javax.swing.JFrame {
         roundPanel2Layout.setHorizontalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(176, 176, 176)
+                .addGap(270, 270, 270)
                 .addComponent(jLabel1)
                 .addContainerGap(356, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -414,6 +426,11 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundPanel4Layout = new javax.swing.GroupLayout(roundPanel4);
         roundPanel4.setLayout(roundPanel4Layout);
@@ -513,6 +530,11 @@ public class FrmEstudiante extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxTituloBachActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -558,7 +580,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private com.raven.swing.ButtonBadges buttonBadges1;
     private javax.swing.JComboBox<String> cbxTituloBach;
     private com.raven.swing.ImageAvatar imageAvatar1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
