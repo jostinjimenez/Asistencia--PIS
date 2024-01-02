@@ -1,9 +1,7 @@
 package model;
 
-
-
-
 public class Horario {
+
     private Integer id;
     private String dia;
     private String horaInicio;
@@ -30,8 +28,6 @@ public class Horario {
         this.id = id;
     }
 
-
-
     public String getHoraInicio() {
         return horaInicio;
     }
@@ -47,7 +43,6 @@ public class Horario {
     public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
     }
-
 
     public Integer getIdAsignatura() {
         return idAsignatura;
@@ -70,7 +65,10 @@ public class Horario {
     public void setDia(String dia) {
         this.dia = dia;
     }
-    
-    
-}
 
+    @Override
+    public String toString() {
+        return dia + ": " + horaInicio + "-" + horaInicio;
+    }
+
+}

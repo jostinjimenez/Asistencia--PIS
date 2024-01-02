@@ -3,9 +3,11 @@ package modelLuis.view.util;
 import javax.swing.JComboBox;
 import model.Asignatura;
 import model.Cursa;
+import model.Horario;
 import model.Matricula;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
+import modelLuis.controller.ControllerHorario;
 import modelLuis.controller.ControllerMatricula;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -57,6 +59,23 @@ public class Util_VistaLinked1_Asistencia {
 
     public static Asignatura getComboAsignatura(JComboBox cbx) {
         return (Asignatura) cbx.getSelectedItem();
+    }
+    
+    
+     public static void cargaHorario(JComboBox cbxmarca) throws VacioExceptions {
+         ControllerHorario ac = new ControllerHorario();
+        cbxmarca.removeAllItems();
+        try {
+            for (int i = 0; i < ac.getLista().getSize(); i++) {
+                cbxmarca.addItem(ac.getLista().get(i));
+            }
+        } catch (VacioExceptions e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Horario getComboHorario(JComboBox cbx) {
+        return (Horario) cbx.getSelectedItem();
     }
 
 }

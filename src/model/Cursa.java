@@ -1,6 +1,5 @@
 package model;
 
-import tda_listas.ListaEnlazada;
 
 public class Cursa {
 

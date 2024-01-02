@@ -14,11 +14,11 @@ import model.Matricula;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsistencia;
 import modelLuis.controller.ControllerCursa;
-import modelLuis.controller.ControllerHorario;
 import modelLuis.controller.ControllerMatricula;
 import modelLuis.controller.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
 import modelLuis.tablas.ModelTableAsistencia2;
+import modelLuis.view.util.Util_VistaLinked1_Asistencia;
 
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -39,7 +39,6 @@ public class FrmAsistencia extends javax.swing.JFrame {
     ListaEnlazada<Matricula> result = new ListaEnlazada<>();
     ModelTableAsistencia2 ad = new ModelTableAsistencia2();
     Integer idtematica;
-    ControllerHorario a = new ControllerHorario();
 
     public FrmAsistencia() {
         initComponents();
@@ -48,6 +47,12 @@ public class FrmAsistencia extends javax.swing.JFrame {
     }
 
     private void limpiar() {
+        try {
+            Util_VistaLinked1_Asistencia.cargaHorario(cbxHorario);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         txtFecha.setText(ct.getTematica().generarFecha());
         txtFecha.setEnabled(false);
     }
@@ -86,7 +91,7 @@ public class FrmAsistencia extends javax.swing.JFrame {
             try {
                 for (Cursa cursa : mat) {
                     ca.getAsistencia().setIdCursa(cursa.getId());
-                    ca.getAsistencia().setIdHorario(1);
+                    ca.getAsistencia().setIdHorario(Util_VistaLinked1_Asistencia.getComboHorario(cbxHorario).getId());
                     ca.getAsistencia().setIdTematica(idtematica);
                     ca.getAsistencia().setId(ca.generatedId());
                     ca.getAsistencia().setFalta(TipoFalta.NULL);
@@ -97,7 +102,6 @@ public class FrmAsistencia extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-
             } catch (Exception e) {
                 System.out.println(e + "Error");
             }
@@ -172,6 +176,7 @@ public class FrmAsistencia extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        cbxHorario = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -301,15 +306,18 @@ public class FrmAsistencia extends javax.swing.JFrame {
 
         jLabel4.setText("Fecha de la clase:");
 
+        cbxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout roundPanel3Layout = new javax.swing.GroupLayout(roundPanel3);
         roundPanel3.setLayout(roundPanel3Layout);
         roundPanel3Layout.setHorizontalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,7 +344,9 @@ public class FrmAsistencia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -446,6 +456,7 @@ public class FrmAsistencia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxCiclos;
+    private javax.swing.JComboBox<String> cbxHorario;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
