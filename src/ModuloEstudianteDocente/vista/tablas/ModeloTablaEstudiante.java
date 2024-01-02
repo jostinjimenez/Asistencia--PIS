@@ -77,7 +77,7 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
                 return (est != null) ? est.getEtnia() : " ";
             case 7:
                 return (est != null && est.getTitulo_bachiller() != null)
-                    ? (est.getTitulo_bachiller() ? "Sí" : "No")
+                    ? (est.getTitulo_bachiller() ? "Si" : "No")
                     : " ";
             case 8:
                 return (est != null) ? est.getDireccion() : " ";

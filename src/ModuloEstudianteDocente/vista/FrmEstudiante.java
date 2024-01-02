@@ -86,9 +86,9 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 est.setEtnia(txtEtnia.getText());
                 String seleccion = cbxTituloBach.getSelectedItem().toString();
                 //System.out.println("Seleccin: " + seleccion);
-                Boolean tituloBachiller = seleccion.equals("Sí");
+                Boolean tituloBachiller = seleccion.equals("Si");
                 est.setTitulo_bachiller(tituloBachiller);
-                String valorGuardar = tituloBachiller ? "Sí" : "No";
+                String valorGuardar = tituloBachiller ? "Si" : "No";
                 est.setDireccion(txtDireccion.getText());
                 
                 if (fila != -1) {
@@ -140,7 +140,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 txtTelefono.setText(estudianteControlador.getEstudiante().getTelefono());
                 txtEtnia.setText(estudianteControlador.getEstudiante().getEtnia());
                 String seleccion = cbxTituloBach.getSelectedItem().toString();
-            Boolean tituloBachiller = seleccion.equals("Sí");
+            Boolean tituloBachiller = seleccion.equals("Si");
             cbxTituloBach.setSelectedItem(seleccion);
             
              
@@ -205,7 +205,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || c == '/') || txtFechaNac.getText().length() >= 10) {
+                if (!(Character.isDigit(c) || c == '/') || txtFechaNac.getText().length() >= 11) {
                     e.consume(); 
                 }
             }
