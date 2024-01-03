@@ -15,6 +15,12 @@ public class Tematica {
         return id;
     }
 
+    public Tematica(Integer id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
