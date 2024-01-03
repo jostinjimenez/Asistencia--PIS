@@ -62,5 +62,7 @@ public class Curso {
     public void setCodCurso(String codCurso) {
         this.codCurso = codCurso;
     }
+    
+    
 }
 

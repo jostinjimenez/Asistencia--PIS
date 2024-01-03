@@ -1,0 +1,92 @@
+{
+    "tda_listas.ListaEnlazada": {
+        "head": {
+            "data": {
+                "@class": "model.Estudiante",
+                "id": 1,
+                "nombre": "Luis",
+                "apellido": "Medina",
+                "correo_personal": "luis33",
+                "fecha_nacimiento": "2023-2030",
+                "telefono": 9827728282,
+                "dni": 7267277272,
+                "activo": false,
+                "direccion": "Loja",
+                "etnia": "Mestiza",
+                "titulo_bachiller": true,
+                "id_matriculas": {
+                    "head": {
+                        "data": {
+                            "@class": "int",
+                            "$": "1"
+                        }
+                    },
+                    "last": {
+                        "@reference": "..\/head"
+                    },
+                    "size": 1
+                }
+            },
+            "next": {
+                "data": {
+                    "@class": "model.Estudiante",
+                    "id": 2,
+                    "nombre": "Francisco",
+                    "apellido": "Fernando",
+                    "correo_personal": "luis33",
+                    "fecha_nacimiento": "2023-2030",
+                    "telefono": 9827728282,
+                    "dni": 7267277272,
+                    "activo": false,
+                    "direccion": "Loja",
+                    "etnia": "Mestiza",
+                    "titulo_bachiller": true,
+                    "id_matriculas": {
+                        "head": {
+                            "data": {
+                                "@class": "int",
+                                "$": "2"
+                            }
+                        },
+                        "last": {
+                            "@reference": "..\/head"
+                        },
+                        "size": 1
+                    }
+                },
+                "next": {
+                    "data": {
+                        "@class": "model.Estudiante",
+                        "id": 3,
+                        "nombre": "Daniel",
+                        "apellido": "Dorn",
+                        "correo_personal": "luis33",
+                        "fecha_nacimiento": "2023-2030",
+                        "telefono": 9827728282,
+                        "dni": 7267277272,
+                        "activo": false,
+                        "direccion": "Loja",
+                        "etnia": "Mestiza",
+                        "titulo_bachiller": true,
+                        "id_matriculas": {
+                            "head": {
+                                "data": {
+                                    "@class": "int",
+                                    "$": "3"
+                                }
+                            },
+                            "last": {
+                                "@reference": "..\/head"
+                            },
+                            "size": 1
+                        }
+                    }
+                }
+            }
+        },
+        "last": {
+            "@reference": "..\/head\/next\/next"
+        },
+        "size": 3
+    }
+}

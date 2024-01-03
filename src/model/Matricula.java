@@ -4,6 +4,7 @@ import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 
 public class Matricula {
+
     private Integer id;
     private String fechaMatricula;
     private Integer ciclo;
@@ -94,9 +95,38 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return "Matricula{" +
-                "id=" + id +
-                '}';
+        return ciclo + "" + id;
     }
-}
 
+    public Boolean comparar(Matricula c, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("ciclo")) {
+                    return getCiclo() < (c.getCiclo());
+                }
+
+            case 0:
+                if (field.equalsIgnoreCase("ciclo")) {
+                    return getCiclo() < (c.getCiclo());
+                }
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Matricula matricula, String text, String campo) {
+        switch (campo.toLowerCase()) {
+
+            case "ciclo":
+                try {
+                return Integer.compare(Integer.parseInt(text), matricula.getCiclo());
+            } catch (Exception e) {
+            }
+
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
+
+}
