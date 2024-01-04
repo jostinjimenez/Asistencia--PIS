@@ -201,17 +201,17 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
 
     private void buscar() throws VacioExceptions {
         // Obtener el criterio ingresado en el campo de búsqueda
-        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
+        String criterioBusqueda = txtBuscar.getText();
 
         // Obtener el criterio de búsqueda seleccionado en el combobox
-        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
+        String criterio = comboBoxCriterio.getSelectedItem().toString();
 
         // Verificar si se ingresó un criterio válido
         if (!criterio.isEmpty()) {
             // Seleccionar el comparador adecuado según el criterio de búsqueda
             Comparator<Asignatura> comparador = (criterio.equals("nombre"))
-                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
-                    : Comparator.comparing(Asignatura::getCodigo);  // Comparar directamente sin convertir a minúsculas
+                    ? Comparator.comparing(Asignatura::getNombre)
+                    : Comparator.comparing(Asignatura::getCodigo);
 
             // Realizar la búsqueda en el modelo de la tabla
             int indice = mta.buscar(criterioBusqueda, comparador, criterio);

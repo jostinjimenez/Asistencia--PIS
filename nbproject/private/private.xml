@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/DAO/DataAccessObject.java</file>
             <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/view/Frm_AgregarAsignatura.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/view/tablas/ModeloTablaCursos.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/view/tablas/ModeloTablaAsignaturas.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/DAO/Connection.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/tda_listas/ListaEnlazada.java</file>
             <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/model/Asignatura.java</file>
             <file>file:/C:/Users/Usuario/Desktop/PIS/Asistencia--PIS/src/controller/AsignaturaController.java</file>
         </group>

@@ -1,5 +1,6 @@
 package view.tablas;
 
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import tda_listas.ListaEnlazada;
@@ -60,12 +61,42 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
         }
     }
 
+    public void setRowCount(int rowCount) {
+        if (rowCount < 0) {
+            throw new IllegalArgumentException("El número de filas no puede ser negativo");
+        }
+
+        // Crear una nueva lista con el tamaño deseado
+        ListaEnlazada<Asignatura> nuevaLista = new ListaEnlazada<>();
+
+        // Copiar los elementos de la lista original a la nueva lista
+        int size = Math.min(rowCount, asignaturas.getSize());
+        for (int i = 0; i < size; i++) {
+            try {
+                nuevaLista.add(asignaturas.get(i));
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // Actualizar la referencia a la nueva lista
+        asignaturas = nuevaLista;
+
+        fireTableDataChanged();
+    }
+
+    public void addRow(Asignatura asignatura) {
+        asignaturas.add(asignatura);
+        fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
+    }
+
     public ListaEnlazada<Asignatura> getAsignaturas() {
         return asignaturas;
     }
 
     public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
+        fireTableDataChanged();
     }
 
     public void sortAscendente(Comparator<Asignatura> comparator) throws VacioExceptions {
@@ -101,4 +132,5 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
 
         fireTableDataChanged(); // Notifica a la tabla que los datos han cambiado
     }
+
 }
