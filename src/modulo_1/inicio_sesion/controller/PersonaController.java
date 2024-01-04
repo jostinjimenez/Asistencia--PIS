@@ -104,6 +104,7 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
+        long startTime = System.nanoTime();
         Persona[] personas = lista.toArray();
         Field faux = getField(Persona.class, field);
         if (faux != null) {
@@ -111,6 +112,9 @@ public class PersonaController extends DataAccessObject<Persona> {
         } else {
             throw new Exception("El atributo no existe");
         }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Tiempo de ejecución de ordenarQS: " + duration + " nanosegundos");
         return lista.toList(personas);
     }
 
