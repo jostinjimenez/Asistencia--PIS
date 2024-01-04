@@ -15,10 +15,9 @@ public class Tematica {
         return id;
     }
 
-    public Tematica(Integer id, String nombre, String descripcion) {
+    public Tematica(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
     }
 
     public void setId(Integer id) {
@@ -33,16 +32,10 @@ public class Tematica {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the fecha
-     */
     public String getFecha() {
         return fecha;
     }
 
-    /**
-     * @param fecha the fecha to set
-     */
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
@@ -53,4 +46,12 @@ public class Tematica {
         return fecha;
     }
 
+    @Override
+    public String toString() {
+        return "Tematica{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", fecha='" + fecha + '\'' +
+                '}';
+    }
 }
