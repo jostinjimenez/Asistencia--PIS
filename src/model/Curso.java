@@ -13,6 +13,14 @@ public class Curso {
     public Curso() {
     }
 
+    public Curso(Integer id, Integer nroEstudiante, String codCurso, ListaEnlazada<Integer> id_asignaturas, Integer idMalla) {
+        this.id = id;
+        this.nroEstudiante = nroEstudiante;
+        this.codCurso = codCurso;
+        this.id_asignaturas = id_asignaturas;
+        this.idMalla = idMalla;
+    }
+
     public ListaEnlazada<Integer> getId_asignaturas() {
         if (id_asignaturas == null)
             id_asignaturas = new ListaEnlazada<>();
@@ -54,5 +62,7 @@ public class Curso {
     public void setCodCurso(String codCurso) {
         this.codCurso = codCurso;
     }
+    
+    
 }
 

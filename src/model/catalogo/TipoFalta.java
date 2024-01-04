@@ -2,11 +2,19 @@ package model.catalogo;
 
 public enum TipoFalta {
     JUSTIFICADA("Justificada"),
-    INJUSTIFICADA("Injustificada");
+    INJUSTIFICADA("Injustificada"),
+    ASISTIO("Asistio"),
+    NULL ("Null");
 
+    private TipoFalta() {
+    }
     private String nombre;
 
-    TipoFalta(String nombre) {
+     TipoFalta(String 
+    nombre
+
+    
+        ) {
         this.nombre = nombre;
     }
 

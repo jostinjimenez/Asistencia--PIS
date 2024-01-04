@@ -178,6 +178,6 @@ public class Menu_Admin extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelMenu;
     private plantilla.swing.RoundPanel roundPanel1;
-    private plantilla.swing.RoundPanel roundPanel2;
+    private  plantilla.swing.RoundPanel roundPanel2;
     // End of variables declaration//GEN-END:variables
 }

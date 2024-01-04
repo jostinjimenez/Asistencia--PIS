@@ -1,16 +1,27 @@
 package model;
 
+import model.catalogo.TipoFalta;
+
 public class Asistencia {
     private Integer id;
     private String observacion;
-
+    private TipoFalta falta;
     private Integer idTematica;
     private Integer idHorario;
+    
 
 
     private Integer idCursa;
 
     public Asistencia() {
+    }
+
+    public Asistencia(Integer id, String observacion, Integer idTematica, Integer idHorario, Integer idCursa) {
+        this.id = id;
+        this.observacion = observacion;
+        this.idTematica = idTematica;
+        this.idHorario = idHorario;
+        this.idCursa = idCursa;
     }
 
     public Integer getId() {
@@ -52,5 +63,20 @@ public class Asistencia {
     public void setIdCursa(Integer idCursa) {
         this.idCursa = idCursa;
     }
+
+    /**
+     * @return the falta
+     */
+    public TipoFalta getFalta() {
+        return falta;
+    }
+
+    /**
+     * @param falta the falta to set
+     */
+    public void setFalta(TipoFalta falta) {
+        this.falta = falta;
+    }
+    
 }
 
