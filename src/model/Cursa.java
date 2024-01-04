@@ -71,15 +71,6 @@ public class Cursa {
         this.idDocente = idDocente;
     }
 
-    public Cursa(Integer id, String paralelo, Integer idMatricula, Integer idAsignatura, Integer idPeriodoAcademico, Integer idDocente) {
-        this.id = id;
-        this.paralelo = paralelo;
-        this.idMatricula = idMatricula;
-        this.idAsignatura = idAsignatura;
-        this.idPeriodoAcademico = idPeriodoAcademico;
-        this.idDocente = idDocente;
-    }
-
     @Override
     public String toString() {
         return id + paralelo;
