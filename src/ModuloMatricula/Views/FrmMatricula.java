@@ -58,6 +58,11 @@ public class FrmMatricula extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField6 = new javax.swing.JTextField();
         cbxEstudiante = new javax.swing.JComboBox<>();
+        jTextField7 = new javax.swing.JTextField();
+        cbxPeriodoAcademico = new javax.swing.JComboBox<>();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        jTextField10 = new javax.swing.JTextField();
         menu_Admin2 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,7 +135,7 @@ public class FrmMatricula extends javax.swing.JFrame {
         Aceptar.setBackground(new java.awt.Color(51, 51, 51));
         Aceptar.setForeground(new java.awt.Color(255, 255, 255));
         Aceptar.setText("Aceptar");
-        roundPanel1.add(Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 400, -1, -1));
+        roundPanel1.add(Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, -1, -1));
 
         Cancelar.setBackground(new java.awt.Color(51, 51, 51));
         Cancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -140,7 +145,7 @@ public class FrmMatricula extends javax.swing.JFrame {
                 CancelarActionPerformed(evt);
             }
         });
-        roundPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, -1, -1));
+        roundPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 400, -1, -1));
 
         jComboBox2.setBackground(new java.awt.Color(51, 51, 51));
         jComboBox2.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,6 +167,31 @@ public class FrmMatricula extends javax.swing.JFrame {
             }
         });
         roundPanel1.add(cbxEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, -1, -1));
+
+        jTextField7.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField7.setText("ESTUDIANTE");
+        roundPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, -1, -1));
+
+        cbxPeriodoAcademico.setBackground(new java.awt.Color(51, 51, 51));
+        cbxPeriodoAcademico.setForeground(new java.awt.Color(255, 255, 255));
+        cbxPeriodoAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel1.add(cbxPeriodoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, -1, -1));
+
+        jTextField8.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField8.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField8.setText("jTextField8");
+        roundPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, -1, -1));
+
+        jTextField9.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField9.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField9.setText("jTextField9");
+        roundPanel1.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, -1, -1));
+
+        jTextField10.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField10.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField10.setText("PARALELO");
+        roundPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, -1, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
@@ -258,14 +288,19 @@ public class FrmMatricula extends javax.swing.JFrame {
     private javax.swing.JButton Cancelar;
     private javax.swing.JPanel bg_panel;
     private javax.swing.JComboBox<String> cbxEstudiante;
+    private javax.swing.JComboBox<String> cbxPeriodoAcademico;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private plantilla.components.Menu_Admin menu_Admin2;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTextField txtFecha;
