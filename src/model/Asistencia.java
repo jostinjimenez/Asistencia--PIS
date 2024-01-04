@@ -16,6 +16,14 @@ public class Asistencia {
     public Asistencia() {
     }
 
+    public Asistencia(Integer id, String observacion, Integer idTematica, Integer idHorario, Integer idCursa) {
+        this.id = id;
+        this.observacion = observacion;
+        this.idTematica = idTematica;
+        this.idHorario = idHorario;
+        this.idCursa = idCursa;
+    }
+
     public Integer getId() {
         return id;
     }

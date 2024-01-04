@@ -14,6 +14,13 @@ public class Rol {
     public Rol() {
     }
 
+    public Rol(Integer id, String nombre, String descripcion, ListaEnlazada<Integer> id_personas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.id_personas = id_personas;
+    }
+
     public Rol(Integer id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;

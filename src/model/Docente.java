@@ -15,6 +15,12 @@ public class Docente extends Persona {
         this.grado_academico = grado_academico;
     }
 
+    public Docente(Integer anios_experiencia, String codigo_empleado, String grado_academico) {
+        this.anios_experiencia = anios_experiencia;
+        this.codigo_empleado = codigo_empleado;
+        this.grado_academico = grado_academico;
+    }
+
     public Integer getAnios_experiencia() {
         return anios_experiencia;
     }
