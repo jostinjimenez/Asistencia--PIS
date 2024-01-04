@@ -5,6 +5,7 @@
 package ModuloMatricula.Views;
 
 import ModuloMatricula.Controller.ControllerMatricula;
+import ModuloMatricula.Views.UtilVista.Util_VistaLinked_Matricula;
 
 
 
@@ -20,12 +21,19 @@ public class FrmMatricula extends javax.swing.JFrame {
     ControllerMatricula ct = new ControllerMatricula();
     public FrmMatricula() {
         initComponents();
+        cargar();
     }
+   
     
     public void cargar(){
     txtFecha.setText(ct.getMatricula().generarFecha());
-  
+     try {
+            Util_VistaLinked_Matricula.cargaEstudiantes(cbxEstudiante);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,6 +53,11 @@ public class FrmMatricula extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField5 = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
+        Aceptar = new javax.swing.JButton();
+        Cancelar = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jTextField6 = new javax.swing.JTextField();
+        cbxEstudiante = new javax.swing.JComboBox<>();
         menu_Admin2 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,44 +68,100 @@ public class FrmMatricula extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("PROCESO DE MATRICULACIÓN");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+        roundPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
 
+        jTextField2.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setText("FECHA");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+        roundPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, -1));
 
+        jTextField3.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setText("CICLO");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+        roundPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, -1));
 
+        jTextField4.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
         jTextField4.setText("CARRERA");
-        roundPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, -1, -1));
 
+        jComboBox1.setBackground(new java.awt.Color(51, 51, 51));
+        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
-        roundPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 50, -1));
-        roundPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 130, -1));
+        roundPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 50, -1));
 
+        jTextField5.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
+        roundPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 130, -1));
+
+        txtFecha.setBackground(new java.awt.Color(51, 51, 51));
+        txtFecha.setForeground(new java.awt.Color(255, 255, 255));
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFechaActionPerformed(evt);
             }
         });
-        roundPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 140, -1));
+        roundPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 140, -1));
+
+        Aceptar.setBackground(new java.awt.Color(51, 51, 51));
+        Aceptar.setForeground(new java.awt.Color(255, 255, 255));
+        Aceptar.setText("Aceptar");
+        roundPanel1.add(Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 400, -1, -1));
+
+        Cancelar.setBackground(new java.awt.Color(51, 51, 51));
+        Cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        Cancelar.setText("Cancelar");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, -1, -1));
+
+        jComboBox2.setBackground(new java.awt.Color(51, 51, 51));
+        jComboBox2.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matriculado", "Retirado", "Aprobado", "Reprobado" }));
+        jComboBox2.setToolTipText("");
+        roundPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, -1, -1));
+
+        jTextField6.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField6.setText("ESTADO");
+        roundPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, -1, -1));
+
+        cbxEstudiante.setBackground(new java.awt.Color(51, 51, 51));
+        cbxEstudiante.setForeground(new java.awt.Color(255, 255, 255));
+        cbxEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxEstudianteActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(cbxEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, -1, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
@@ -137,6 +206,18 @@ public class FrmMatricula extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
 
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarActionPerformed
+
+    private void cbxEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEstudianteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxEstudianteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -173,13 +254,18 @@ public class FrmMatricula extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Aceptar;
+    private javax.swing.JButton Cancelar;
     private javax.swing.JPanel bg_panel;
+    private javax.swing.JComboBox<String> cbxEstudiante;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private plantilla.components.Menu_Admin menu_Admin2;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTextField txtFecha;
