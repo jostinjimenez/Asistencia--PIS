@@ -167,6 +167,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cbxHorario = new javax.swing.JComboBox<>();
         buttonMenu5 = new com.raven.swing.ButtonMenu();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAsis = new javax.swing.JTable();
         buttonMenu1 = new com.raven.swing.ButtonMenu();
@@ -239,14 +240,14 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
-        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 440, -1));
+        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, -1));
 
         jLabel3.setText("Tema de la clase:");
 
@@ -261,26 +262,30 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Horario:");
+
         javax.swing.GroupLayout roundPanel3Layout = new javax.swing.GroupLayout(roundPanel3);
         roundPanel3.setLayout(roundPanel3Layout);
         roundPanel3Layout.setHorizontalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel3Layout.createSequentialGroup()
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(33, 33, 33))
-                        .addGroup(roundPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addContainerGap()))
-                    .addComponent(buttonMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel3Layout.createSequentialGroup()
+                        .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33))))
         );
         roundPanel3Layout.setVerticalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,14 +301,17 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(roundPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(buttonMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        roundPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 520, 140));
+        roundPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 460, 140));
 
         tblAsis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -327,7 +335,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 buttonMenu1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(buttonMenu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 160, -1));
+        roundPanel1.add(buttonMenu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 160, -1));
 
         buttonMenu3.setText("        Actualizar Tabla");
         buttonMenu3.addActionListener(new java.awt.event.ActionListener() {
@@ -335,7 +343,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 buttonMenu3ActionPerformed(evt);
             }
         });
-        roundPanel1.add(buttonMenu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 160, -1));
+        roundPanel1.add(buttonMenu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 160, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
         bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
@@ -409,6 +417,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private plantilla.components.Menu_Docente menu_Docente1;
     private plantilla.swing.RoundPanel roundPanel1;
