@@ -10,21 +10,30 @@ public class PeriodoAcademico {
     private String fechaFin;
     private Boolean estado;
 
-    private ListaEnlazada<Matricula> matriculas;
+    private ListaEnlazada<Integer> id_matriculas;
 
 
     // Constructor
     public PeriodoAcademico() {
     }
 
-    public ListaEnlazada<Matricula> getMatriculas() {
-        if (matriculas == null)
-            matriculas = new ListaEnlazada<>();
-        return matriculas;
+    public PeriodoAcademico(Integer id, Integer anio, String fechaInicio, String fechaFin, Boolean estado, ListaEnlazada<Integer> id_matriculas) {
+        this.id = id;
+        this.anio = anio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
+        this.id_matriculas = id_matriculas;
     }
 
-    public void setMatriculas(ListaEnlazada<Matricula> matriculas) {
-        this.matriculas = matriculas;
+    public ListaEnlazada<Integer> getId_matriculas() {
+        if (id_matriculas == null)
+            id_matriculas = new ListaEnlazada<>();
+        return id_matriculas;
+    }
+
+    public void setId_matriculas(ListaEnlazada<Integer> id_matriculas) {
+        this.id_matriculas = id_matriculas;
     }
 
     public Integer getId() {

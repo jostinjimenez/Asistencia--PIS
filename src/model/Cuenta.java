@@ -13,6 +13,14 @@ public class Cuenta {
     public Cuenta() {
     }
 
+    public Cuenta(Integer id, String correo, String clave, Boolean estado, Integer idPersona) {
+        this.id = id;
+        this.correo = correo;
+        this.clave = clave;
+        this.estado = estado;
+        this.idPersona = idPersona;
+    }
+
     //Getters y Setters
     public Integer getId() {
         return id;

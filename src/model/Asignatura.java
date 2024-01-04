@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Objects;
 import tda_listas.ListaEnlazada;
 
 public class Asignatura {
@@ -8,25 +7,29 @@ public class Asignatura {
     // Atributos
     private Integer id;
     private String nombre;
-    private String codigo;
     private Integer horasTotales;
+    private Integer codigo;
 
-    private ListaEnlazada<Cursa> cursas;
+    private ListaEnlazada<Integer> id_cursas;
+
+    public Asignatura(Integer id, String nombre, Integer codigo, Integer horasTotales, ListaEnlazada<Integer> id_cursas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.horasTotales = horasTotales;
+        this.id_cursas = id_cursas;
+    }
 
     // Constructor
     public Asignatura() {
     }
-    
-    public Asignatura(String nombre) {
-        this.nombre = nombre;
+
+    public ListaEnlazada<Integer> getId_cursas() {
+        return id_cursas;
     }
 
-    public ListaEnlazada<Cursa> getCursas() {
-        return cursas;
-    }
-
-    public void setCursas(ListaEnlazada<Cursa> cursas) {
-        this.cursas = cursas;
+    public void setId_cursas(ListaEnlazada<Integer> id_cursas) {
+        this.id_cursas = id_cursas;
     }
 
     public Integer getId() {
@@ -45,11 +48,11 @@ public class Asignatura {
         this.nombre = nombre;
     }
 
-    public String getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
@@ -66,20 +69,28 @@ public class Asignatura {
         return nombre;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+    public Boolean comparar(Asignatura as, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() > as.getId();
+                }
+            case 0:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() > as.getId();
+                }
+            default:
+                return false;
         }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Asignatura that = (Asignatura) obj;
-        return Objects.equals(id, that.id);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public int comparar(Asignatura estudiante, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "id":
+                return Integer.compare(Integer.parseInt(text), estudiante.getId());
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
     }
 }

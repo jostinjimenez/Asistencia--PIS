@@ -1,1 +1,50 @@
-{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Asignatura","id":1,"nombre":"Analisis","codigo":"01","horasTotales":30},"next":{"data":{"@class":"model.Asignatura","id":3,"nombre":"Quimica","codigo":"03","horasTotales":20},"next":{"data":{"@class":"model.Asignatura","id":5,"nombre":"Ciencias","codigo":"05","horasTotales":30},"next":{"data":{"@class":"model.Asignatura","id":8,"nombre":"Programacion","codigo":"09","horasTotales":50},"next":{"data":{"@class":"model.Asignatura","id":10,"nombre":"Electricidad","codigo":11,"horasTotales":35},"next":{"data":{"@class":"model.Asignatura","id":11,"nombre":"Arquitectura","codigo":12,"horasTotales":45},"next":{"data":{"@class":"model.Asignatura","id":12,"nombre":"Matematicas","codigo":13,"horasTotales":40}}}}}}}},"last":{"@reference":"..\/head\/next\/next\/next\/next\/next\/next"},"size":7}}
+{
+    "tda_listas.ListaEnlazada": {
+        "head": {
+            "data": {
+                "@class": "model.Asignatura",
+                "id": 1,
+                "nombre": "Mate Discretas",
+                "codigo": 62262,
+                "horasTotales": 223,
+                "id_cursas": {
+                    "head": {
+                        "data": {
+                            "@class": "int",
+                            "$": "1"
+                        }
+                    },
+                    "last": {
+                        "@reference": "..\/head"
+                    },
+                    "size": 1
+                }
+            },
+            "next": {
+                "data": {
+                    "@class": "model.Asignatura",
+                    "id": 2,
+                    "nombre": "Base Datos",
+                    "codigo": 6226212,
+                    "horasTotales": 22312,
+                    "id_cursas": {
+                        "head": {
+                            "data": {
+                                "@class": "int",
+                                "$": "2"
+                            }
+                        },
+                        "last": {
+                            "@reference": "..\/head"
+                        },
+                        "size": 1
+                    }
+                }
+            }
+        },
+        "last": {
+            "@reference": "..\/head\/next"
+        },
+        "size": 2
+    }
+}

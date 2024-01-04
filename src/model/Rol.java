@@ -8,10 +8,17 @@ public class Rol {
     private String nombre;
     private String descripcion;
 
-    private ListaEnlazada<Persona> personas;
+    private ListaEnlazada<Integer> id_personas;
 
     //Constructor
     public Rol() {
+    }
+
+    public Rol(Integer id, String nombre, String descripcion, ListaEnlazada<Integer> id_personas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.id_personas = id_personas;
     }
 
     public Rol(Integer id, String nombre, String descripcion) {
@@ -21,14 +28,14 @@ public class Rol {
     }
 
     // Getters y Setters
-    public ListaEnlazada<Persona> getPersonas() {
-        if (personas == null)
-            personas = new ListaEnlazada<>();
-        return personas;
+    public ListaEnlazada<Integer> getId_personas() {
+        if (id_personas == null)
+            id_personas = new ListaEnlazada<>();
+        return id_personas;
     }
 
-    public void setPersonas(ListaEnlazada<Persona> personas) {
-        this.personas = personas;
+    public void setId_personas(ListaEnlazada<Integer> id_personas) {
+        this.id_personas = id_personas;
     }
 
     public Integer getId() {

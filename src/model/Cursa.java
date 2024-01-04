@@ -1,8 +1,8 @@
 package model;
 
-import tda_listas.ListaEnlazada;
 
 public class Cursa {
+
     private Integer id;
     private String paralelo;
 
@@ -12,6 +12,15 @@ public class Cursa {
     private Integer idDocente;
 
     public Cursa() {
+    }
+
+    public Cursa(Integer id, String paralelo, Integer idMatricula, Integer idAsignatura, Integer idPeriodoAcademico, Integer idDocente) {
+        this.id = id;
+        this.paralelo = paralelo;
+        this.idMatricula = idMatricula;
+        this.idAsignatura = idAsignatura;
+        this.idPeriodoAcademico = idPeriodoAcademico;
+        this.idDocente = idDocente;
     }
 
     public Integer getIdMatricula() {
@@ -61,5 +70,44 @@ public class Cursa {
     public void setIdDocente(Integer idDocente) {
         this.idDocente = idDocente;
     }
-}
 
+    public Cursa(Integer id, String paralelo, Integer idMatricula, Integer idAsignatura, Integer idPeriodoAcademico, Integer idDocente) {
+        this.id = id;
+        this.paralelo = paralelo;
+        this.idMatricula = idMatricula;
+        this.idAsignatura = idAsignatura;
+        this.idPeriodoAcademico = idPeriodoAcademico;
+        this.idDocente = idDocente;
+    }
+
+    @Override
+    public String toString() {
+        return id + paralelo;
+    }
+
+    public Boolean comparar(Cursa cursa, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("paralelo")) {
+                    return getParalelo().compareTo(cursa.getParalelo()) < 0;
+                }
+            case 0:
+                if (field.equalsIgnoreCase("paralelo")) {
+                    return getParalelo().compareTo(cursa.getParalelo()) > 0;
+                }
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Cursa cursa, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "paralelo":
+                return text.compareTo(cursa.getParalelo().toLowerCase());
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
+
+}

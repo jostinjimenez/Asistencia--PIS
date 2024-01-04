@@ -4,6 +4,7 @@ import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 
 public class Matricula {
+
     private Integer id;
     private String fechaMatricula;
     private Integer ciclo;
@@ -12,16 +13,20 @@ public class Matricula {
     private EstadoMatricula estado;
     private Integer idEstudiante;
     private Integer idPeriodoAcademico;
-    private ListaEnlazada<Cursa> cursas;
+    private ListaEnlazada<Integer> id_cursas;
 
     public Matricula() {
     }
 
-    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera) {
+    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera, EstadoMatricula estado, Integer idEstudiante, Integer idPeriodoAcademico, ListaEnlazada<Integer> id_cursas) {
         this.id = id;
         this.fechaMatricula = fechaMatricula;
         this.ciclo = ciclo;
         this.carrera = carrera;
+        this.estado = estado;
+        this.idEstudiante = idEstudiante;
+        this.idPeriodoAcademico = idPeriodoAcademico;
+        this.id_cursas = id_cursas;
     }
 
     public Integer getIdEstudiante() {
@@ -40,12 +45,12 @@ public class Matricula {
         this.idPeriodoAcademico = idPeriodoAcademico;
     }
 
-    public ListaEnlazada<Cursa> getCursas() {
-        return cursas;
+    public ListaEnlazada<Integer> getId_cursas() {
+        return id_cursas;
     }
 
-    public void setCursas(ListaEnlazada<Cursa> cursas) {
-        this.cursas = cursas;
+    public void setId_cursas(ListaEnlazada<Integer> id_cursas) {
+        this.id_cursas = id_cursas;
     }
 
     public EstadoMatricula getEstado() {
@@ -90,9 +95,38 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return "Matricula{" +
-                "id=" + id +
-                '}';
+        return ciclo + "" + id;
     }
-}
 
+    public Boolean comparar(Matricula c, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("ciclo")) {
+                    return getCiclo() < (c.getCiclo());
+                }
+
+            case 0:
+                if (field.equalsIgnoreCase("ciclo")) {
+                    return getCiclo() < (c.getCiclo());
+                }
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Matricula matricula, String text, String campo) {
+        switch (campo.toLowerCase()) {
+
+            case "ciclo":
+                try {
+                return Integer.compare(Integer.parseInt(text), matricula.getCiclo());
+            } catch (Exception e) {
+            }
+
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
+
+}
