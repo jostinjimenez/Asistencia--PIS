@@ -1,11 +1,12 @@
 package tda_listas;
 
-
 import tda_listas.exceptions.VacioExceptions;
 
 import java.util.Iterator;
+import java.util.Comparator;
 
 import static java.lang.reflect.Array.newInstance;
+import model.Asignatura;
 
 public class ListaEnlazada<E> implements Iterable<E> {
 
@@ -27,7 +28,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         return head;
     }
 
-    // Metodos
     public Boolean isEmpty() {
         return head == null || size == 0;
     }
@@ -53,7 +53,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
             last = aux;
             size++;
         }
-
     }
 
     public void add(E data) {
@@ -82,7 +81,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         }
     }
 
-    // Metodo para obtener el ultimo elemento de la lista
     public E getLast() throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Error, Lista vacia");
@@ -91,7 +89,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         }
     }
 
-    // Metodo para obtener un elemento en una posicion especifica
     public E get(Integer index) throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Error, Lista vacia");
@@ -107,7 +104,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         }
     }
 
-    // Metodo para obtener un nodo en una posicion especifica
     private Nodo<E> getNode(Integer post) throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Error, Lista vacia");
@@ -128,7 +124,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         }
     }
 
-    // Metodo para imprimir la lista
     public String print() {
         StringBuilder sb = new StringBuilder();
         if (isEmpty()) {
@@ -143,7 +138,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         return sb.toString();
     }
 
-    // Metodo para actualizar un elemento en una posicion especifica
     public void update(Integer pos, E data) throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Lista Vacia");
@@ -164,7 +158,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         }
     }
 
-    // Metodo para eliminar el primer elemento de la lista
     public E deleteFirst() throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Lista Vacia");
@@ -179,10 +172,8 @@ public class ListaEnlazada<E> implements Iterable<E> {
 
             return element;
         }
-
     }
 
-    // Metodo para eliminar el ultimo elemento de la lista
     public E deleteLast() throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Lista Vacia");
@@ -204,10 +195,8 @@ public class ListaEnlazada<E> implements Iterable<E> {
             size--;
             return element;
         }
-
     }
 
-    // Metodo para eliminar un elemento en una posicion especifica
     public E delete(Integer post) throws VacioExceptions {
         if (isEmpty()) {
             throw new VacioExceptions("Lista Esta Vacia ");
@@ -219,47 +208,19 @@ public class ListaEnlazada<E> implements Iterable<E> {
             return deleteLast();
         } else {
             Nodo<E> preview = getNode(post - 1);
-            Nodo<E> actually = getNode(post);
-            E element = preview.getData();
+            Nodo<E> actually = preview.getNext();
+            E element = actually.getData();
             Nodo<E> next = actually.getNext();
-            actually = null;
             preview.setNext(next);
             size--;
             return element;
         }
     }
 
-    // Metodo para vaciar la lista
     public void clear() {
         head = null;
         last = null;
         size = 0;
-    }
-
-    public static void main(String[] args) {
-        ListaEnlazada<Integer> numerics = new ListaEnlazada<>();
-        for (int i = 0; i < 10; i++) {
-            Integer aux = (int) (Math.random() * 1000);
-            numerics.add(aux);
-        }
-
-        System.out.println("Lista original:");
-        System.out.println(numerics.print());
-        System.out.println("Tamaño de la lista: " + numerics.getSize());
-
-        try {
-            // Supongamos que queremos actualizar el elemento en la posición 3 con un nuevo valor
-            int posToUpdate = 3;
-            int newValue = 999;
-
-            System.out.println("---------------------------------------------");
-            System.out.println("Actualizando elemento en la posición " + posToUpdate + " con el valor " + newValue);
-            numerics.update(posToUpdate, newValue);
-            System.out.println("Lista actualizada:");
-            System.out.println(numerics.print());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     @Override
@@ -281,8 +242,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         };
     }
 
-
-    // Metodo para invertir la lista
     public void reverse() {
         Nodo<E> prev = null;
         Nodo<E> next = null;
@@ -296,7 +255,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
         head = prev;
     }
 
-    // Metodo para convertir la lista en un array
     public E[] toArray() {
         Class clazz = null;
         E[] matriz = null;
@@ -309,7 +267,6 @@ public class ListaEnlazada<E> implements Iterable<E> {
                 matriz[i] = aux.getData();
                 aux = aux.getNext();
             }
-
         }
         return matriz;
     }
@@ -320,6 +277,133 @@ public class ListaEnlazada<E> implements Iterable<E> {
             this.add(e);
         }
         return this;
+    }
+
+    public int indexOf(E data) {
+        Nodo<E> current = head;
+        int index = 0;
+
+        while (current != null) {
+            if (current.getData().equals(data)) {
+                return index;
+            }
+
+            current = current.getNext();
+            index++;
+        }
+
+        return -1;
+    }
+
+    public void quicksort(Comparator<E> comparator) throws VacioExceptions {
+        quicksort(0, size - 1, comparator);
+    }
+
+    private void quicksort(int low, int high, Comparator<E> comparator) throws VacioExceptions {
+        if (low < high) {
+            int pivotIndex = partition(low, high, comparator);
+
+            quicksort(low, pivotIndex - 1, comparator);
+            quicksort(pivotIndex + 1, high, comparator);
+        }
+    }
+
+    private int partition(int low, int high, Comparator<E> comparator) throws VacioExceptions {
+        E pivot = get(high);
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (comparator.compare(get(j), pivot) < 0) {
+                i++;
+                swap(i, j);
+            }
+        }
+
+        swap(i + 1, high);
+        return i + 1;
+    }
+
+    private void swap(int i, int j) throws VacioExceptions {
+        Nodo<E> nodoI = getNode(i);
+        Nodo<E> nodoJ = getNode(j);
+
+        E temp = nodoI.getData();
+        nodoI.setData(nodoJ.getData());
+        nodoJ.setData(temp);
+    }
+
+    public int busquedaLineal(E elemento, Comparator<E> comparador) {
+        Nodo<E> current = head;
+        int index = 0;
+
+        while (current != null) {
+            if (comparador.compare(current.getData(), elemento) == 0) {
+                return index;
+            }
+
+            current = current.getNext();
+            index++;
+        }
+
+        return -1;
+    }
+
+    public int buscar(String criterioBusqueda, Comparator<Asignatura> comparador, String criterio) {
+        Nodo<Asignatura> current = (Nodo<Asignatura>) this.getHead();
+
+        int index = 0;
+
+        while (current != null) {
+            Asignatura asignatura = current.getData();
+
+            if ("nombre".equalsIgnoreCase(criterio) && asignatura.getNombre().equals(criterioBusqueda)) {
+                return index;
+            } else if ("codigo".equalsIgnoreCase(criterio) && asignatura.getCodigo().equals(criterioBusqueda)) {
+                return index;
+            }
+
+            current = current.getNext();
+            index++;
+        }
+
+        System.out.println("No se encontró ninguna asignatura con el criterio proporcionado.");
+        return -1;
+    }
+
+    public void sortAscendente(Comparator<E> comparator) throws VacioExceptions {
+        quicksort(0, size - 1, comparator);
+    }
+
+    public void sortDescendente(Comparator<E> comparator) throws VacioExceptions {
+        quicksortDescendente(0, size - 1, comparator);
+    }
+
+    private void quicksortDescendente(int low, int high, Comparator<E> comparator) throws VacioExceptions {
+        if (low < high) {
+            int pivotIndex = partitionDescendente(low, high, comparator);
+
+            quicksortDescendente(low, pivotIndex - 1, comparator);
+            quicksortDescendente(pivotIndex + 1, high, comparator);
+        }
+    }
+
+    private int partitionDescendente(int low, int high, Comparator<E> comparator) throws VacioExceptions {
+        E pivot = get(high);
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (comparator.compare(get(j), pivot) > 0) {
+                i++;
+                swap(i, j);
+            }
+        }
+
+        swap(i + 1, high);
+        return i + 1;
+    }
+
+    public void quicksortDescendente(Comparator<E> comparator) throws VacioExceptions {
+        quicksortDescendente(0, size - 1, comparator);
     }
 
 }

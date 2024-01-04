@@ -1,19 +1,24 @@
 package model;
 
+import java.util.Objects;
 import tda_listas.ListaEnlazada;
 
 public class Asignatura {
+
     // Atributos
     private Integer id;
     private String nombre;
-    private Integer codigo;
+    private String codigo;
     private Integer horasTotales;
 
     private ListaEnlazada<Cursa> cursas;
 
-
     // Constructor
     public Asignatura() {
+    }
+    
+    public Asignatura(String nombre) {
+        this.nombre = nombre;
     }
 
     public ListaEnlazada<Cursa> getCursas() {
@@ -40,11 +45,11 @@ public class Asignatura {
         this.nombre = nombre;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -60,5 +65,21 @@ public class Asignatura {
     public String toString() {
         return nombre;
     }
-}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Asignatura that = (Asignatura) obj;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+}
