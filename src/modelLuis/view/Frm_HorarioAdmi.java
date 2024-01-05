@@ -80,7 +80,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblM = new javax.swing.JTable();
-        menu_Docente1 = new plantilla.components.Menu_Docente();
+        menu_Admin1 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -171,7 +171,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 570, 330));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
-        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -209,7 +209,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private plantilla.components.Menu_Docente menu_Docente1;
+    private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
     private plantilla.swing.RoundPanel roundPanel4;
     private javax.swing.JTable tblM;

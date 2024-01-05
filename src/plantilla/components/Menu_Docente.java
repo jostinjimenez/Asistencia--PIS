@@ -3,9 +3,14 @@ package plantilla.components;
 import com.raven.swing.ButtonMenu;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
@@ -43,26 +48,26 @@ public class Menu_Docente extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
-//        if (text.equals("Cerrar Sesión")) {
-//            menu.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    cerrarSesion();
-//                }
-//            });
-//        }
+        if (text.equals("Cerrar Sesión")) {
+            menu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cerrarSesion();
+                }
+            });
+        }
         panelMenu.add(menu);
     }
 
-//    private void cerrarSesion() {
-//        // Cierra la ventana actual
-//        Window currentWindow = SwingUtilities.getWindowAncestor(this);
-//        currentWindow.dispose();
-//
-//        // Abre la ventana de inicio de sesión
-//        Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();
-//        inicioSesion.setVisible(true);
-//    }
+    private void cerrarSesion() {
+        // Cierra la ventana actual
+        Window currentWindow = SwingUtilities.getWindowAncestor(this);
+        currentWindow.dispose();
+
+        // Abre la ventana de inicio de sesión
+        Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();
+        inicioSesion.setVisible(true);
+    }
 
     private void setSelected(ButtonMenu menu) {
         for (Component com : panelMenu.getComponents()) {
