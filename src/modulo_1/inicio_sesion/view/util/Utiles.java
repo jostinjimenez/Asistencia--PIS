@@ -1,6 +1,7 @@
 package modulo_1.inicio_sesion.view.util;
 
 import model.Rol;
+import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.RolController;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -66,6 +67,16 @@ public class Utiles {
         int digitoVerificador = (modulo == 0) ? 0 : 10 - modulo;
 
         return digitoVerificador == Character.getNumericValue(cedula.charAt(9));
+    }
+
+    private static CuentaController cc;
+
+    public static CuentaController getCc() {
+        return cc;
+    }
+
+    public static void setCc(CuentaController cc) {
+        Utiles.cc = cc;
     }
 }
 

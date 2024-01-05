@@ -16,7 +16,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
         this.cc = cc;
     }
 
-
+    
     // Metodos
 
 
@@ -25,9 +25,9 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
     private void initComponents() {
 
         bg_panel = new javax.swing.JPanel();
-        txtUsername = new javax.swing.JLabel();
         roundPanel1 = new plantilla.swing.RoundPanel();
         menu_Admin1 = new plantilla.components.Menu_Admin();
+        header1 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -40,15 +40,11 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
         bg_panel.setBackground(new java.awt.Color(21, 21, 21));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtUsername.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        txtUsername.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsername.setText("jLabel1");
-        bg_panel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 20));
-
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 560));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        bg_panel.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 50));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -56,7 +52,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,9 +75,9 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
+    private plantilla.components.Header header1;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
-    private javax.swing.JLabel txtUsername;
     // End of variables declaration//GEN-END:variables
 
 }
