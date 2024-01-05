@@ -7,8 +7,8 @@ public class Asignatura {
     // Atributos
     private Integer id;
     private String nombre;
-    private Integer codigo;
     private Integer horasTotales;
+    private Integer codigo;
 
     private ListaEnlazada<Integer> id_cursas;
 
