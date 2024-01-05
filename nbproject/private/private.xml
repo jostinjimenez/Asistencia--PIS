@@ -3,11 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/juanc/OneDrive/Documentos/Trabajos%20U/Git/Asistencia--PIS/src/ModuloMatricula/Views/FrmMatricula.java</file>
             <file>file:/C:/Users/juanc/OneDrive/Documentos/Trabajos%20U/Git/Asistencia--PIS/src/ModuloMatricula/Controller/ControllerMatricula.java</file>
             <file>file:/C:/Users/juanc/OneDrive/Documentos/Trabajos%20U/Git/Asistencia--PIS/src/ModuloMatricula/Views/UtilVista/Util_VistaLinked_Matricula.java</file>
             <file>file:/C:/Users/juanc/OneDrive/Documentos/Trabajos%20U/Git/Asistencia--PIS/src/model/Matricula.java</file>
             <file>file:/C:/Users/juanc/OneDrive/Documentos/Trabajos%20U/Git/Asistencia--PIS/src/modelLuis/view/FrmAsistencia.java</file>
+=======
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/plantilla/components/Menu_Admin.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>
