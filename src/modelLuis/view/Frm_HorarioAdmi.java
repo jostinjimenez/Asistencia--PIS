@@ -26,6 +26,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     }
 
     private void limpiar() {
+        cargarTabla();
         try {
             Util_VistaLinked1_Asistencia.cargaMaterias(cbxAsistencia);
         } catch (Exception e) {
@@ -50,7 +51,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
 
                 if (a.saved()) {
                     JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                    cargarTabla();
+                    limpiar();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -171,7 +172,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 570, 330));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 

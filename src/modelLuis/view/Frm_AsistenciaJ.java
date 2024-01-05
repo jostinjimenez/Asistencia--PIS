@@ -172,7 +172,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         tblAsis = new javax.swing.JTable();
         buttonMenu1 = new com.raven.swing.ButtonMenu();
         buttonMenu3 = new com.raven.swing.ButtonMenu();
-        menu_Admin1 = new plantilla.components.Menu_Admin();
+        menu_Docente1 = new plantilla.components.Menu_Docente();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -346,7 +346,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         roundPanel1.add(buttonMenu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 160, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -419,7 +419,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private plantilla.components.Menu_Admin menu_Admin1;
+    private plantilla.components.Menu_Docente menu_Docente1;
     private plantilla.swing.RoundPanel roundPanel1;
     private plantilla.swing.RoundPanel roundPanel2;
     private plantilla.swing.RoundPanel roundPanel3;
