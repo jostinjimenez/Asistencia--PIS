@@ -18,6 +18,15 @@
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmAsistencia.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/tablas/ModelTableHorarioEs.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
+<<<<<<< HEAD
+=======
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Asignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Docente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Cursa.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Persona.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
+>>>>>>> master
+>>>>>>> master
         </group>
     </open-files>
 </project-private>
