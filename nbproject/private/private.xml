@@ -30,6 +30,16 @@
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Persona.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
 >>>>>>> master
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/controlador/ControladorEstudiante.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/controlador/DocenteControlador.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/DAO/DataAccessObject.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/model/Docente.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/tablas/ModeloTablaEstudiante.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/tablas/ModeloTablaDocente.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/model/Persona.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/model/Estudiante.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/NetBeansProjects/Asistencia--PIS/src/DAO/TransferObject.java</file>
         </group>
     </open-files>
 </project-private>
