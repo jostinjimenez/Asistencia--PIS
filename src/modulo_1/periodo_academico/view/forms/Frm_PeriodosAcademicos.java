@@ -1,14 +1,9 @@
-package modulo_1.matricula.view.forms;
+package modulo_1.periodo_academico.view.forms;
 
 import model.PeriodoAcademico;
-import modulo_1.inicio_sesion.view.forms.*;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import model.Rol;
-import modulo_1.inicio_sesion.controller.PersonaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
-import modulo_1.inicio_sesion.view.util.Utiles;
-import modulo_1.matricula.controller.PeriodoAcController;
-import modulo_1.matricula.view.tablas.ModeloTablaPeriodoAc;
+import modulo_1.periodo_academico.controller.PeriodoAcController;
+import modulo_1.periodo_academico.view.tablas.ModeloTablaPeriodoAc;
 import tda_listas.ListaEnlazada;
 
 import javax.swing.*;
@@ -18,8 +13,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
 import java.util.Objects;
-
-import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
 public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
 

@@ -1,10 +1,7 @@
-package modulo_1.matricula.controller;
+package modulo_1.periodo_academico.controller;
 
 import DAO.DataAccessObject;
-import model.Asignatura;
 import model.PeriodoAcademico;
-import model.Persona;
-import model.Rol;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

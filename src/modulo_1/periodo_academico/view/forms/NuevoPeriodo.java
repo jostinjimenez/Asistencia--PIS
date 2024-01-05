@@ -1,17 +1,9 @@
-package modulo_1.matricula.view.forms;
+package modulo_1.periodo_academico.view.forms;
 
-import modulo_1.inicio_sesion.view.forms.*;
-import modulo_1.inicio_sesion.view.util.TextPrompt;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
-import modulo_1.matricula.controller.PeriodoAcController;
-import modulo_1.matricula.view.tablas.ModeloTablaPeriodoAc;
+import modulo_1.periodo_academico.controller.PeriodoAcController;
+import modulo_1.periodo_academico.view.tablas.ModeloTablaPeriodoAc;
 
 import javax.swing.*;
-
-import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
-import static modulo_1.inicio_sesion.view.util.Utiles.cargaRoll;
 
 public class NuevoPeriodo extends javax.swing.JDialog {
 

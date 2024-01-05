@@ -1,7 +1,6 @@
-package modulo_1.matricula.view.tablas;
+package modulo_1.periodo_academico.view.tablas;
 
 import model.PeriodoAcademico;
-import model.Persona;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
