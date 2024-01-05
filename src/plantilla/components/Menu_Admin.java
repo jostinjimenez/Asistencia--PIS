@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
@@ -54,26 +55,26 @@ public class Menu_Admin extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
-//        if (text.equals("Cerrar Sesión")) {
-//            menu.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    cerrarSesion();
-//                }
-//            });
-//        }
+        if (text.equals("Cerrar Sesión")) {
+            menu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cerrarSesion();
+                }
+            });
+        }
         panelMenu.add(menu);
     }
 
-//    private void cerrarSesion() {
-//        // Cierra la ventana actual
-//        Window currentWindow = SwingUtilities.getWindowAncestor(this);
-//        currentWindow.dispose();
-//
-//        // Abre la ventana de inicio de sesión
-//        Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();
-//        inicioSesion.setVisible(true);
-//    }
+    private void cerrarSesion() {
+        // Cierra la ventana actual
+        Window currentWindow = SwingUtilities.getWindowAncestor(this);
+        currentWindow.dispose();
+
+        // Abre la ventana de inicio de sesión
+        Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();
+        inicioSesion.setVisible(true);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
