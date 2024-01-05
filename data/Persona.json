@@ -38,13 +38,27 @@
             "dni": 1150696977,
             "activo": true,
             "idRol": 3
+          },
+          "next": {
+            "data": {
+              "@class": "model.Persona",
+              "id": 4,
+              "nombre": "Jostin S",
+              "apellido": "Jimenez U",
+              "correo_personal": "jostinjimenes2@gmail.com",
+              "fecha_nacimiento": "23\/05\/2023",
+              "telefono": "0999170229",
+              "dni": 1150696977,
+              "activo": true,
+              "idRol": 2
+            }
           }
         }
       }
     },
     "last": {
-      "@reference": "..\/head\/next\/next"
+      "@reference": "..\/head\/next\/next\/next"
     },
-    "size": 3
+    "size": 4
   }
 }

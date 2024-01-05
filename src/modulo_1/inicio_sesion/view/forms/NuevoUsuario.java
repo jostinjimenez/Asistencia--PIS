@@ -1,5 +1,7 @@
 package modulo_1.inicio_sesion.view.forms;
 
+import modulo_1.inicio_sesion.controller.DocenteController;
+import modulo_1.inicio_sesion.controller.EstudianteController;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
@@ -42,6 +44,8 @@ public class NuevoUsuario extends javax.swing.JDialog {
     //Variables
     private PersonaController pc = new PersonaController();
     private CuentaController cc = new CuentaController();
+    private EstudianteController ec = new EstudianteController();
+    private DocenteController dc = new DocenteController();
     private boolean isEditing = false;
 
     //Metodos
@@ -140,6 +144,15 @@ public class NuevoUsuario extends javax.swing.JDialog {
             cc.getCuenta().setEstado(true);
 
             if (cc.save()) {
+                if (cbxRol.getSelectedIndex() == 1) {
+                    ec.getEstudiante().setId(pc.getPersona().getId());
+                    //ec.getEstudiante().setCodigo(ec.generatedCode());
+                    ec.save();
+                } else if (cbxRol.getSelectedIndex() == 2) {
+                    dc.getDocente().setId(pc.getPersona().getId());
+                    //dc.getDocente().setCodigo(dc.generatedCode());
+                    dc.save();
+                }
                 System.out.println("Se guardó correctamente");
             } else {
                 System.out.println("No se pudo guardar");

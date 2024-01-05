@@ -1,5 +1,6 @@
 package modulo_1.matricula.view.forms;
 
+import model.PeriodoAcademico;
 import modulo_1.inicio_sesion.view.forms.*;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import model.Rol;
@@ -8,8 +9,11 @@ import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import modulo_1.matricula.controller.PeriodoAcController;
 import modulo_1.matricula.view.tablas.ModeloTablaPeriodoAc;
+import tda_listas.ListaEnlazada;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
@@ -25,8 +29,6 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         cargarTabla();
-        cargaRol(cbxRol);
-        cbxRol.setVisible(false);
 
         jTable1.getSelectionModel().addListSelectionListener(e -> {
             btnEditar.setEnabled(true);
@@ -34,30 +36,84 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         });
 
         btnEliminar.addActionListener(e -> eliminarRegistro());
+
+        txtCriterio.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                actualizarTabla();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                actualizarTabla();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                actualizarTabla();
+            }
+        });
     }
 
     ModeloTablaPeriodoAc mtpa = new ModeloTablaPeriodoAc();
     PeriodoAcController pc = new PeriodoAcController();
 
     // Metodos
-//    private void buscar() {
-//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-//        try {
-//            if (criterio.equalsIgnoreCase("rol")) {
-//                Rol rolSeleccionado = Utiles.getComboRol(cbxRol);
-//                if (rolSeleccionado.getNombre().equals("Todos")) {
-//                    mtpa.setPersonas(pc.getPersonas());
-//                } else {
-//                    mtpa.setPersonas(pc.buscarRol(pc.getPersonas(), "idRol", rolSeleccionado));
-//                }
-//                mtpa.fireTableDataChanged();
-//                jTable1.setModel(mtpa);
-//                jTable1.updateUI();
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
+    public void actualizarTabla() {
+        String criterio = txtCriterio.getText();
+        if (criterio.isEmpty()) {
+            cargarTabla();
+            return;
+        }
+
+        try {
+            ListaEnlazada<PeriodoAcademico> resultados = new ListaEnlazada<>();
+            String criterioSeleccionado = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+            switch (criterioSeleccionado) {
+                case "id":
+                    if (!criterio.matches("\\d+")) {
+                        cargarTabla();
+                        return;
+                    }
+                    Integer id = Integer.valueOf(criterio);
+                    PeriodoAcademico paId = pc.buscarId(pc.getPeriodoAcademicos(), id);
+                    if (paId != null) {
+                        resultados.add(paId);
+                    }
+                    break;
+                case "anio":
+                    if (!criterio.matches("\\d+")) {
+                        cargarTabla();
+                        return;
+                    }
+                    Integer anio = Integer.valueOf(criterio);
+                    resultados = pc.buscarAnio(pc.getPeriodoAcademicos(), anio);
+                    System.out.println(resultados.print());
+                    break;
+                case "fechaInicio":
+                    resultados = pc.buscarFechaInicio(pc.getPeriodoAcademicos(), criterio);
+                    System.out.println(resultados.print());
+                    break;
+                case "fechaFin":
+                    resultados = pc.buscarFechaFin(pc.getPeriodoAcademicos(), criterio);
+                    System.out.println(resultados.print());
+                    break;
+                default:
+                    cargarTabla();
+                    return;
+            }
+
+            if (resultados.isEmpty()) {
+                PeriodoAcademico noResult = new PeriodoAcademico();
+                noResult.setId(-1);
+                noResult.setFechaFin("No se encontraron resultados para la búsqueda");
+                resultados.add(noResult);
+            }
+            mtpa.setPeriodoAcademicos(resultados);
+            mtpa.fireTableDataChanged();
+            jTable1.setModel(mtpa);
+            jTable1.updateUI();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void eliminarRegistro() {
         int selectedRow = jTable1.getSelectedRow();
@@ -116,7 +172,6 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         cbxCriterio = new javax.swing.JComboBox<>();
         cbxAscDesc = new javax.swing.JComboBox<>();
-        cbxRol = new javax.swing.JComboBox<>();
         menu_Admin1 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -145,15 +200,15 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane1.setViewportView(jTable1);
 
@@ -189,7 +244,7 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Rol", "Nombre", "DNI" }));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Id", "Anio", "Fecha Inicio", "Fecha Fin"}));
         cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxCriterioItemStateChanged(evt);
@@ -198,17 +253,8 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 160, -1));
 
         cbxAscDesc.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         roundPanel1.add(cbxAscDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(856, 150, 160, -1));
-
-        cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxRol.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxRolItemStateChanged(evt);
-            }
-        });
-        roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
@@ -229,20 +275,9 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
 
     private void cbxCriterioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCriterioItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
-            if (Objects.equals(cbxCriterio.getSelectedItem(), "Rol")) {
-                cbxRol.setVisible(true);
-                txtCriterio.setVisible(false);
-            } else {
-                cbxRol.setVisible(false);
-                txtCriterio.setVisible(true);
-            }
-
+            //buscar();
         }
     }//GEN-LAST:event_cbxCriterioItemStateChanged
-
-    private void cbxRolItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxRolItemStateChanged
-        //buscar();
-    }//GEN-LAST:event_cbxRolItemStateChanged
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         NuevoPeriodo nu = new NuevoPeriodo(this, true);
@@ -270,7 +305,6 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbxAscDesc;
     private javax.swing.JComboBox<String> cbxCriterio;
-    private javax.swing.JComboBox<String> cbxRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
