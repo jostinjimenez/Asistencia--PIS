@@ -27,7 +27,8 @@ public class PeriodoAcademico {
     }
 
     public ListaEnlazada<Integer> getId_matriculas() {
-        if (id_matriculas == null) id_matriculas = new ListaEnlazada<>();
+        if (id_matriculas == null)
+            id_matriculas = new ListaEnlazada<>();
         return id_matriculas;
     }
 
@@ -77,36 +78,10 @@ public class PeriodoAcademico {
 
     @Override
     public String toString() {
-        return "id " + id  + "fechaInicio " + fechaInicio + ", fechaFin " + fechaFin + anio;
-    }
-
-    public Boolean compareTo(PeriodoAcademico pa, String field, Integer type) {
-        switch (type) {
-            case 1:
-                if (field.equalsIgnoreCase("id")) {
-                    return this.getId() > (pa.getId());
-                } else if (field.equalsIgnoreCase("anio")) {
-                    return this.getAnio() > (pa.getAnio());
-                } else if (field.equalsIgnoreCase("fechaInicio")) {
-                    return this.getFechaInicio().toLowerCase().compareTo(pa.getFechaInicio().toLowerCase()) > 0;
-                } else if (field.equalsIgnoreCase("fechaFin")) {
-                    return this.getFechaFin().toLowerCase().compareTo(pa.getFechaFin().toLowerCase()) > 0;
-                }
-
-            case 0:
-                if (field.equalsIgnoreCase("id")) {
-                    return this.getId() < (pa.getId());
-                } else if (field.equalsIgnoreCase("anio")) {
-                    return this.getAnio() < (pa.getAnio());
-                } else if (field.equalsIgnoreCase("fechaInicio")) {
-                    return this.getFechaInicio().toLowerCase().compareTo(pa.getFechaInicio().toLowerCase()) < 0;
-                } else if (field.equalsIgnoreCase("fechaFin")) {
-                    return this.getFechaFin().toLowerCase().compareTo(pa.getFechaFin().toLowerCase()) < 0;
-                }
-
-            default:
-                return false;
-        }
+        return "PeriodoAcademico{" +
+                "fechaInicio='" + fechaInicio + '\'' +
+                ", fechaFin='" + fechaFin + '\'' +
+                '}';
     }
 }
 

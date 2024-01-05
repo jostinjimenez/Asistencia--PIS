@@ -1,1 +1,27 @@
-{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.PeriodoAcademico","id":1,"anio":2024,"fechaInicio":"14 de Octubre","fechaFin":"16 de Marzo"},"next":{"data":{"@class":"model.PeriodoAcademico","id":2,"anio":2025,"fechaInicio":"14 de Abril","fechaFin":"16 de Agosto","estado":false},"next":{"data":{"@class":"model.PeriodoAcademico","id":3,"anio":2023,"fechaInicio":"14 de Abril","fechaFin":"16 de Agosto","estado":false}}}},"last":{"@reference":"..\/head\/next\/next"},"size":3}}
+{
+  "tda_listas.ListaEnlazada": {
+    "head": {
+      "data": {
+        "@class": "model.PeriodoAcademico",
+        "id": 1,
+        "anio": 2024,
+        "fechaInicio": "14 de Octubre",
+        "fechaFin": "16 de Marzo"
+      },
+      "next": {
+        "data": {
+          "@class": "model.PeriodoAcademico",
+          "id": 2,
+          "anio": 2025,
+          "fechaInicio": "14 de Abril",
+          "fechaFin": "16 de Agosto",
+          "estado": false
+        }
+      }
+    },
+    "last": {
+      "@reference": "..\/head\/next"
+    },
+    "size": 2
+  }
+}
