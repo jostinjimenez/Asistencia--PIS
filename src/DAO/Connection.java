@@ -3,28 +3,36 @@ package DAO;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.security.AnyTypePermission;
-
 import java.io.File;
 
 public class Connection {
-    private static final String URL = "data" + File.separatorChar;
-    private static XStream xStream;
+
+    private static String URL = "data" + File.separatorChar;
+    private static XStream xstream;
 
     private Connection() {
-        xStream = new XStream(new JettisonMappedXmlDriver());
+        xstream = new XStream(new JettisonMappedXmlDriver());
     }
 
+    /**
+     * @return the URL
+     */
     public static String getURL() {
         return URL;
     }
 
-    public static XStream getxStream() {
-        if (xStream == null) {
-            xStream = new XStream(new JettisonMappedXmlDriver());
-            //xStream.setMode(XStream.NO_REFERENCES);
-            xStream.addPermission(AnyTypePermission.ANY);
+    /**
+     * @return the xstream
+     */
+    public static XStream getXstream() {
+        if (xstream == null) {
+            xstream = new XStream(new JettisonMappedXmlDriver());
+//            xstream.setMode(XStream.NO_REFERENCES);
+            xstream.addPermission(AnyTypePermission.ANY );
         }
-        return xStream;
+
+        return xstream;
+
     }
 
 }

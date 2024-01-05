@@ -1,8 +1,12 @@
 package view;
 
 import controller.CursoController;
+import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Curso;
+import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 import view.tablas.ModeloTablaCursos;
 
@@ -28,7 +32,7 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        mtc.setCursos(cc.getLista());
+        mtc.setLista(cc.getLista());
         tablaCursos.setModel(mtc);
         tablaCursos.updateUI();
     }
@@ -47,19 +51,24 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
                 String nroEstudiantesStr = txtNroEstudiantes.getText();
                 String nroAula = txtNroAula.getText();
 
-                // Convertir a los tipos de datos apropiados
-                Integer nroEstudiantes = Integer.parseInt(nroEstudiantesStr);
+                // Validar que nroEstudiantesStr sea numérico
+                if (esNumero(nroEstudiantesStr)) {
+                    // Convertir a los tipos de datos apropiados
+                    Integer nroEstudiantes = Integer.parseInt(nroEstudiantesStr);
 
-                // Configurar los datos en el controlador
-                cc.getCurso().setCodCurso(codigo);
-                cc.getCurso().setNroEstudiante(nroEstudiantes);
-                cc.getCurso().setNroAula(nroAula);
+                    // Configurar los datos en el controlador
+                    cc.getCurso().setCodCurso(codigo);
+                    cc.getCurso().setNroEstudiante(nroEstudiantes);
+                    cc.getCurso().setNroAula(nroAula);
 
-                if (cc.saved()) {
-                    cargarTabla();
-                    JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    if (cc.guardar()) {
+                        cargarTabla();
+                        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ingrese un valor numérico en Nro. Estudiantes", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,6 +76,21 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
+    }
+
+    private boolean esNumero(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private int obtenerIdDesdeFilaSeleccionada(int filaSeleccionada) {
+        // Obtener el valor de la columna que contiene el ID desde el modelo de tabla
+        int columnaId = 0; // Asume que la columna 0 contiene el ID, ajusta según tu estructura
+        return (int) tablaCursos.getValueAt(filaSeleccionada, columnaId);
     }
 
     private void eliminar() {
@@ -83,32 +107,22 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                try {
-                    // Obtener el objeto Curso correspondiente a la fila seleccionada
-                    Curso cursoAEliminar = mtc.getCursos().get(filaSeleccionada);
+                // Obtener el objeto Curso correspondiente a la fila seleccionada
+                int cursoAEliminar = obtenerIdDesdeFilaSeleccionada(filaSeleccionada);
+                // Eliminar el objeto Curso utilizando el método delete del controlador
+                if (cc.delete(cursoAEliminar)) {
+                    // Actualizar la tabla
+                    cargarTabla();
 
-                    // Eliminar el objeto Curso utilizando el método delete del controlador
-                    if (cc.delete(cursoAEliminar)) {
-                        // Actualizar la tabla
-                        cargarTabla();
-
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Se eliminó correctamente",
-                                "OK",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Error al eliminar el curso",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (VacioExceptions e) {
-                    // Manejar la excepción aquí
                     JOptionPane.showMessageDialog(
                             null,
-                            "Error al eliminar el curso: " + e.getMessage(),
+                            "Se eliminó correctamente",
+                            "OK",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Error al eliminar el curso",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
@@ -128,7 +142,7 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         txtNroAula.setText("");
     }
 
-    public void modificar() {
+    public void modificar() throws VacioExceptions {
         if (validar()) {
             // Obtener los datos del formulario
             String codigo = txtCodigo.getText();
@@ -147,12 +161,11 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
             int filaSeleccionada = tablaCursos.getSelectedRow();
 
             // Verificar si se ha seleccionado alguna fila
-            if (filaSeleccionada >= 0) {
-                // Actualizar la información en la lista y en la tabla
-                cc.update(filaSeleccionada);
+            if (filaSeleccionada >= 0 && filaSeleccionada < cc.getLista().getSize()) {
+                Curso nuevoCurso = cargarDatosSeleccionados();  // Reemplaza esto con el método que obtiene los datos del formulario
+                cc.updateCurso(nuevoCurso, filaSeleccionada);
+                // Luego actualiza la tabla o cualquier otra parte de la interfaz que necesite reflejar los cambios
                 cargarTabla();
-
-                JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -161,7 +174,7 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         }
     }
 
-    private void cargarDatosSeleccionados() {
+    private Curso cargarDatosSeleccionados() {
         // Obtener el índice de la fila seleccionada
         int filaSeleccionada = tablaCursos.getSelectedRow();
 
@@ -169,14 +182,100 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         if (filaSeleccionada >= 0) {
             // Obtener los datos de la fila seleccionada desde el modelo de la tabla
             String id = tablaCursos.getValueAt(filaSeleccionada, 0).toString();
-            String nroEstudiantes = tablaCursos.getValueAt(filaSeleccionada, 1).toString();
-            String codigo = tablaCursos.getValueAt(filaSeleccionada, 2).toString();
+            String codigo = tablaCursos.getValueAt(filaSeleccionada, 1).toString();
+            String nroEstudiantes = tablaCursos.getValueAt(filaSeleccionada, 2).toString();
             String nroAula = tablaCursos.getValueAt(filaSeleccionada, 3).toString();
 
-            // Mostrar los datos en los campos de texto
-            txtCodigo.setText(codigo);
-            txtNroEstudiantes.setText(nroEstudiantes);
-            txtNroAula.setText(nroAula);
+            // Crear un nuevo objeto Curso con los datos
+            Curso cursoSeleccionado = new Curso();
+            cursoSeleccionado.setId(Integer.parseInt(id));
+            cursoSeleccionado.setCodCurso(codigo);
+            cursoSeleccionado.setNroEstudiante(Integer.parseInt(nroEstudiantes));
+            cursoSeleccionado.setNroAula(nroAula);
+
+            return cursoSeleccionado;
+        }
+        return null;
+    }
+
+    public int buscarIndice(Curso curso) {
+        ListaEnlazada<Curso> lista = cc.getLista();
+
+        for (int i = 0; i < lista.getSize(); i++) {
+            try {
+                Curso actual = lista.get(i);
+                if (actual.equals(curso)) {
+                    return i;
+                }
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return -1; // Devuelve -1 si no se encuentra el curso
+    }
+
+    private void buscar() {
+        String criterioBusqueda = txtBuscar.getText().trim();
+        String criterio = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+
+        if (!criterio.isEmpty()) {
+            Comparator<Curso> comparador = null;
+
+            switch (criterio) {
+                case "nombre":
+                    comparador = Comparator.comparing(Curso::getCodCurso);
+                    break;
+                case "nro. estudiante":
+                    comparador = Comparator.comparing(Curso::getNroEstudiante);
+                    break;
+                case "nro. aula":
+                    comparador = Comparator.comparing(Curso::getNroAula);
+                    break;
+                // Agrega más casos según tus necesidades
+
+                default:
+                    break;
+            }
+
+            if (comparador != null) {
+                Curso cursoEncontrado = mtc.buscar(criterioBusqueda, comparador, criterio);
+
+                if (cursoEncontrado != null) {
+                    int indice = buscarIndice(cursoEncontrado);
+                    // Asegúrate de tener un método setRowSelectionInterval en tu tabla
+                    tablaCursos.setRowSelectionInterval(indice, indice);
+                    cargarDatosSeleccionados();
+                } else {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "No se encontró ningún curso con ese criterio: " + criterioBusqueda,
+                            "Información",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione un criterio (Nombre, Nro. Estudiante o Nro. Aula) para buscar",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void ordenar() {
+        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+        String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
+
+        if (!campoOrden.isEmpty() && mtc.esCampoValido(campoOrden)) {
+            mtc.ordenar(campoOrden, tipoOrden);
+            cargarTabla();  // Actualizar la tabla después de ordenar
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Campo de orden inválido",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -190,6 +289,7 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox<>();
+        txtBuscar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         txtNroEstudiantes = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -206,6 +306,13 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCursos = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        comboBoxCriterio = new javax.swing.JComboBox<>();
+        txtBuscarCriterio = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        ComboBoxOrdenar = new javax.swing.JComboBox<>();
+        btnOrdenar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
@@ -244,7 +351,7 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         });
 
         btnEliminar.setBackground(new java.awt.Color(242, 242, 242));
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictures/editar (1).png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setBorder(null);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -275,14 +382,14 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtNroAula, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNroEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtNroEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(117, 117, 117)
                         .addComponent(jLabel5)))
@@ -297,12 +404,12 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNroEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNroEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -325,7 +432,7 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nro. Estudiantes", "Codigo", "Nro. Aula"
+                "Id", "Codigo", "Nro. Estudiantes", "Nro. Aula"
             }
         ));
         tablaCursos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -335,21 +442,79 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaCursos);
 
+        jLabel3.setText("Ingrese el criterio:");
+
+        comboBoxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Codigo", "Nro. Aula" }));
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/lupa.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Ordenar por Criterio");
+
+        ComboBoxOrdenar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascendente", "Descendente" }));
+
+        btnOrdenar.setText("Ordenar");
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar)
+                        .addGap(33, 33, 33))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(txtBuscarCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(20, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(ComboBoxOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnOrdenar)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(comboBoxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscarCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ComboBoxOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOrdenar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
@@ -407,12 +572,14 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
 
         pack();
@@ -423,7 +590,11 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        modificar();
+        try {
+            modificar();
+        } catch (VacioExceptions ex) {
+            Logger.getLogger(Frm_AgregarCurso.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -445,6 +616,14 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
         dispose(); // Cierra la ventana actual
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        buscar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+        ordenar();
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -462,16 +641,22 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxOrdenar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> comboBoxCriterio;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -479,6 +664,8 @@ public class Frm_AgregarCurso extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tablaCursos;
+    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtBuscarCriterio;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroAula;
     private javax.swing.JTextField txtNroEstudiantes;

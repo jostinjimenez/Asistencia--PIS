@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package modelLuis.controller;
+package controller;
 
 import DAO.DataAccessObject;
+import java.util.Comparator;
 import model.Asignatura;
 
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-/**
- *
- * @author Usuario
- */
 public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     private Asignatura asignatura = new Asignatura();
@@ -36,7 +29,15 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
     }
 
     public Boolean saved() {
-        return save(asignatura);
+        Boolean result = save(asignatura);
+
+        if (result) {
+            System.out.println("Asignatura guardada correctamente.");
+        } else {
+            System.out.println("Error al guardar la asignatura.");
+        }
+
+        return result;
     }
 
     public ListaEnlazada<Asignatura> getLista() {
@@ -47,7 +48,7 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     }
 
-    public Boolean update1(Integer i) {
+    public Boolean update(Integer i) {
         return update(asignatura, i);
     }
 
@@ -72,8 +73,18 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
         this.index = index;
     }
 
-    public int generatedId() {
-        return generarID();
+    public Integer generatedId() {
+        // Obtener el máximo ID actual mediante un bucle tradicional
+        Integer maxId = 0;
+        for (Asignatura asignatura : getLista()) {
+            Integer currentId = asignatura.getId();
+            if (currentId != null && currentId > maxId) {
+                maxId = currentId;
+            }
+        }
+
+        // Incrementar el máximo ID en 1 para obtener un nuevo ID único
+        return maxId + 1;
     }
 
     public static void main(String[] args) {
@@ -116,12 +127,10 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
     }
 
     private void swap(Asignatura[] array, int i, int j) {
-       Asignatura temp = array[i];
+        Asignatura temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
-
-   
 
     private int busquedaBinaria1(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
         int infe = 0;
@@ -175,4 +184,16 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
         }
     }
 
+    public Boolean updateAsignatura(Asignatura asignatura, Integer index) {
+        DataAccessObject<Asignatura> dao = new DataAccessObject<>(Asignatura.class);
+        Boolean result = dao.update(asignatura, index);
+
+        if (result) {
+            System.out.println("Asignatura actualizada correctamente en la posición: " + index);
+        } else {
+            System.out.println("Error al actualizar la asignatura en la posición: " + index);
+        }
+
+        return result;
+    }
 }

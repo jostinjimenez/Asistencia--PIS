@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import view.tablas.ModeloTablaAsignaturas;
 import model.Asignatura;
+import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 public class Frm_AgregarAsignatura extends javax.swing.JFrame {
@@ -14,35 +15,16 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
     private AsignaturaController ac = new AsignaturaController();
     private ModeloTablaAsignaturas mta = new ModeloTablaAsignaturas();
 
-//    private static final String ASCENDENTE = "Ascendente";
-//    private static final String DESCENDENTE = "Descendente";
-//
-//    private void initComboBoxOrdenar() {
-//        ComboBoxOrdenar.addItem(ASCENDENTE);
-//        ComboBoxOrdenar.addItem(DESCENDENTE);
-//    }
-    /**
-     * Creates new form Frm_AgregarAsistencia
-     */
     public Frm_AgregarAsignatura() {
         initComponents();
-
-        // Centrar la ventana
         setLocationRelativeTo(null);
-
-        // Deshabilitar la modificación del tamaño
         setResizable(false);
-
-//        initComboBoxOrdenar();
-        // Establecer el nombre de la ventana
         setTitle("Agregar Asignaturas");
-
-        // Cargar contenido en la tabla al iniciar
         cargarTabla();
     }
 
     public void cargarTabla() {
-        mta.setAsignaturas(ac.getLista());
+        mta.setLista(ac.getLista());
         tablaAsignaturas.setModel(mta);
         tablaAsignaturas.updateUI();
     }
@@ -53,48 +35,53 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
                 && !txtHorasTotales.getText().trim().isEmpty();
     }
 
+    private Integer generatedId() {
+        // Lógica para generar un ID único usando un contador
+        return ac.generarId();
+    }
+
     public void guardar() {
         if (validar()) {
             try {
-                // Obtener los datos del formulario
                 String nombre = txtNombreAsignatura.getText();
-                String codigo = txtCodigoAsigntura.getText();
+                String codigoStr = txtCodigoAsigntura.getText();
                 String horasTotalesStr = txtHorasTotales.getText();
 
-                // Convertir a los tipos de datos apropiados
                 Integer horasTotales = Integer.parseInt(horasTotalesStr);
+                Integer codigo = Integer.parseInt(codigoStr);
 
-                // Generar nuevo id
-                Integer nuevoId = Integer.parseInt(ac.generatedCode());
+                // Utiliza el nuevo método generatedId() para obtener un ID único
+                Integer nuevoId = generatedId();
 
-                // Configurar los datos en el controlador
-                ac.getAsignatura().setId(nuevoId);
-                ac.getAsignatura().setNombre(nombre);
-                ac.getAsignatura().setCodigo(codigo);
-                ac.getAsignatura().setHorasTotales(horasTotales);
+                Asignatura nuevaAsignatura = new Asignatura(nuevoId, nombre, codigo, horasTotales);
 
-                if (ac.saved()) {
-                    cargarTabla();
-                    JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                // Agregar mensaje de depuración
+                System.out.println("Guardando nueva asignatura: " + nuevaAsignatura);
+
+                ac.add(nuevaAsignatura);
+
+                cargarTabla();
+                limpiar(); // Agregamos la limpieza de campos después de guardar
+                JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                // Manejar la excepción aquí
-                System.out.println("Error al guardar la Asignatura desde el formulario: " + e.getMessage());
+                // Agregar mensaje de depuración con el stack trace
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al guardar la Asignatura desde el formulario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
 
-    private void eliminar() {
-        // Obtener el índice de la fila seleccionada
-        int filaSeleccionada = tablaAsignaturas.getSelectedRow();
+    private int obtenerIdDesdeFilaSeleccionada(int filaSeleccionada) {
+        // Obtener el valor de la columna que contiene el ID desde el modelo de tabla
+        int columnaId = 0; // Asume que la columna 0 contiene el ID, ajusta según tu estructura
+        return (int) tablaAsignaturas.getValueAt(filaSeleccionada, columnaId);
+    }
 
-        // Verificar si se ha seleccionado alguna fila
+    private void eliminar() {
+        int filaSeleccionada = tablaAsignaturas.getSelectedRow();
         if (filaSeleccionada >= 0) {
-            // Confirmar si realmente desea eliminar la fila
             int confirmacion = JOptionPane.showConfirmDialog(
                     this,
                     "¿Está seguro de que desea eliminar la asignatura seleccionada?",
@@ -102,39 +89,26 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                try {
-                    // Obtener el objeto Asignatura correspondiente a la fila seleccionada
-                    Asignatura asignaturaAEliminar = mta.getAsignaturas().get(filaSeleccionada);
-
-                    // Eliminar el objeto Asignatura utilizando el método delete del controlador
-                    if (ac.delete(asignaturaAEliminar)) {
-                        // Actualizar la tabla
-                        cargarTabla();
-
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Se eliminó correctamente",
-                                "OK",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Error al eliminar la asignatura",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (VacioExceptions e) {
-                    // Manejar la excepción aquí
+                int idAEliminar = obtenerIdDesdeFilaSeleccionada(filaSeleccionada); // Implementa este método para obtener el ID desde la fila seleccionada
+                if (ac.delete(idAEliminar)) {
+                    cargarTabla();
+                    limpiar();
                     JOptionPane.showMessageDialog(
-                            null,
-                            "Error al eliminar la asignatura: " + e.getMessage(),
+                            this,
+                            "Se eliminó correctamente",
+                            "OK",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Error al eliminar la asignatura",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else {
             JOptionPane.showMessageDialog(
-                    null,
+                    this,
                     "Seleccione una fila para eliminar",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -147,100 +121,132 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
         txtHorasTotales.setText("");
     }
 
-    public void modificar() {
+    private void modificar() throws VacioExceptions {
         if (validar()) {
-            // Obtener el índice de la fila seleccionada
             int filaSeleccionada = tablaAsignaturas.getSelectedRow();
-
-            // Verificar si se ha seleccionado alguna fila
             if (filaSeleccionada >= 0) {
-                // Obtener los datos del formulario
                 String nombre = txtNombreAsignatura.getText();
-                String codigo = txtCodigoAsigntura.getText();
+                String codigoStr = txtCodigoAsigntura.getText();
                 String horasTotalesStr = txtHorasTotales.getText();
 
-                // Convertir a los tipos de datos apropiados
-                Integer horasTotales = Integer.parseInt(horasTotalesStr);
+                try {
+                    Integer horasTotales = Integer.parseInt(horasTotalesStr);
+                    Integer codigo = Integer.parseInt(codigoStr);
 
-                // Configurar los datos en el controlador
-                ac.getAsignatura().setNombre(nombre);
-                ac.getAsignatura().setCodigo(codigo);
-                ac.getAsignatura().setHorasTotales(horasTotales);
+                    Asignatura asignaturaAModificar = mta.getAsignaturaAt(filaSeleccionada);
 
-                // Actualizar la información en la lista y en la tabla
-                ac.update(filaSeleccionada);
-                cargarTabla();
+                    asignaturaAModificar.setNombre(nombre);
+                    asignaturaAModificar.setCodigo(codigo);
+                    asignaturaAModificar.setHorasTotales(horasTotales);
 
-                JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    if (ac.updateAsignatura(asignaturaAModificar, filaSeleccionada)) {
+                        cargarTabla();
+                        limpiar();
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "Se modificó correctamente",
+                                "OK",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "Error al modificar la asignatura",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Ingrese un valor numérico válido para las horas totales",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Seleccione una fila para modificar",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Complete todos los campos",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void cargarDatosSeleccionados() {
-        // Obtener el índice de la fila seleccionada
         int filaSeleccionada = tablaAsignaturas.getSelectedRow();
-
-        // Verificar si se ha seleccionado alguna fila
         if (filaSeleccionada >= 0) {
-            // Obtener los datos de la fila seleccionada desde el modelo de la tabla
-            String id = tablaAsignaturas.getValueAt(filaSeleccionada, 0).toString();
-            String nombre = tablaAsignaturas.getValueAt(filaSeleccionada, 1).toString();
-            String codigo = tablaAsignaturas.getValueAt(filaSeleccionada, 2).toString();
-            String horasTotales = tablaAsignaturas.getValueAt(filaSeleccionada, 3).toString();
+            Asignatura asignaturaSeleccionada = mta.getAsignaturaAt(filaSeleccionada);
 
-            // Mostrar los datos en los campos de texto
-            txtNombreAsignatura.setText(nombre);
-            txtCodigoAsigntura.setText(codigo);
-            txtHorasTotales.setText(horasTotales);
+            txtNombreAsignatura.setText(asignaturaSeleccionada.getNombre());
+            txtCodigoAsigntura.setText(String.valueOf(asignaturaSeleccionada.getCodigo()));
+            txtHorasTotales.setText(String.valueOf(asignaturaSeleccionada.getHorasTotales()));
         }
     }
 
-    private void buscar() throws VacioExceptions {
-        // Obtener el criterio ingresado en el campo de búsqueda
-        String criterioBusqueda = txtBuscar.getText();
+    public int buscarIndice(Asignatura asignatura) {
+        ListaEnlazada<Asignatura> lista = mta.getLista();
 
-        // Obtener el criterio de búsqueda seleccionado en el combobox
-        String criterio = comboBoxCriterio.getSelectedItem().toString();
+        for (int i = 0; i < lista.getSize(); i++) {
+            try {
+                Asignatura actual = lista.get(i);
+                if (actual.equals(asignatura)) {
+                    return i;
+                }
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-        // Verificar si se ingresó un criterio válido
+        return -1; // Devuelve -1 si no se encuentra la asignatura
+    }
+
+    private void buscar() {
+        String criterioBusqueda = txtBuscar.getText().trim();
+        String criterio = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+
         if (!criterio.isEmpty()) {
-            // Seleccionar el comparador adecuado según el criterio de búsqueda
-            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
+            Comparator<Asignatura> comparador = (criterio.equalsIgnoreCase("nombre"))
                     ? Comparator.comparing(Asignatura::getNombre)
-                    : Comparator.comparing(Asignatura::getCodigo);
+                    : Comparator.comparing(asignatura -> String.valueOf(asignatura.getCodigo()));
 
-            // Realizar la búsqueda en el modelo de la tabla
-            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
-
-            // Verificar si se encontró la asignatura
-            if (indice >= 0) {
-                // Seleccionar la fila encontrada
+            Asignatura asignaturaEncontrada = mta.buscar(criterioBusqueda, comparador, criterio);
+            if (asignaturaEncontrada != null) {
+                int indice = buscarIndice(asignaturaEncontrada);
                 tablaAsignaturas.setRowSelectionInterval(indice, indice);
-                // Cargar los datos seleccionados en los campos de texto
                 cargarDatosSeleccionados();
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No se encontró ninguna asignatura con ese criterio: " + criterioBusqueda,
+                        "Información",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione un criterio (Nombre o Código) para buscar",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void ordenar() throws VacioExceptions {
-        // Obtener el campo de orden del ComboBox
+    private void ordenar() {
         String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
-        // Obtener el tipo de orden del ComboBox
         String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
 
         if (!campoOrden.isEmpty() && mta.esCampoValido(campoOrden)) {
-            // Llama al método ordenar con el campo de orden y tipo de orden
             mta.ordenar(campoOrden, tipoOrden);
         } else {
-            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Campo de orden inválido",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -544,7 +550,11 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        modificar();
+        try {
+            modificar();
+        } catch (VacioExceptions ex) {
+            Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tablaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAsignaturasMouseClicked
@@ -552,19 +562,11 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaAsignaturasMouseClicked
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
-        try {
-            ordenar();
-        } catch (VacioExceptions ex) {
-            Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ordenar();
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try {
-            buscar();
-        } catch (VacioExceptions ex) {
-            Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

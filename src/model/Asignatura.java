@@ -12,16 +12,23 @@ public class Asignatura {
 
     private ListaEnlazada<Integer> id_cursas;
 
-    public Asignatura(Integer id, String nombre, Integer codigo, Integer horasTotales, ListaEnlazada<Integer> id_cursas) {
+    public Asignatura(Integer id, String nombre, Integer horasTotales, Integer codigo, ListaEnlazada<Integer> id_cursas) {
         this.id = id;
         this.nombre = nombre;
-        this.codigo = codigo;
         this.horasTotales = horasTotales;
+        this.codigo = codigo;
         this.id_cursas = id_cursas;
     }
 
     // Constructor
     public Asignatura() {
+    }
+
+    public Asignatura(Integer nuevoId, String nombre, Integer codigo, Integer horasTotales) {
+        this.id = nuevoId;
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.horasTotales = horasTotales;
     }
 
     public ListaEnlazada<Integer> getId_cursas() {
@@ -69,28 +76,29 @@ public class Asignatura {
         return nombre;
     }
 
-    public Boolean comparar(Asignatura as, String field, Integer type) {
-
-        switch (type) {
-            case 1:
-                if (field.equalsIgnoreCase("id")) {
-                    return getId() > as.getId();
-                }
-            case 0:
-                if (field.equalsIgnoreCase("id")) {
-                    return getId() > as.getId();
-                }
+    public boolean comparar(String texto, String campo, Integer type) {
+        switch (campo.toLowerCase()) {
+            case "nombre":
+                return compararCampo(nombre, texto, type);
+            case "codigo":
+                return compararCampo(codigo.toString(), texto, type);
+            // Agrega otros campos según sea necesario
             default:
-                return false;
+                throw new IllegalArgumentException("Campo de comparación no válido");
         }
     }
 
-    public int comparar(Asignatura estudiante, String text, String campo) {
-        switch (campo.toLowerCase()) {
-            case "id":
-                return Integer.compare(Integer.parseInt(text), estudiante.getId());
+    private boolean compararCampo(String campo, String texto, Integer type) {
+        // Lógica de comparación para campos String
+        // Puedes ajustar esto según tus necesidades específicas
+        switch (type) {
+            case 0: // Igual
+                return campo.equalsIgnoreCase(texto);
+            case 1: // Contiene
+                return campo.toLowerCase().contains(texto.toLowerCase());
+            // Agrega otros tipos de comparación según sea necesario
             default:
-                throw new IllegalArgumentException("Campo de comparación no válido");
+                throw new IllegalArgumentException("Tipo de comparación no válido");
         }
     }
 }

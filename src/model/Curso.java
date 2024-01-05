@@ -5,6 +5,7 @@ import tda_listas.ListaEnlazada;
 import java.util.Objects;
 
 public class Curso {
+
     private Integer id;
     private Integer nroEstudiante;
     private String codCurso;
@@ -16,10 +17,6 @@ public class Curso {
     public Curso() {
     }
 
-
-
-
-
     public Curso(Integer id, Integer nroEstudiante, String codCurso, ListaEnlazada<Integer> id_asignaturas, Integer idMalla) {
         this.id = id;
         this.nroEstudiante = nroEstudiante;
@@ -28,9 +25,19 @@ public class Curso {
         this.idMalla = idMalla;
     }
 
+    public Curso(Integer id, Integer nroEstudiante, String codCurso, String nroAula, ListaEnlazada<Integer> id_asignaturas, Integer idMalla) {
+        this.id = id;
+        this.nroEstudiante = nroEstudiante;
+        this.codCurso = codCurso;
+        this.nroAula = nroAula;
+        this.id_asignaturas = id_asignaturas;
+        this.idMalla = idMalla;
+    }
+
     public ListaEnlazada<Integer> getId_asignaturas() {
-        if (id_asignaturas == null)
+        if (id_asignaturas == null) {
             id_asignaturas = new ListaEnlazada<>();
+        }
         return id_asignaturas;
     }
 
@@ -69,4 +76,19 @@ public class Curso {
     public void setCodCurso(String codCurso) {
         this.codCurso = codCurso;
     }
+
+    /**
+     * @return the nroAula
+     */
+    public String getNroAula() {
+        return nroAula;
+    }
+
+    /**
+     * @param nroAula the nroAula to set
+     */
+    public void setNroAula(String nroAula) {
+        this.nroAula = nroAula;
+    }
+
 }

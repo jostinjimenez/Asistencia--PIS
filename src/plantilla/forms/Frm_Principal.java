@@ -1,4 +1,4 @@
-package plantilla.forms;
+    package plantilla.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.UIManager;
