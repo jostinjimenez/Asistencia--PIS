@@ -1,0 +1,18 @@
+{
+    "tda_listas.ListaEnlazada": {
+        "head": {
+            "data": {
+                "@class": "model.Horario",
+                "id": 1,
+                "dia": "Martes",
+                "horaInicio": "09:30 h",
+                "horaFin": "11:30 h",
+                "idAsignatura": 2
+            }
+        },
+        "last": {
+            "@reference": "..\/head"
+        },
+        "size": 1
+    }
+}
