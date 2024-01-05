@@ -116,13 +116,13 @@ public class Persona {
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("nombre")) {
-                    return this.getNombre().toLowerCase().compareTo(c.getNombre().toLowerCase()) > 0;
+                    return this.getNombre().compareTo(c.getNombre()) > 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     return this.getId() > (c.getId());
                 } else if (field.equalsIgnoreCase("apellido")) {
-                    return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) > 0;
+                    return this.getApellido().compareTo(c.getApellido()) > 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
-                    return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) > 0;
+                    return this.getCorreo_personal().compareTo(c.getCorreo_personal()) > 0;
                 } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
                     return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) > 0;
                 } else if (field.equalsIgnoreCase("telefono")) {
@@ -138,13 +138,13 @@ public class Persona {
                 }
             case 0:
                 if (field.equalsIgnoreCase("nombre")) {
-                    return this.getNombre().toLowerCase().compareTo(c.getNombre().toLowerCase()) < 0;
+                    return this.getNombre().compareTo(c.getNombre()) < 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     return this.getId() < (c.getId());
                 } else if (field.equalsIgnoreCase("apellido")) {
-                    return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) < 0;
+                    return this.getApellido().compareTo(c.getApellido()) < 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
-                    return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) < 0;
+                    return this.getCorreo_personal().compareTo(c.getCorreo_personal()) < 0;
                 } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
                     return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) < 0;
                 } else if (field.equalsIgnoreCase("telefono")) {
