@@ -9,6 +9,8 @@ import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
+import modulo_1.inicio_sesion.view.util.Utiles;
+import plantilla.components.Menu_Admin;
 
 public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
@@ -20,6 +22,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
         TextPrompt tp = new TextPrompt("Ingrese su correo institucional", txtUsuario);
         TextPrompt tp1 = new TextPrompt("Ingrese su clave", txtClave);
+
     }
 
     CuentaController cc = new CuentaController();
@@ -30,9 +33,11 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
         if (usuario.isEmpty() || clave.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
-        } else {
+        }
+        else {
             Cuenta cuenta = cc.validarCuenta(usuario, clave);
             cc.setCuenta(cuenta);
+            Utiles.setCc(cc);
             if (cuenta != null) {
                 switch (cc.identificarRolPersona(cc.getPersona(cuenta.getIdPersona()))) {
                     case 1 -> {
@@ -149,7 +154,8 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
+        }
+        catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }
         java.awt.EventQueue.invokeLater(() -> {

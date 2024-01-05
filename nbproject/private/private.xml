@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/DAO/Connection.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/plantilla/swing/progress/ProgressCircleUI.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
@@ -26,6 +27,11 @@
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Persona.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
 >>>>>>> master
+>>>>>>> master
+=======
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/plantilla/components/Menu_Admin.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
 >>>>>>> master
         </group>
     </open-files>

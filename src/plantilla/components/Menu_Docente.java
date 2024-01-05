@@ -10,11 +10,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
+import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
 public class Menu_Docente extends javax.swing.JPanel {
+
+    CuentaController cc = Utiles.getCc();
 
     public Menu_Docente() {
 
@@ -25,6 +29,8 @@ public class Menu_Docente extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(sb);
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
+        txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+
     }
 
     public void initMenu() {
@@ -86,6 +92,7 @@ public class Menu_Docente extends javax.swing.JPanel {
         roundPanel1 = new plantilla.swing.RoundPanel();
         imageAvatar1 = new com.raven.swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JLabel();
         roundPanel2 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelMenu = new javax.swing.JPanel();
@@ -99,6 +106,10 @@ public class Menu_Docente extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(203, 203, 203));
         jLabel2.setText("Docente");
 
+        txtUsername.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsername.setText("jLabel1");
+
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
@@ -106,8 +117,13 @@ public class Menu_Docente extends javax.swing.JPanel {
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2))
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtUsername)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roundPanel1Layout.setVerticalGroup(
@@ -115,7 +131,9 @@ public class Menu_Docente extends javax.swing.JPanel {
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addGap(23, 23, 23)
+                        .addComponent(txtUsername)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2))
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -183,5 +201,6 @@ public class Menu_Docente extends javax.swing.JPanel {
     private javax.swing.JPanel panelMenu;
     private plantilla.swing.RoundPanel roundPanel1;
     private plantilla.swing.RoundPanel roundPanel2;
+    private javax.swing.JLabel txtUsername;
     // End of variables declaration//GEN-END:variables
 }
