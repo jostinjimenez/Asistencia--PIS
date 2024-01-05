@@ -3,6 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
+=======
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerTematica.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/util/Util_VistaLinked1_Asistencia.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Horario.java</file>
@@ -26,6 +29,7 @@
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Cursa.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Persona.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
+>>>>>>> master
         </group>
     </open-files>
 </project-private>
