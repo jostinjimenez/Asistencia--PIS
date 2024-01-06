@@ -10,6 +10,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import model.Persona;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.util.Utiles;
@@ -29,7 +30,14 @@ public class Menu_Docente extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(sb);
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
-        txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+
+        Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
+        if (persona != null) {
+            txtUsername.setText(persona.toString());
+        }
+        else {
+            txtUsername.setText("Username");
+        }
 
     }
 

@@ -34,7 +34,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
     }
 
     public Cuenta getCuenta() {
-        return cuenta;
+        return cuenta != null ? cuenta : new Cuenta();
     }
 
     public void setCuenta(Cuenta cuenta) {
