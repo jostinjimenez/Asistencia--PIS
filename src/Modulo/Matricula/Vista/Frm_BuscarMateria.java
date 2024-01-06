@@ -132,7 +132,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             try {
                 Asignatura p = m.getAsignatura(tabla.getSelectedRow());
-                Frm_Maatricula.cargarMaterias(p);
+                Frm_Matricula.cargarMaterias(p);
             } catch (Exception e) {
             }
         }
