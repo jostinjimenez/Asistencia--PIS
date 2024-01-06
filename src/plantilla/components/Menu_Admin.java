@@ -29,7 +29,11 @@ public class Menu_Admin extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(sb);
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
-        txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+        if (cc.getCuenta() != null) {
+            txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+        }else{
+            txtUsername.setText("Username");
+        }
     }
 
     public void initMenu() {
