@@ -1,15 +1,18 @@
 package ModuloMatricula.Controller;
 
 import DAO.DataAccessObject;
-
 import model.Matricula;
+import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
+/**
+ *
+ * @author Usuario
+ */
+public class ControllerMatricula extends DataAccessObject<Matricula> {
 
-
-public class ControllerMatricula extends DataAccessObject<Matricula>{
-   private Matricula matricula = new Matricula();
+    private Matricula matricula = new Matricula();
     private ListaEnlazada<Matricula> lista = new ListaEnlazada<>();
     private Integer index = -1;
 
@@ -159,5 +162,15 @@ public class ControllerMatricula extends DataAccessObject<Matricula>{
         listaOrdenada = quicksort(lista, 0, campo);
         return listaOrdenada;
     }
-    
+
+    public static void main(String[] args) throws VacioExceptions {
+        ListaEnlazada<Integer> ids = new ListaEnlazada();
+        ids.add(3);
+        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
+        ControllerMatricula c = new ControllerMatricula();
+        c.save(matricula);
+        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
+
+    }
+
 }
