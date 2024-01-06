@@ -237,7 +237,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="plantilla.components.Menu_Admin" name="menu_Admin1">
+        <Component class="plantilla.components.Menu_Admin" name="menu_Admin2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="10" width="210" height="620"/>

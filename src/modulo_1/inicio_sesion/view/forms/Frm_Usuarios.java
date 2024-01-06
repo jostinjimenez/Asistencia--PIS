@@ -113,7 +113,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         cbxCriterio = new javax.swing.JComboBox<>();
         cbxRol = new javax.swing.JComboBox<>();
-        menu_Admin1 = new plantilla.components.Menu_Admin();
+        menu_Admin2 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -203,7 +203,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -266,7 +266,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private plantilla.components.Menu_Admin menu_Admin1;
+    private plantilla.components.Menu_Admin menu_Admin2;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTextField txtCriterio;
     // End of variables declaration//GEN-END:variables

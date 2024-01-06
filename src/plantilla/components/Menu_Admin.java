@@ -13,6 +13,7 @@ import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import ModuloEstudianteDocente.vista.*;
 import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
 
+import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
@@ -71,36 +72,40 @@ public class Menu_Admin extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
-        if (text.equals("Cerrar Sesión")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+        switch (text) {
+            case "Cerrar Sesión" -> menu.addActionListener(e -> {
+                int dialogResult = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
                     cerrarSesion();
                 }
             });
-        } else if (text.equals("Estudiantes")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    FrmEstudiante frm = new FrmEstudiante();
-                    frm.setVisible(true);
-                }
+            case "Menu Principal" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_Main_Admin frm = new Frm_Main_Admin(cc);
+                frm.setVisible(true);
             });
-        } else if (text.equals("Docentes")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    FrmDocente frm = new FrmDocente();
-                    frm.setVisible(true);
-                }
+            case "Estudiantes" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                FrmEstudiante frm = new FrmEstudiante();
+                frm.setVisible(true);
             });
-        } else if (text.equals("Usuarios")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Frm_Usuarios frm = new Frm_Usuarios();
-                    frm.setVisible(true);
-                }
+            case "Docentes" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                FrmDocente frm = new FrmDocente();
+                frm.setVisible(true);
+            });
+            case "Usuarios" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_Usuarios frm = new Frm_Usuarios();
+                frm.setVisible(true);
             });
         }
 
@@ -144,34 +149,8 @@ public class Menu_Admin extends javax.swing.JPanel {
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
-        roundPanel1Layout.setHorizontalGroup(
-                roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(roundPanel1Layout.createSequentialGroup()
-                                                .addGap(10, 10, 10)
-                                                .addComponent(jLabel2))
-                                        .addGroup(roundPanel1Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        roundPanel1Layout.setVerticalGroup(
-                roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundPanel1Layout.createSequentialGroup()
-                                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(roundPanel1Layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel2))
-                                        .addGroup(roundPanel1Layout.createSequentialGroup()
-                                                .addGap(10, 10, 10)
-                                                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(10, 10, 10))
-        );
+        roundPanel1Layout.setHorizontalGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(roundPanel1Layout.createSequentialGroup().addGap(10, 10, 10).addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE).addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(roundPanel1Layout.createSequentialGroup().addGap(10, 10, 10).addComponent(jLabel2)).addGroup(roundPanel1Layout.createSequentialGroup().addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        roundPanel1Layout.setVerticalGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(roundPanel1Layout.createSequentialGroup().addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(roundPanel1Layout.createSequentialGroup().addGap(20, 20, 20).addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jLabel2)).addGroup(roundPanel1Layout.createSequentialGroup().addGap(10, 10, 10).addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))).addGap(10, 10, 10)));
 
         roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -182,48 +161,20 @@ public class Menu_Admin extends javax.swing.JPanel {
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
-        panelMenuLayout.setHorizontalGroup(
-                panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 208, Short.MAX_VALUE)
-        );
-        panelMenuLayout.setVerticalGroup(
-                panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 578, Short.MAX_VALUE)
-        );
+        panelMenuLayout.setHorizontalGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 208, Short.MAX_VALUE));
+        panelMenuLayout.setVerticalGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 578, Short.MAX_VALUE));
 
         jScrollPane1.setViewportView(panelMenu);
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
-        roundPanel2Layout.setHorizontalGroup(
-                roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1)
-                                .addContainerGap())
-        );
-        roundPanel2Layout.setVerticalGroup(
-                roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1)
-                                .addContainerGap())
-        );
+        roundPanel2Layout.setHorizontalGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(roundPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jScrollPane1).addContainerGap()));
+        roundPanel2Layout.setVerticalGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(roundPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jScrollPane1).addContainerGap()));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(10, 10, 10).addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
