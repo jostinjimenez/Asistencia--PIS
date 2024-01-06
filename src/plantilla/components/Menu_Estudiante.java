@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.Persona;
 import modulo_1.inicio_sesion.controller.CuentaController;
@@ -62,13 +63,14 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
-        if (text.equals("Cerrar Sesión")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cerrarSesion();
-                }
-            });
+        switch (text) {
+            case "Cerrar Sesión" ->
+                menu.addActionListener(e -> {
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        cerrarSesion();
+                    }
+                });
         }
         panelMenu.add(menu);
     }

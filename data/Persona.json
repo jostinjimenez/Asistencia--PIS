@@ -51,14 +51,28 @@
               "dni": 1150696977,
               "activo": true,
               "idRol": 2
+            },
+            "next": {
+              "data": {
+                "@class": "model.Persona",
+                "id": 5,
+                "nombre": "Jhon",
+                "apellido": "Smitt",
+                "correo_personal": "jhonsmitt@gmail.com",
+                "fecha_nacimiento": "16 de mayo",
+                "telefono": "0999170229",
+                "dni": 1150696977,
+                "activo": true,
+                "idRol": 1
+              }
             }
           }
         }
       }
     },
     "last": {
-      "@reference": "..\/head\/next\/next\/next"
+      "@reference": "..\/head\/next\/next\/next\/next"
     },
-    "size": 4
+    "size": 5
   }
 }

@@ -3,12 +3,14 @@ package plantilla.components;
 import com.raven.swing.ButtonMenu;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.Persona;
 import modulo_1.inicio_sesion.controller.CuentaController;
@@ -62,14 +64,18 @@ public class Menu_Docente extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
-        if (text.equals("Cerrar Sesión")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cerrarSesion();
-                }
-            });
+        menu.setFont(new Font("Roboto", Font.PLAIN, 12));
+
+        switch (text) {
+            case "Cerrar Sesión" ->
+                menu.addActionListener(e -> {
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        cerrarSesion();
+                    }
+                });
         }
+
         panelMenu.add(menu);
     }
 
