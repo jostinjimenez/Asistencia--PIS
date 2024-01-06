@@ -72,6 +72,8 @@ public class Utiles {
     private static CuentaController cc;
 
     public static CuentaController getCc() {
+        if (cc == null)
+            cc = new CuentaController();
         return cc;
     }
 
