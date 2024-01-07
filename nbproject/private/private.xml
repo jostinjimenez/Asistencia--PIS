@@ -4,28 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/tablas/ModelTableHorario.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerTematica.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/util/Util_VistaLinked1_Asistencia.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/data/Estudiante.json</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Horario.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/Frm_AsistenciaJ.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/Frm_DocenteHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modulo_1/periodo_academico/controller/PeriodoAcController.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerAsistencia.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/plantilla/components/Header.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerHorario.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerCursa.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/data/Cursa.json</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Estudiante.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerAsignatura.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/plantilla/forms/Frm_Principal.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Matricula.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/tablas/ModelTableHorario.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/Frm_HorarioEstudiante.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerEstudiante.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/model/Cursa.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/tablas/ModelTableAsistenciaEstudiante.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/tablas/ModelTableAsistenciaDocente.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/data/PeriodoAcademico.json</file>
         </group>
     </open-files>
