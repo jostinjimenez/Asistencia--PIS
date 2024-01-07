@@ -72,7 +72,7 @@ public class Cursa {
 
     @Override
     public String toString() {
-        return id + paralelo;
+        return paralelo;
     }
 
     public Boolean comparar(Cursa cursa, String field, Integer type) {
@@ -82,13 +82,17 @@ public class Cursa {
                 if (field.equalsIgnoreCase("paralelo")) {
                     return getParalelo().compareTo(cursa.getParalelo()) > 0;
                 } else if (field.equalsIgnoreCase("id_matricula")) {
-                    return getIdAsignatura() > (cursa.getIdMatricula());
+                    return getIdMatricula() > (cursa.getIdMatricula());
+                } else if (field.equalsIgnoreCase("id_docente")) {
+                    return getIdDocente() > (cursa.getIdDocente());
                 }
             case 0:
                 if (field.equalsIgnoreCase("paralelo")) {
                     return getParalelo().compareTo(cursa.getParalelo()) < 0;
                 } else if (field.equalsIgnoreCase("id_matricula")) {
-                    return getIdAsignatura() < (cursa.getIdMatricula());
+                    return getIdMatricula() < (cursa.getIdMatricula());
+                } else if (field.equalsIgnoreCase("id_docente")) {
+                    return getIdDocente() < (cursa.getIdDocente());
                 }
             default:
                 return false;
@@ -103,6 +107,11 @@ public class Cursa {
             case "id_matricula":
                try {
                 return Integer.compare(Integer.parseInt(text), cursa.getIdMatricula());
+            } catch (Exception e) {
+            }
+            case "id_docente":
+                try {
+                return Integer.compare(Integer.parseInt(text), cursa.getIdDocente());
             } catch (Exception e) {
             }
             default:

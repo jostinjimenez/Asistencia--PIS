@@ -95,10 +95,9 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return ciclo + "" + id;
+        return ciclo + "-" + carrera;
     }
 
-  
     public Boolean comparar(Matricula c, String field, Integer type) {
 
         switch (type) {
@@ -107,6 +106,8 @@ public class Matricula {
                     return getCiclo() > (c.getCiclo());
                 } else if (field.equalsIgnoreCase("id_estudiante")) {
                     return getIdEstudiante() > (c.getIdEstudiante());
+                } else if (field.equalsIgnoreCase("id")) {
+                    return getIdEstudiante() > (c.getIdEstudiante());
                 }
 
             case 0:
@@ -114,6 +115,8 @@ public class Matricula {
                     return getCiclo() < (c.getCiclo());
                 } else if (field.equalsIgnoreCase("id_estudiante")) {
                     return getIdEstudiante() < (c.getIdEstudiante());
+                } else if (field.equalsIgnoreCase("id")) {
+                    return getId() < (c.getId());
                 }
             default:
                 return false;
@@ -133,7 +136,11 @@ public class Matricula {
                 return Integer.compare(Integer.parseInt(text), matricula.getIdEstudiante());
             } catch (Exception e) {
             }
-
+            case "id":
+               try {
+                return Integer.compare(Integer.parseInt(text), matricula.getId());
+            } catch (Exception e) {
+            }
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }

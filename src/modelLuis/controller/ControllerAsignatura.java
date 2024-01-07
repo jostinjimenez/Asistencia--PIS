@@ -79,7 +79,7 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
     public static void main(String[] args) {
         ListaEnlazada<Integer> ids = new ListaEnlazada();
         ids.add(2);
-        Asignatura asig = new Asignatura(2, "Base Datos", 6226212, 22312, ids);
+        Asignatura asig = new Asignatura(2, "Estrutura Datos", 37733, 279, ids);
         ControllerAsignatura c = new ControllerAsignatura();
         System.out.println(c.save(asig));
     }
@@ -159,7 +159,6 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     private ListaEnlazada<Asignatura> ordenarLista(ListaEnlazada<Asignatura> lista, String campo) throws VacioExceptions {
         ListaEnlazada<Asignatura> listaOrdenada = quicksort(lista, 0, campo);
-        System.out.println(listaOrdenada.print());
         return listaOrdenada;
     }
 

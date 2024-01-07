@@ -84,7 +84,7 @@
           "next": {
             "data": {
               "@class": "model.Estudiante",
-              "id": 4,
+              "id": 3,
               "activo": false
             }
           }
@@ -94,6 +94,6 @@
     "last": {
       "@reference": "..\/head\/next\/next\/next"
     },
-    "size": 4
+    "size": 3
   }
 }

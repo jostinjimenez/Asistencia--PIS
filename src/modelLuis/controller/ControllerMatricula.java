@@ -107,8 +107,8 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         array[i] = array[j];
         array[j] = temp;
     }
-    
-     public Matricula busquedaBinaria2(ListaEnlazada<Matricula> lista, String text, String campo) throws VacioExceptions {
+
+    public Matricula busquedaBinaria2(ListaEnlazada<Matricula> lista, String text, String campo) throws VacioExceptions {
         ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo);
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
         if (index != -1) {
@@ -118,7 +118,6 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
             return null;
         }
     }
-
 
     public ListaEnlazada<Matricula> busquedaBinaria(ListaEnlazada<Matricula> lista, String text, String campo, String tipo, Integer type) throws VacioExceptions {
         ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo);
@@ -169,6 +168,8 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
                 return Integer.toString(matricula.getCiclo()).equalsIgnoreCase(text);
             case "id":
                 return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
+            case "id_estudiante":
+                return Integer.toString(matricula.getIdEstudiante()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
@@ -179,15 +180,5 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         listaOrdenada = quicksort(lista, 0, campo);
         return listaOrdenada;
     }
-
-    public static void main(String[] args) throws VacioExceptions {
-//        ListaEnlazada<Integer> ids = new ListaEnlazada();
-//        ids.add(3);
-//        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
-//        ControllerMatricula c = new ControllerMatricula();
-//        c.save(matricula);
-        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
-    }
-
 
 }

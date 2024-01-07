@@ -1,40 +1,35 @@
 package modelLuis.view;
 
+import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 import model.Asignatura;
 import model.Cursa;
+import model.Docente;
 import model.Horario;
 import model.Matricula;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.controller.ControllerMatricula;
-import modelLuis.tablas.ModelTableAsistenciaEstudiante;
+import modelLuis.tablas.ModelTableAsistenciaDocente;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-public class Frm_HorarioEstudiante extends javax.swing.JFrame {
-
-    ModelTableAsistenciaEstudiante a = new ModelTableAsistenciaEstudiante();
+public class Frm_DocenteHorario extends javax.swing.JFrame {
 
     private ListaEnlazada<Horario> horarios = new ListaEnlazada<>();
-    private ListaEnlazada<Integer> ids;
     private ControllerAsignatura controlerAsignatura = new ControllerAsignatura();
-    private ControllerMatricula controlMatricula = new ControllerMatricula();
     private ControllerCursa controlCursa = new ControllerCursa();
     private ListaEnlazada<Cursa> cursas = new ListaEnlazada<>();
     private ListaEnlazada<Asignatura> listaAsis = new ListaEnlazada<>();
     private ControllerHorario controlHorario = new ControllerHorario();
-    private Integer id_Matricula;
+    private ModelTableAsistenciaDocente a = new ModelTableAsistenciaDocente();
     private Integer id = 1;
 
-    public Frm_HorarioEstudiante() {
+    public Frm_DocenteHorario() {
         initComponents();
-
         cargarTabla();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -47,33 +42,24 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         }
         a.setHorarios(horarios);
         a.setListaAsis(listaAsis);
-        tblHorario.setModel(a);
-        tblHorario.updateUI();
+        tblDocente.setModel(a);
+        tblDocente.updateUI();
     }
 
-    public void getMatricula() throws VacioExceptions {
+    public void getCursa() throws VacioExceptions {
         String idd = id.toString();
-        Matricula matricula = controlMatricula.busquedaBinaria2(controlMatricula.list_All(), idd, "id_estudiante");
-        id_Matricula = matricula.getId();
-    }
-
-    public void getAsignaturas() throws VacioExceptions {
-        getMatricula();
-        String ident = id_Matricula.toString();
-        cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), ident, "id_matricula", "quicksort", 0);
+        cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), idd, "id_docente", "quicksort", 0);
         for (Cursa cursa : cursas) {
             String iden = cursa.getIdAsignatura().toString();
             Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id", 0);
-            System.out.println(asi.getId());
             if (Objects.equals(cursa.getIdAsignatura(), asi.getId())) {
                 listaAsis.add(asi);
             }
         }
-
     }
 
     public void getHorario() throws VacioExceptions {
-        getAsignaturas();
+        getCursa();
         for (Asignatura asig : listaAsis) {
             String id_asi = asig.getId().toString();
             ListaEnlazada<Horario> listaHorarios = controlHorario.busquedaBinaria(controlHorario.list_All(), id_asi, "id_asignatura", "quicksort");
@@ -92,8 +78,7 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         bg_panel = new javax.swing.JPanel();
         roundPanel1 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblHorario = new javax.swing.JTable();
-        menu_Estudiante1 = new plantilla.components.Menu_Estudiante();
+        tblDocente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,7 +89,7 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tblHorario.setModel(new javax.swing.table.DefaultTableModel(
+        tblDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -115,12 +100,11 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblHorario);
+        jScrollPane1.setViewportView(tblDocente);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 640, 340));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
-        bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -142,16 +126,15 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_HorarioEstudiante().setVisible(true);
+            new Frm_DocenteHorario().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
     private javax.swing.JScrollPane jScrollPane1;
-    private plantilla.components.Menu_Estudiante menu_Estudiante1;
     private plantilla.swing.RoundPanel roundPanel1;
-    private javax.swing.JTable tblHorario;
+    private javax.swing.JTable tblDocente;
     // End of variables declaration//GEN-END:variables
 
 }

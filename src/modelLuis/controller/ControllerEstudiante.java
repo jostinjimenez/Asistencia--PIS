@@ -134,7 +134,6 @@ public class ControllerEstudiante extends DataAccessObject<Estudiante> {
     private int busquedaBinaria1(ListaEnlazada<Estudiante> lista, String text, String campo) throws VacioExceptions {
         int infe = 0;
         int sup = lista.getSize() - 1;
-
         while (infe <= sup) {
             int indice = (infe + sup) / 2;
             Estudiante mid = lista.get(indice);
@@ -167,7 +166,6 @@ public class ControllerEstudiante extends DataAccessObject<Estudiante> {
 
     private ListaEnlazada<Estudiante> ordenarLista(ListaEnlazada<Estudiante> lista, String campo) throws VacioExceptions {
         ListaEnlazada<Estudiante> listaOrdenada = quicksort(lista, 0, campo);
-        System.out.println(listaOrdenada.print());  
         return listaOrdenada;
     }
 
@@ -182,16 +180,16 @@ public class ControllerEstudiante extends DataAccessObject<Estudiante> {
             return null;
         }
     }
-
-    public static void main(String[] args) throws VacioExceptions {
-//        ListaEnlazada<Integer> ids = new ListaEnlazada();
-//        ids.add(3);
-//        Estudiante estudiante = new Estudiante(3,"Daniel", "Dorn", "luis33","2023-2030","9827728282","7267277272", "Loja", "Mestiza", true, ids);
-
-        ControllerEstudiante c = new ControllerEstudiante();
-        c.busquedaBinaria2(c.list_All(), "2", "id", 0);
-//        c.save(estudiante);
-        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
-
-    }
+//
+//    public static void main(String[] args) throws VacioExceptions {
+////        ListaEnlazada<Integer> ids = new ListaEnlazada();
+////        ids.add(3);
+////        Estudiante estudiante = new Estudiante(3,"Daniel", "Dorn", "luis33","2023-2030","9827728282","7267277272", "Loja", "Mestiza", true, ids);
+//
+//        ControllerEstudiante c = new ControllerEstudiante();
+//        c.busquedaBinaria2(c.list_All(), "2", "id", 0);
+////        c.save(estudiante);
+//        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
+//
+//    }
 }
