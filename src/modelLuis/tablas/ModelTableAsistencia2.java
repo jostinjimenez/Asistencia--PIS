@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import model.Asistencia;
 import model.Estudiante;
-import model.Matricula;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsistencia;
 import tda_listas.ListaEnlazada;

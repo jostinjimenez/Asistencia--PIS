@@ -14,7 +14,6 @@ import model.Cursa;
 import model.Docente;
 import model.Estudiante;
 import model.Horario;
-import model.Matricula;
 import model.PeriodoAcademico;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;

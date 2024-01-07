@@ -3,7 +3,6 @@ package modelLuis.tablas;
 import javax.swing.table.AbstractTableModel;
 import model.Asistencia;
 import model.Estudiante;
-import model.Matricula;
 
 import modelLuis.controller.ControllerAsistencia;
 import modelLuis.controller.ControllerEstudiante;

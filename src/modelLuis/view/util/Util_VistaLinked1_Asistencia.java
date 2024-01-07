@@ -4,7 +4,6 @@ import javax.swing.JComboBox;
 import model.Asignatura;
 import model.Cursa;
 import model.Horario;
-import model.Matricula;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
