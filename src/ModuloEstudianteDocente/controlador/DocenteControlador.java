@@ -12,17 +12,16 @@ import java.io.IOException;
  *
  * @author LENOVO
  */
-public class DocenteControlador extends DataAccessObject<Docente>{
+public class DocenteControlador extends DataAccessObject<Docente> {
+
     private Docente docente = new Docente();
-    
-    
-    
+
     public DocenteControlador() {
         super(Docente.class);
     }
 
     public Docente getDocente() {
-         if (docente == null) {
+        if (docente == null) {
             docente = new Docente();
         }
         return docente;
@@ -31,13 +30,13 @@ public class DocenteControlador extends DataAccessObject<Docente>{
     public void setDocente(Docente docente) {
         this.docente = docente;
     }
-    
+
     public Boolean save() {
         docente.setId(generarID());
         return save(docente);
     }
 
-    public void update(Integer pos) throws IOException{
+    public void update(Integer pos) throws IOException {
         this.update(docente, pos);
     }
 
@@ -51,6 +50,4 @@ public class DocenteControlador extends DataAccessObject<Docente>{
         code.append(length.toString());
         return code.toString();
     }
-    
 }
-

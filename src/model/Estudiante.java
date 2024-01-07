@@ -70,7 +70,7 @@ public class Estudiante extends Persona {
                 }
             case 0:
                 if (field.equalsIgnoreCase("id")) {
-                    return getId() > estudiante.getId();
+                    return getId() < estudiante.getId();
                 }
             default:
                 return false;
