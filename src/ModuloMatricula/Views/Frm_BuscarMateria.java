@@ -1,4 +1,4 @@
-package Modulo.Matricula.Vista;
+package ModuloMatricula.Views;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.logging.Level;
@@ -80,6 +80,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 880, 270));
 
         buttonGroup1.add(rbutton1);
+        rbutton1.setForeground(new java.awt.Color(255, 255, 255));
         rbutton1.setText("Nombre");
         rbutton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +90,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
         roundPanel1.add(rbutton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
 
         buttonGroup1.add(rbutton2);
+        rbutton2.setForeground(new java.awt.Color(255, 255, 255));
         rbutton2.setText("Codigo");
         rbutton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,8 +111,10 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
         });
         roundPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 350, -1));
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Busqueda de Materias");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, -1, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -120,8 +124,8 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 170, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 1020, 620));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 620));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 

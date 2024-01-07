@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.Persona;
+import modelLuis.view.Frm_HorarioEstudiante;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
@@ -75,6 +76,13 @@ public class Menu_Estudiante extends javax.swing.JPanel {
                 currentWindow.dispose();
 
                 Frm_Main_Estudiante frm = new Frm_Main_Estudiante(cc);
+                frm.setVisible(true);
+            });
+            case "Horario" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Estudiante.this);
+                currentWindow.dispose();
+
+                Frm_HorarioEstudiante frm = new Frm_HorarioEstudiante();    // Enviar el id del estudiante
                 frm.setVisible(true);
             });
 

@@ -1,4 +1,4 @@
-package Modulo.Matricula.Vista;
+package ModuloMatricula.Views;
 
 import ModuloMatricula.Views.UtilVista.Util_VistaLinked_Matricula;
 import com.formdev.flatlaf.FlatDarkLaf;

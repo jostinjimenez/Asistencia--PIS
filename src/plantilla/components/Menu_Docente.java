@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.Persona;
+import modelLuis.view.Frm_AsistenciaJ;
+import modelLuis.view.Frm_DocenteHorario;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
@@ -77,6 +79,20 @@ public class Menu_Docente extends javax.swing.JPanel {
                 currentWindow.dispose();
 
                 Frm_Main_Docente frm = new Frm_Main_Docente(cc);
+                frm.setVisible(true);
+            });
+            case "Registro de Asistencia" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
+                currentWindow.dispose();
+
+                Frm_AsistenciaJ frm = new Frm_AsistenciaJ(); // Enviar el ID del docente
+                frm.setVisible(true);
+            });
+            case "Horario Academico" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
+                currentWindow.dispose();
+
+                Frm_DocenteHorario frm = new Frm_DocenteHorario(); // Enviar el ID del docente
                 frm.setVisible(true);
             });
         }

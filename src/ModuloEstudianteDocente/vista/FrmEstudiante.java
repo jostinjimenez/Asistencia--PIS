@@ -231,7 +231,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonBadges1 = new com.raven.swing.ButtonBadges();
         jPanel1 = new javax.swing.JPanel();
         roundPanel3 = new plantilla.swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -260,8 +259,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEstudiante = new javax.swing.JTable();
-
-        buttonBadges1.setText("buttonBadges1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -513,7 +510,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private com.raven.swing.ButtonBadges buttonBadges1;
     private javax.swing.JComboBox<String> cbxTituloBach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

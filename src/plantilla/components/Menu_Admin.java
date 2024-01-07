@@ -1,5 +1,6 @@
 package plantilla.components;
 
+import ModuloMatricula.Views.Frm_Matricula;
 import com.raven.swing.ButtonMenu;
 
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.util.Objects;
 import javax.swing.*;
 
 import model.Persona;
+import modelLuis.view.Frm_HorarioAdmi;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import ModuloEstudianteDocente.vista.*;
@@ -52,6 +54,7 @@ public class Menu_Admin extends javax.swing.JPanel {
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/matricula.png"))), "Matriculas", 5);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/asignatura.png"))), "Asignaturas", 6);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Periodos Academicos", 7);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Horarios", 8);
         addEmpty();
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/salir.png"))), "Cerrar Sesión", 8);
     }
@@ -115,6 +118,20 @@ public class Menu_Admin extends javax.swing.JPanel {
                 currentWindow.dispose();
 
                 Frm_PeriodosAcademicos frm = new Frm_PeriodosAcademicos();
+                frm.setVisible(true);
+            });
+            case "Horarios" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_HorarioAdmi frm = new Frm_HorarioAdmi();
+                frm.setVisible(true);
+            });
+            case "Matriculas" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_Matricula frm = new Frm_Matricula();
                 frm.setVisible(true);
             });
         }
