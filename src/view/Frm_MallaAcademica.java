@@ -12,27 +12,25 @@ import view.tablas.ModeloTablaMallas;
 public class Frm_MallaAcademica extends javax.swing.JFrame {
 
     private MallaController mallaController = new MallaController();
-    private ModeloTablaMallas mtm = new ModeloTablaMallas();
+    private ModeloTablaMallas modeloTablaMallas = new ModeloTablaMallas();
 
     public Frm_MallaAcademica() {
         initComponents();
 
-        // Centrar la ventana
         setLocationRelativeTo(null);
-
-        // Deshabilitar la modificación del tamaño
         setResizable(false);
-
-        // Establecer el nombre de la ventana
         setTitle("Mallas Académicas");
 
-        // Cargar contenido en la tabla al iniciar
+        mallaController = new MallaController();
+        modeloTablaMallas = new ModeloTablaMallas();
+        modeloTablaMallas.setMallaController(mallaController);
+
         cargarTabla();
     }
 
     public void cargarTabla() {
-        mtm.setLista(mallaController.getLista());
-        tablaMallas.setModel(mtm);
+        modeloTablaMallas.getMallaController().setLista(modeloTablaMallas.getMallaController().list_All());
+        tablaMallas.setModel(modeloTablaMallas);
         tablaMallas.updateUI();
     }
 
@@ -46,22 +44,28 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         if (validar()) {
             try {
                 // Obtener los datos del formulario
-                String duracion = txtDuracion.getText();
                 String descripcion = txtDescripcion.getText();
-                String nombreSilabo = txtNombreSilabo.getText();
+                String duracion = txtDuracion.getText();
+                String silabo = txtNombreSilabo.getText();
+
+                // Generar nuevo id
+                Integer nuevoId = Integer.parseInt(mallaController.generatedCode());
 
                 // Configurar los datos en el controlador
-                Malla nuevaMalla = new Malla(mallaController.generarId(), duracion, descripcion, nombreSilabo, null);
-                mallaController.add(nuevaMalla);
+                mallaController.getMalla().setId(nuevoId);
+                mallaController.getMalla().setDescripcion(descripcion);
+                mallaController.getMalla().setDuracion(duracion);
+                mallaController.getMalla().setNombreSilabo(silabo);
 
-                if (mallaController.guardar()) {
+                if (mallaController.saved()) {
                     cargarTabla();
-                    JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                // Manejar la excepción aquí
+                System.out.println("Error al guardar la Asignatura desde el formulario: " + e.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
@@ -69,18 +73,14 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     }
 
     private int obtenerIdDesdeFilaSeleccionada(int filaSeleccionada) {
-        // Obtener el valor de la columna que contiene el ID desde el modelo de tabla
-        int columnaId = 0; // Asume que la columna 0 contiene el ID, ajusta según tu estructura
+        int columnaId = 0;
         return (int) tablaMallas.getValueAt(filaSeleccionada, columnaId);
     }
 
     private void eliminar() {
-        // Obtener el índice de la fila seleccionada
         int filaSeleccionada = tablaMallas.getSelectedRow();
 
-        // Verificar si se ha seleccionado alguna fila
         if (filaSeleccionada >= 0) {
-            // Confirmar si realmente desea eliminar la fila
             int confirmacion = JOptionPane.showConfirmDialog(
                     this,
                     "¿Está seguro de que desea eliminar la malla académica seleccionada?",
@@ -88,11 +88,9 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                // Obtener el objeto Malla correspondiente a la fila seleccionada
                 int mallaAEliminar = obtenerIdDesdeFilaSeleccionada(filaSeleccionada);
-                // Eliminar el objeto Malla utilizando el método delete del controlador
+
                 if (mallaController.delete(mallaAEliminar)) {
-                    // Actualizar la tabla
                     cargarTabla();
 
                     JOptionPane.showMessageDialog(
@@ -125,23 +123,19 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
 
     public void modificar() throws VacioExceptions {
         if (validar()) {
-            // Obtener los datos del formulario
             String duracion = txtDuracion.getText();
             String descripcion = txtDescripcion.getText();
             String nombreSilabo = txtNombreSilabo.getText();
 
-            // Configurar los datos en el controlador
             mallaController.getMalla().setDuracion(duracion);
             mallaController.getMalla().setDescripcion(descripcion);
             mallaController.getMalla().setNombreSilabo(nombreSilabo);
 
-            // Obtener el índice de la fila seleccionada
             int filaSeleccionada = tablaMallas.getSelectedRow();
 
-            // Verificar si se ha seleccionado alguna fila
             if (filaSeleccionada >= 0 && filaSeleccionada < mallaController.getLista().getSize()) {
-                Malla nuevaMalla = cargarDatosSeleccionados();  // Reemplaza esto con el método que obtiene los datos del formulario
-                mallaController.updateMalla(nuevaMalla, filaSeleccionada);
+                Malla nuevaMalla = cargarDatosSeleccionados();
+                mallaController.update(nuevaMalla, filaSeleccionada);
 
                 cargarTabla();
                 JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
@@ -154,51 +148,45 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     }
 
     private Malla cargarDatosSeleccionados() {
-        // Reemplaza este bloque con el código que obtiene los datos del formulario y crea un objeto Malla
         int filaSeleccionada = tablaMallas.getSelectedRow();
         int id = obtenerIdDesdeFilaSeleccionada(filaSeleccionada);
         String duracion = txtDuracion.getText();
         String descripcion = txtDescripcion.getText();
         String nombreSilabo = txtNombreSilabo.getText();
 
-        // Devuelve un nuevo objeto Malla con los datos cargados
         return new Malla(id, duracion, descripcion, nombreSilabo, null);
     }
 
     private void buscar() {
-        String criterioBusqueda = txtBuscarCriterio.getText();
-        String criterio = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+        // Obtener el criterio ingresado en el campo de búsqueda
+        String criterioBusqueda = txtBuscarCriterio.getText();  // No convertir a minúsculas
 
-        Comparator<Malla> comparador = Comparator.comparing(m -> {
-            switch (criterio) {
-                case "descripcion":
-                    return m.getDescripcion();
-                case "duracion":
-                    return m.getDuracion();
-                case "silabo":
-                    return m.getNombreSilabo();
-                default:
-                    return "";
+        // Obtener el criterio de búsqueda seleccionado en el combobox
+        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
+
+        // Verificar si se ingresó un criterio válido
+        if (!criterio.isEmpty()) {
+            // Seleccionar el comparador adecuado según el criterio de búsqueda
+            Comparator<Malla> comparador = (criterio.equals("descripcion"))
+                    ? Comparator.comparing(Malla::getDescripcion)
+                    : (criterio.equals("duracion"))
+                    ? Comparator.comparing(Malla::getDuracion)
+                    : Comparator.comparing(Malla::getNombreSilabo);
+
+            // Realizar la búsqueda en el modelo de la tabla
+            int indice = modeloTablaMallas.buscar(criterioBusqueda, comparador, criterio);
+
+            // Verificar si se encontró la asignatura
+            if (indice >= 0) {
+                // Seleccionar la fila encontrada
+                tablaMallas.setRowSelectionInterval(indice, indice);
+                // Cargar los datos seleccionados en los campos de texto
+                cargarDatosSeleccionados();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
             }
-        });
-
-        Malla resultado = mallaController.buscar(criterioBusqueda, comparador, criterio);
-
-        if (resultado != null) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Malla encontrada:\nID: " + resultado.getId()
-                            + "\nDuración: " + resultado.getDuracion()
-                            + "\nDescripción: " + resultado.getDescripcion()
-                            + "\nNombre Silabo: " + resultado.getNombreSilabo(),
-                    "Resultado de búsqueda",
-                    JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No se encontró ninguna malla que coincida con la búsqueda",
-                    "Búsqueda sin resultados",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -206,9 +194,9 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
         String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
 
-        if (!campoOrden.isEmpty() && mtm.esCampoValido(campoOrden)) {
-            mtm.ordenar(campoOrden, tipoOrden);
-            cargarTabla();  // Actualizar la tabla después de ordenar
+        if (!campoOrden.isEmpty() && modeloTablaMallas.esCampoValido(campoOrden)) {
+            modeloTablaMallas.ordenar(campoOrden, tipoOrden);
+            cargarTabla();
         } else {
             JOptionPane.showMessageDialog(
                     this,
@@ -217,7 +205,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

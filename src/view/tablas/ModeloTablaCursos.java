@@ -1,35 +1,30 @@
 package view.tablas;
 
+import controller.CursoController;
 import java.util.Comparator;
 import javax.swing.table.AbstractTableModel;
 import model.Curso;
-import controller.CursoController;
-import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 public class ModeloTablaCursos extends AbstractTableModel {
 
-    private CursoController controller;
+    private CursoController cursoController;
 
-    public ModeloTablaCursos() {
-        controller = new CursoController();
+    @Override
+    public int getColumnCount() {
+        return 4;
     }
 
     @Override
     public int getRowCount() {
-        return controller.getLista().getSize();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return 4; // Asegúrate de ajustar el número de columnas según tu necesidad
+        return (cursoController != null && cursoController.getLista() != null) ? cursoController.getLista().getSize() : 0;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        Curso curso = null;
+        Curso curso;
         try {
-            curso = controller.getLista().get(row);
+            curso = cursoController.getLista().get(row);
         } catch (VacioExceptions e) {
             throw new RuntimeException(e);
         }
@@ -56,106 +51,58 @@ public class ModeloTablaCursos extends AbstractTableModel {
             case 1:
                 return "Código Curso";
             case 2:
-                return "Nro. Estudiante";
+                return "Nro Estudiante";
             case 3:
-                return "Nro. Aula";
+                return "Nro Aula";
             default:
                 return null;
         }
     }
 
-    public Curso buscar(String criterioBusqueda, Comparator<Curso> comparador, String criterio) {
-        ListaEnlazada<Curso> lista = getLista();
+    public CursoController getCursoController() {
+        return cursoController;
+    }
 
-        for (int i = 0; i < lista.getSize(); i++) {
-            try {
-                Curso actual = lista.get(i);
+    public void setCursoController(CursoController cursoController) {
+        this.cursoController = cursoController;
+    }
 
-                if ("codigo curso".equalsIgnoreCase(criterio) && comparador.compare(actual, new Curso(-1, -1, criterioBusqueda, null, -1)) == 0) {
-                    return actual;
-                } else if ("nro. estudiante".equalsIgnoreCase(criterio) && comparador.compare(actual, new Curso(-1, Integer.parseInt(criterioBusqueda), "", null, -1)) == 0) {
-                    return actual;
-                } else if ("nro. aula".equalsIgnoreCase(criterio) && comparador.compare(actual, new Curso(-1, -1, "", criterioBusqueda, null, -1)) == 0) {
-                    return actual;
-                }
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return null; // Devuelve null si no se encuentra el curso
+    public int buscar(String criterioBusqueda, Comparator<Curso> comparador, String criterio) {
+        int resultado = cursoController.buscar(criterioBusqueda, comparador, criterio);
+        return resultado;
     }
 
     public boolean esCampoValido(String campo) {
-        return campo.equalsIgnoreCase("codigo curso") || campo.equalsIgnoreCase("nro. estudiante") || campo.equalsIgnoreCase("nro. aula");
+        // Método para verificar si el campo de búsqueda es válido (codCurso, nroAula)
+        boolean esValido = campo.equalsIgnoreCase("codCurso") || campo.equalsIgnoreCase("nroAula");
+        return esValido;
     }
 
-    public void quicksort(String campoOrden, String tipoOrden) throws VacioExceptions {
-        Comparator<Curso> comparador = (campoOrden.equalsIgnoreCase("codigo curso"))
+    public void ordenar(String campo, String tipoOrden) {
+        System.out.println("Antes de ordenar: " + cursoController.getLista().print());
+
+        Comparator<Curso> comparador = (campo.equals("codCurso"))
                 ? Comparator.comparing(Curso::getCodCurso)
-                : (campoOrden.equalsIgnoreCase("nro. estudiante"))
-                ? Comparator.comparing(Curso::getNroEstudiante)
                 : Comparator.comparing(Curso::getNroAula);
 
-        if (tipoOrden.equalsIgnoreCase("ascendente")) {
-            controller.quicksort(controller.getLista(), campoOrden, comparador);
-        } else if (tipoOrden.equalsIgnoreCase("descendente")) {
+        if (tipoOrden.equals("descendente")) {
             comparador = comparador.reversed();
-            controller.quicksort(controller.getLista(), campoOrden, comparador);
         }
+
+        System.out.println("Después de ordenar: " + cursoController.getLista().print());
 
         fireTableDataChanged();
     }
 
-    public void setLista(ListaEnlazada<Curso> lista) {
-        controller.setLista(lista);
-    }
-
-    public Curso getCursoAt(int index) {
-        try {
-            return controller.getLista().get(index);
-        } catch (VacioExceptions e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ListaEnlazada<Curso> getLista() {
-        return controller.getLista();
-    }
-
-    public void ordenar(String campoOrden, String tipoOrden) {
-        // Obtén la lista actual de cursos
-        ListaEnlazada<Curso> lista = getLista();
-
-        // Asegúrate de que la lista no sea nula
-        if (lista != null && !lista.isEmpty()) {
-            // Crea un comparador según el campo y tipo de orden
-            Comparator<Curso> comparador = (campoOrden.equalsIgnoreCase("codigo curso"))
-                    ? Comparator.comparing(Curso::getCodCurso)
-                    : (campoOrden.equalsIgnoreCase("nro. estudiante"))
-                    ? Comparator.comparing(Curso::getNroEstudiante)
-                    : Comparator.comparing(Curso::getNroAula);
-
-            // Obtén el array de cursos
-            Curso[] arrayCursos = lista.toArray();
-
-            // Aplica el algoritmo de ordenación
-            for (int i = 0; i < arrayCursos.length - 1; i++) {
-                for (int j = 0; j < arrayCursos.length - 1 - i; j++) {
-                    if (comparador.compare(arrayCursos[j], arrayCursos[j + 1]) > 0) {
-                        // Intercambia los elementos si están en el orden incorrecto
-                        Curso temp = arrayCursos[j];
-                        arrayCursos[j] = arrayCursos[j + 1];
-                        arrayCursos[j + 1] = temp;
-                    }
-                }
-            }
-
-            // Actualiza la lista con el array ordenado
-            lista.toList(arrayCursos);
-
-            // Notifica a la tabla que los datos han cambiado
-            fireTableDataChanged();
+    private Comparator<Curso> obtenerComparador(String campoOrden) {
+        switch (campoOrden) {
+            case "codCurso":
+                return Comparator.comparing(Curso::getCodCurso);
+            case "nroAula":
+                return Comparator.comparing(Curso::getNroAula);
+            // Puedes agregar más casos según tus necesidades
+            default:
+                return null;
         }
     }
 }

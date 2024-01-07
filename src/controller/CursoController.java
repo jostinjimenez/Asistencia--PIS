@@ -1,22 +1,22 @@
 package controller;
 
 import DAO.DataAccessObject;
-import java.util.Comparator;
-import javax.swing.table.DefaultTableModel;
-import model.Curso;
-
 import tda_listas.ListaEnlazada;
+import tda_listas.Nodo;
 import tda_listas.exceptions.VacioExceptions;
+import java.util.Comparator;
+import java.util.Iterator;
+import model.Curso;
 
 public class CursoController extends DataAccessObject<Curso> {
 
     private Curso curso = new Curso();
-    private ListaEnlazada<Curso> lista = new ListaEnlazada<>();
-    private Integer index = -1;
+    private ListaEnlazada<Curso> lista;
+    private static Integer lastUsedId = 0;
 
     public CursoController() {
         super(Curso.class);
-        lista = list_All();  // Asegúrate de cargar la lista al inicio
+        lastUsedId = generarID();
     }
 
     public Curso getCurso() {
@@ -30,23 +30,58 @@ public class CursoController extends DataAccessObject<Curso> {
         this.curso = curso;
     }
 
-    public Boolean guardar() {
-        Boolean result = save(curso);
-
-        if (result) {
-            System.out.println("Curso guardado correctamente.");
-        } else {
-            System.out.println("Error al guardar el curso.");
+    public boolean validar() {
+        // Verificar que el Curso no es null
+        if (curso == null) {
+            return false;
         }
 
-        return result;
+        // Verificar que los campos del Curso no son null o vacíos
+        return curso.isValid();
+    }
+
+    public Boolean saved() {
+        if (validar()) {
+            try {
+                // Obtener los datos del formulario
+                Integer nroEstudiante = curso.getNroEstudiante();
+                String codCurso = curso.getCodCurso();
+                String nroAula = curso.getNroAula();
+
+                // Incrementar el lastUsedId antes de asignarlo al nuevo ID
+                Integer id = ++lastUsedId;
+
+                // Crear una nueva instancia de Curso con los valores correctos
+                Curso cursoGuardar = new Curso();
+                cursoGuardar.setId(id);
+                cursoGuardar.setNroEstudiante(nroEstudiante);
+                cursoGuardar.setCodCurso(codCurso);
+                cursoGuardar.setNroAula(nroAula);
+
+                // Guardar el Curso
+                boolean isSaved = save(cursoGuardar);
+                if (isSaved) {
+                    lista = getLista(); // Actualizar la lista después de guardar
+                }
+
+                return isSaved;
+            } catch (Exception e) {
+                // Manejar la excepción aquí
+                System.out.println("Error al guardar el Curso: " + e.getMessage());
+                return false;
+            }
+        } else {
+            System.out.println("Error: los datos del Curso no son válidos");
+            return false;
+        }
     }
 
     public ListaEnlazada<Curso> getLista() {
+        lista = list_All(); // Actualizar la lista desde la base de datos
         return lista;
     }
 
-    public Boolean actualizar(Integer i) {
+    public Boolean update(Integer i) {
         return update(curso, i);
     }
 
@@ -54,67 +89,102 @@ public class CursoController extends DataAccessObject<Curso> {
         this.lista = lista;
     }
 
-    public Integer generarId() {
-        // Obtener el máximo ID actual mediante un bucle tradicional
-        Integer maxId = 0;
-        for (Curso curso : lista) {
-            Integer currentId = curso.getId();
-            if (currentId != null && currentId > maxId) {
-                maxId = currentId;
+    private Integer getLastUsedIdFromDatabase() throws VacioExceptions {
+        // Obtener el último ID generado por el DataAccessObject
+        return generarID();
+    }
+
+    public int busquedaLineal(Curso elemento, Comparator<Curso> comparador) {
+        Nodo<Curso> current = lista.getHead();
+        int index = 0;
+
+        while (current != null) {
+            if (comparador.compare(current.getData(), elemento) == 0) {
+                return index;
             }
+
+            current = current.getNext();
+            index++;
         }
 
-        // Incrementar el máximo ID en 1 para obtener un nuevo ID único
-        return maxId + 1;
+        return -1;
     }
 
-    public void quicksort(ListaEnlazada<Curso> lista, String campoOrden, Comparator<Curso> comparador) {
-        Curso[] array = lista.toArray();
-        quicksort(array, 0, array.length - 1, campoOrden, comparador);
-        lista.toList(array);
+    public int buscar(String criterioBusqueda, Comparator<Curso> comparador, String criterio) {
+        Nodo<Curso> current = (Nodo<Curso>) lista.getHead();
+
+        int index = 0;
+
+        while (current != null) {
+            Curso curso = current.getData();
+
+            if ("nroEstudiante".equalsIgnoreCase(criterio) && curso.getNroEstudiante().equals(Integer.parseInt(criterioBusqueda))) {
+                return index;
+            } else if ("codCurso".equalsIgnoreCase(criterio) && curso.getCodCurso().equalsIgnoreCase(criterioBusqueda)) {
+                return index;
+            } else if ("nroAula".equalsIgnoreCase(criterio) && curso.getNroAula().equalsIgnoreCase(criterioBusqueda)) {
+                return index;
+            }
+
+            current = current.getNext();
+            index++;
+        }
+
+        System.out.println("No se encontró ningún curso con el criterio proporcionado.");
+        return -1;
     }
 
-    // Asegúrate de que estos métodos también estén presentes en tu clase
-    private void quicksort(Curso[] array, int low, int high, String campoOrden, Comparator<Curso> comparador) {
+    public Integer getIndex() {
+        Iterator<Curso> iterator = lista.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            if (iterator.next() == curso) {
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
+    }
+
+    public void quicksort(ListaEnlazada<Curso> lista, Comparator<Curso> comparador, boolean ascendente) throws VacioExceptions {
+        quicksortRecursivo(lista, 0, lista.getSize() - 1, comparador, ascendente);
+    }
+
+    private void quicksortRecursivo(ListaEnlazada<Curso> lista, int low, int high, Comparator<Curso> comparador, boolean ascendente) throws VacioExceptions {
         if (low < high) {
-            int pivotIndex = partition(array, low, high, campoOrden, comparador);
-            quicksort(array, low, pivotIndex - 1, campoOrden, comparador);
-            quicksort(array, pivotIndex + 1, high, campoOrden, comparador);
+            int pivotIndex = particion(lista, low, high, comparador, ascendente);
+
+            // Recursivamente ordenar los elementos antes y después del pivote
+            quicksortRecursivo(lista, low, pivotIndex - 1, comparador, ascendente);
+            quicksortRecursivo(lista, pivotIndex + 1, high, comparador, ascendente);
         }
     }
 
-    private int partition(Curso[] array, int low, int high, String campoOrden, Comparator<Curso> comparador) {
-        Curso pivote = array[high];
+    private int particion(ListaEnlazada<Curso> lista, int low, int high, Comparator<Curso> comparador, boolean ascendente) throws VacioExceptions {
+        Curso pivot = lista.get(high);
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (comparador.compare(array[j], pivote) <= 0) {
+            if (compareCursos(lista.get(j), pivot, comparador, ascendente) <= 0) {
                 i++;
-                swap(array, i, j);
+                swap(lista, i, j);
             }
         }
 
-        swap(array, i + 1, high);
+        swap(lista, i + 1, high);
         return i + 1;
     }
 
-    private void swap(Curso[] array, int i, int j) {
-        Curso temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    private void swap(ListaEnlazada<Curso> lista, int i, int j) throws VacioExceptions {
+        Curso temp = lista.get(i);
+        lista.update(i, lista.get(j));
+        lista.update(j, temp);
     }
 
-    public void add(Curso nuevoCurso) {
-        lista.add(nuevoCurso);
+    private int compareCursos(Curso c1, Curso c2, Comparator<Curso> comparador, boolean ascendente) {
+        int resultado = comparador.compare(c1, c2);
+        return ascendente ? resultado : -resultado;
     }
-
-    public boolean updateCurso(Curso curso, int indice) throws VacioExceptions {
-        // Asegúrate de que el índice sea válido
-        if (indice >= 0 && indice < lista.getSize()) {
-            lista.update(indice, curso);
-            return true;
-        }
-        return false;
-    }
-    
 }

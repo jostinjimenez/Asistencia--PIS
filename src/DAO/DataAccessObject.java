@@ -35,7 +35,7 @@ public class DataAccessObject<T> implements TransferObject {
     }
 
     public Integer generarID() {
-        return list_All().getSize() + 1;
+        return list_All().getSize();
     }
 
     @Override
@@ -74,33 +74,46 @@ public class DataAccessObject<T> implements TransferObject {
     public Object find(Integer id) {
         return null;
     }
-
+  
     @Override
-    public Boolean delete(Integer id) {
+    public Boolean delete(Object data) {
         ListaEnlazada<T> list = list_All();
-        try {
-            if (!list.isEmpty()) {
-                T entidadAEliminar = list.get(id);
-                if (list.delete(id) != null) {
-                    this.xStream.alias(list.getClass().getName(), ListaEnlazada.class);
-                    try {
-                        this.xStream.toXML(list, new FileOutputStream(URL));
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                // Manejar el caso cuando la lista está vacía
-                System.err.println("La lista está vacía, no se puede eliminar.");
+
+        // Buscar el objeto en la lista utilizando el método equals
+        T objectToDelete = (T) data;
+        boolean found = false;
+        int index = 0;
+
+        for (T item : list) {
+            if (item.equals(objectToDelete)) {
+                found = true;
+                break;
+            }
+            index++;
+        }
+
+        if (found) {
+            try {
+                // Agregar impresión de debug
+                System.out.println("Index to delete: " + index);
+
+                // Eliminar el objeto de la lista
+                list.delete(index);
+
+                // Actualizar el archivo XML
+                this.xStream.alias(list.getClass().getName(), ListaEnlazada.class);
+                this.xStream.toXML(list, new FileOutputStream(URL));
+
+                return true;
+            } catch (Exception e) {
+                // Agregar impresión de debug
+                System.out.println("Error deleting object: " + e.getMessage());
                 return false;
             }
-        } catch (VacioExceptions ex) {
-            // Manejar la excepción o imprimir un mensaje de depuración
-            System.err.println("Error al intentar eliminar el elemento: " + ex.getMessage());
-            return false;
+        } else {
+            // Agregar impresión de debug
+            System.out.println("Object not found in the list.");
+            return false; // El objeto no se encontró en la lista
         }
     }
 }

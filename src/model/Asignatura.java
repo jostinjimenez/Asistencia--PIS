@@ -1,11 +1,12 @@
 package model;
 
+import java.util.Objects;
 import tda_listas.ListaEnlazada;
 
 public class Asignatura {
 
     // Atributos
-    private Integer id;
+    Integer id;
     private String nombre;
     private Integer horasTotales;
     private Integer codigo;
@@ -76,29 +77,27 @@ public class Asignatura {
         return nombre;
     }
 
-    public boolean comparar(String texto, String campo, Integer type) {
-        switch (campo.toLowerCase()) {
-            case "nombre":
-                return compararCampo(nombre, texto, type);
-            case "codigo":
-                return compararCampo(codigo.toString(), texto, type);
-            // Agrega otros campos según sea necesario
-            default:
-                throw new IllegalArgumentException("Campo de comparación no válido");
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Asignatura that = (Asignatura) obj;
+        return Objects.equals(id, that.id);
     }
 
-    private boolean compararCampo(String campo, String texto, Integer type) {
-        // Lógica de comparación para campos String
-        // Puedes ajustar esto según tus necesidades específicas
-        switch (type) {
-            case 0: // Igual
-                return campo.equalsIgnoreCase(texto);
-            case 1: // Contiene
-                return campo.toLowerCase().contains(texto.toLowerCase());
-            // Agrega otros tipos de comparación según sea necesario
-            default:
-                throw new IllegalArgumentException("Tipo de comparación no válido");
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+    
+    public boolean isValid() {
+        // Verificar que los campos necesarios no sean null o vacíos
+        return nombre != null && !nombre.isEmpty()
+                && codigo != null && codigo > 0
+                && horasTotales != null && horasTotales > 0;
     }
 }

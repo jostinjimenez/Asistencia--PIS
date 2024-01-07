@@ -7,26 +7,45 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import view.tablas.ModeloTablaAsignaturas;
 import model.Asignatura;
-import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-public class Frm_AgregarAsignatura extends javax.swing.JFrame {
+public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
     private AsignaturaController ac = new AsignaturaController();
     private ModeloTablaAsignaturas mta = new ModeloTablaAsignaturas();
 
-    public Frm_AgregarAsignatura() {
+    /**
+     * Creates new form Frm_AgregarAsistencia
+     */
+    public FrmAgregarAsignatura() {
         initComponents();
+
+        // Centrar la ventana
         setLocationRelativeTo(null);
+
+        // Deshabilitar la modificación del tamaño
         setResizable(false);
+
+        // Establecer el nombre de la ventana
         setTitle("Agregar Asignaturas");
+
+        // Inicializar el controlador y el modelo de la tabla
+        ac = new AsignaturaController();
+        mta = new ModeloTablaAsignaturas();
+        mta.setAsignaturaController(ac);
+
+        // Cargar contenido en la tabla al iniciar
         cargarTabla();
     }
 
     public void cargarTabla() {
-        mta.setLista(ac.getLista());
+        System.out.println("Cargando la tabla...");
+        mta.getAsignaturaController().setLista(mta.getAsignaturaController().list_All());
         tablaAsignaturas.setModel(mta);
+        mta.fireTableDataChanged();
         tablaAsignaturas.updateUI();
+        tablaAsignaturas.repaint();  // Agrega esta línea
+        System.out.println("Tabla cargada exitosamente.");
     }
 
     public Boolean validar() {
@@ -35,53 +54,56 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
                 && !txtHorasTotales.getText().trim().isEmpty();
     }
 
-    private Integer generatedId() {
-        // Lógica para generar un ID único usando un contador
-        return ac.generarId();
-    }
-
     public void guardar() {
         if (validar()) {
             try {
+                // Obtener los datos del formulario
                 String nombre = txtNombreAsignatura.getText();
                 String codigoStr = txtCodigoAsigntura.getText();
                 String horasTotalesStr = txtHorasTotales.getText();
 
+                // Convertir a los tipos de datos apropiados
                 Integer horasTotales = Integer.parseInt(horasTotalesStr);
                 Integer codigo = Integer.parseInt(codigoStr);
 
-                // Utiliza el nuevo método generatedId() para obtener un ID único
-                Integer nuevoId = generatedId();
+                // Generar nuevo id
+                Integer nuevoId = Integer.parseInt(ac.generatedCode());
 
-                Asignatura nuevaAsignatura = new Asignatura(nuevoId, nombre, codigo, horasTotales);
+                // Configurar los datos en el controlador
+                ac.getAsignatura().setId(nuevoId);
+                ac.getAsignatura().setNombre(nombre);  
+                ac.getAsignatura().setCodigo(codigo);  
+                ac.getAsignatura().setHorasTotales(horasTotales);
 
-                // Agregar mensaje de depuración
-                System.out.println("Guardando nueva asignatura: " + nuevaAsignatura);
+                // Agregamos mensajes de depuración
+                System.out.println("Datos de la Asignatura antes de guardar:");
+                System.out.println("ID: " + ac.getAsignatura().getId());
+                System.out.println("Nombre: " + ac.getAsignatura().getNombre());
+                System.out.println("Código: " + ac.getAsignatura().getCodigo());
+                System.out.println("Horas Totales: " + ac.getAsignatura().getHorasTotales());
 
-                ac.add(nuevaAsignatura);
-
-                cargarTabla();
-                limpiar(); // Agregamos la limpieza de campos después de guardar
-                JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                if (ac.saved()) {
+                    cargarTabla();
+                    JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (Exception e) {
-                // Agregar mensaje de depuración con el stack trace
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error al guardar la Asignatura desde el formulario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                // Manejar la excepción aquí
+                System.out.println("Error al guardar la Asignatura desde el formulario: " + e.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
 
-    private int obtenerIdDesdeFilaSeleccionada(int filaSeleccionada) {
-        // Obtener el valor de la columna que contiene el ID desde el modelo de tabla
-        int columnaId = 0; // Asume que la columna 0 contiene el ID, ajusta según tu estructura
-        return (int) tablaAsignaturas.getValueAt(filaSeleccionada, columnaId);
-    }
-
     private void eliminar() {
+        // Obtener el índice de la fila seleccionada
         int filaSeleccionada = tablaAsignaturas.getSelectedRow();
+
+        // Verificar si se ha seleccionado alguna fila
         if (filaSeleccionada >= 0) {
+            // Confirmar si realmente desea eliminar la fila
             int confirmacion = JOptionPane.showConfirmDialog(
                     this,
                     "¿Está seguro de que desea eliminar la asignatura seleccionada?",
@@ -89,26 +111,39 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                int idAEliminar = obtenerIdDesdeFilaSeleccionada(filaSeleccionada); // Implementa este método para obtener el ID desde la fila seleccionada
-                if (ac.delete(idAEliminar)) {
-                    cargarTabla();
-                    limpiar();
+                try {
+                    // Obtener el objeto Asignatura correspondiente a la fila seleccionada
+                    Asignatura asignaturaAEliminar = ac.getLista().get(filaSeleccionada);
+
+                    // Eliminar el objeto Asignatura utilizando el método delete del controlador
+                    if (ac.delete(asignaturaAEliminar)) {
+                        // Actualizar la tabla
+                        cargarTabla();
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Se eliminó correctamente",
+                                "OK",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Error al eliminar la asignatura",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (VacioExceptions e) {
+                    // Manejar la excepción aquí
                     JOptionPane.showMessageDialog(
-                            this,
-                            "Se eliminó correctamente",
-                            "OK",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Error al eliminar la asignatura",
+                            null,
+                            "Error al eliminar la asignatura: " + e.getMessage(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else {
             JOptionPane.showMessageDialog(
-                    this,
+                    null,
                     "Seleccione una fila para eliminar",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -121,132 +156,101 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
         txtHorasTotales.setText("");
     }
 
-    private void modificar() throws VacioExceptions {
+    public void modificar() {
         if (validar()) {
+            // Obtener el índice de la fila seleccionada
             int filaSeleccionada = tablaAsignaturas.getSelectedRow();
+
+            // Verificar si se ha seleccionado alguna fila
             if (filaSeleccionada >= 0) {
+                // Obtener los datos del formulario
                 String nombre = txtNombreAsignatura.getText();
                 String codigoStr = txtCodigoAsigntura.getText();
                 String horasTotalesStr = txtHorasTotales.getText();
 
-                try {
-                    Integer horasTotales = Integer.parseInt(horasTotalesStr);
-                    Integer codigo = Integer.parseInt(codigoStr);
+                // Convertir a los tipos de datos apropiados
+                Integer horasTotales = Integer.parseInt(horasTotalesStr);
+                Integer codigo = Integer.parseInt(codigoStr);
+                
+                // Configurar los datos en el controlador
+                ac.getAsignatura().setNombre(nombre);
+                ac.getAsignatura().setCodigo(codigo);
+                ac.getAsignatura().setHorasTotales(horasTotales);
 
-                    Asignatura asignaturaAModificar = mta.getAsignaturaAt(filaSeleccionada);
+                // Actualizar la información en la lista y en la tabla
+                ac.update(filaSeleccionada);
+                cargarTabla();
 
-                    asignaturaAModificar.setNombre(nombre);
-                    asignaturaAModificar.setCodigo(codigo);
-                    asignaturaAModificar.setHorasTotales(horasTotales);
-
-                    if (ac.updateAsignatura(asignaturaAModificar, filaSeleccionada)) {
-                        cargarTabla();
-                        limpiar();
-                        JOptionPane.showMessageDialog(
-                                this,
-                                "Se modificó correctamente",
-                                "OK",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                this,
-                                "Error al modificar la asignatura",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Ingrese un valor numérico válido para las horas totales",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Seleccione una fila para modificar",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Complete todos los campos",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
 
     private void cargarDatosSeleccionados() {
+        // Obtener el índice de la fila seleccionada
         int filaSeleccionada = tablaAsignaturas.getSelectedRow();
+
+        // Verificar si se ha seleccionado alguna fila
         if (filaSeleccionada >= 0) {
-            Asignatura asignaturaSeleccionada = mta.getAsignaturaAt(filaSeleccionada);
+            // Obtener los datos de la fila seleccionada desde el modelo de la tabla
+            String id = tablaAsignaturas.getValueAt(filaSeleccionada, 0).toString();
+            String nombre = tablaAsignaturas.getValueAt(filaSeleccionada, 1).toString();
+            String codigo = tablaAsignaturas.getValueAt(filaSeleccionada, 2).toString();
+            String horasTotales = tablaAsignaturas.getValueAt(filaSeleccionada, 3).toString();
 
-            txtNombreAsignatura.setText(asignaturaSeleccionada.getNombre());
-            txtCodigoAsigntura.setText(String.valueOf(asignaturaSeleccionada.getCodigo()));
-            txtHorasTotales.setText(String.valueOf(asignaturaSeleccionada.getHorasTotales()));
+            // Mostrar los datos en los campos de texto
+            txtNombreAsignatura.setText(nombre);
+            txtCodigoAsigntura.setText(codigo);
+            txtHorasTotales.setText(horasTotales);
         }
     }
 
-    public int buscarIndice(Asignatura asignatura) {
-        ListaEnlazada<Asignatura> lista = mta.getLista();
+    private void buscar() throws VacioExceptions {
+        // Obtener el criterio ingresado en el campo de búsqueda
+        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
 
-        for (int i = 0; i < lista.getSize(); i++) {
-            try {
-                Asignatura actual = lista.get(i);
-                if (actual.equals(asignatura)) {
-                    return i;
-                }
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-        }
+        // Obtener el criterio de búsqueda seleccionado en el combobox
+        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
 
-        return -1; // Devuelve -1 si no se encuentra la asignatura
-    }
-
-    private void buscar() {
-        String criterioBusqueda = txtBuscar.getText().trim();
-        String criterio = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
-
+        // Verificar si se ingresó un criterio válido
         if (!criterio.isEmpty()) {
-            Comparator<Asignatura> comparador = (criterio.equalsIgnoreCase("nombre"))
-                    ? Comparator.comparing(Asignatura::getNombre)
-                    : Comparator.comparing(asignatura -> String.valueOf(asignatura.getCodigo()));
+            // Seleccionar el comparador adecuado según el criterio de búsqueda
+            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
+                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
+                    : Comparator.comparing(Asignatura::getCodigo);  // Comparar directamente sin convertir a minúsculas
 
-            Asignatura asignaturaEncontrada = mta.buscar(criterioBusqueda, comparador, criterio);
-            if (asignaturaEncontrada != null) {
-                int indice = buscarIndice(asignaturaEncontrada);
+            // Realizar la búsqueda en el modelo de la tabla
+            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
+
+            // Verificar si se encontró la asignatura
+            if (indice >= 0) {
+                // Seleccionar la fila encontrada
                 tablaAsignaturas.setRowSelectionInterval(indice, indice);
+                // Cargar los datos seleccionados en los campos de texto
                 cargarDatosSeleccionados();
             } else {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "No se encontró ninguna asignatura con ese criterio: " + criterioBusqueda,
-                        "Información",
-                        JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Seleccione un criterio (Nombre o Código) para buscar",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void ordenar() {
+    private void ordenar() throws VacioExceptions {
+        // Obtener el campo de orden del ComboBox
         String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+        // Obtener el tipo de orden del ComboBox
         String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
 
         if (!campoOrden.isEmpty() && mta.esCampoValido(campoOrden)) {
+            // Llama al método ordenar con el campo de orden y tipo de orden
             mta.ordenar(campoOrden, tipoOrden);
         } else {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Campo de orden inválido",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -550,11 +554,7 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try {
-            modificar();
-        } catch (VacioExceptions ex) {
-            Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        modificar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tablaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAsignaturasMouseClicked
@@ -562,11 +562,19 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaAsignaturasMouseClicked
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
-        ordenar();
+        try {
+            ordenar();
+        } catch (VacioExceptions ex) {
+            Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscar();
+        try {
+            buscar();
+        } catch (VacioExceptions ex) {
+            Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -586,14 +594,18 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_AgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -602,7 +614,7 @@ public class Frm_AgregarAsignatura extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_AgregarAsignatura().setVisible(true);
+                new FrmAgregarAsignatura().setVisible(true);
             }
         });
     }

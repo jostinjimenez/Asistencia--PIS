@@ -1,0 +1,1 @@
+{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Malla","id":1,"duracion":"Marzo-Abril","descripcion":"Periodo Academico 3ro A","nombreSilabo":"Instrucciones"},"next":{"data":{"@class":"model.Malla","id":2,"duracion":"Marzo-Junio","descripcion":"Periodo Academico 3ro A","nombreSilabo":"Instrucciones 3ro A"}}},"last":{"@reference":"..\/head\/next"},"size":2}}
