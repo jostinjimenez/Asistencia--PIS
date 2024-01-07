@@ -180,8 +180,6 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         return listaOrdenada;
     }
 
-<<<<<<< HEAD
-=======
     public static void main(String[] args) throws VacioExceptions {
 //        ListaEnlazada<Integer> ids = new ListaEnlazada();
 //        ids.add(3);
@@ -189,7 +187,7 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
 //        ControllerMatricula c = new ControllerMatricula();
 //        c.save(matricula);
         //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
->>>>>>> master
+    }
 
 
 }
