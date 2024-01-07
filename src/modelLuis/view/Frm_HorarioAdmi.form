@@ -49,7 +49,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="230" y="0" width="1040" height="620"/>
+              <AbsoluteConstraints x="250" y="0" width="1020" height="620"/>
             </Constraint>
           </Constraints>
 
@@ -199,7 +199,7 @@
         <Component class="plantilla.components.Menu_Admin" name="menu_Admin1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="30" y="20" width="-1" height="-1"/>
+              <AbsoluteConstraints x="10" y="10" width="230" height="610"/>
             </Constraint>
           </Constraints>
         </Component>

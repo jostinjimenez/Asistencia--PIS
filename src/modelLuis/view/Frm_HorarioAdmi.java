@@ -171,8 +171,8 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 570, 330));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 1020, 620));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 610));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
