@@ -1,12 +1,14 @@
 package modelLuis.view;
 
+import plantilla.forms.*;
 import com.formdev.flatlaf.FlatDarkLaf;
-
+import java.lang.System.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Asistencia;
 import model.Cursa;
 import model.Estudiante;
+import model.Matricula;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsistencia;
 import modelLuis.controller.ControllerCursa;

@@ -5,6 +5,7 @@
 package modelLuis.controller;
 
 import DAO.DataAccessObject;
+import model.Matricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
