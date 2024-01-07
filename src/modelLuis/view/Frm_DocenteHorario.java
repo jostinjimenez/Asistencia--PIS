@@ -79,6 +79,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocente = new javax.swing.JTable();
+        menu_Docente1 = new plantilla.components.Menu_Docente();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,6 +106,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
+        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -133,6 +135,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
     private javax.swing.JScrollPane jScrollPane1;
+    private plantilla.components.Menu_Docente menu_Docente1;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tblDocente;
     // End of variables declaration//GEN-END:variables
