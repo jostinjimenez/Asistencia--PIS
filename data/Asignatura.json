@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Asignatura","id":1,"nombre":"Matematicas","horasTotales":30,"codigo":1},"next":{"data":{"@class":"model.Asignatura","id":2,"nombre":"Estadistica","horasTotales":40,"codigo":2},"next":{"data":{"@class":"model.Asignatura","id":3,"nombre":"Arquitectura","horasTotales":30,"codigo":5},"next":{"data":{"@class":"model.Asignatura","id":5,"nombre":"Arquitectura","horasTotales":50,"codigo":7}}}}},"last":{"@reference":"..\/head\/next\/next\/next"},"size":4}}
+=======
+{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Asignatura","id":1,"nombre":"Base Datos","horasTotales":234,"codigo":6226212,"id_cursas":{"head":{"data":{"@class":"int","$":"1"}},"last":{"@reference":"..\/head"},"size":1}},"next":{"data":{"@class":"model.Asignatura","id":2,"nombre":"Estrutura Datos","horasTotales":279,"codigo":37733,"id_cursas":{"head":{"data":{"@class":"int","$":"2"}},"last":{"@reference":"..\/head"},"size":1}}}},"last":{"@reference":"..\/head\/next"},"size":2}}
+>>>>>>> master

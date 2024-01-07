@@ -108,6 +108,18 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         array[j] = temp;
     }
 
+    public Cursa busquedaBinaria2(ListaEnlazada<Cursa> lista, String text, String campo, Integer type) throws VacioExceptions {
+        ListaEnlazada<Cursa> listaOrdenada = ordenarLista(lista, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
+    }
+
     public ListaEnlazada<Cursa> busquedaBinaria(ListaEnlazada<Cursa> lista, String text, String campo, String tipo, Integer type) throws VacioExceptions {
         ListaEnlazada<Cursa> listaOrdenada = ordenarLista(lista, campo);
 
@@ -155,9 +167,14 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         switch (campo.toLowerCase()) {
             case "paralelo":
                 return cursa.getParalelo().equalsIgnoreCase(text);
+            case "id_matricula":
+                return Integer.toString(cursa.getIdMatricula()).equalsIgnoreCase(text);
+            case "id_docente":
+                return Integer.toString(cursa.getIdDocente()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
+
     }
 
     private ListaEnlazada<Cursa> ordenarLista(ListaEnlazada<Cursa> lista, String campo) throws VacioExceptions {
@@ -166,10 +183,9 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
     }
 
     public static void main(String[] args) {
-        Cursa cursa = new Cursa(3, "B", 3, 1, 1, 1);
         ControllerCursa c = new ControllerCursa();
-        System.out.println(c.save(cursa));
-
+        Cursa cursa = new Cursa(2, "A", 2, 2, 1, 2);
+        c.save(cursa);
     }
 
 }

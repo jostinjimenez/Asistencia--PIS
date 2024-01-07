@@ -77,6 +77,19 @@ public class Asignatura {
         return nombre;
     }
 
+    public Boolean comparar(Asignatura as, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() > as.getId();
+                }
+            case 0:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() < as.getId();
+                }
+            default:
+                return false;
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
