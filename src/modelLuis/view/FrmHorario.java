@@ -21,7 +21,6 @@ public class FrmHorario extends javax.swing.JFrame {
     public FrmHorario() {
         initComponents();
         limpiar();
-        cargarTabla();
     }
 
     public Boolean validarDatosHorario() {
@@ -31,6 +30,7 @@ public class FrmHorario extends javax.swing.JFrame {
     }
 
     private void limpiar() {
+        cargarTabla();
         try {
             Util_VistaLinked1_Asistencia.cargaMaterias(cbxAsistencia);
         } catch (Exception e) {

@@ -1,7 +1,5 @@
 package modelLuis.tablas;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import model.Horario;
