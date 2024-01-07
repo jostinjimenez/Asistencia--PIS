@@ -1,6 +1,5 @@
 package plantilla.components;
 
-import ModuloMatricula.Views.Frm_Matricula;
 import com.raven.swing.ButtonMenu;
 
 import java.awt.*;
@@ -14,6 +13,7 @@ import modelLuis.view.Frm_HorarioAdmi;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import ModuloEstudianteDocente.vista.*;
+import ModuloMatricula.Views.Frm_Maatricula;
 import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
 
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
@@ -131,7 +131,7 @@ public class Menu_Admin extends javax.swing.JPanel {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
                 currentWindow.dispose();
 
-                Frm_Matricula frm = new Frm_Matricula();
+                Frm_Maatricula frm = new Frm_Maatricula();
                 frm.setVisible(true);
             });
         }

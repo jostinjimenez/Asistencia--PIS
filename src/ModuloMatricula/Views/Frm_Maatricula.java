@@ -1,6 +1,5 @@
 package ModuloMatricula.Views;
 
-import ModuloMatricula.Views.UtilVista.Util_VistaLinked_Matricula;
 import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -10,9 +9,10 @@ import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerMatricula;
 import modelLuis.tablas.ModelTableMateria;
 import modelLuis.tablas.ModelTableMatriculas;
+import modelLuis.view.util.Util_VistaLinked1_Asistencia;
 import tda_listas.ListaEnlazada;
 
-public class Frm_Matricula extends javax.swing.JFrame {
+public class Frm_Maatricula extends javax.swing.JFrame {
     
     ControllerMatricula a = new ControllerMatricula();
     private static ModelTableMateria z = new ModelTableMateria();
@@ -23,7 +23,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
     Integer id = 0;
     ModelTableMatriculas matriculas = new ModelTableMatriculas();
     
-    public Frm_Matricula() {
+    public Frm_Maatricula() {
         initComponents();
         limpiar();
         cargarTabla();
@@ -50,9 +50,9 @@ public class Frm_Matricula extends javax.swing.JFrame {
         cargarTabla();
         txtCarrera.setText(" ");
         try {
-            Util_VistaLinked_Matricula.cargaEstudiante(cbxEstudiante);
-            Util_VistaLinked_Matricula.cargaPeriodoAcademico(cbxPeriodoAcademico);
-            Util_VistaLinked_Matricula.cargaDocente(cbxDocente);
+            Util_VistaLinked1_Asistencia.cargaEstudiante(cbxEstudiante);
+            Util_VistaLinked1_Asistencia.cargaPeriodoAcademico(cbxPeriodoAcademico);
+            Util_VistaLinked1_Asistencia.cargaDocente(cbxDocente);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
         if (validar2()) {
             try {
                 for (Asignatura asig : n) {
-                    c.getAsistencia().setIdDocente(Util_VistaLinked_Matricula.getComboDocente(cbxDocente).getId());
+                    c.getAsistencia().setIdDocente(Util_VistaLinked1_Asistencia.getComboDocente(cbxDocente).getId());
                     c.getAsistencia().setParalelo(txtParalelo.getText());
                     c.getAsistencia().setIdMatricula(id);
                     c.getAsistencia().setIdAsignatura(asig.getId());
@@ -135,10 +135,12 @@ public class Frm_Matricula extends javax.swing.JFrame {
                 String criterio = cbxEstado.getSelectedItem().toString();
                 if (criterio.equalsIgnoreCase("Matriculado")) {
                     es = EstadoMatricula.MATRICULADO;
-                } else if (criterio.equalsIgnoreCase("No Matriculado")) {
-                    es = EstadoMatricula.NO_MATRICULADO;
-                } else if (criterio.equalsIgnoreCase("En Espera")) {
-                    es = EstadoMatricula.EN_ESPERA;
+                } else if (criterio.equalsIgnoreCase("Reprobado")) {
+                    es = EstadoMatricula.REPROBADO;
+                } else if (criterio.equalsIgnoreCase("Aprobado")) {
+                    es = EstadoMatricula.APROBADO;
+                } else if (criterio.equalsIgnoreCase("Retirado")) {
+                    es = EstadoMatricula.RETIRADO;
                 }
                 String cicloStr = cbxCiclo.getSelectedItem().toString();
                 int ciclo = Integer.parseInt(cicloStr);
@@ -146,8 +148,8 @@ public class Frm_Matricula extends javax.swing.JFrame {
                 a.getMatricula().setCiclo(ciclo);
                 a.getMatricula().setEstado(es);
                 a.getMatricula().setFechaMatricula(txtFecha.getText());
-                a.getMatricula().setIdEstudiante(Util_VistaLinked_Matricula.getComboEstudiante(cbxEstudiante).getId());
-                a.getMatricula().setIdPeriodoAcademico(Util_VistaLinked_Matricula.getComboPeriodo(cbxPeriodoAcademico).getId());
+                a.getMatricula().setIdEstudiante(Util_VistaLinked1_Asistencia.getComboEstudiante(cbxEstudiante).getId());
+                a.getMatricula().setIdPeriodoAcademico(Util_VistaLinked1_Asistencia.getComboPeriodo(cbxPeriodoAcademico).getId());
                 id = a.generarID();
                 a.getMatricula().setId(id);
                 ListaEnlazada<Integer> ids = new ListaEnlazada();
@@ -167,7 +169,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -322,8 +324,8 @@ public class Frm_Matricula extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 130, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1020, 620));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -349,7 +351,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         cargarVista();
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -365,7 +367,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_Matricula().setVisible(true);
+            new Frm_Maatricula().setVisible(true);
         });
     }
 

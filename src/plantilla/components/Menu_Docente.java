@@ -37,15 +37,14 @@ public class Menu_Docente extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
-        Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
         if (persona != null) {
             txtUsername.setText(persona.toString());
         }
         else {
             txtUsername.setText("Username");
         }
-
     }
+    Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
 
     public void initMenu() {
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/menu.png"))), "Menu Principal", 0);
@@ -85,7 +84,7 @@ public class Menu_Docente extends javax.swing.JPanel {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
                 currentWindow.dispose();
 
-                Frm_AsistenciaJ frm = new Frm_AsistenciaJ(); // Enviar el ID del docente
+                Frm_AsistenciaJ frm = new Frm_AsistenciaJ(persona);
                 frm.setVisible(true);
             });
             case "Horario Academico" -> menu.addActionListener(e -> {

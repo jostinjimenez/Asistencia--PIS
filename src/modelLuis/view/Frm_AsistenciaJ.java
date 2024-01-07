@@ -10,6 +10,7 @@ import model.Asistencia;
 import model.Cursa;
 import model.Estudiante;
 import model.Matricula;
+import model.Persona;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerAsistencia;
@@ -19,6 +20,7 @@ import modelLuis.controller.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
 import modelLuis.tablas.ModelTableAsistencia2;
 import modelLuis.view.util.Util_VistaLinked1_Asistencia;
+import modulo_1.inicio_sesion.controller.CuentaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -35,19 +37,20 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     ListaEnlazada<Matricula> result = new ListaEnlazada<>();
     ModelTableAsistencia2 ad = new ModelTableAsistencia2();
     Integer idtematica;
-    Integer id = 1;
+    Integer id;
 
-    public Frm_AsistenciaJ() {
+    public Frm_AsistenciaJ(Persona persona) {
         initComponents();
         try {
             cargarCombos();
-
-        } catch (Exception e) {
+            id = persona.getId();
+        }
+        catch (Exception e) {
             System.out.println(e + "Errros");
         }
         limpiar();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setResizable(false);  
     }
 
     private void cargarCombos() throws VacioExceptions {
@@ -76,7 +79,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
             Util_VistaLinked1_Asistencia.cargaHorario(cbxHorario);
             Util_VistaLinked1_Asistencia.cargaAsig(cbxAsig);
             Util_VistaLinked1_Asistencia.cargaParalelos(cbxParalelos);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -97,7 +101,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
     public Boolean validar() {
         return !txtFecha.getText().trim().isEmpty()
-                && !txtNombre.getText().trim().isEmpty();
+                  && !txtNombre.getText().trim().isEmpty();
     }
 
     public void modificar() {
@@ -107,7 +111,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         ca.setIndex(fila);
         if (ca.update1(ca.getIndex())) {
             JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -124,14 +129,17 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                     if (ca.saved()) {
                         list.add(ca.getAsistencia());
                         JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
+                    }
+                    else {
                         JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println(e + "Error");
             }
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
@@ -146,14 +154,17 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 if (ct.saved()) {
                     limpiar();
                     JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                } else {
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
@@ -161,7 +172,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     public void listar() throws VacioExceptions {
         String paralelo = Util_VistaLinked1_Asistencia.getComboCursa(cbxParalelos).getParalelo();
         ListaEnlazada<Cursa> listCur = cd.busquedaBinaria(cd.list_All(), paralelo, "paralelo", "quicksort", 0);
-        
+
         Integer ciclo = Util_VistaLinked1_Asistencia.getComboMatricula(cbxCiclos).getCiclo();
         String nciclo = ciclo.toString();
         ListaEnlazada<Matricula> lista1 = c.busquedaBinaria(c.list_All(), nciclo, "ciclo", "quicksort", 0);
@@ -407,13 +418,14 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCiclosItemStateChanged
 
     private void buttonMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu1ActionPerformed
-       modificar();
+        modificar();
     }//GEN-LAST:event_buttonMenu1ActionPerformed
 
     private void buttonMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu2ActionPerformed
         try {
             listar();
-        } catch (VacioExceptions ex) {
+        }
+        catch (VacioExceptions ex) {
 
         }
     }//GEN-LAST:event_buttonMenu2ActionPerformed
@@ -421,7 +433,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private void buttonMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu3ActionPerformed
         try {
             actualizarTabla();
-        } catch (VacioExceptions ex) {
+        }
+        catch (VacioExceptions ex) {
 
         }
     }//GEN-LAST:event_buttonMenu3ActionPerformed
@@ -443,14 +456,15 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
          */
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_AsistenciaJ().setVisible(true);
+            //new Frm_AsistenciaJ().setVisible(true);
         });
     }
 
