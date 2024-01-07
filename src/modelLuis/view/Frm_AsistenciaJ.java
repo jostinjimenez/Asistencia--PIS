@@ -71,7 +71,6 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         int fila = tblAsis.getSelectedRow();
         TipoFalta a = (TipoFalta) this.tblAsis.getValueAt(fila, 2);
         ca.getAsistencia().setFalta(a);
-        System.out.println(a + "gagag");
         ca.setIndex(fila);
         if (ca.update1(ca.getIndex())) {
             JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
