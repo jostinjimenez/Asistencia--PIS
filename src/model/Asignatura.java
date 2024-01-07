@@ -78,7 +78,7 @@ public class Asignatura {
                 }
             case 0:
                 if (field.equalsIgnoreCase("id")) {
-                    return getId() > as.getId();
+                    return getId() < as.getId();
                 }
             default:
                 return false;

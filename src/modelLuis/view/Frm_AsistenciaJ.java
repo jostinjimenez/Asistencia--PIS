@@ -5,11 +5,13 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.lang.System.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import model.Asignatura;
 import model.Asistencia;
 import model.Cursa;
 import model.Estudiante;
 import model.Matricula;
 import model.catalogo.TipoFalta;
+import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerAsistencia;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerMatricula;
@@ -27,22 +29,53 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     ModelTableAsistencia md = new ModelTableAsistencia();
     ControllerAsistencia ca = new ControllerAsistencia();
     ListaEnlazada<Cursa> mat = new ListaEnlazada<>();
+
     ListaEnlazada<Asistencia> list = new ListaEnlazada<>();
     ControllerTematica ct = new ControllerTematica();
     ListaEnlazada<Matricula> result = new ListaEnlazada<>();
     ModelTableAsistencia2 ad = new ModelTableAsistencia2();
     Integer idtematica;
+    Integer id = 1;
 
     public Frm_AsistenciaJ() {
         initComponents();
+        try {
+            cargarCombos();
+
+        } catch (Exception e) {
+            System.out.println(e + "Errros");
+        }
         limpiar();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
 
+    private void cargarCombos() throws VacioExceptions {
+        ControllerCursa cc = new ControllerCursa();
+        ControllerAsignatura ca = new ControllerAsignatura();
+        ControllerMatricula cm = new ControllerMatricula();
+        ListaEnlazada<Asignatura> listaAsig = new ListaEnlazada<>();
+        ListaEnlazada<Cursa> listaCursa = new ListaEnlazada<>();
+        ListaEnlazada<Matricula> listMatr = new ListaEnlazada<>();
+        listaCursa = cc.busquedaBinaria(cc.list_All(), id.toString(), "id_docente", "quicksort", 0);
+        for (Cursa cursa : listaCursa) {
+            Matricula matricula = cm.busquedaBinaria2(cm.list_All(), cursa.getIdMatricula().toString(), "id");
+            Asignatura asig = ca.busquedaBinaria2(ca.list_All(), cursa.getIdAsignatura().toString(), "id", 0);
+            listaAsig.add(asig);
+            listMatr.add(matricula);
+        }
+        Util_VistaLinked1_Asistencia.setListaMatr(listMatr);
+        Util_VistaLinked1_Asistencia.setListaAsig(listaAsig);
+        Util_VistaLinked1_Asistencia.setListaCursa(listaCursa);
+    }
+
     private void limpiar() {
+
         try {
+            Util_VistaLinked1_Asistencia.cargaCiclos(cbxCiclos);
             Util_VistaLinked1_Asistencia.cargaHorario(cbxHorario);
+            Util_VistaLinked1_Asistencia.cargaAsig(cbxAsig);
+            Util_VistaLinked1_Asistencia.cargaParalelos(cbxParalelos);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,10 +159,10 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     }
 
     public void listar() throws VacioExceptions {
-
-        String paralelo = txtParalelo.getText();
+        String paralelo = Util_VistaLinked1_Asistencia.getComboCursa(cbxParalelos).getParalelo();
         ListaEnlazada<Cursa> listCur = cd.busquedaBinaria(cd.list_All(), paralelo, "paralelo", "quicksort", 0);
-        Integer ciclo = cbxCiclos.getSelectedIndex() + 1;
+        
+        Integer ciclo = Util_VistaLinked1_Asistencia.getComboMatricula(cbxCiclos).getCiclo();
         String nciclo = ciclo.toString();
         ListaEnlazada<Matricula> lista1 = c.busquedaBinaria(c.list_All(), nciclo, "ciclo", "quicksort", 0);
         for (Cursa cursa : listCur) {
@@ -154,11 +187,13 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         roundPanel2 = new plantilla.swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtParalelo = new javax.swing.JTextField();
         cbxCiclos = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         buttonMenu2 = new com.raven.swing.ButtonMenu();
         buttonMenu4 = new com.raven.swing.ButtonMenu();
+        cbxAsig = new javax.swing.JComboBox<>();
+        cbxParalelos = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
         roundPanel3 = new plantilla.swing.RoundPanel();
         txtNombre = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
@@ -207,46 +242,61 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
             }
         });
 
+        cbxAsig.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbxParalelos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel6.setText("Asignaturas:");
+
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonMenu2, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addComponent(txtParalelo)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cbxParalelos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonMenu2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxAsig, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
+                            .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                        .addGap(57, 57, 57))))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxAsig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbxParalelos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, -1));
+        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, 160));
 
         jLabel3.setText("Tema de la clase:");
 
@@ -357,7 +407,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCiclosItemStateChanged
 
     private void buttonMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu1ActionPerformed
-        // TODO add your handling code here:
+       modificar();
     }//GEN-LAST:event_buttonMenu1ActionPerformed
 
     private void buttonMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu2ActionPerformed
@@ -381,7 +431,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonMenu4ActionPerformed
 
     private void buttonMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu5ActionPerformed
-      guardarTematica();
+        guardarTematica();
+
     }//GEN-LAST:event_buttonMenu5ActionPerformed
 
     public static void main(String args[]) {
@@ -410,13 +461,16 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private com.raven.swing.ButtonMenu buttonMenu3;
     private com.raven.swing.ButtonMenu buttonMenu4;
     private com.raven.swing.ButtonMenu buttonMenu5;
+    private javax.swing.JComboBox<String> cbxAsig;
     private javax.swing.JComboBox<String> cbxCiclos;
     private javax.swing.JComboBox<String> cbxHorario;
+    private javax.swing.JComboBox<String> cbxParalelos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private plantilla.components.Menu_Docente menu_Docente1;
     private plantilla.swing.RoundPanel roundPanel1;
@@ -425,7 +479,6 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private javax.swing.JTable tblAsis;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtParalelo;
     // End of variables declaration//GEN-END:variables
 
 }
