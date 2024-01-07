@@ -10,20 +10,19 @@ import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerMatricula;
 import modelLuis.tablas.ModelTableMateria;
 import modelLuis.tablas.ModelTableMatriculas;
-
-
 import tda_listas.ListaEnlazada;
 
 public class Frm_Matricula extends javax.swing.JFrame {
-
+    
     ControllerMatricula a = new ControllerMatricula();
     private static ModelTableMateria z = new ModelTableMateria();
     private static ListaEnlazada<Asignatura> n = new ListaEnlazada<>();
+    private static ListaEnlazada<Asignatura> d = new ListaEnlazada<>();
     ControllerCursa c = new ControllerCursa();
     ListaEnlazada<Integer> ids2 = new ListaEnlazada<>();
     Integer id = 0;
     ModelTableMatriculas matriculas = new ModelTableMatriculas();
-
+    
     public Frm_Matricula() {
         initComponents();
         limpiar();
@@ -31,22 +30,23 @@ public class Frm_Matricula extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
-
+    
     public void cargarTabla() {
         matriculas.setMatriculas(a.list_All());
         tbl1.setModel(matriculas);
         tbl1.updateUI();
     }
-
+    
     public static void cargarMaterias(Asignatura asignatura) {
+        d.add(asignatura);
         n.add(asignatura);
-        z.setAsignaturas(n);
+        z.setAsignaturas(d);
         tabla.setModel(z);
         tabla.updateUI();
     }
-
+    
     private void limpiar() {
-
+        
         cargarTabla();
         txtCarrera.setText(" ");
         try {
@@ -58,18 +58,18 @@ public class Frm_Matricula extends javax.swing.JFrame {
         }
         txtFecha.setText(a.getMatricula().generarFecha());
         txtFecha.setEnabled(false);
-
+        
     }
-
+    
     public Boolean validar() {
         return !txtFecha.getText().trim().isEmpty()
                 && !txtCarrera.getText().trim().isEmpty();
     }
-
+    
     public Boolean validar2() {
         return !txtParalelo.getText().trim().isEmpty();
     }
-
+    
     public void guadarCursa() {
         if (validar2()) {
             try {
@@ -78,11 +78,11 @@ public class Frm_Matricula extends javax.swing.JFrame {
                     c.getAsistencia().setParalelo(txtParalelo.getText());
                     c.getAsistencia().setIdMatricula(id);
                     c.getAsistencia().setIdAsignatura(asig.getId());
-
+                    
                     int id_cursa = c.generarID();
                     c.getAsistencia().setId(id_cursa);
                     if (c.saved()) {
-
+                        n.delete(0);
                         JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                         ids2.add(id_cursa);
                         System.out.println(id_cursa);
@@ -96,9 +96,9 @@ public class Frm_Matricula extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
-
+        
     }
-
+    
     private void cargarVista() {
         a.setIndex(tbl1.getSelectedRow());
         if (a.getIndex() < 0) {
@@ -111,10 +111,10 @@ public class Frm_Matricula extends javax.swing.JFrame {
             } catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
-
+            
         }
     }
-
+    
     private void modificarMatricula() {
         try {
             a.getMatricula().setId_cursas(ids2);
@@ -127,7 +127,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
             System.out.println(e + "Errooor");
         }
     }
-
+    
     public void guardar() {
         if (validar()) {
             try {
@@ -135,12 +135,10 @@ public class Frm_Matricula extends javax.swing.JFrame {
                 String criterio = cbxEstado.getSelectedItem().toString();
                 if (criterio.equalsIgnoreCase("Matriculado")) {
                     es = EstadoMatricula.MATRICULADO;
-                } else if (criterio.equalsIgnoreCase("Reprobado")) {
-                    es = EstadoMatricula.REPROBADO;
-                } else if (criterio.equalsIgnoreCase("Aprobado")) {
-                    es = EstadoMatricula.APROBADO;
-                } else if (criterio.equalsIgnoreCase("Retirado")) {
-                    es = EstadoMatricula.RETIRADO;
+                } else if (criterio.equalsIgnoreCase("No Matriculado")) {
+                    es = EstadoMatricula.NO_MATRICULADO;
+                } else if (criterio.equalsIgnoreCase("En Espera")) {
+                    es = EstadoMatricula.EN_ESPERA;
                 }
                 String cicloStr = cbxCiclo.getSelectedItem().toString();
                 int ciclo = Integer.parseInt(cicloStr);
@@ -161,7 +159,7 @@ public class Frm_Matricula extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
+                
             } catch (Exception e) {
                 System.out.println(e + "Error");
             }
