@@ -119,6 +119,8 @@ public class NuevoPeriodo extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -146,11 +148,11 @@ public class NuevoPeriodo extends javax.swing.JDialog {
 
         txtFechaInicio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtFechaInicio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 270, 30));
+        jPanel1.add(txtFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, 270, 30));
 
         txtFechaFin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtFechaFin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 270, 30));
+        jPanel1.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 270, 30));
 
         btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -180,10 +182,26 @@ public class NuevoPeriodo extends javax.swing.JDialog {
         jLabel6.setText("Fecha Inicio:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 90, 20));
 
+        jDateChooser2.setDateFormatString("dd mm yyyy");
+        jDateChooser2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 270, 30));
+
+        jDateChooser3.setDateFormatString("dd mm yyyy");
+        jDateChooser3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jPanel1.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 270, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(0, 8, Short.MAX_VALUE)));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,6 +256,8 @@ public class NuevoPeriodo extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

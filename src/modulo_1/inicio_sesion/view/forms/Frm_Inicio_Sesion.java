@@ -10,7 +10,6 @@ import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
 import modulo_1.inicio_sesion.view.util.Utiles;
-import plantilla.components.Menu_Admin;
 
 public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
@@ -137,10 +136,10 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         roundPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 330, 40));
 
-        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, 500, 530));
+        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 500, 530));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modulo_1/inicio_sesion/view/forms/img/unl.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, -10, 610, 650));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, -10, 610, 650));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
 
