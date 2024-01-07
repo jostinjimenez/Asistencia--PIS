@@ -1,6 +1,7 @@
 package modulo_1.inicio_sesion.controller;
 
 import DAO.DataAccessObject;
+import model.Cuenta;
 import model.Persona;
 import model.Rol;
 import modulo_1.inicio_sesion.controller.util.Utilidades;
@@ -40,7 +41,7 @@ public class PersonaController extends DataAccessObject<Persona> {
     }
 
     public Persona getPersona() {
-        return persona;
+        return persona != null ? persona : new Persona();
     }
 
     public Persona getPersonaID(Integer id) {

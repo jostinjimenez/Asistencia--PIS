@@ -6,7 +6,9 @@ package ModuloEstudianteDocente.vista;
 
 import ModuloEstudianteDocente.controlador.DocenteControlador;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import model.Docente;
 
 /**
@@ -14,7 +16,7 @@ import model.Docente;
  * @author LENOVO
  */
 public class FrmDocente extends javax.swing.JFrame {
-    
+
     private DocenteControlador docenteControlador = new DocenteControlador();
     private ModeloTablaDocente modeloDocente = new ModeloTablaDocente();
     private Integer fila = -1;
@@ -24,17 +26,19 @@ public class FrmDocente extends javax.swing.JFrame {
      */
     public FrmDocente() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         cargarTabla();
     }
-    
-    private void cargarTabla(){
+
+    private void cargarTabla() {
         modeloDocente.setDocente(docenteControlador.list_All());
         tblDocente.setModel(modeloDocente);
         tblDocente.updateUI();
     }
-    
-    private void limpiar(){
-        
+
+    private void limpiar() {
+
         txtNombresDoc.setText(" ");
         txtFechaNacim.setText(" ");
         txtCorreoPersonal.setText(" ");
@@ -43,28 +47,28 @@ public class FrmDocente extends javax.swing.JFrame {
         txtCodigoEmp.setText(" ");
         txtAniosExpe.setText(" ");
         txtGradoAcademico.setText(" ");
-        
+
         docenteControlador.setDocente(null);
         cargarTabla();
         fila = -1;
         tblDocente.clearSelection();
     }
-    
-    private Boolean validar(){
+
+    private Boolean validar() {
         return !txtNombresDoc.getText().trim().isEmpty()
-                && !txtFechaNacim.getText().trim().isEmpty()
-                && !txtCorreoPersonal.getText().trim().isEmpty()
-                && !txtDNI.getText().trim().isEmpty()
-                && !txtTelefn.getText().trim().isEmpty()
-                && !txtCodigoEmp.getText().trim().isEmpty()
-                && !txtAniosExpe.getText().trim().isEmpty()
-                && !txtGradoAcademico.getText().trim().isEmpty();
-        
+                  && !txtFechaNacim.getText().trim().isEmpty()
+                  && !txtCorreoPersonal.getText().trim().isEmpty()
+                  && !txtDNI.getText().trim().isEmpty()
+                  && !txtTelefn.getText().trim().isEmpty()
+                  && !txtCodigoEmp.getText().trim().isEmpty()
+                  && !txtAniosExpe.getText().trim().isEmpty()
+                  && !txtGradoAcademico.getText().trim().isEmpty();
+
     }
-    
-    public void guardar(){
+
+    public void guardar() {
         if (validar()) {
-            try{
+            try {
                 Docente docte = new Docente();
                 docte.setNombre(txtNombresDoc.getText());
                 docte.setFecha_nacimiento(txtFechaNacim.getText());
@@ -76,48 +80,52 @@ public class FrmDocente extends javax.swing.JFrame {
                 docte.setAnios_experiencia(aniosExperiencia);
                 docte.setGrado_academico(txtGradoAcademico.getText());
                 docte.setGrado_academico(txtGradoAcademico.getText());
-                
+
                 if (fila != -1) {
                     docte.setId(docenteControlador.getDocente().getId());
-                    docenteControlador.update(docte,fila);
+                    docenteControlador.update(docte, fila);
                     limpiar();
-                    JOptionPane.showMessageDialog(null, "Docente actualizado correctamente", 
-                            "Mensaje",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }else{
+                    JOptionPane.showMessageDialog(null, "Docente actualizado correctamente",
+                              "Mensaje",
+                              JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
                     docte.setId(docenteControlador.generarID());
                     docenteControlador.save(docte);
                     limpiar();
-                    
-                    JOptionPane.showMessageDialog(null, "Docente registrado correctamente", 
-                            "Mensaje",
-                            JOptionPane.INFORMATION_MESSAGE);
+
+                    JOptionPane.showMessageDialog(null, "Docente registrado correctamente",
+                              "Mensaje",
+                              JOptionPane.INFORMATION_MESSAGE);
                 }
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), 
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                
             }
-        }else{
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
+                          "Error",
+                          JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        else {
             JOptionPane.showMessageDialog(null,
-                    "Por favor llene todos los campos",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                      "Por favor llene todos los campos",
+                      "Error",
+                      JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void actualizar(){
+
+    private void actualizar() {
         int fila = tblDocente.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null,
-                    "Seleccione una fila",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }else{
-            try{
+                      "Seleccione una fila",
+                      "Error",
+                      JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            try {
                 this.fila = fila;
-                
+
                 docenteControlador.setDocente(modeloDocente.getDocente().get(fila));
                 txtNombresDoc.setText(docenteControlador.getDocente().getNombre());
                 txtFechaNacim.setText(docenteControlador.getDocente().getFecha_nacimiento());
@@ -127,12 +135,13 @@ public class FrmDocente extends javax.swing.JFrame {
                 txtCodigoEmp.setText(docenteControlador.getDocente().getCodigo_empleado());
                 txtAniosExpe.setText(String.valueOf(docenteControlador.getDocente().getAnios_experiencia()));
                 txtGradoAcademico.setText(docenteControlador.getDocente().getGrado_academico());
-                
-            }catch(Exception e){
+
+            }
+            catch (Exception e) {
                 JOptionPane.showMessageDialog(null,
-                        "Error al cargar los datos",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                          "Error al cargar los datos",
+                          "Error",
+                          JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -149,11 +158,13 @@ public class FrmDocente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         roundPanel2 = new plantilla.swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        roundPanel3 = new plantilla.swing.RoundPanel();
+        roundPanel1 = new plantilla.swing.RoundPanel();
+        roundPanel6 = new plantilla.swing.RoundPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocente = new javax.swing.JTable();
-        roundPanel4 = new plantilla.swing.RoundPanel();
-        roundPanel1 = new plantilla.swing.RoundPanel();
         roundPanel5 = new plantilla.swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -171,15 +182,10 @@ public class FrmDocente extends javax.swing.JFrame {
         txtAniosExpe = new javax.swing.JTextField();
         txtGradoAcademico = new javax.swing.JTextField();
         txtCodigoEmp = new javax.swing.JTextField();
-        roundPanel6 = new plantilla.swing.RoundPanel();
-        btnGuardar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        roundPanel7 = new plantilla.swing.RoundPanel();
-        imageAvatar1 = new com.raven.swing.ImageAvatar();
-        jLabel7 = new javax.swing.JLabel();
+        menu_Admin1 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -197,7 +203,7 @@ public class FrmDocente extends javax.swing.JFrame {
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGap(190, 190, 190)
                 .addComponent(jLabel1)
-                .addContainerGap(405, Short.MAX_VALUE))
+                .addContainerGap(639, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,10 +213,62 @@ public class FrmDocente extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 790, 80));
+        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 1020, 80));
 
-        roundPanel3.setBackground(new java.awt.Color(51, 51, 51));
-        roundPanel3.setLayout(new javax.swing.BoxLayout(roundPanel3, javax.swing.BoxLayout.LINE_AXIS));
+        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        roundPanel6.setBackground(new java.awt.Color(51, 51, 51));
+
+        btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setBackground(new java.awt.Color(204, 204, 204));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout roundPanel6Layout = new javax.swing.GroupLayout(roundPanel6);
+        roundPanel6.setLayout(roundPanel6Layout);
+        roundPanel6Layout.setHorizontalGroup(
+            roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel6Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        roundPanel6Layout.setVerticalGroup(
+            roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel6Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
+        );
+
+        roundPanel1.add(roundPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 0, 180, 260));
 
         tblDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -225,43 +283,7 @@ public class FrmDocente extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDocente);
 
-        roundPanel3.add(jScrollPane1);
-
-        jPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 790, 180));
-
-        roundPanel4.setBackground(new java.awt.Color(51, 51, 51));
-
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
-
-        javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
-        roundPanel1.setLayout(roundPanel1Layout);
-        roundPanel1Layout.setHorizontalGroup(
-            roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        roundPanel1Layout.setVerticalGroup(
-            roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout roundPanel4Layout = new javax.swing.GroupLayout(roundPanel4);
-        roundPanel4.setLayout(roundPanel4Layout);
-        roundPanel4Layout.setHorizontalGroup(
-            roundPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel4Layout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
-                .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
-        roundPanel4Layout.setVerticalGroup(
-            roundPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel4Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(roundPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 230, 450));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 980, 230));
 
         roundPanel5.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -336,111 +358,12 @@ public class FrmDocente extends javax.swing.JFrame {
         txtCodigoEmp.setBackground(new java.awt.Color(204, 204, 204));
         roundPanel5.add(txtCodigoEmp, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
 
-        jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 600, 260));
+        roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 480, 260));
 
-        roundPanel6.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 1020, 530));
+        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 620));
 
-        btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnModificar.setBackground(new java.awt.Color(204, 204, 204));
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout roundPanel6Layout = new javax.swing.GroupLayout(roundPanel6);
-        roundPanel6.setLayout(roundPanel6Layout);
-        roundPanel6Layout.setHorizontalGroup(
-            roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel6Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-        roundPanel6Layout.setVerticalGroup(
-            roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel6Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(roundPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 100, 180, 260));
-
-        roundPanel7.setBackground(new java.awt.Color(51, 51, 51));
-
-        imageAvatar1.setForeground(new java.awt.Color(231, 231, 231));
-        imageAvatar1.setBorderSize(2);
-        imageAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/profile.jpg"))); // NOI18N
-
-        jLabel7.setForeground(new java.awt.Color(203, 203, 203));
-        jLabel7.setText("Docente");
-
-        javax.swing.GroupLayout roundPanel7Layout = new javax.swing.GroupLayout(roundPanel7);
-        roundPanel7.setLayout(roundPanel7Layout);
-        roundPanel7Layout.setHorizontalGroup(
-            roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addContainerGap(108, Short.MAX_VALUE))
-        );
-        roundPanel7Layout.setVerticalGroup(
-            roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel7Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(roundPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel7Layout.createSequentialGroup()
-                        .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(15, 15, 15))))
-        );
-
-        jPanel1.add(roundPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 80));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -468,35 +391,17 @@ public class FrmDocente extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new FlatNordIJTheme());
         }
-        //</editor-fold>
+        catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmDocente().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FrmDocente().setVisible(true);
         });
     }
 
@@ -506,24 +411,20 @@ public class FrmDocente extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private com.raven.swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlabeljhgfgh;
+    private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
     private plantilla.swing.RoundPanel roundPanel2;
-    private plantilla.swing.RoundPanel roundPanel3;
-    private plantilla.swing.RoundPanel roundPanel4;
     private plantilla.swing.RoundPanel roundPanel5;
     private plantilla.swing.RoundPanel roundPanel6;
-    private plantilla.swing.RoundPanel roundPanel7;
     private javax.swing.JTable tblDocente;
     private javax.swing.JTextField txtAniosExpe;
     private javax.swing.JTextField txtCodigoEmp;

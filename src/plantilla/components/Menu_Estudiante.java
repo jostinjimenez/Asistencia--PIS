@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import model.Persona;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.util.Utiles;
@@ -29,7 +31,14 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(sb);
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
-        txtUsername.setText(cc.getPersona(cc.getCuenta().getIdPersona()).toString());
+
+        Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
+        if (persona != null) {
+            txtUsername.setText(persona.toString());
+        }
+        else {
+            txtUsername.setText("Username");
+        }
 
     }
 
@@ -54,13 +63,14 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
-        if (text.equals("Cerrar Sesión")) {
-            menu.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cerrarSesion();
-                }
-            });
+        switch (text) {
+            case "Cerrar Sesión" ->
+                menu.addActionListener(e -> {
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        cerrarSesion();
+                    }
+                });
         }
         panelMenu.add(menu);
     }
