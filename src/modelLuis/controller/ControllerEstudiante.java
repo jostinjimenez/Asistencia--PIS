@@ -146,7 +146,7 @@ public class ControllerEstudiante extends DataAccessObject<Estudiante> {
                     izquierda--;
                 }
                 return indice;
-            } else if (resultado > 0) {
+            } else if (resultado < 0) {
                 sup = indice - 1;
             } else {
                 infe = indice + 1;

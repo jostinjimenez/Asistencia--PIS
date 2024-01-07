@@ -98,17 +98,22 @@ public class Matricula {
         return ciclo + "" + id;
     }
 
+  
     public Boolean comparar(Matricula c, String field, Integer type) {
 
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("ciclo")) {
-                    return getCiclo() < (c.getCiclo());
+                    return getCiclo() > (c.getCiclo());
+                } else if (field.equalsIgnoreCase("id_estudiante")) {
+                    return getIdEstudiante() > (c.getIdEstudiante());
                 }
 
             case 0:
                 if (field.equalsIgnoreCase("ciclo")) {
                     return getCiclo() < (c.getCiclo());
+                } else if (field.equalsIgnoreCase("id_estudiante")) {
+                    return getIdEstudiante() < (c.getIdEstudiante());
                 }
             default:
                 return false;
@@ -121,6 +126,11 @@ public class Matricula {
             case "ciclo":
                 try {
                 return Integer.compare(Integer.parseInt(text), matricula.getCiclo());
+            } catch (Exception e) {
+            }
+            case "id_estudiante":
+               try {
+                return Integer.compare(Integer.parseInt(text), matricula.getIdEstudiante());
             } catch (Exception e) {
             }
 

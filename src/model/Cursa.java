@@ -1,6 +1,5 @@
 package model;
 
-
 public class Cursa {
 
     private Integer id;
@@ -81,11 +80,15 @@ public class Cursa {
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("paralelo")) {
-                    return getParalelo().compareTo(cursa.getParalelo()) < 0;
+                    return getParalelo().compareTo(cursa.getParalelo()) > 0;
+                } else if (field.equalsIgnoreCase("id_matricula")) {
+                    return getIdAsignatura() > (cursa.getIdMatricula());
                 }
             case 0:
                 if (field.equalsIgnoreCase("paralelo")) {
-                    return getParalelo().compareTo(cursa.getParalelo()) > 0;
+                    return getParalelo().compareTo(cursa.getParalelo()) < 0;
+                } else if (field.equalsIgnoreCase("id_matricula")) {
+                    return getIdAsignatura() < (cursa.getIdMatricula());
                 }
             default:
                 return false;
@@ -96,6 +99,12 @@ public class Cursa {
         switch (campo.toLowerCase()) {
             case "paralelo":
                 return text.compareTo(cursa.getParalelo().toLowerCase());
+
+            case "id_matricula":
+               try {
+                return Integer.compare(Integer.parseInt(text), cursa.getIdMatricula());
+            } catch (Exception e) {
+            }
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }

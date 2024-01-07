@@ -155,9 +155,12 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         switch (campo.toLowerCase()) {
             case "paralelo":
                 return cursa.getParalelo().equalsIgnoreCase(text);
+            case "id_matricula":
+                return Integer.toString(cursa.getIdMatricula()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
+
     }
 
     private ListaEnlazada<Cursa> ordenarLista(ListaEnlazada<Cursa> lista, String campo) throws VacioExceptions {
@@ -165,11 +168,5 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         return listaOrdenada;
     }
 
-    public static void main(String[] args) {
-        Cursa cursa = new Cursa(3, "B", 3, 1, 1, 1);
-        ControllerCursa c = new ControllerCursa();
-        System.out.println(c.save(cursa));
-
-    }
 
 }

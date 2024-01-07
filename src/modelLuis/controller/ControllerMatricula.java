@@ -107,9 +107,21 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         array[i] = array[j];
         array[j] = temp;
     }
+    
+     public Matricula busquedaBinaria2(ListaEnlazada<Matricula> lista, String text, String campo) throws VacioExceptions {
+        ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
+    }
+
 
     public ListaEnlazada<Matricula> busquedaBinaria(ListaEnlazada<Matricula> lista, String text, String campo, String tipo, Integer type) throws VacioExceptions {
-        ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo, tipo);
+        ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo);
 
         ListaEnlazada<Matricula> marc = new ListaEnlazada<>();
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
@@ -162,20 +174,12 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         }
     }
 
-    private ListaEnlazada<Matricula> ordenarLista(ListaEnlazada<Matricula> lista, String campo, String tipo) throws VacioExceptions {
+    private ListaEnlazada<Matricula> ordenarLista(ListaEnlazada<Matricula> lista, String campo) throws VacioExceptions {
         ListaEnlazada<Matricula> listaOrdenada = new ListaEnlazada<>();
         listaOrdenada = quicksort(lista, 0, campo);
         return listaOrdenada;
     }
 
-    public static void main(String[] args) throws VacioExceptions {
-//        ListaEnlazada<Integer> ids = new ListaEnlazada();
-//        ids.add(3);
-//        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
-//        ControllerMatricula c = new ControllerMatricula();
-//        c.save(matricula);
-        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
 
-    }
 
 }
