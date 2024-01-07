@@ -5,6 +5,7 @@ import com.raven.swing.ButtonMenu;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import javax.swing.*;
 
 import model.Persona;
@@ -15,6 +16,7 @@ import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
 
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.util.Utiles;
+import modulo_1.periodo_academico.view.forms.Frm_PeriodosAcademicos;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
@@ -42,16 +44,16 @@ public class Menu_Admin extends javax.swing.JPanel {
     }
 
     public void initMenu() {
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/menu.png")), "Menu Principal", 0);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/user.png")), "Usuarios", 1);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/roles.png")), "Roles", 2);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/estudiante.png")), "Estudiantes", 3);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/docente.png")), "Docentes", 4);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/matricula.png")), "Matriculas", 5);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/asignatura.png")), "Asignaturas", 6);
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/periodo.png")), "Periodos Academicos", 7);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/menu.png"))), "Menu Principal", 0);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/user.png"))), "Usuarios", 1);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/roles.png"))), "Roles", 2);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/estudiante.png"))), "Estudiantes", 3);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/docente.png"))), "Docentes", 4);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/matricula.png"))), "Matriculas", 5);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/asignatura.png"))), "Asignaturas", 6);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Periodos Academicos", 7);
         addEmpty();
-        addMenu(new ImageIcon(getClass().getResource("/plantilla/img/menu/salir.png")), "Cerrar Sesión", 8);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/salir.png"))), "Cerrar Sesión", 8);
     }
 
     private void addEmpty() {
@@ -72,6 +74,7 @@ public class Menu_Admin extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
+        menu.setFont(new Font("Roboto", Font.PLAIN, 12));
         switch (text) {
             case "Cerrar Sesión" -> menu.addActionListener(e -> {
                 int dialogResult = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
@@ -105,6 +108,13 @@ public class Menu_Admin extends javax.swing.JPanel {
                 currentWindow.dispose();
 
                 Frm_Usuarios frm = new Frm_Usuarios();
+                frm.setVisible(true);
+            });
+            case "Periodos Academicos" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_PeriodosAcademicos frm = new Frm_PeriodosAcademicos();
                 frm.setVisible(true);
             });
         }

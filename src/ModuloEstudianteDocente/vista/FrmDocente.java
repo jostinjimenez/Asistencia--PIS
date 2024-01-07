@@ -358,7 +358,7 @@ public class FrmDocente extends javax.swing.JFrame {
         txtCodigoEmp.setBackground(new java.awt.Color(204, 204, 204));
         roundPanel5.add(txtCodigoEmp, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
 
-        roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 480, 260));
+        roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 480, 260));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 1020, 530));
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 620));

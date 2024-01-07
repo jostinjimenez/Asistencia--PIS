@@ -6,7 +6,6 @@ package modelLuis.controller;
 
 import DAO.DataAccessObject;
 import model.Matricula;
-import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -156,6 +155,8 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         switch (campo.toLowerCase()) {
             case "ciclo":
                 return Integer.toString(matricula.getCiclo()).equalsIgnoreCase(text);
+            case "id":
+                return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
@@ -168,11 +169,11 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
     }
 
     public static void main(String[] args) throws VacioExceptions {
-        ListaEnlazada<Integer> ids = new ListaEnlazada();
-        ids.add(3);
-        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
-        ControllerMatricula c = new ControllerMatricula();
-        c.save(matricula);
+//        ListaEnlazada<Integer> ids = new ListaEnlazada();
+//        ids.add(3);
+//        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
+//        ControllerMatricula c = new ControllerMatricula();
+//        c.save(matricula);
         //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
 
     }
