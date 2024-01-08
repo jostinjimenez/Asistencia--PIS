@@ -158,7 +158,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "DNI incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
             }
             JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-            ((Frm_Usuarios) this.getParent()).cargarTabla(); // Agrega esta línea
+            ((Frm_Usuarios) this.getParent()).cargarTabla();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
