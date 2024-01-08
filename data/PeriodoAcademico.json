@@ -4,34 +4,25 @@
             "data": {
                 "@class": "model.PeriodoAcademico",
                 "id": 1,
-                "anio": 2024,
-                "fechaInicio": "14 de Octubre",
-                "fechaFin": "16 de Marzo"
+                "anio": 2020,
+                "fechaInicio": "16 de mayo",
+                "fechaFin": "12 de septiembre",
+                "estado": false
             },
             "next": {
                 "data": {
                     "@class": "model.PeriodoAcademico",
                     "id": 2,
-                    "anio": 2025,
-                    "fechaInicio": "14 de Abril",
-                    "fechaFin": "16 de Agosto",
+                    "anio": 2024,
+                    "fechaInicio": "12 de julio",
+                    "fechaFin": "24 de diciembre",
                     "estado": false
-                },
-                "next": {
-                    "data": {
-                        "@class": "model.PeriodoAcademico",
-                        "id": 3,
-                        "anio": 2023,
-                        "fechaInicio": "14 de Abril",
-                        "fechaFin": "16 de Agosto",
-                        "estado": false
-                    }
                 }
             }
         },
         "last": {
-            "@reference": "..\/head\/next\/next"
+            "@reference": "..\/head\/next"
         },
-        "size": 3
+        "size": 2
     }
 }
