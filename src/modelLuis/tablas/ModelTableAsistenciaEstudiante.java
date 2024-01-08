@@ -1,10 +1,6 @@
 package modelLuis.tablas;
 
-<<<<<<< HEAD
-=======
-import java.util.logging.Level;
-import java.util.logging.Logger;
->>>>>>> master
+
 import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import model.Horario;
