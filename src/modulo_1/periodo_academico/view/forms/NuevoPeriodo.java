@@ -82,7 +82,7 @@ public class NuevoPeriodo extends javax.swing.JDialog {
         pac.getPeriodoAc().setAnio(Integer.valueOf(txtAnio.getText().trim()));
         pac.getPeriodoAc().setFechaInicio(txtFechaInicio.getText().trim());
         pac.getPeriodoAc().setFechaFin(txtFechaFin.getText().trim());
-        pac.getPeriodoAc().setEstado(false);
+        pac.getPeriodoAc().setEstado(true);
     }
 
     private void updatePersona() {

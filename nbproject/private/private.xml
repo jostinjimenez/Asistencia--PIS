@@ -40,9 +40,6 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/periodo_academico/controller/PeriodoAcController.java</file>
-        </group>
-        <group>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
@@ -50,6 +47,11 @@
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/Rol.json</file>
 >>>>>>> master
+        </group>
+        <group>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/periodo_academico/view/forms/Frm_PeriodosAcademicos.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/PeriodoAcademico.json</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/periodo_academico/controller/PeriodoAcController.java</file>
         </group>
     </open-files>
 </project-private>
