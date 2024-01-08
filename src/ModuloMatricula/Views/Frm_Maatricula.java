@@ -9,7 +9,7 @@ import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerMatricula;
 import modelLuis.tablas.ModelTableMateria;
 import modelLuis.tablas.ModelTableMatriculas;
-import modelLuis.view.util.Util_VistaLinked1_Asistencia;
+import ModuloMatricula.Views.UtilVista.Util_VistaLinked1_Asistencia;
 import tda_listas.ListaEnlazada;
 
 public class Frm_Maatricula extends javax.swing.JFrame {
