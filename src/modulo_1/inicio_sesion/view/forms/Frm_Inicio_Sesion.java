@@ -10,10 +10,16 @@ import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
 import modulo_1.inicio_sesion.view.util.Utiles;
-import plantilla.components.Menu_Admin;
 
+/**
+ * Esta clase representa el formulario de inicio de sesión.
+ */
 public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
+    /**
+     * Constructor de Frm_Inicio_Sesion.
+     * Inicializa los componentes del formulario y establece su ubicación.
+     */
     public Frm_Inicio_Sesion() {
         initComponents();
         setLocationRelativeTo(null);
@@ -27,6 +33,10 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
     CuentaController cc = new CuentaController();
 
+    /**
+     * Este método se encarga de iniciar la sesión del usuario.
+     * Valida la cuenta del usuario y, si es válida, identifica el rol de la persona y abre el formulario correspondiente.
+     */
     public void iniciarSesion() {
         String usuario = txtUsuario.getText();
         String clave = txtClave.getText();
@@ -137,10 +147,10 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         roundPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 330, 40));
 
-        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, 500, 530));
+        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 500, 530));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modulo_1/inicio_sesion/view/forms/img/unl.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, -10, 610, 650));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, -10, 610, 650));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
 

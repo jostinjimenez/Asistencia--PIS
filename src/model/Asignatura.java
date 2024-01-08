@@ -1,11 +1,12 @@
 package model;
 
+import java.util.Objects;
 import tda_listas.ListaEnlazada;
 
 public class Asignatura {
 
     // Atributos
-    private Integer id;
+    Integer id;
     private String nombre;
     private Integer horasTotales;
     private Integer codigo;
@@ -18,6 +19,13 @@ public class Asignatura {
         this.codigo = codigo;
         this.horasTotales = horasTotales;
         this.id_cursas = id_cursas;
+    }
+
+    public Asignatura(Integer nuevoId, String nombre, Integer codigo, Integer horasTotales) {
+        this.id = nuevoId;
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.horasTotales = horasTotales;
     }
 
     // Constructor
@@ -67,6 +75,30 @@ public class Asignatura {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Asignatura that = (Asignatura) obj;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public boolean isValid() {
+        // Verificar que los campos necesarios no sean null o vacíos
+        return nombre != null && !nombre.isEmpty()
+                  && codigo != null && codigo > 0
+                  && horasTotales != null && horasTotales > 0;
     }
 
     public Boolean comparar(Asignatura as, String field, Integer type) {

@@ -2,9 +2,9 @@ package model.catalogo;
 
 public enum EstadoMatricula {
     MATRICULADO("Matriculado"),
-    RETIRADO("Retirado"),
     APROBADO("Aprobado"),
-    REPROBADO("Reprobado");
+    REPROBADO("Reprobado"),
+    RETIRADO("Retirado");
 
     private String nombre;
 

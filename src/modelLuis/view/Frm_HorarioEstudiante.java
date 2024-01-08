@@ -119,8 +119,13 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 640, 340));
 
+<<<<<<< HEAD
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
         bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+=======
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 1010, 620));
+        bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 240, 620));
+>>>>>>> master
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 

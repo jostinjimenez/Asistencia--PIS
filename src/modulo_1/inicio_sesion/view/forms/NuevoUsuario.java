@@ -9,8 +9,7 @@ import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 
 import javax.swing.*;
 
-import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
-import static modulo_1.inicio_sesion.view.util.Utiles.cargaRoll;
+import static modulo_1.inicio_sesion.view.util.Utiles.*;
 
 public class NuevoUsuario extends javax.swing.JDialog {
 
@@ -138,28 +137,28 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
     private void savePersona() {
         if (pc.save()) {
-            cc.getCuenta().setClave(txtDni.getText().trim());
-            cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
-            cc.getCuenta().setIdPersona(pc.getPersona().getId());
-            cc.getCuenta().setEstado(true);
+            if (validarDni(txtDni.getText().trim())) {
+                cc.getCuenta().setCorreo(txtCorreoInstitucional.getText().trim());
+                cc.getCuenta().setIdPersona(pc.getPersona().getId());
+                cc.getCuenta().setEstado(true);
 
-            if (cc.save()) {
-                if (cbxRol.getSelectedIndex() == 1) {
-                    ec.getEstudiante().setId(pc.getPersona().getId());
-                    //ec.getEstudiante().setCodigo(ec.generatedCode());
-                    ec.save();
-                } else if (cbxRol.getSelectedIndex() == 2) {
-                    dc.getDocente().setId(pc.getPersona().getId());
-                    //dc.getDocente().setCodigo(dc.generatedCode());
-                    dc.save();
+                if (cc.save()) {
+                    if (cbxRol.getSelectedIndex() == 1) {
+                        ec.getEstudiante().setId(pc.getPersona().getId());
+                        ec.save();
+                    } else if (cbxRol.getSelectedIndex() == 2) {
+                        dc.getDocente().setId(pc.getPersona().getId());
+                        dc.save();
+                    }
+                    System.out.println("Se guardó correctamente");
+                } else {
+                    System.out.println("No se pudo guardar");
                 }
-                System.out.println("Se guardó correctamente");
             } else {
-                System.out.println("No se pudo guardar");
+                JOptionPane.showMessageDialog(null, "DNI incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
             JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-            ((Frm_Usuarios) this.getParent()).cargarTabla(); // Agrega esta línea
+            ((Frm_Usuarios) this.getParent()).cargarTabla();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);

@@ -85,7 +85,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
                 break;
             }
         }
-        System.out.println(idRol);
         return idRol;
     }
 
@@ -99,6 +98,5 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         }
         return persona;
     }
-
 }
 

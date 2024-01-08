@@ -2,6 +2,7 @@ package modulo_1.periodo_academico.controller;
 
 import DAO.DataAccessObject;
 import model.PeriodoAcademico;
+import model.Persona;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -124,57 +125,181 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
         return i + 1;
     }
 
-    public PeriodoAcademico buscarId(ListaEnlazada<PeriodoAcademico> lista, Integer id) throws Exception {
-        ListaEnlazada<PeriodoAcademico> lo = ordenarQS(lista, 0, "id");
+    public ListaEnlazada<PeriodoAcademico> buscarId(ListaEnlazada<PeriodoAcademico> lista, Integer id) throws Exception {
+        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "id");
+        PeriodoAcademico[] p = lo.toArray();
+        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
 
         int left = 0;
-        int right = lo.getSize() - 1;
+        int right = lista.getSize() - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            PeriodoAcademico midPeriodo = lo.get(mid);
 
-            if (midPeriodo.getId().equals(id)) {
-                return midPeriodo;
+            if (p[mid].getId().intValue() == id.intValue()) {
+                result.add(p[mid]);
+
+                int temp = mid - 1;
+                while (temp >= left && p[temp].getId().intValue() == id.intValue()) {
+                    result.add(p[temp]);
+                    temp--;
+                }
+
+                temp = mid + 1;
+                while (temp <= right && p[temp].getId().intValue() == id.intValue()) {
+                    result.add(p[temp]);
+                    temp++;
+                }
+                return result;
             }
-
-            if (midPeriodo.getId() < id) {
+            if (p[mid].getId().intValue() < id.intValue()) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-        return null;
+        return result;
     }
 
     public ListaEnlazada<PeriodoAcademico> buscarAnio(ListaEnlazada<PeriodoAcademico> lista, Integer anio) throws Exception {
+        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "anio");
+        PeriodoAcademico[] p = lo.toArray();
         ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-        for (int i = 0; i < lista.getSize(); i++) {
-            PeriodoAcademico pa = lista.get(i);
-            if (pa.getAnio().equals(anio)) {
-                result.add(pa);
+
+        int left = 0;
+        int right = lista.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (p[mid].getAnio().intValue() == anio.intValue()) {
+                result.add(p[mid]);
+
+                int temp = mid - 1;
+                while (temp >= left && p[temp].getAnio().intValue() == anio.intValue()) {
+                    result.add(p[temp]);
+                    temp--;
+                }
+
+                temp = mid + 1;
+                while (temp <= right && p[temp].getAnio().intValue() == anio.intValue()) {
+                    result.add(p[temp]);
+                    temp++;
+                }
+                return result;
+            }
+            if (p[mid].getAnio().intValue() < anio.intValue()) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
         return result;
     }
 
+//    public ListaEnlazada<PeriodoAcademico> buscarEstado(ListaEnlazada<PeriodoAcademico> lista, Boolean estado) throws Exception {
+//        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "estado");
+//        PeriodoAcademico[] p = lo.toArray();
+//        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
+//
+//        int left = 0;
+//        int right = lista.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//
+//            if (p[mid].getEstado().booleanValue() == estado.booleanValue()) {
+//                result.add(p[mid]);
+//
+//                int temp = mid - 1;
+//                while (temp >= left && p[temp].getEstado().booleanValue() == estado.booleanValue()) {
+//                    result.add(p[temp]);
+//                    temp--;
+//                }
+//
+//                temp = mid + 1;
+//                while (temp <= right && p[temp].getEstado().booleanValue() == estado.booleanValue()) {
+//                    result.add(p[temp]);
+//                    temp++;
+//                }
+//                return result;
+//            }
+//            if (p[mid].getEstado().booleanValue() < estado.booleanValue()) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return result;
+//    }
+
     public ListaEnlazada<PeriodoAcademico> buscarFechaInicio(ListaEnlazada<PeriodoAcademico> lista, String fechaInicio) throws Exception {
+        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "fechaInicio");
+        PeriodoAcademico[] p = lo.toArray();
         ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-        for (int i = 0; i < lista.getSize(); i++) {
-            PeriodoAcademico pa = lista.get(i);
-            if (pa.getFechaInicio().equals(fechaInicio)) {
-                result.add(pa);
+
+        int left = 0;
+        int right = lista.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (p[mid].getFechaInicio().equals(fechaInicio)) {
+                result.add(p[mid]);
+
+                int temp = mid - 1;
+                while (temp >= left && p[temp].getFechaInicio().equals(fechaInicio)) {
+                    result.add(p[temp]);
+                    temp--;
+                }
+
+                temp = mid + 1;
+                while (temp <= right && p[temp].getFechaInicio().equals(fechaInicio)) {
+                    result.add(p[temp]);
+                    temp++;
+                }
+                return result;
+            }
+            if (p[mid].getFechaInicio().compareTo(fechaInicio) < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
         return result;
     }
 
     public ListaEnlazada<PeriodoAcademico> buscarFechaFin(ListaEnlazada<PeriodoAcademico> lista, String fechaFin) throws Exception {
+        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "fechaFin");
+        PeriodoAcademico[] p = lo.toArray();
         ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-        for (int i = 0; i < lista.getSize(); i++) {
-            PeriodoAcademico pa = lista.get(i);
-            if (pa.getFechaFin().equals(fechaFin)) {
-                result.add(pa);
+
+        int left = 0;
+        int right = lista.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (p[mid].getFechaFin().equals(fechaFin)) {
+                result.add(p[mid]);
+
+                int temp = mid - 1;
+                while (temp >= left && p[temp].getFechaFin().equals(fechaFin)) {
+                    result.add(p[temp]);
+                    temp--;
+                }
+
+                temp = mid + 1;
+                while (temp <= right && p[temp].getFechaFin().equals(fechaFin)) {
+                    result.add(p[temp]);
+                    temp++;
+                }
+                return result;
+            }
+            if (p[mid].getFechaFin().compareTo(fechaFin) < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
         return result;

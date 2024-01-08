@@ -9,6 +9,7 @@ import model.Asistencia;
 import model.Cursa;
 import model.Estudiante;
 import model.Matricula;
+import model.Persona;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerAsistencia;
@@ -18,6 +19,7 @@ import modelLuis.controller.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
 import modelLuis.tablas.ModelTableAsistencia2;
 import modelLuis.view.util.Util_VistaLinked1_Asistencia;
+import modulo_1.inicio_sesion.controller.CuentaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -34,19 +36,48 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     ListaEnlazada<Matricula> result = new ListaEnlazada<>();
     ModelTableAsistencia2 ad = new ModelTableAsistencia2();
     Integer idtematica;
+<<<<<<< HEAD
     Integer id = 1;
+=======
+    Integer id;
+>>>>>>> master
 
-    public Frm_AsistenciaJ() {
+    public Frm_AsistenciaJ(Persona persona) {
         initComponents();
         try {
             cargarCombos();
+<<<<<<< HEAD
 
         } catch (Exception e) {
+=======
+            id = persona.getId();
+        }
+        catch (Exception e) {
+>>>>>>> master
             System.out.println(e + "Errros");
         }
         limpiar();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setResizable(false);  
+    }
+
+    private void cargarCombos() throws VacioExceptions {
+        ControllerCursa cc = new ControllerCursa();
+        ControllerAsignatura ca = new ControllerAsignatura();
+        ControllerMatricula cm = new ControllerMatricula();
+        ListaEnlazada<Asignatura> listaAsig = new ListaEnlazada<>();
+        ListaEnlazada<Cursa> listaCursa = new ListaEnlazada<>();
+        ListaEnlazada<Matricula> listMatr = new ListaEnlazada<>();
+        listaCursa = cc.busquedaBinaria(cc.list_All(), id.toString(), "id_docente", "quicksort", 0);
+        for (Cursa cursa : listaCursa) {
+            Matricula matricula = cm.busquedaBinaria2(cm.list_All(), cursa.getIdMatricula().toString(), "id");
+            Asignatura asig = ca.busquedaBinaria2(ca.list_All(), cursa.getIdAsignatura().toString(), "id", 0);
+            listaAsig.add(asig);
+            listMatr.add(matricula);
+        }
+        Util_VistaLinked1_Asistencia.setListaMatr(listMatr);
+        Util_VistaLinked1_Asistencia.setListaAsig(listaAsig);
+        Util_VistaLinked1_Asistencia.setListaCursa(listaCursa);
     }
 
     private void cargarCombos() throws VacioExceptions {
@@ -75,7 +106,12 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
             Util_VistaLinked1_Asistencia.cargaHorario(cbxHorario);
             Util_VistaLinked1_Asistencia.cargaAsig(cbxAsig);
             Util_VistaLinked1_Asistencia.cargaParalelos(cbxParalelos);
+<<<<<<< HEAD
         } catch (Exception e) {
+=======
+        }
+        catch (Exception e) {
+>>>>>>> master
             e.printStackTrace();
         }
 
@@ -96,7 +132,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
     public Boolean validar() {
         return !txtFecha.getText().trim().isEmpty()
-                && !txtNombre.getText().trim().isEmpty();
+                  && !txtNombre.getText().trim().isEmpty();
     }
 
     public void modificar() {
@@ -106,7 +142,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         ca.setIndex(fila);
         if (ca.update1(ca.getIndex())) {
             JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -123,14 +160,17 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                     if (ca.saved()) {
                         list.add(ca.getAsistencia());
                         JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
+                    }
+                    else {
                         JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println(e + "Error");
             }
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
@@ -145,14 +185,17 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 if (ct.saved()) {
                     limpiar();
                     JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                } else {
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
@@ -160,7 +203,11 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     public void listar() throws VacioExceptions {
         String paralelo = Util_VistaLinked1_Asistencia.getComboCursa(cbxParalelos).getParalelo();
         ListaEnlazada<Cursa> listCur = cd.busquedaBinaria(cd.list_All(), paralelo, "paralelo", "quicksort", 0);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> master
         Integer ciclo = Util_VistaLinked1_Asistencia.getComboMatricula(cbxCiclos).getCiclo();
         String nciclo = ciclo.toString();
         ListaEnlazada<Matricula> lista1 = c.busquedaBinaria(c.list_All(), nciclo, "ciclo", "quicksort", 0);
@@ -254,6 +301,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
                     .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(cbxParalelos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonMenu2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
@@ -266,6 +314,23 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                     .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57))
+=======
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cbxParalelos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonMenu2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxAsig, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(57, 57, 57))))
+>>>>>>> master
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,11 +338,20 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel2Layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGap(22, 22, 22)
                         .addComponent(cbxAsig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+=======
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxAsig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+>>>>>>> master
                         .addComponent(cbxParalelos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -285,9 +359,13 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                             .addComponent(buttonMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel6))
+=======
+                        .addComponent(jLabel2)
+>>>>>>> master
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -391,8 +469,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         });
         roundPanel1.add(buttonMenu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 160, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 620));
-        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 1000, 620));
+        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 250, 620));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
 
@@ -404,13 +482,18 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCiclosItemStateChanged
 
     private void buttonMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu1ActionPerformed
+<<<<<<< HEAD
        modificar();
+=======
+        modificar();
+>>>>>>> master
     }//GEN-LAST:event_buttonMenu1ActionPerformed
 
     private void buttonMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu2ActionPerformed
         try {
             listar();
-        } catch (VacioExceptions ex) {
+        }
+        catch (VacioExceptions ex) {
 
         }
     }//GEN-LAST:event_buttonMenu2ActionPerformed
@@ -418,7 +501,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private void buttonMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu3ActionPerformed
         try {
             actualizarTabla();
-        } catch (VacioExceptions ex) {
+        }
+        catch (VacioExceptions ex) {
 
         }
     }//GEN-LAST:event_buttonMenu3ActionPerformed
@@ -440,14 +524,15 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
          */
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_AsistenciaJ().setVisible(true);
+            //new Frm_AsistenciaJ().setVisible(true);
         });
     }
 

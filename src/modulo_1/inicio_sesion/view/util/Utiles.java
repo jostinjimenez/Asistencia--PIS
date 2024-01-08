@@ -40,7 +40,7 @@ public class Utiles {
         return (Rol) cbx.getSelectedItem();
     }
 
-    public static boolean validadorDeCedula(String cedula) {
+    public static boolean validarDni(String cedula) {
         if (cedula.length() != 10) {
             return false;
         }

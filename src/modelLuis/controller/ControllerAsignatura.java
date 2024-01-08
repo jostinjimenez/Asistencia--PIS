@@ -78,8 +78,13 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     public static void main(String[] args) {
         ListaEnlazada<Integer> ids = new ListaEnlazada();
+<<<<<<< HEAD
         ids.add(3);
         Asignatura asig = new Asignatura(3, "Matematicas", 838833, 180, ids);
+=======
+        ids.add(2);
+        Asignatura asig = new Asignatura(2, "Estrutura Datos", 37733, 279, ids);
+>>>>>>> master
         ControllerAsignatura c = new ControllerAsignatura();
         System.out.println(c.save(asig));
     }

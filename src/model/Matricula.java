@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 
@@ -144,6 +145,11 @@ public class Matricula {
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
+    }
+    public String generarFecha() {
+        LocalDate fechaHoy = LocalDate.now();
+       String fecha = fechaHoy.toString();
+        return fecha;
     }
 
 }

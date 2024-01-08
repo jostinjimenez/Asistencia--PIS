@@ -7,6 +7,8 @@ import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 import modulo_1.inicio_sesion.view.util.Utiles;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
@@ -14,8 +16,15 @@ import java.util.Objects;
 
 import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
+/**
+ * Esta clase representa el formulario de usuarios.
+ */
 public class Frm_Usuarios extends javax.swing.JFrame {
 
+    /**
+     * Constructor de Frm_Usuarios.
+     * Inicializa los componentes del formulario y establece su ubicación.
+     */
     public Frm_Usuarios() {
         initComponents();
 
@@ -24,20 +33,38 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         cargarTabla();
         cargaRol(cbxRol);
         cbxRol.setVisible(false);
-
         jTable1.getSelectionModel().addListSelectionListener(e -> {
             btnEditar.setEnabled(true);
             btnEliminar.setEnabled(true);
         });
 
         btnEliminar.addActionListener(e -> eliminarRegistro());
+
+        txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                buscar();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                buscar();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                buscar();
+            }
+        });
     }
 
     ModeloTablaPersona mtp = new ModeloTablaPersona();
     PersonaController pc = new PersonaController();
 
-    // Metodos
-    private void buscar() {
+    /**
+     * Este método se encarga de buscar personas por rol.
+     */
+    private void buscarRol() {
         String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
         try {
             if (criterio.equalsIgnoreCase("rol")) {
@@ -45,7 +72,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 if (rolSeleccionado.getNombre().equals("Todos")) {
                     mtp.setPersonas(pc.getPersonas());
                 } else {
-                    mtp.setPersonas(pc.buscarRolCombinado(pc.getPersonas(), "idRol", rolSeleccionado));
+                    mtp.setPersonas(pc.buscarRol(pc.getPersonas(), "idRol", rolSeleccionado));
                 }
                 mtp.fireTableDataChanged();
                 jTable1.setModel(mtp);
@@ -56,6 +83,39 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este método se encarga de buscar personas por diferentes criterios.
+     */
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBuscar.getText();
+
+        try {
+            if (texto.isEmpty()) {
+                mtp.setPersonas(pc.getPersonas());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    mtp.setPersonas(pc.buscarNombre(pc.list_All(), texto));
+                } else if (criterio.equalsIgnoreCase("apellido")) {
+                    mtp.setPersonas(pc.buscarApellido(pc.list_All(), texto));
+                } else if (criterio.equalsIgnoreCase("dni")) {
+                    mtp.setPersonas(pc.buscarDni(pc.list_All(), texto));
+                } else if (criterio.equalsIgnoreCase("id")) {
+                    Integer id = Integer.parseInt(texto);
+                    mtp.setPersonas(pc.buscarId(pc.list_All(), id));
+                }
+            }
+            mtp.fireTableDataChanged();
+            jTable1.setModel(mtp);
+            jTable1.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Este método se encarga de eliminar un registro de la tabla.
+     */
     public void eliminarRegistro() {
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow >= 0) {
@@ -77,12 +137,15 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este método se encarga de cargar la tabla con los datos de las personas.
+     */
     public void cargarTabla() {
         mtp.setPersonas(pc.list_All());
         mtp.setPersonas(pc.getPersonas());
-        mtp.fireTableDataChanged();
         jTable1.setModel(mtp);
         jTable1.updateUI();
+        mtp.fireTableDataChanged();
 
         TableRowSorter<ModeloTablaPersona> trs = new TableRowSorter<>(mtp);
         jTable1.setRowSorter(trs);
@@ -105,7 +168,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtCriterio = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
@@ -135,21 +198,21 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         jLabel3.setText("Buscar");
         roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 70, 60, 20));
 
-        txtCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCriterio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(txtCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 240, 20));
+        txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 240, 20));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane1.setViewportView(jTable1);
 
@@ -185,7 +248,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Rol", "Nombre", "DNI" }));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Id", "Rol", "Nombre", "Apellido", "DNI"}));
         cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxCriterioItemStateChanged(evt);
@@ -194,7 +257,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 160, -1));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbxRol.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxRolItemStateChanged(evt);
@@ -223,17 +286,17 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             if (Objects.equals(cbxCriterio.getSelectedItem(), "Rol")) {
                 cbxRol.setVisible(true);
-                txtCriterio.setVisible(false);
+                txtBuscar.setVisible(false);
             } else {
                 cbxRol.setVisible(false);
-                txtCriterio.setVisible(true);
+                txtBuscar.setVisible(true);
             }
 
         }
     }//GEN-LAST:event_cbxCriterioItemStateChanged
 
     private void cbxRolItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxRolItemStateChanged
-        buscar();
+        buscarRol();
     }//GEN-LAST:event_cbxRolItemStateChanged
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,7 +331,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private plantilla.components.Menu_Admin menu_Admin2;
     private plantilla.swing.RoundPanel roundPanel1;
-    private javax.swing.JTextField txtCriterio;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
 }

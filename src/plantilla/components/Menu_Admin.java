@@ -9,10 +9,13 @@ import java.util.Objects;
 import javax.swing.*;
 
 import model.Persona;
+import modelLuis.view.Frm_HorarioAdmi;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import ModuloEstudianteDocente.vista.*;
+import ModuloMatricula.Views.Frm_Maatricula;
 import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
+import moduloAsignaturas.view.*;
 
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.util.Utiles;
@@ -46,12 +49,13 @@ public class Menu_Admin extends javax.swing.JPanel {
     public void initMenu() {
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/menu.png"))), "Menu Principal", 0);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/user.png"))), "Usuarios", 1);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/roles.png"))), "Roles", 2);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/roles.png"))), "Asignaturas", 2);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/estudiante.png"))), "Estudiantes", 3);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/docente.png"))), "Docentes", 4);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/matricula.png"))), "Matriculas", 5);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/asignatura.png"))), "Asignaturas", 6);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Periodos Academicos", 7);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Horarios", 8);
         addEmpty();
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/salir.png"))), "Cerrar Sesión", 8);
     }
@@ -115,6 +119,27 @@ public class Menu_Admin extends javax.swing.JPanel {
                 currentWindow.dispose();
 
                 Frm_PeriodosAcademicos frm = new Frm_PeriodosAcademicos();
+                frm.setVisible(true);
+            });
+            case "Horarios" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_HorarioAdmi frm = new Frm_HorarioAdmi();
+                frm.setVisible(true);
+            });
+            case "Matriculas" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_Maatricula frm = new Frm_Maatricula();
+                frm.setVisible(true);
+            });
+            case "Asignaturas" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                FrmAgregarAsignatura frm = new FrmAgregarAsignatura();
                 frm.setVisible(true);
             });
         }
