@@ -1,9 +1,9 @@
-package viewAndres.tablas;
+package moduloAsignaturas.view.tablas;
 
-import controllerAndres.CursoController;
+import moduloAsignaturas.controller.CursoController;
 import java.util.Comparator;
 import javax.swing.table.AbstractTableModel;
-import modelAndres.Curso;
+import model.Curso;
 import tda_listas.exceptions.VacioExceptions;
 
 public class ModeloTablaCursos extends AbstractTableModel {

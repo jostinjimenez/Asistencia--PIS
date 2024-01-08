@@ -1,14 +1,14 @@
-package viewAndres;
+package moduloAsignaturas.view;
 
-import controllerAndres.CursoController;
+import moduloAsignaturas.controller.CursoController;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelAndres.Curso;
+import model.Curso;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
-import viewAndres.tablas.ModeloTablaCursos;
+import moduloAsignaturas.view.tablas.ModeloTablaCursos;
 
 public class FrmAgregarCurso extends javax.swing.JFrame {
 

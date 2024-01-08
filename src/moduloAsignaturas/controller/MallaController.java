@@ -1,4 +1,4 @@
-package controllerAndres;
+package moduloAsignaturas.controller;
 
 import DAO.DataAccessObject;
 import tda_listas.ListaEnlazada;
@@ -6,7 +6,7 @@ import tda_listas.Nodo;
 import tda_listas.exceptions.VacioExceptions;
 import java.util.Comparator;
 import java.util.Iterator;
-import modelAndres.Malla;
+import model.Malla;
 
 public class MallaController extends DataAccessObject<Malla> {
 
@@ -192,5 +192,9 @@ public class MallaController extends DataAccessObject<Malla> {
     private int compareMallas(Malla m1, Malla m2, Comparator<Malla> comparador, boolean ascendente) {
         int resultado = comparador.compare(m1, m2);
         return ascendente ? resultado : -resultado;
+    }
+
+    public boolean delete(int mallaAEliminar) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

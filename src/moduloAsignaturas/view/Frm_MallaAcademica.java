@@ -1,13 +1,13 @@
-package viewAndres;
+package moduloAsignaturas.view;
 
-import controllerAndres.MallaController;
+import moduloAsignaturas.controller.MallaController;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelAndres.Malla;
+import model.Malla;
 import tda_listas.exceptions.VacioExceptions;
-import viewAndres.tablas.ModeloTablaMallas;
+import moduloAsignaturas.view.tablas.ModeloTablaMallas;
 
 public class Frm_MallaAcademica extends javax.swing.JFrame {
 
