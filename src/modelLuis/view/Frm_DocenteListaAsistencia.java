@@ -1,12 +1,9 @@
 package modelLuis.view;
-
-import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.Objects;
 import javax.swing.UIManager;
 import model.Asignatura;
 import model.Cursa;
-import model.Docente;
 import model.Horario;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
@@ -15,7 +12,7 @@ import modelLuis.tablas.ModelTableAsistenciaDocente;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-public class Frm_DocenteHorario extends javax.swing.JFrame {
+public class Frm_DocenteListaAsistencia extends javax.swing.JFrame {
 
     private ListaEnlazada<Horario> horarios = new ListaEnlazada<>();
     private ControllerAsignatura controlerAsignatura = new ControllerAsignatura();
@@ -26,7 +23,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
     private ModelTableAsistenciaDocente a = new ModelTableAsistenciaDocente();
     private Integer id = 1;
 
-    public Frm_DocenteHorario() {
+    public Frm_DocenteListaAsistencia() {
         initComponents();
         cargarTabla();
         this.setLocationRelativeTo(null);
@@ -139,7 +136,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_DocenteHorario().setVisible(true);
+            new Frm_DocenteListaAsistencia().setVisible(true);
         });
     }
 
