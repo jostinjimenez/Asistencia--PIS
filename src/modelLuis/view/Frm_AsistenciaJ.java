@@ -37,13 +37,12 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     ListaEnlazada<Matricula> result = new ListaEnlazada<>();
     ModelTableAsistencia2 ad = new ModelTableAsistencia2();
     Integer idtematica;
-    Integer id;
+    Integer id = 0;
 
-    public Frm_AsistenciaJ(Persona persona) {
+    public Frm_AsistenciaJ() {
         initComponents();
         try {
             cargarCombos();
-            id = persona.getId();
         }
         catch (Exception e) {
             System.out.println(e + "Errros");
@@ -464,7 +463,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            //new Frm_AsistenciaJ().setVisible(true);
+            new Frm_AsistenciaJ().setVisible(true);
         });
     }
 

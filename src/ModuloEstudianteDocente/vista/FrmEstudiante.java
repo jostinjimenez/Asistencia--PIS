@@ -17,6 +17,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Estudiante;
+import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.controller.PersonaController;
 
 /**
  *
@@ -26,6 +28,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
     private ControladorEstudiante estudianteControlador = new ControladorEstudiante();
     private ModeloTablaEstudiante modeloEstudiante = new ModeloTablaEstudiante();
+    private PersonaController pc = new PersonaController();
+    private CuentaController cc = new CuentaController();
     private Integer fila = -1;
 
     /**
@@ -50,7 +54,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
     private void limpiar() {
 
-        txtNombres.setText(" ");
+        txtApellidos.setText(" ");
         txtFechaNac.setText(" ");
         txtCorreo.setText(" ");
         txtCedula.setText(" ");
@@ -65,7 +69,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     }
 
     private Boolean validar() {
-        return !txtNombres.getText().trim().isEmpty()
+        return !txtApellidos.getText().trim().isEmpty()
                   && !txtFechaNac.getText().trim().isEmpty()
                   && !txtCorreo.getText().trim().isEmpty()
                   && !txtCedula.getText().trim().isEmpty()
@@ -79,14 +83,14 @@ public class FrmEstudiante extends javax.swing.JFrame {
         if (validar()) {
             try {
                 Estudiante est = new Estudiante();
-                est.setNombre(txtNombres.getText());
+                est.setNombre(txtApellidos.getText());
+                est.setApellido(txtApellidos.getText());
                 est.setFecha_nacimiento(txtFechaNac.getText());
                 est.setCorreo_personal(txtCorreo.getText());
                 est.setDni(txtCedula.getText());
                 est.setTelefono(txtTelefono.getText());
                 est.setEtnia(txtEtnia.getText());
                 String seleccion = cbxTituloBach.getSelectedItem().toString();
-                //System.out.println("Seleccin: " + seleccion);
                 Boolean tituloBachiller = seleccion.equals("Si");
                 est.setTitulo_bachiller(tituloBachiller);
                 String valorGuardar = tituloBachiller ? "Si" : "No";
@@ -103,6 +107,13 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 else {
                     est.setId(estudianteControlador.generarID());
                     estudianteControlador.save(est);
+                    String nombre = txtNombres.getText().substring(0, txtNombres.getText().indexOf(" "));
+                    String apellido = txtApellidos.getText().substring(0, txtApellidos.getText().indexOf(" "));
+                    String correoInsti = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
+                    cc.getCuenta().setCorreo(correoInsti);
+                    cc.getCuenta().setClave(txtCedula.getText());
+                    cc.getCuenta().setEstado(true);
+                    cc.getCuenta().setIdPersona(estudianteControlador.getEstudiante().getId());
                     limpiar();
 
                     JOptionPane.showMessageDialog(null, "Estudiante registrado correctamente",
@@ -138,7 +149,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 this.fila = fila;
 
                 estudianteControlador.setEstudiante(modeloEstudiante.getEstudiante().get(fila));
-                txtNombres.setText(estudianteControlador.getEstudiante().getNombre());
+                txtApellidos.setText(estudianteControlador.getEstudiante().getNombre());
                 txtFechaNac.setText(estudianteControlador.getEstudiante().getFecha_nacimiento());
                 txtCorreo.setText(estudianteControlador.getEstudiante().getCorreo_personal());
                 txtCedula.setText(estudianteControlador.getEstudiante().getDni());
@@ -233,12 +244,10 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         roundPanel3 = new plantilla.swing.RoundPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Jlabelll = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtNombres = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         Jlabel = new javax.swing.JLabel();
@@ -249,6 +258,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
         txtEtnia = new javax.swing.JTextField();
         cbxTituloBach = new javax.swing.JComboBox<>();
         txtDireccion = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtNombres = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         roundPanel2 = new plantilla.swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -259,6 +270,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEstudiante = new javax.swing.JTable();
+        txtApellidos = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -268,11 +281,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         roundPanel3.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Nombres: ");
-        roundPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 16, -1, -1));
-
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -281,7 +289,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Correo:");
+        jLabel4.setText("Correo Personal:");
         roundPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
         Jlabelll.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -293,14 +301,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Titulo de bachiller: ");
         roundPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-
-        txtNombres.setBackground(new java.awt.Color(204, 204, 204));
-        txtNombres.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombresActionPerformed(evt);
-            }
-        });
-        roundPanel3.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -318,21 +318,33 @@ public class FrmEstudiante extends javax.swing.JFrame {
         roundPanel3.add(Jlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         txtFechaNac.setBackground(new java.awt.Color(204, 204, 204));
+        txtFechaNac.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtFechaNac.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel3.add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 230, -1));
 
         txtCorreo.setBackground(new java.awt.Color(204, 204, 204));
+        txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel3.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 231, -1));
 
         txtCedula.setBackground(new java.awt.Color(204, 204, 204));
+        txtCedula.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCedula.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel3.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 231, -1));
 
         txtTelefono.setBackground(new java.awt.Color(204, 204, 204));
+        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtTelefono.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel3.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 231, -1));
 
         txtEtnia.setBackground(new java.awt.Color(204, 204, 204));
+        txtEtnia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtEtnia.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel3.add(txtEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
 
         cbxTituloBach.setBackground(new java.awt.Color(204, 204, 204));
+        cbxTituloBach.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxTituloBach.setForeground(new java.awt.Color(0, 0, 0));
         cbxTituloBach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTituloBachActionPerformed(evt);
@@ -341,9 +353,26 @@ public class FrmEstudiante extends javax.swing.JFrame {
         roundPanel3.add(cbxTituloBach, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 230, -1));
 
         txtDireccion.setBackground(new java.awt.Color(204, 204, 204));
+        txtDireccion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtDireccion.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel3.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 230, -1));
 
-        jPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 600, 260));
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Nombres: ");
+        roundPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 16, -1, -1));
+
+        txtNombres.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombres.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtNombres.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombresActionPerformed(evt);
+            }
+        });
+        roundPanel3.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
+
+        jPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 450, 260));
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 590));
 
         roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
@@ -385,6 +414,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         });
 
         btnModificar.setBackground(new java.awt.Color(204, 204, 204));
+        btnModificar.setForeground(new java.awt.Color(0, 0, 0));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,6 +423,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         });
 
         btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
+        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -441,6 +472,21 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         roundPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 960, 190));
 
+        txtApellidos.setBackground(new java.awt.Color(204, 204, 204));
+        txtApellidos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtApellidos.setForeground(new java.awt.Color(0, 0, 0));
+        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellidosActionPerformed(evt);
+            }
+        });
+        roundPanel5.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 230, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Apellidos:");
+        roundPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
+
         jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 1020, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -463,9 +509,9 @@ public class FrmEstudiante extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
+    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombresActionPerformed
+    }//GEN-LAST:event_txtApellidosActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
@@ -485,6 +531,10 @@ public class FrmEstudiante extends javax.swing.JFrame {
         // TODO add your handling code here:
         eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,6 +568,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private plantilla.components.Menu_Admin menu_Admin1;
@@ -526,6 +577,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private plantilla.swing.RoundPanel roundPanel4;
     private plantilla.swing.RoundPanel roundPanel5;
     private javax.swing.JTable tblEstudiante;
+    private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;

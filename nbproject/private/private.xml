@@ -25,17 +25,34 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/Persona.json</file>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/model/Persona.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/Estudiante.json</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/model/Cuenta.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/ModuloEstudianteDocente/controlador/ControladorEstudiante.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
             <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/Rol.json</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/tablas/ModeloTablaCuenta.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/periodo_academico/view/forms/Frm_PeriodosAcademicos.java</file>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/PeriodoAcademico.json</file>
-            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/periodo_academico/controller/PeriodoAcController.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/Persona.json</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/model/Persona.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/data/Estudiante.json</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/model/Cuenta.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/ModuloEstudianteDocente/controlador/ControladorEstudiante.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
+            <file>file:/C:/Users/Dell-G15/Documents/NetBeansProjects/Asistencia_PIS/src/modulo_1/inicio_sesion/view/tablas/ModeloTablaCuenta.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,6 +1,9 @@
 package modulo_1.inicio_sesion.controller;
 
 import DAO.DataAccessObject;
+
+import java.io.FileOutputStream;
+
 import model.Cuenta;
 import model.Persona;
 import model.Rol;
@@ -10,6 +13,7 @@ import tda_listas.exceptions.VacioExceptions;
 import javax.swing.*;
 
 public class CuentaController extends DataAccessObject<Cuenta> {
+
     // Atributos
     private ListaEnlazada<Cuenta> cuentas;
     private Cuenta cuenta = new Cuenta();
@@ -23,10 +27,28 @@ public class CuentaController extends DataAccessObject<Cuenta> {
 
     // Getters y Setters
     public ListaEnlazada<Cuenta> getCuentas() {
-        if (cuentas.isEmpty()) {
-            cuentas = this.list_All();
+        ListaEnlazada<Cuenta> cuentasActivas = new ListaEnlazada<>();
+        for (Cuenta cuenta : cuentas) {
+            if (cuenta.isEstado()) {
+                cuentasActivas.add(cuenta);
+            }
         }
-        return cuentas;
+        return cuentasActivas;
+    }
+
+    public Cuenta getCuentaID(Integer id) {
+        for (int i = 0; i < cuentas.getSize(); i++) {
+            Cuenta cuenta = null;
+            try {
+                cuenta = cuentas.get(i);
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+            if (cuenta.getId().equals(id)) {
+                return cuenta;
+            }
+        }
+        return null;
     }
 
     public void setCuentas(ListaEnlazada<Cuenta> cuentas) {
@@ -98,5 +120,44 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         }
         return persona;
     }
+
+    public Boolean delete(Integer idCuenta) {
+        for (int i = 0; i < cuentas.getSize(); i++) {
+            Cuenta cuenta = null;
+            try {
+                cuenta = cuentas.get(i);
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+            if (cuenta.getId().equals(idCuenta)) {
+                try {
+                    cuenta.setEstado(false);
+                    this.xStream.toXML(cuentas, new FileOutputStream(URL));
+                    return true;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+//    public Rol getRol(Cuenta cuenta) {
+//
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 

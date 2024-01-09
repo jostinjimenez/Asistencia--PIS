@@ -80,5 +80,10 @@ public class Utiles {
     public static void setCc(CuentaController cc) {
         Utiles.cc = cc;
     }
+    
+    public void GenerarCorreoInstitucional(String nombre, String apellido) {
+        String correo = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
+    }
+   
 }
 

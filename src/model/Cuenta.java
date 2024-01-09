@@ -1,11 +1,12 @@
 package model;
 
 public class Cuenta {
+
     // Atributos
     private Integer id;
     private String correo;
     private String clave;
-    private Boolean estado;
+    private boolean estado;
 
     private Integer idPersona;
 
@@ -46,11 +47,11 @@ public class Cuenta {
         this.clave = clave;
     }
 
-    public Boolean getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
@@ -64,9 +65,9 @@ public class Cuenta {
 
     @Override
     public String toString() {
-        return "Cuenta{" +
-                "correo='" + correo + '\'' +
-                '}';
+        return "Cuenta{"
+                  + "correo='" + correo + '\''
+                  + '}';
     }
 
     public Boolean compareTo(Cuenta c, String field, Integer type) {
@@ -74,25 +75,28 @@ public class Cuenta {
             case 1:
                 if (field.equalsIgnoreCase("correo")) {
                     return this.getCorreo().compareTo(c.getCorreo()) > 0;
-                } else if (field.equalsIgnoreCase("id")) {
+                }
+                else if (field.equalsIgnoreCase("id")) {
                     return this.getId() > (c.getId());
-                } else if (field.equalsIgnoreCase("estado")) {
-                    return this.getEstado().compareTo(c.getEstado()) > 0;
-                } else if (field.equalsIgnoreCase("clave")) {
+
+                }
+                else if (field.equalsIgnoreCase("clave")) {
                     return this.getClave().compareTo(c.getClave()) > 0;
-                } else if (field.equalsIgnoreCase("idPersona")) {
+                }
+                else if (field.equalsIgnoreCase("idPersona")) {
                     return this.getIdPersona() > (c.getIdPersona());
                 }
             case 0:
                 if (field.equalsIgnoreCase("correo")) {
                     return this.getCorreo().compareTo(c.getCorreo()) < 0;
-                } else if (field.equalsIgnoreCase("id")) {
+                }
+                else if (field.equalsIgnoreCase("id")) {
                     return this.getId() < (c.getId());
-                } else if (field.equalsIgnoreCase("estado")) {
-                    return this.getEstado().compareTo(c.getEstado()) < 0;
-                } else if (field.equalsIgnoreCase("clave")) {
+                }
+                else if (field.equalsIgnoreCase("clave")) {
                     return this.getClave().compareTo(c.getClave()) < 0;
-                } else if (field.equalsIgnoreCase("idPersona")) {
+                }
+                else if (field.equalsIgnoreCase("idPersona")) {
                     return this.getIdPersona() < (c.getIdPersona());
                 }
             default:
@@ -100,4 +104,3 @@ public class Cuenta {
         }
     }
 }
-

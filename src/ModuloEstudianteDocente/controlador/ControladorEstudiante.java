@@ -35,12 +35,26 @@ public class ControladorEstudiante extends DataAccessObject<Estudiante>{
         return estudiante;
     }
 
+    public ListaEnlazada<Estudiante> getEstudiantes() {
+        ListaEnlazada<Estudiante> personasActivas = new ListaEnlazada<>();
+        for (Estudiante persona : estudiantes) {
+            if (persona.isActivo()) {
+                personasActivas.add(persona);
+            }
+        }
+        return personasActivas;
+    }
+
+    public void setEstudiantes(ListaEnlazada<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
+
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
     
-    public Boolean save() {
-        estudiante.setId(generarID());
+    public Boolean save(Integer id) {
+        estudiante.setId(id);
         return save(estudiante);
     }
 

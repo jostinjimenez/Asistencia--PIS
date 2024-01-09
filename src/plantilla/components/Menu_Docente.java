@@ -84,7 +84,7 @@ public class Menu_Docente extends javax.swing.JPanel {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
                 currentWindow.dispose();
 
-                Frm_AsistenciaJ frm = new Frm_AsistenciaJ(persona);
+                Frm_AsistenciaJ frm = new Frm_AsistenciaJ();
                 frm.setVisible(true);
             });
             case "Horario Academico" -> menu.addActionListener(e -> {

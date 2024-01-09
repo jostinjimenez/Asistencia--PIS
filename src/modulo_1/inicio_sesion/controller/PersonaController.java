@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
 public class PersonaController extends DataAccessObject<Persona> {
+
     // Atributos
     private ListaEnlazada<Persona> personas;
     private Persona persona = new Persona();
@@ -49,7 +50,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             Persona persona = null;
             try {
                 persona = personas.get(i);
-            } catch (VacioExceptions e) {
+            }
+            catch (VacioExceptions e) {
                 throw new RuntimeException(e);
             }
             if (persona.getId().equals(id)) {
@@ -86,7 +88,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             Persona persona = null;
             try {
                 persona = personas.get(i);
-            } catch (VacioExceptions e) {
+            }
+            catch (VacioExceptions e) {
                 throw new RuntimeException(e);
             }
             if (persona.getId().equals(idPersona)) {
@@ -94,7 +97,8 @@ public class PersonaController extends DataAccessObject<Persona> {
                     persona.setActivo(false);
                     this.xStream.toXML(personas, new FileOutputStream(URL));
                     return true;
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     System.out.println(e.getMessage());
                     return false;
                 }
@@ -102,6 +106,17 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
         return false;
     }
+//
+//    public Cuenta getCuenta(Integer idCuenta) {
+//        Cuenta cuenta = null;
+//        for (Persona persona : getPersonas()) {
+//            if (persona.getIdCuenta().equals(idCuenta)) {
+//                persona = new PersonaController().getPersonaID(idCuenta);
+//                break;
+//            }
+//        }
+//        return cuenta;
+//    }
 
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
@@ -109,7 +124,8 @@ public class PersonaController extends DataAccessObject<Persona> {
         Field faux = getField(Persona.class, field);
         if (faux != null) {
             quickSort(personas, 0, personas.length - 1, type, field);
-        } else {
+        }
+        else {
             throw new Exception("El atributo no existe");
         }
         return lista.toList(personas);
@@ -174,7 +190,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             }
             if (p[mid].getIdRol().intValue() < rol.getId().intValue()) {
                 left = mid + 1;
-            } else {
+            }
+            else {
                 right = mid - 1;
             }
         }
@@ -210,7 +227,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             }
             if (p[mid].getNombre().compareToIgnoreCase(txt) < 0) {
                 left = mid + 1;
-            } else {
+            }
+            else {
                 right = mid - 1;
             }
         }
@@ -246,7 +264,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             }
             if (p[mid].getApellido().compareToIgnoreCase(txt) < 0) {
                 left = mid + 1;
-            } else {
+            }
+            else {
                 right = mid - 1;
             }
         }
@@ -282,7 +301,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             }
             if (p[mid].getDni().compareToIgnoreCase(txt) < 0) {
                 left = mid + 1;
-            } else {
+            }
+            else {
                 right = mid - 1;
             }
         }
@@ -318,7 +338,8 @@ public class PersonaController extends DataAccessObject<Persona> {
             }
             if (p[mid].getId().intValue() < id.intValue()) {
                 left = mid + 1;
-            } else {
+            }
+            else {
                 right = mid - 1;
             }
         }
