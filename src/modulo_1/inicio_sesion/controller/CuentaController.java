@@ -36,21 +36,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return cuentasActivas;
     }
 
-    public Cuenta getCuentaID(Integer id) {
-        for (int i = 0; i < cuentas.getSize(); i++) {
-            Cuenta cuenta = null;
-            try {
-                cuenta = cuentas.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (cuenta.getId().equals(id)) {
-                return cuenta;
-            }
-        }
-        return null;
-    }
-
     public void setCuentas(ListaEnlazada<Cuenta> cuentas) {
         this.cuentas = cuentas;
     }
@@ -82,21 +67,20 @@ public class CuentaController extends DataAccessObject<Cuenta> {
     }
 
     public Cuenta validarCuenta(String usuario, String clave) {
-        Cuenta cuenta = null;
-
+        System.out.println("Validando cuenta");
         for (Cuenta c : this.getCuentas()) {
+
             if (c.getCorreo().equalsIgnoreCase(usuario)) {
                 if (c.getClave().equalsIgnoreCase(clave)) {
-                    cuenta = c;
-                    return cuenta;
+                    return c;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Clave incorrecta");
+                    JOptionPane.showMessageDialog(null, "Clave incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                     return null;
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, "Usuario incorrecto");
-        return cuenta;
+        JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+        return null;
     }
 
     public Integer identificarRolPersona(Persona p) {
@@ -108,17 +92,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
             }
         }
         return idRol;
-    }
-
-    public Persona getPersona(Integer idPersona) {
-        Persona persona = null;
-        for (Cuenta cuenta : getCuentas()) {
-            if (cuenta.getIdPersona().equals(idPersona)) {
-                persona = new PersonaController().getPersonaID(idPersona);
-                break;
-            }
-        }
-        return persona;
     }
 
     public Boolean delete(Integer idCuenta) {
@@ -143,9 +116,48 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return false;
     }
 
-//    public Rol getRol(Cuenta cuenta) {
-//
-//    }
+    // Buscar persona por id
+    public Persona getPersona(Integer idPersona) {
+        PersonaController personaController = new PersonaController();
+        ListaEnlazada<Persona> personas = personaController.getPersonas();
+        try {
+            personas = personaController.ordenarQS(personas, 0, "id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int left = 0;
+        int right = personas.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            Persona midPersona = null;
+            try {
+                midPersona = personas.get(mid);
+            } catch (VacioExceptions e) {
+                e.printStackTrace();
+            }
+
+            if (midPersona.getId().equals(idPersona)) {
+                return midPersona;
+            }
+
+            if (midPersona.getId() < idPersona) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+        CuentaController cc = new CuentaController();
+
+        System.out.println(cc.getPersona(1));
+
+    }
 }
 
 

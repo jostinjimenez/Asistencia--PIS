@@ -106,17 +106,7 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
         return false;
     }
-//
-//    public Cuenta getCuenta(Integer idCuenta) {
-//        Cuenta cuenta = null;
-//        for (Persona persona : getPersonas()) {
-//            if (persona.getIdCuenta().equals(idCuenta)) {
-//                persona = new PersonaController().getPersonaID(idCuenta);
-//                break;
-//            }
-//        }
-//        return cuenta;
-//    }
+
 
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {

@@ -53,8 +53,8 @@ public class ControladorEstudiante extends DataAccessObject<Estudiante>{
         this.estudiante = estudiante;
     }
     
-    public Boolean save(Integer id) {
-        estudiante.setId(id);
+    public Boolean save() {
+        this.estudiante.setId(generarID());
         return save(estudiante);
     }
 

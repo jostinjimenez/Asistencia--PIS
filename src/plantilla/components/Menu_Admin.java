@@ -37,11 +37,16 @@ public class Menu_Admin extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
-        Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
-        if (persona != null) {
-            txtUsername.setText(persona.toString());
-        } else {
+        try {
+            Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
+            if (persona != null) {
+                txtUsername.setText(persona.toString());
+            } else {
+                txtUsername.setText("Username");
+            }
+        } catch (Exception e) {
             txtUsername.setText("Username");
+            System.out.println(e.getMessage());
         }
 
     }

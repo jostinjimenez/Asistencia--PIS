@@ -98,12 +98,49 @@ public class NuevoUsuario extends javax.swing.JDialog {
     public void guardar() {
         if (validar()) {
             try {
-                setPersonaData();
-                if (isEditing) {
-                    updatePersona();
-                } else {
-                    saveCuenta();
+                int rol = cbxRol.getSelectedIndex() + 1;
+                switch (rol) {
+                    case 1 -> {
+                        // Implementar la lógica para el rol de administrador
+                    }
+                    case 2 -> {
+                        ec.getEstudiante().setNombre(txtNombre.getText().trim());
+                        ec.getEstudiante().setApellido(txtApellido.getText().trim());
+                        ec.getEstudiante().setDni(txtDni.getText().trim());
+                        ec.getEstudiante().setCorreo_personal(txtCorreoPersonal.getText().trim());
+                        ec.getEstudiante().setFecha_nacimiento(txtFechaNac.getText().trim());
+                        ec.getEstudiante().setTelefono(txtTelefono.getText().trim());
+                        ec.getEstudiante().setIdRol(cbxRol.getSelectedIndex() + 1);
+                        ec.getEstudiante().setActivo(true);
+                        ec.save();
+                    }
+                    case 3 -> {
+                        dc.getDocente().setNombre(txtNombre.getText().trim());
+                        dc.getDocente().setApellido(txtApellido.getText().trim());
+                        dc.getDocente().setDni(txtDni.getText().trim());
+                        dc.getDocente().setCorreo_personal(txtCorreoPersonal.getText().trim());
+                        dc.getDocente().setFecha_nacimiento(txtFechaNac.getText().trim());
+                        dc.getDocente().setTelefono(txtTelefono.getText().trim());
+                        dc.getDocente().setIdRol(cbxRol.getSelectedIndex() + 1);
+                        dc.getDocente().setActivo(true);
+                        dc.save();
+                    }
+                    default -> throw new IllegalStateException("Unexpected value: " + rol);
                 }
+
+                // Save Cuenta
+                cc.getCuenta().setCorreo(generarCorreoInst());
+                cc.getCuenta().setEstado(true);
+                cc.getCuenta().setClave(txtDni.getText());
+                cc.getCuenta().setIdPersona(pc.getPersona().getId());
+                if (cc.save()) {
+                    System.out.println("Se la guardó correctamente la cuenta");
+                } else {
+                    System.out.println("No se pudo guardar");
+                }
+                System.out.println("Se guardó correctamente la persona");
+                this.dispose();
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
@@ -111,51 +148,6 @@ public class NuevoUsuario extends javax.swing.JDialog {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void personaSave(){
-        pc.getPersona().setNombre(txtNombre.getText().trim());
-        pc.getPersona().setApellido(txtApellido.getText().trim());
-        pc.getPersona().setDni(txtDni.getText().trim());
-        pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText().trim());
-        pc.getPersona().setFecha_nacimiento(txtFechaNac.getText().trim());
-        pc.getPersona().setTelefono(txtTelefono.getText().trim());
-        pc.getPersona().setIdRol(cbxRol.getSelectedIndex() + 1);
-        pc.getPersona().setActivo(true);
-        pc.save();
-    }
-
-    private void setPersonaData() {
-        personaSave();
-        int rol = cbxRol.getSelectedIndex() + 1;
-        switch (rol) {
-            case 1 -> {
-
-            }
-            case 2 -> {
-                ec.getEstudiante().setNombre(txtNombre.getText().trim());
-                ec.getEstudiante().setApellido(txtApellido.getText().trim());
-                ec.getEstudiante().setDni(txtDni.getText().trim());
-                ec.getEstudiante().setCorreo_personal(txtCorreoPersonal.getText().trim());
-                ec.getEstudiante().setFecha_nacimiento(txtFechaNac.getText().trim());
-                ec.getEstudiante().setTelefono(txtTelefono.getText().trim());
-                ec.getEstudiante().setIdRol(cbxRol.getSelectedIndex() + 1);
-                ec.getEstudiante().setActivo(true);
-                ec.save(pc.getPersona().getId());
-            }
-            case 3 -> {
-                dc.getDocente().setNombre(txtNombre.getText().trim());
-                dc.getDocente().setApellido(txtApellido.getText().trim());
-                dc.getDocente().setDni(txtDni.getText().trim());
-                dc.getDocente().setCorreo_personal(txtCorreoPersonal.getText().trim());
-                dc.getDocente().setFecha_nacimiento(txtFechaNac.getText().trim());
-                dc.getDocente().setTelefono(txtTelefono.getText().trim());
-                dc.getDocente().setIdRol(cbxRol.getSelectedIndex() + 1);
-                dc.getDocente().setActivo(true);
-                dc.save(pc.getPersona().getId());
-            }
-            default -> throw new AssertionError();
         }
     }
 
@@ -168,22 +160,10 @@ public class NuevoUsuario extends javax.swing.JDialog {
         }
     }
 
-    private void saveCuenta() {
+    private String generarCorreoInst() {
         String nombre = txtNombre.getText().substring(0, txtNombre.getText().indexOf(" "));
         String apellido = txtApellido.getText().substring(0, txtApellido.getText().indexOf(" "));
-        String correoInsti = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
-        cc.getCuenta().setCorreo(correoInsti);
-        cc.getCuenta().setEstado(true);
-        cc.getCuenta().setClave(txtDni.getText());
-        cc.getCuenta().setIdPersona(pc.getPersona().getId());
-        if (cc.save()) {
-            System.out.println("Se la guardó correctamente la cuenta");
-        } else {
-            System.out.println("No se pudo guardar");
-        }
-        System.out.println("Se guardó correctamente la persona");
-        ((Frm_Usuarios) this.getParent()).cargarTabla();
-        this.dispose();
+        return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
 
     @SuppressWarnings("unchecked")
@@ -257,19 +237,19 @@ public class NuevoUsuario extends javax.swing.JDialog {
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, 110, 30));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbxRol.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 270, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
         );
 
         pack();

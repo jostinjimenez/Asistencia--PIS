@@ -31,8 +31,8 @@ public class DocenteControlador extends DataAccessObject<Docente> {
         this.docente = docente;
     }
 
-    public Boolean save(Integer id) {
-        docente.setId(id);
+    public Boolean save() {
+        docente.setId(generarID());
         return save(docente);
     }
 

@@ -12,7 +12,6 @@ public class Persona {
     private boolean activo;
 
     private Integer idRol;
-    private Integer idCuenta;
 
     public Persona(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni) {
         this.id = id;
@@ -33,14 +32,6 @@ public class Persona {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-    public Integer getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
     }
 
     public Integer getId() {
@@ -133,8 +124,6 @@ public class Persona {
                     return this.isActivo() == c.isActivo();
                 } else if (field.equalsIgnoreCase("idRol")) {
                     return this.getIdRol() > (c.getIdRol());
-                } else if (field.equalsIgnoreCase("idCuenta")) {
-                    return this.getIdCuenta() > (c.getIdCuenta());
                 }
             case 0:
                 if (field.equalsIgnoreCase("nombre")) {
@@ -155,8 +144,6 @@ public class Persona {
                     return this.isActivo() != c.isActivo();
                 } else if (field.equalsIgnoreCase("idRol")) {
                     return this.getIdRol() < (c.getIdRol());
-                } else if (field.equalsIgnoreCase("idCuenta")) {
-                    return this.getIdCuenta() < (c.getIdCuenta());
                 }
             default:
                 return false;
