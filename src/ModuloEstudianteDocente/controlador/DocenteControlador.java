@@ -6,10 +6,11 @@ package ModuloEstudianteDocente.controlador;
 
 import DAO.DataAccessObject;
 import model.Docente;
+import modulo_1.inicio_sesion.controller.PersonaController;
+
 import java.io.IOException;
 
 /**
- *
  * @author LENOVO
  */
 public class DocenteControlador extends DataAccessObject<Docente> {
@@ -32,22 +33,34 @@ public class DocenteControlador extends DataAccessObject<Docente> {
     }
 
     public Boolean save() {
-        docente.setId(generarID());
-        return save(docente);
+        Integer id = generarID();
+
+        docente.setId(id);
+        Boolean result = save(docente);
+
+        PersonaController pc = new PersonaController();
+        pc.getPersona().setNombre(docente.getNombre());
+        pc.getPersona().setApellido(docente.getApellido());
+        pc.getPersona().setDni(docente.getDni());
+        pc.getPersona().setCorreo_personal(docente.getCorreo_personal());
+        pc.getPersona().setFecha_nacimiento(docente.getFecha_nacimiento());
+        pc.getPersona().setTelefono(docente.getTelefono());
+        pc.getPersona().setIdRol(3);
+        pc.getPersona().setId(id);
+        pc.save();
+
+        return result;
     }
 
     public void update(Integer pos) throws IOException {
         this.update(docente, pos);
     }
 
-    public String generatedCode() {
-        StringBuilder code = new StringBuilder();
-        Integer length = list_All().getSize() + 1;
-        Integer pos = length.toString().length();
-        for (int i = 0; i < (10 - pos); i++) {
-            code.append("0");
-        }
-        code.append(length.toString());
-        return code.toString();
+
+    public static void main(String[] args) {
+        DocenteControlador dc = new DocenteControlador();
+        dc.getDocente().setNombre("Juan");
+        dc.getDocente().setApellido("Perez");
+        dc.save();
     }
 }

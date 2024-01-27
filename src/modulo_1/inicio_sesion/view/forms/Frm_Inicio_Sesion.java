@@ -49,7 +49,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
             cc.setCuenta(cuenta);
             Utiles.setCc(cc);
             if (cuenta != null) {
-                switch (cc.identificarRolPersona(cc.getPersona(cuenta.getIdPersona()))) {
+                switch (cc.getPersona(cc.getCuenta().getIdPersona()).getIdRol()) {
                     case 1 -> {
                         Frm_Main_Admin frm = new Frm_Main_Admin(cc);
                         frm.setVisible(true);

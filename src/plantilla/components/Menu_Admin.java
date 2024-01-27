@@ -102,14 +102,14 @@ public class Menu_Admin extends javax.swing.JPanel {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
                 currentWindow.dispose();
 
-                FrmEstudiante frm = new FrmEstudiante();
+                FrmEstudiante frm = new FrmEstudiante(cc);
                 frm.setVisible(true);
             });
             case "Docentes" -> menu.addActionListener(e -> {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
                 currentWindow.dispose();
 
-                FrmDocente frm = new FrmDocente();
+                FrmDocente frm = new FrmDocente(cc);
                 frm.setVisible(true);
             });
             case "Usuarios" -> menu.addActionListener(e -> {

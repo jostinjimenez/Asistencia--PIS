@@ -27,13 +27,10 @@ public class CuentaController extends DataAccessObject<Cuenta> {
 
     // Getters y Setters
     public ListaEnlazada<Cuenta> getCuentas() {
-        ListaEnlazada<Cuenta> cuentasActivas = new ListaEnlazada<>();
-        for (Cuenta cuenta : cuentas) {
-            if (cuenta.isEstado()) {
-                cuentasActivas.add(cuenta);
-            }
+        if (cuentas.isEmpty()){
+            cuentas = this.list_All();
         }
-        return cuentasActivas;
+        return cuentas;
     }
 
     public void setCuentas(ListaEnlazada<Cuenta> cuentas) {
@@ -67,7 +64,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
     }
 
     public Cuenta validarCuenta(String usuario, String clave) {
-        System.out.println("Validando cuenta");
         for (Cuenta c : this.getCuentas()) {
 
             if (c.getCorreo().equalsIgnoreCase(usuario)) {
@@ -154,8 +150,11 @@ public class CuentaController extends DataAccessObject<Cuenta> {
 
     public static void main(String[] args) {
         CuentaController cc = new CuentaController();
-
-        System.out.println(cc.getPersona(1));
+        cc.getCuenta().setId(1);
+        cc.getCuenta().setIdPersona(1);
+        cc.getCuenta().setCorreo("jostin.jimenez@unl.edu.ec");
+        cc.getCuenta().setClave("1150696977");
+        cc.save();
 
     }
 }

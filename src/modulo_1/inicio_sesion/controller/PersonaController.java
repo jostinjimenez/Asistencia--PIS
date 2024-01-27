@@ -339,6 +339,15 @@ public class PersonaController extends DataAccessObject<Persona> {
     public static void main(String[] args) throws Exception {
         PersonaController pc = new PersonaController();
 
-        System.out.println(pc.buscarNombre(pc.list_All(), "Juan").print());
+        pc.getPersona().setNombre("Jostin");
+        pc.getPersona().setApellido("Jimenez");
+        pc.getPersona().setDni("1150696977");
+        pc.getPersona().setFecha_nacimiento("Calle 1");
+        pc.getPersona().setTelefono("0999999999");
+        pc.getPersona().setCorreo_personal("asdasd");
+        pc.getPersona().setIdRol(1);
+        pc.getPersona().setActivo(true);
+        pc.getPersona().setId(1);
+        pc.save();
     }
 }

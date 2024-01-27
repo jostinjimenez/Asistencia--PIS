@@ -21,6 +21,7 @@ public class Estudiante extends Persona {
         this.id_matriculas = id_matriculas;
     }
 
+
     public ListaEnlazada<Integer> getId_matriculas() {
         if (id_matriculas == null) {
             id_matriculas = new ListaEnlazada<>();

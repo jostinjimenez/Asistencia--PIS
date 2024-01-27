@@ -10,6 +10,7 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Docente;
+import modulo_1.inicio_sesion.controller.CuentaController;
 
 /**
  *
@@ -20,6 +21,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private DocenteControlador docenteControlador = new DocenteControlador();
     private ModeloTablaDocente modeloDocente = new ModeloTablaDocente();
     private Integer fila = -1;
+    private CuentaController cc;
 
     /**
      * Creates new form FrmDocete
@@ -29,6 +31,14 @@ public class FrmDocente extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         cargarTabla();
+    }
+
+    public FrmDocente(CuentaController cc) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        cargarTabla();
+        this.cc = cc;
     }
 
     private void cargarTabla() {
@@ -80,6 +90,7 @@ public class FrmDocente extends javax.swing.JFrame {
                 docte.setAnios_experiencia(aniosExperiencia);
                 docte.setGrado_academico(txtGradoAcademico.getText());
                 docte.setGrado_academico(txtGradoAcademico.getText());
+                docte.setIdRol(3);
 
                 if (fila != -1) {
                     docte.setId(docenteControlador.getDocente().getId());
@@ -92,6 +103,13 @@ public class FrmDocente extends javax.swing.JFrame {
                 else {
                     docte.setId(docenteControlador.generarID());
                     docenteControlador.save(docte);
+
+                    cc.getCuenta().setCorreo(generarCorreoInst());
+                    cc.getCuenta().setClave(txtDNI.getText());
+                    cc.getCuenta().setEstado(true);
+                    cc.getCuenta().setIdPersona(docenteControlador.getDocente().getId());
+                    limpiar();
+
                     limpiar();
 
                     JOptionPane.showMessageDialog(null, "Docente registrado correctamente",
@@ -112,6 +130,12 @@ public class FrmDocente extends javax.swing.JFrame {
                       "Error",
                       JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private String generarCorreoInst() {
+        String nombre = txtNombresDoc.getText().contains(" ") ? txtNombresDoc.getText().substring(0, txtNombresDoc.getText().indexOf(" ")) : txtNombresDoc.getText();
+        String apellido = txtApellidos.getText().contains(" ") ? txtApellidos.getText().substring(0, txtApellidos.getText().indexOf(" ")) : txtApellidos.getText();
+        return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
 
     private void actualizar() {
@@ -166,12 +190,10 @@ public class FrmDocente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocente = new javax.swing.JTable();
         roundPanel5 = new plantilla.swing.RoundPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Jlablsss = new javax.swing.JLabel();
         jlabeljhgfgh = new javax.swing.JLabel();
-        txtNombresDoc = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         Jlabel111111 = new javax.swing.JLabel();
@@ -182,6 +204,10 @@ public class FrmDocente extends javax.swing.JFrame {
         txtAniosExpe = new javax.swing.JTextField();
         txtGradoAcademico = new javax.swing.JTextField();
         txtCodigoEmp = new javax.swing.JTextField();
+        txtNombresDoc = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtApellidos = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -288,11 +314,6 @@ public class FrmDocente extends javax.swing.JFrame {
         roundPanel5.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Nombres: ");
-        roundPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 16, -1, -1));
-
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -313,14 +334,6 @@ public class FrmDocente extends javax.swing.JFrame {
         jlabeljhgfgh.setForeground(new java.awt.Color(255, 255, 255));
         jlabeljhgfgh.setText("Años Experiencia:");
         roundPanel5.add(jlabeljhgfgh, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-
-        txtNombresDoc.setBackground(new java.awt.Color(204, 204, 204));
-        txtNombresDoc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombresDocActionPerformed(evt);
-            }
-        });
-        roundPanel5.add(txtNombresDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -358,7 +371,33 @@ public class FrmDocente extends javax.swing.JFrame {
         txtCodigoEmp.setBackground(new java.awt.Color(204, 204, 204));
         roundPanel5.add(txtCodigoEmp, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
 
+        txtNombresDoc.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombresDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombresDocActionPerformed(evt);
+            }
+        });
+        roundPanel5.add(txtNombresDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
+
         roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 480, 260));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Nombres: ");
+        roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 16, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Apellidos");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 70, -1));
+
+        txtApellidos.setBackground(new java.awt.Color(204, 204, 204));
+        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellidosActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 230, -1));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 1020, 530));
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 620));
@@ -386,6 +425,10 @@ public class FrmDocente extends javax.swing.JFrame {
         // TODO add your handling code here:
         //eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,6 +460,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlabeljhgfgh;
@@ -427,6 +471,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private plantilla.swing.RoundPanel roundPanel6;
     private javax.swing.JTable tblDocente;
     private javax.swing.JTextField txtAniosExpe;
+    private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCodigoEmp;
     private javax.swing.JTextField txtCorreoPersonal;
     private javax.swing.JTextField txtDNI;

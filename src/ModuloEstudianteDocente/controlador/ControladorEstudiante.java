@@ -10,6 +10,7 @@ import java.awt.List;
 import java.io.FileOutputStream;
 import model.Estudiante;
 import model.Persona;
+import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -52,26 +53,32 @@ public class ControladorEstudiante extends DataAccessObject<Estudiante>{
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
-    
+
     public Boolean save() {
-        this.estudiante.setId(generarID());
-        return save(estudiante);
+        Integer id = generarID();
+
+        estudiante.setId(id);
+        Boolean result = save(estudiante);
+
+        PersonaController pc = new PersonaController();
+        pc.getPersona().setNombre(estudiante.getNombre());
+        pc.getPersona().setApellido(estudiante.getApellido());
+        pc.getPersona().setDni(estudiante.getDni());
+        pc.getPersona().setCorreo_personal(estudiante.getCorreo_personal());
+        pc.getPersona().setFecha_nacimiento(estudiante.getFecha_nacimiento());
+        pc.getPersona().setTelefono(estudiante.getTelefono());
+        pc.getPersona().setIdRol(2);
+        pc.getPersona().setId(id);
+        pc.save();
+
+        return result;
     }
 
     public void update(Integer pos) throws IOException{
         this.update(estudiante, pos);
     }
 
-    public String generatedCode() {
-        StringBuilder code = new StringBuilder();
-        Integer length = list_All().getSize() + 1;
-        Integer pos = length.toString().length();
-        for (int i = 0; i < (10 - pos); i++) {
-            code.append("0");
-        }
-        code.append(length.toString());
-        return code.toString();
-    }
+
     
 //
 //    
@@ -274,5 +281,13 @@ public class ControladorEstudiante extends DataAccessObject<Estudiante>{
 //            return false;
 //        }
 //    }
+
+
+    public static void main(String[] args) {
+        ControladorEstudiante ce = new ControladorEstudiante();
+        ce.getEstudiante().setNombre("Ana");
+        ce.getEstudiante().setApellido("Flores");
+        ce.save();
+    }
 
 }

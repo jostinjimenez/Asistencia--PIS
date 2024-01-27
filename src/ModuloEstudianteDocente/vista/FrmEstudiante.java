@@ -28,8 +28,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
     private ControladorEstudiante estudianteControlador = new ControladorEstudiante();
     private ModeloTablaEstudiante modeloEstudiante = new ModeloTablaEstudiante();
-    private PersonaController pc = new PersonaController();
-    private CuentaController cc = new CuentaController();
+    private CuentaController cc;
     private Integer fila = -1;
 
     /**
@@ -44,6 +43,18 @@ public class FrmEstudiante extends javax.swing.JFrame {
         cbxTituloBach.addItem("Si");
         cbxTituloBach.addItem("No");
         cargarTabla();
+    }
+
+    public FrmEstudiante(CuentaController cc) {
+        super();
+        initComponents();
+        setupListeners();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        cbxTituloBach.addItem("Si");
+        cbxTituloBach.addItem("No");
+        cargarTabla();
+        this.cc = cc;
     }
 
     private void cargarTabla() {
@@ -95,6 +106,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 est.setTitulo_bachiller(tituloBachiller);
                 String valorGuardar = tituloBachiller ? "Si" : "No";
                 est.setDireccion(txtDireccion.getText());
+                est.setIdRol(2);
 
                 if (fila != -1) {
                     est.setId(estudianteControlador.getEstudiante().getId());
@@ -107,10 +119,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 else {
                     est.setId(estudianteControlador.generarID());
                     estudianteControlador.save(est);
-                    String nombre = txtNombres.getText().substring(0, txtNombres.getText().indexOf(" "));
-                    String apellido = txtApellidos.getText().substring(0, txtApellidos.getText().indexOf(" "));
-                    String correoInsti = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
-                    cc.getCuenta().setCorreo(correoInsti);
+
+                    cc.getCuenta().setCorreo(generarCorreoInst());
                     cc.getCuenta().setClave(txtCedula.getText());
                     cc.getCuenta().setEstado(true);
                     cc.getCuenta().setIdPersona(estudianteControlador.getEstudiante().getId());
@@ -134,6 +144,12 @@ public class FrmEstudiante extends javax.swing.JFrame {
                       "Error",
                       JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private String generarCorreoInst() {
+        String nombre = txtNombres.getText().contains(" ") ? txtNombres.getText().substring(0, txtNombres.getText().indexOf(" ")) : txtNombres.getText();
+        String apellido = txtApellidos.getText().contains(" ") ? txtApellidos.getText().substring(0, txtApellidos.getText().indexOf(" ")) : txtApellidos.getText();
+        return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
 
     private void actualizar() {
