@@ -22,6 +22,17 @@ import tda_listas.exceptions.VacioExceptions;
 public class ControladorEstudiante extends DataAccessObject<Estudiante>{
     private Estudiante estudiante = new Estudiante();
     ListaEnlazada<Estudiante> estudiantes = list_All();
+    Integer index = -1;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+    
+    
     
     
     

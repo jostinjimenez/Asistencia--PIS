@@ -4,33 +4,19 @@
       "data": {
         "@class": "model.Persona",
         "id": 1,
-        "nombre": "Jostin",
-        "apellido": "Jimenez",
-        "correo_personal": "asdasd",
-        "fecha_nacimiento": "Calle 1",
-        "telefono": "0999999999",
+        "nombre": "jostin",
+        "apellido": "jimenez",
+        "correo_personal": "sdasdasd",
+        "fecha_nacimiento": "02\/05\/2004",
+        "telefono": "0999170229",
         "dni": 1150696977,
-        "activo": true,
-        "idRol": 1
-      },
-      "next": {
-        "data": {
-          "@class": "model.Persona",
-          "id": 2,
-          "nombre": "juan",
-          "apellido": "perez",
-          "correo_personal": "juanperez@gmail.com",
-          "fecha_nacimiento": "jsdada",
-          "telefono": "099999999",
-          "dni": 1150696977,
-          "activo": true,
-          "idRol": 1
-        }
+        "activo": false,
+        "idRol": 2
       }
     },
     "last": {
-      "@reference": "..\/head\/next"
+      "@reference": "..\/head"
     },
-    "size": 2
+    "size": 1
   }
 }

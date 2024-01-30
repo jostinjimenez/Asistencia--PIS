@@ -118,7 +118,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         if (pc.save()) {
             cc.getCuenta().setCorreo(generarCorreoInst());
             cc.getCuenta().setClave(txtDni.getText());
-            cc.getCuenta().setIdPersona(pc.getPersona().getId());
+            cc.getCuenta().setIdPersona(cc.generarID());
             cc.getCuenta().setEstado(true);
             cc.save();
 
@@ -173,36 +173,36 @@ public class NuevoUsuario extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 110, 30));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 110, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
         jLabel1.setText("Nuevo Administrador");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 270, 30));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 270, 30));
 
         txtDni.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtDni.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 270, 30));
+        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 270, 30));
 
         txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 270, 30));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 270, 30));
 
         txtApellido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtApellido.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 270, 30));
+        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 270, 30));
 
         txtCorreoPersonal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreoPersonal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 160, 270, 30));
+        jPanel1.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 270, 30));
 
         txtFechaNac.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtFechaNac.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 270, 30));
+        jPanel1.add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 270, 30));
 
         btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -212,17 +212,17 @@ public class NuevoUsuario extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, 110, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
         );
 
         pack();

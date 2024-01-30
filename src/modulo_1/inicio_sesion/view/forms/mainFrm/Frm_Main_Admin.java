@@ -1,5 +1,6 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
+import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
@@ -45,11 +46,11 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 570));
-        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
         bg_panel.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -64,7 +65,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatNordIJTheme());
+            UIManager.setLookAndFeel(new FlatDraculaIJTheme());
         }
         catch (Exception ex) {
             System.err.println("Failed to initialize LaF");

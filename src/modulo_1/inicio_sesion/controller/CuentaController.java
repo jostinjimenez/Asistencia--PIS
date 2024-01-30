@@ -63,6 +63,16 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return update(cuenta, index);
     }
 
+    public Integer generarIdCuenta() {
+        Integer id = 0;
+        for (Cuenta c : this.getCuentas()) {
+            if (c.getId() > id) {
+                id = c.getId();
+            }
+        }
+        return id + 1;
+    }
+
     public Cuenta validarCuenta(String usuario, String clave) {
         for (Cuenta c : this.getCuentas()) {
 

@@ -209,28 +209,28 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 1000, 360));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btnNuevo.setText("Nuevo");
+        btnNuevo.setText("Agregar Administrador");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 110, 30));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 200, 30));
 
         btnEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -253,7 +253,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Id", "Rol", "Nombre", "Apellido", "DNI"}));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Rol", "Nombre", "Apellido", "DNI" }));
         cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxCriterioItemStateChanged(evt);
@@ -262,7 +262,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 160, -1));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxRol.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxRolItemStateChanged(evt);
@@ -270,10 +270,10 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         });
         roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
-        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 650));
+        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 650));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
