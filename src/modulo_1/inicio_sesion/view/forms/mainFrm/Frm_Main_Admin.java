@@ -1,5 +1,6 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
+import com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import modulo_1.inicio_sesion.controller.CuentaController;
@@ -149,7 +150,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatDraculaIJTheme());
+            UIManager.setLookAndFeel(new FlatDarkFlatIJTheme());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }

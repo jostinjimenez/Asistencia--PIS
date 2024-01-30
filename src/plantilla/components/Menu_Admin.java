@@ -39,6 +39,8 @@ public class Menu_Admin extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
+        cargarFotoUsu();
+
         try {
             Persona persona = cc.getPersona(cuentaUsu.getIdPersona());
             if (persona != null) {
@@ -51,6 +53,20 @@ public class Menu_Admin extends javax.swing.JPanel {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void cargarFotoUsu(){
+        try {
+            Persona persona = cc.getPersona(cuentaUsu.getIdPersona());
+            if (persona != null) {
+                fotoUsuario.setIcon(new ImageIcon(persona.getFoto()));
+            } else {
+                fotoUsuario.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
+            }
+        } catch (Exception e) {
+            fotoUsuario.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
+            System.out.println(e.getMessage());
+        }
     }
 
     public void initMenu() {
@@ -173,7 +189,7 @@ public class Menu_Admin extends javax.swing.JPanel {
     private void initComponents() {
 
         roundPanel1 = new plantilla.swing.RoundPanel();
-        imageAvatar1 = new com.raven.swing.ImageAvatar();
+        fotoUsuario = new com.raven.swing.ImageAvatar();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JLabel();
         roundPanel2 = new plantilla.swing.RoundPanel();
@@ -182,9 +198,8 @@ public class Menu_Admin extends javax.swing.JPanel {
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
-        imageAvatar1.setForeground(new java.awt.Color(231, 231, 231));
-        imageAvatar1.setBorderSize(2);
-        imageAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/profile.jpg"))); // NOI18N
+        fotoUsuario.setForeground(new java.awt.Color(231, 231, 231));
+        fotoUsuario.setBorderSize(2);
 
         jLabel2.setForeground(new java.awt.Color(203, 203, 203));
         jLabel2.setText("Admin");
@@ -199,7 +214,7 @@ public class Menu_Admin extends javax.swing.JPanel {
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fotoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -220,7 +235,7 @@ public class Menu_Admin extends javax.swing.JPanel {
                         .addComponent(jLabel2))
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(fotoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10))
         );
 
@@ -278,7 +293,7 @@ public class Menu_Admin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.swing.ImageAvatar imageAvatar1;
+    private com.raven.swing.ImageAvatar fotoUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelMenu;
