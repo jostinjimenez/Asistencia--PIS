@@ -7,13 +7,14 @@ package ModuloEstudianteDocente.vista;
 import ModuloEstudianteDocente.controlador.DocenteControlador;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
 import model.Docente;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
 /**
- *
  * @author LENOVO
  */
 public class FrmDocente extends javax.swing.JFrame {
@@ -66,69 +67,71 @@ public class FrmDocente extends javax.swing.JFrame {
 
     private Boolean validar() {
         return !txtNombresDoc.getText().trim().isEmpty()
-                  && !txtFechaNacim.getText().trim().isEmpty()
-                  && !txtCorreoPersonal.getText().trim().isEmpty()
-                  && !txtDNI.getText().trim().isEmpty()
-                  && !txtTelefn.getText().trim().isEmpty()
-                  && !txtCodigoEmp.getText().trim().isEmpty()
-                  && !txtAniosExpe.getText().trim().isEmpty()
-                  && !txtGradoAcademico.getText().trim().isEmpty();
+                && !txtFechaNacim.getText().trim().isEmpty()
+                && !txtCorreoPersonal.getText().trim().isEmpty()
+                && !txtDNI.getText().trim().isEmpty()
+                && !txtTelefn.getText().trim().isEmpty()
+                && !txtCodigoEmp.getText().trim().isEmpty()
+                && !txtAniosExpe.getText().trim().isEmpty()
+                && !txtApellidos.getText().trim().isEmpty()
+                && !txtGradoAcademico.getText().trim().isEmpty();
 
     }
 
     public void guardar() {
         if (validar()) {
             try {
-                Docente docte = new Docente();
-                docte.setNombre(txtNombresDoc.getText());
-                docte.setFecha_nacimiento(txtFechaNacim.getText());
-                docte.setCorreo_personal(txtCorreoPersonal.getText());
-                docte.setDni(txtDNI.getText());
-                docte.setTelefono(txtTelefn.getText());
-                docte.setCodigo_empleado(txtCodigoEmp.getText());
+                docenteControlador.getDocente().setNombre(txtNombresDoc.getText());
+                docenteControlador.getDocente().setApellido(txtApellidos.getText());
+                docenteControlador.getDocente().setFecha_nacimiento(txtFechaNacim.getText());
+                docenteControlador.getDocente().setCorreo_personal(txtCorreoPersonal.getText());
+                docenteControlador.getDocente().setDni(txtDNI.getText());
+                docenteControlador.getDocente().setTelefono(txtTelefn.getText());
+                docenteControlador.getDocente().setCodigo_empleado(txtCodigoEmp.getText());
                 int aniosExperiencia = Integer.parseInt(txtAniosExpe.getText());
-                docte.setAnios_experiencia(aniosExperiencia);
-                docte.setGrado_academico(txtGradoAcademico.getText());
-                docte.setGrado_academico(txtGradoAcademico.getText());
-                docte.setIdRol(3);
+                docenteControlador.getDocente().setAnios_experiencia(aniosExperiencia);
+                docenteControlador.getDocente().setGrado_academico(txtGradoAcademico.getText());
+                docenteControlador.getDocente().setIdRol(3);
+                docenteControlador.getDocente().setActivo(true);
 
                 if (fila != -1) {
-                    docte.setId(docenteControlador.getDocente().getId());
-                    docenteControlador.update(docte, fila);
+                    docenteControlador.getDocente().setId(docenteControlador.getDocente().getId());
+                    docenteControlador.update(docenteControlador.getDocente(), fila);
                     limpiar();
                     JOptionPane.showMessageDialog(null, "Docente actualizado correctamente",
-                              "Mensaje",
-                              JOptionPane.INFORMATION_MESSAGE);
+                            "Mensaje",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    if (docenteControlador.save()) {
+                        cc.getCuenta().setCorreo(generarCorreoInst());
+                        cc.getCuenta().setClave(txtDNI.getText());
+                        cc.getCuenta().setEstado(true);
+                        cc.getCuenta().setIdPersona(cc.generarID());
+                        if (cc.save()){
+                            System.out.println("Cuenta registrada correctamente");
+                        } else {
+                            System.out.println("Error al registrar la cuenta");
+                        }
+                        limpiar();
+                        JOptionPane.showMessageDialog(null, "Docente registrado correctamente",
+                                "Mensaje",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al registrar el docente",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-                else {
-                    docte.setId(docenteControlador.generarID());
-                    docenteControlador.save(docte);
-
-                    cc.getCuenta().setCorreo(generarCorreoInst());
-                    cc.getCuenta().setClave(txtDNI.getText());
-                    cc.getCuenta().setEstado(true);
-                    cc.getCuenta().setIdPersona(docenteControlador.getDocente().getId());
-                    limpiar();
-
-                    limpiar();
-
-                    JOptionPane.showMessageDialog(null, "Docente registrado correctamente",
-                              "Mensaje",
-                              JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
-                          "Error",
-                          JOptionPane.ERROR_MESSAGE);
-
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null,
-                      "Por favor llene todos los campos",
-                      "Error",
-                      JOptionPane.ERROR_MESSAGE);
+                    "Por favor llene todos los campos",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -142,11 +145,10 @@ public class FrmDocente extends javax.swing.JFrame {
         int fila = tblDocente.getSelectedRow();
         if (fila < 0) {
             JOptionPane.showMessageDialog(null,
-                      "Seleccione una fila",
-                      "Error",
-                      JOptionPane.ERROR_MESSAGE);
-        }
-        else {
+                    "Seleccione una fila",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
             try {
                 this.fila = fila;
 
@@ -160,12 +162,11 @@ public class FrmDocente extends javax.swing.JFrame {
                 txtAniosExpe.setText(String.valueOf(docenteControlador.getDocente().getAnios_experiencia()));
                 txtGradoAcademico.setText(docenteControlador.getDocente().getGrado_academico());
 
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,
-                          "Error al cargar los datos",
-                          "Error",
-                          JOptionPane.ERROR_MESSAGE);
+                        "Error al cargar los datos",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -180,8 +181,6 @@ public class FrmDocente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        roundPanel2 = new plantilla.swing.RoundPanel();
-        jLabel1 = new javax.swing.JLabel();
         roundPanel1 = new plantilla.swing.RoundPanel();
         roundPanel6 = new plantilla.swing.RoundPanel();
         btnGuardar = new javax.swing.JButton();
@@ -209,37 +208,13 @@ public class FrmDocente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtApellidos = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
+        header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Agregar Docente");
-
-        javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
-        roundPanel2.setLayout(roundPanel2Layout);
-        roundPanel2Layout.setHorizontalGroup(
-            roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(jLabel1)
-                .addContainerGap(639, Short.MAX_VALUE))
-        );
-        roundPanel2Layout.setVerticalGroup(
-            roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 1020, 80));
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -294,7 +269,7 @@ public class FrmDocente extends javax.swing.JFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        roundPanel1.add(roundPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 0, 180, 260));
+        roundPanel1.add(roundPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 60, 180, 260));
 
         tblDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -309,7 +284,7 @@ public class FrmDocente extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDocente);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 980, 230));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 980, 230));
 
         roundPanel5.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -379,17 +354,17 @@ public class FrmDocente extends javax.swing.JFrame {
         });
         roundPanel5.add(txtNombresDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
 
-        roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 480, 260));
+        roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 480, 260));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Nombres: ");
-        roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 16, -1, -1));
+        roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Apellidos");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 70, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 70, -1));
 
         txtApellidos.setBackground(new java.awt.Color(204, 204, 204));
         txtApellidos.addActionListener(new java.awt.event.ActionListener() {
@@ -397,12 +372,13 @@ public class FrmDocente extends javax.swing.JFrame {
                 txtApellidosActionPerformed(evt);
             }
         });
-        roundPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 230, -1));
+        roundPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 230, -1));
 
-        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 1020, 530));
-        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 620));
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 1030, 630));
+        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
+        jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -436,8 +412,7 @@ public class FrmDocente extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatNordIJTheme());
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
         //</editor-fold>
@@ -454,7 +429,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JLabel jLabel1;
+    private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -466,7 +441,6 @@ public class FrmDocente extends javax.swing.JFrame {
     private javax.swing.JLabel jlabeljhgfgh;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
-    private plantilla.swing.RoundPanel roundPanel2;
     private plantilla.swing.RoundPanel roundPanel5;
     private plantilla.swing.RoundPanel roundPanel6;
     private javax.swing.JTable tblDocente;

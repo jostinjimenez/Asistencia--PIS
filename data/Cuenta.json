@@ -8,11 +8,21 @@
         "clave": 1150696977,
         "estado": true,
         "idPersona": 1
+      },
+      "next": {
+        "data": {
+          "@class": "model.Cuenta",
+          "id": 2,
+          "correo": "juan.perez@unl.edu.ec",
+          "clave": 1150696977,
+          "estado": true,
+          "idPersona": 2
+        }
       }
     },
     "last": {
-      "@reference": "..\/head"
+      "@reference": "..\/head\/next"
     },
-    "size": 1
+    "size": 2
   }
 }

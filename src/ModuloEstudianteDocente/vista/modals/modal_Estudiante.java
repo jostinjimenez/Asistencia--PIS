@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import model.Estudiante;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
 public class modal_Estudiante extends javax.swing.JDialog {

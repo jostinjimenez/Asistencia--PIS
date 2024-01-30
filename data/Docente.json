@@ -1,0 +1,1 @@
+{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Docente","id":1,"nombre":"Juan","correo_personal":"juanperez16@gmail.com","fecha_nacimiento":"19\/05\/2000","telefono":"0999163256","dni":1150696977,"activo":true,"idRol":3,"anios_experiencia":5,"codigo_empleado":"JOPZ16","grado_academico":"Doctorado"}},"last":{"@reference":"..\/head"},"size":1}}

@@ -28,7 +28,7 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     // Getters y Setters
     public ListaEnlazada<Persona> getPersonas() {
-        if (personas.isEmpty()) {
+        if (personas == null || personas.isEmpty()) {
             personas = this.list_All();
         }
         return personas;

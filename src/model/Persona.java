@@ -10,6 +10,7 @@ public class Persona {
     private String telefono;
     private String dni;
     private boolean activo;
+    private String foto;
 
     private Integer idRol;
 
@@ -24,6 +25,14 @@ public class Persona {
     }
 
     public Persona() {
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public boolean isActivo() {

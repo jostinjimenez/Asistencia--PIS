@@ -157,16 +157,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
 
         return null;
     }
-
-    public static void main(String[] args) {
-        CuentaController cc = new CuentaController();
-        cc.getCuenta().setId(1);
-        cc.getCuenta().setIdPersona(1);
-        cc.getCuenta().setCorreo("jostin.jimenez@unl.edu.ec");
-        cc.getCuenta().setClave("1150696977");
-        cc.save();
-
-    }
 }
 
 

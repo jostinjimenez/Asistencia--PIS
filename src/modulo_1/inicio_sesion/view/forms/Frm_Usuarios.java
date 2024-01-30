@@ -13,8 +13,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
 import java.util.Objects;
+
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
+import plantilla.AccionesCellRenderer;
 
 import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
@@ -154,6 +156,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
         TableRowSorter<ModeloTablaCuenta> trs = new TableRowSorter<>(mtp);
         jTable1.setRowSorter(trs);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
         jTable1.getTableHeader().setReorderingAllowed(false);
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
@@ -161,7 +164,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+
     }
 
 
@@ -182,6 +185,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         cbxCriterio = new javax.swing.JComboBox<>();
         cbxRol = new javax.swing.JComboBox<>();
         menu_Admin2 = new plantilla.components.Menu_Admin();
+        header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -201,11 +205,11 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Buscar");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 70, 60, 20));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 100, 60, 20));
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 240, 20));
+        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 130, 240, 20));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -221,7 +225,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 1000, 360));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1000, 320));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnNuevo.setText("Agregar Administrador");
@@ -230,7 +234,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 200, 30));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 200, 30));
 
         btnEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -259,7 +263,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 cbxCriterioItemStateChanged(evt);
             }
         });
-        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 160, -1));
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 180, 160, -1));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -268,12 +272,13 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 cbxRolItemStateChanged(evt);
             }
         });
-        roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
+        roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 160, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 650));
-        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 650));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
+        bg_panel.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 670));
+        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -330,6 +335,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbxCriterio;
     private javax.swing.JComboBox<String> cbxRol;
+    private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

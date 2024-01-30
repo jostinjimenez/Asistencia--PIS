@@ -100,6 +100,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -143,7 +144,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        roundPanel5.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 580, 123, 50));
+        roundPanel5.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 560, 123, 50));
 
         btnModificar.setBackground(new java.awt.Color(204, 204, 204));
         btnModificar.setForeground(new java.awt.Color(0, 0, 0));
@@ -153,7 +154,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        roundPanel5.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 580, 123, 43));
+        roundPanel5.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 560, 123, 43));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
@@ -170,7 +171,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jLabel3.setText("Buscar");
         roundPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 180, 60, 20));
 
-        jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1040, 680));
+        jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 1040, 630));
+        jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -4, 1290, 700));
 
@@ -213,6 +215,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

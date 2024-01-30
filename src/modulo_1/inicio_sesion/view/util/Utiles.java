@@ -6,6 +6,7 @@ import modulo_1.inicio_sesion.controller.RolController;
 import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
+import model.Cuenta;
 
 public class Utiles {
 
@@ -70,6 +71,17 @@ public class Utiles {
     }
 
     private static CuentaController cc;
+    private static Cuenta cuentaUsu;
+
+    public static Cuenta getCuentaUsu() {
+        if (cuentaUsu == null)
+            cuentaUsu = new Cuenta();
+        return cuentaUsu;
+    }
+
+    public static void setCuentaUsu(Cuenta cuentaUsu) {
+        Utiles.cuentaUsu = cuentaUsu;
+    }
 
     public static CuentaController getCc() {
         if (cc == null)

@@ -4,19 +4,32 @@
       "data": {
         "@class": "model.Persona",
         "id": 1,
-        "nombre": "jostin",
-        "apellido": "jimenez",
-        "correo_personal": "sdasdasd",
-        "fecha_nacimiento": "02\/05\/2004",
+        "nombre": "Jostin",
+        "apellido": "Jimenez",
+        "correo_personal": "jostinjimenez16@gmail.com",
+        "fecha_nacimiento": "23\/05\/2004",
         "telefono": "0999170229",
         "dni": 1150696977,
-        "activo": false,
-        "idRol": 2
+        "activo": true,
+        "idRol": 1
+      },
+      "next": {
+        "data": {
+          "@class": "model.Persona",
+          "id": 2,
+          "nombre": "Juan",
+          "correo_personal": "juanperez16@gmail.com",
+          "fecha_nacimiento": "19\/05\/2000",
+          "telefono": "0999163256",
+          "dni": 1150696977,
+          "activo": false,
+          "idRol": 3
+        }
       }
     },
     "last": {
-      "@reference": "..\/head"
+      "@reference": "..\/head\/next"
     },
-    "size": 1
+    "size": 2
   }
 }
