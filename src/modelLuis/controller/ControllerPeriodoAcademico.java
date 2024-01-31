@@ -131,13 +131,4 @@ public class ControllerPeriodoAcademico extends DataAccessObject<PeriodoAcademic
         return i + 1;
     }
 
-    public static void main(String[] args) {
-
-        ListaEnlazada<Integer> ids = new ListaEnlazada();
-        ids.add(1);
-        PeriodoAcademico a = new PeriodoAcademico(1, 2018, "4/01/2024", "29/02/2024", true, ids);
-        ControllerPeriodoAcademico p = new ControllerPeriodoAcademico();
-        p.save();
-    }
-
 }

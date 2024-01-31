@@ -57,10 +57,7 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
             if (texto.isEmpty()) {
                 mtpa.setPeriodoAcademicos(pc.getPeriodoAcademicos());
             } else {
-                if (criterio.equalsIgnoreCase("anio")) {
-                    Integer anio = Integer.parseInt(texto);
-                    mtpa.setPeriodoAcademicos(pc.buscarAnio(pc.list_All(), anio));
-                } else if (criterio.equalsIgnoreCase("fechaFin")) {
+                if (criterio.equalsIgnoreCase("fechaFin")) {
                     mtpa.setPeriodoAcademicos(pc.buscarFechaFin(pc.list_All(), texto));
                 } else if (criterio.equalsIgnoreCase("fechaInicio")) {
                     mtpa.setPeriodoAcademicos(pc.buscarFechaInicio(pc.list_All(), texto));
@@ -99,7 +96,7 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        mtpa.setPeriodoAcademicos(pc.getPeriodoAcademicos());
+        mtpa.setPeriodoAcademicos(pc.list_All());
         mtpa.fireTableDataChanged();
         jTable1.setModel(mtpa);
         jTable1.updateUI();

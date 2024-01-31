@@ -2,19 +2,13 @@ package modulo_1.inicio_sesion.view.forms;
 
 import ModuloEstudianteDocente.controlador.ControladorEstudiante;
 import ModuloEstudianteDocente.controlador.DocenteControlador;
-import model.Estudiante;
-import modulo_1.inicio_sesion.controller.DocenteController;
-import modulo_1.inicio_sesion.controller.EstudianteController;
 import modulo_1.inicio_sesion.view.util.TextPrompt;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 
 import javax.swing.*;
 
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
-
-import static modulo_1.inicio_sesion.view.util.Utiles.*;
 
 public class NuevoUsuario extends javax.swing.JDialog {
 
@@ -114,6 +108,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pc.getPersona().setTelefono(txtTelefono.getText());
         pc.getPersona().setActivo(true);
         pc.getPersona().setIdRol(1);
+        pc.getPersona().setFoto("/plantilla/img/user.png");
 
         if (pc.save()) {
             cc.getCuenta().setCorreo(generarCorreoInst());
@@ -131,7 +126,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
     }
 
     private void updatePersona() {
-        if (pc.update(pc.getIndex())) {
+        if (pc.update()) {
             JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } else {

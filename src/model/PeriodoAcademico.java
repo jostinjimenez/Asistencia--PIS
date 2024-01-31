@@ -5,7 +5,6 @@ import tda_listas.ListaEnlazada;
 public class PeriodoAcademico {
     // Atributos
     private Integer id;
-    private Integer anio;
     private String fechaInicio;
     private String fechaFin;
     private Boolean estado;
@@ -17,9 +16,8 @@ public class PeriodoAcademico {
     public PeriodoAcademico() {
     }
 
-    public PeriodoAcademico(Integer id, Integer anio, String fechaInicio, String fechaFin, Boolean estado, ListaEnlazada<Integer> id_matriculas) {
+    public PeriodoAcademico(Integer id, String fechaInicio, String fechaFin, Boolean estado, ListaEnlazada<Integer> id_matriculas) {
         this.id = id;
-        this.anio = anio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.estado = estado;
@@ -41,14 +39,6 @@ public class PeriodoAcademico {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getAnio() {
-        return anio;
-    }
-
-    public void setAnio(Integer anio) {
-        this.anio = anio;
     }
 
     public String getFechaInicio() {
@@ -77,7 +67,7 @@ public class PeriodoAcademico {
 
     @Override
     public String toString() {
-        return "id " + id  + "fechaInicio " + fechaInicio + ", fechaFin " + fechaFin + anio;
+        return fechaInicio + " - " + fechaFin;
     }
 
     public Boolean compareTo(PeriodoAcademico pa, String field, Integer type) {
@@ -85,8 +75,6 @@ public class PeriodoAcademico {
             case 1:
                 if (field.equalsIgnoreCase("id")) {
                     return this.getId() > (pa.getId());
-                } else if (field.equalsIgnoreCase("anio")) {
-                    return this.getAnio() > (pa.getAnio());
                 } else if (field.equalsIgnoreCase("fechaInicio")) {
                     return this.getFechaInicio().toLowerCase().compareTo(pa.getFechaInicio().toLowerCase()) > 0;
                 } else if (field.equalsIgnoreCase("fechaFin")) {
@@ -96,8 +84,6 @@ public class PeriodoAcademico {
             case 0:
                 if (field.equalsIgnoreCase("id")) {
                     return this.getId() < (pa.getId());
-                } else if (field.equalsIgnoreCase("anio")) {
-                    return this.getAnio() < (pa.getAnio());
                 } else if (field.equalsIgnoreCase("fechaInicio")) {
                     return this.getFechaInicio().toLowerCase().compareTo(pa.getFechaInicio().toLowerCase()) < 0;
                 } else if (field.equalsIgnoreCase("fechaFin")) {

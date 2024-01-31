@@ -27,29 +27,17 @@
         <group>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/tablas/ModeloTablaCuenta.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/Frm_MallaAcademica.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Update_Foto.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarCurso.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/util/Utiles.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/plantilla/components/Menu_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
         </group>
         <group>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/tablas/ModeloTablaCuenta.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/Frm_MallaAcademica.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Update_Foto.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarCurso.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/util/Utiles.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/plantilla/components/Header.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,10 +1,8 @@
 package modulo_1.inicio_sesion.controller;
 
 import DAO.DataAccessObject;
-import model.Cuenta;
 import model.Persona;
 import model.Rol;
-import modulo_1.inicio_sesion.controller.util.Utilidades;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -60,8 +58,23 @@ public class PersonaController extends DataAccessObject<Persona> {
         return save(persona);
     }
 
-    public Boolean update(Integer index) {
-        return update(persona, index);
+    public Boolean update() {
+        System.out.println(persona.toString() + " ---- " + buscarIndex(persona.getId() + 1));
+        return update(persona, buscarIndex(persona.getId() + 1));
+    }
+
+    public Integer buscarIndex(Integer id) {
+        int ind = 0;
+        if (list_All().isEmpty()) {
+            Persona[] personas1 = list_All().toArray();
+            for (Persona persona : personas1) {
+                if (id.intValue() == persona.getId().intValue()) {
+                    ind = 1;
+                    break;
+                }
+            }
+        }
+        return ind;
     }
 
     public Boolean delete(Integer idPersona) {
