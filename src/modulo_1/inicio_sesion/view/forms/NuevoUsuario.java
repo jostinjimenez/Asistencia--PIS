@@ -114,7 +114,6 @@ public class NuevoUsuario extends javax.swing.JDialog {
             cc.getCuenta().setCorreo(generarCorreoInst());
             cc.getCuenta().setClave(txtDni.getText());
             cc.getCuenta().setIdPersona(cc.generarID());
-            cc.getCuenta().setEstado(true);
             cc.save();
 
             JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);

@@ -112,7 +112,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
                     if (estudianteControlador.save()) {
                         cc.getCuenta().setCorreo(generarCorreoInst());
                         cc.getCuenta().setClave(txtCedula.getText());
-                        cc.getCuenta().setEstado(true);
                         cc.getCuenta().setIdPersona(cc.generarID());
                         cc.save();
 

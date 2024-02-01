@@ -105,7 +105,6 @@ public class FrmDocente extends javax.swing.JFrame {
                     if (docenteControlador.save()) {
                         cc.getCuenta().setCorreo(generarCorreoInst());
                         cc.getCuenta().setClave(txtDNI.getText());
-                        cc.getCuenta().setEstado(true);
                         cc.getCuenta().setIdPersona(cc.generarID());
                         if (cc.save()){
                             System.out.println("Cuenta registrada correctamente");

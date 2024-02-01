@@ -44,7 +44,7 @@ public class ModeloTablaCuenta extends AbstractTableModel {
                 case 0 -> cuenta.getId();
                 case 1 -> cuenta.getCorreo();
                 case 2 -> p.getNombre() + " " + p.getApellido();
-                case 3 -> (cuenta.isEstado()) ? "Activo" : "Inactivo";
+                case 3 -> (p.isActivo()) ? "Activo" : "Inactivo";
                 case 4 -> {
                     yield switch (p.getIdRol()) {
                         case 1 -> "Administrador";

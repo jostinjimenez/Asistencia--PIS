@@ -6,7 +6,6 @@ public class Cuenta {
     private Integer id;
     private String correo;
     private String clave;
-    private boolean estado;
 
     private Integer idPersona;
 
@@ -18,7 +17,6 @@ public class Cuenta {
         this.id = id;
         this.correo = correo;
         this.clave = clave;
-        this.estado = estado;
         this.idPersona = idPersona;
     }
 
@@ -45,14 +43,6 @@ public class Cuenta {
 
     public void setClave(String clave) {
         this.clave = clave;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
 
     public Integer getIdPersona() {

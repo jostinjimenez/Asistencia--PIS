@@ -110,7 +110,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
             }
             if (cuenta.getId().equals(idCuenta)) {
                 try {
-                    cuenta.setEstado(false);
                     this.xStream.toXML(cuentas, new FileOutputStream(URL));
                     return true;
                 } catch (Exception e) {

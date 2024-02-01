@@ -1,0 +1,1 @@
+{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Estudiante","id":1,"nombre":"Ana","apellido":"Flores","correo_personal":"anaflores@gmail.com","fecha_nacimiento":"12\/05\/2003","telefono":"0999170229","dni":1150696977,"activo":true,"idRol":2,"direccion":"San Jose Alto","etnia":"Mestiza","titulo_bachiller":true}},"last":{"@reference":"..\/head"},"size":1}}
