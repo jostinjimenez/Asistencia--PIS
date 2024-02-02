@@ -13,11 +13,8 @@ import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerEstudiante;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.controller.ControllerMatricula;
-<<<<<<< HEAD
 import modulo_1.inicio_sesion.controller.DocenteController;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
-=======
->>>>>>> master
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -145,7 +142,7 @@ public class Util_VistaLinked1_Asistencia {
     public static void setListaMatr(ListaEnlazada<Matricula> aListaMatr) {
         listaMatr = aListaMatr;
     }
-<<<<<<< HEAD
+
 
     public static void cargaEstudiante(JComboBox cbxmarca) throws VacioExceptions {
         ControllerEstudiante ac = new ControllerEstudiante();
@@ -194,9 +191,5 @@ public class Util_VistaLinked1_Asistencia {
     public static Docente getComboDocente(JComboBox cbx) {
         return (Docente) cbx.getSelectedItem();
     }
-=======
-    
-    
->>>>>>> master
 
 }
