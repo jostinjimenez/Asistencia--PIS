@@ -1,12 +1,14 @@
 package model;
 
+import java.util.Date;
+
 public class Persona {
 
     private Integer id;
     private String nombre;
     private String apellido;
     private String correo_personal;
-    private String fecha_nacimiento;
+    private Date fecha_nacimiento;
     private String telefono;
     private String dni;
     private boolean activo;
@@ -14,7 +16,7 @@ public class Persona {
 
     private Integer idRol;
 
-    public Persona(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni) {
+    public Persona(Integer id, String nombre, String apellido, String correoPersonal, Date fechaNacimiento, String telefono, String dni) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -67,11 +69,11 @@ public class Persona {
         this.correo_personal = correo_personal;
     }
 
-    public String getFecha_nacimiento() {
+    public Date getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -123,8 +125,6 @@ public class Persona {
                     return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) > 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
                     return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) > 0;
-                } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
-                    return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) > 0;
                 } else if (field.equalsIgnoreCase("telefono")) {
                     return this.getTelefono().compareTo(c.getTelefono()) > 0;
                 } else if (field.equalsIgnoreCase("dni")) {
@@ -143,8 +143,6 @@ public class Persona {
                     return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) < 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
                     return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) < 0;
-                } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
-                    return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) < 0;
                 } else if (field.equalsIgnoreCase("telefono")) {
                     return this.getTelefono().compareTo(c.getTelefono()) < 0;
                 } else if (field.equalsIgnoreCase("dni")) {

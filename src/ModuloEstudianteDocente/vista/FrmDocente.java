@@ -51,7 +51,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private void limpiar() {
 
         txtNombresDoc.setText(" ");
-        txtFechaNacim.setText(" ");
+        txtFechaNacim.setDate(null);
         txtCorreoPersonal.setText(" ");
         txtDNI.setText(" ");
         txtTelefn.setText(" ");
@@ -67,7 +67,7 @@ public class FrmDocente extends javax.swing.JFrame {
 
     private Boolean validar() {
         return !txtNombresDoc.getText().trim().isEmpty()
-                && !txtFechaNacim.getText().trim().isEmpty()
+                && !txtFechaNacim.getDate().toString().isEmpty()
                 && !txtCorreoPersonal.getText().trim().isEmpty()
                 && !txtDNI.getText().trim().isEmpty()
                 && !txtTelefn.getText().trim().isEmpty()
@@ -83,7 +83,7 @@ public class FrmDocente extends javax.swing.JFrame {
             try {
                 docenteControlador.getDocente().setNombre(txtNombresDoc.getText());
                 docenteControlador.getDocente().setApellido(txtApellidos.getText());
-                docenteControlador.getDocente().setFecha_nacimiento(txtFechaNacim.getText());
+                docenteControlador.getDocente().setFecha_nacimiento(txtFechaNacim.getDate());
                 docenteControlador.getDocente().setCorreo_personal(txtCorreoPersonal.getText());
                 docenteControlador.getDocente().setDni(txtDNI.getText());
                 docenteControlador.getDocente().setTelefono(txtTelefn.getText());
@@ -93,6 +93,7 @@ public class FrmDocente extends javax.swing.JFrame {
                 docenteControlador.getDocente().setGrado_academico(txtGradoAcademico.getText());
                 docenteControlador.getDocente().setIdRol(3);
                 docenteControlador.getDocente().setActivo(true);
+                docenteControlador.getDocente().setFoto("/plantilla/img/user.png");
 
                 if (fila != -1) {
                     docenteControlador.getDocente().setId(docenteControlador.getDocente().getId());
@@ -106,7 +107,7 @@ public class FrmDocente extends javax.swing.JFrame {
                         cc.getCuenta().setCorreo(generarCorreoInst());
                         cc.getCuenta().setClave(txtDNI.getText());
                         cc.getCuenta().setIdPersona(cc.generarID());
-                        if (cc.save()){
+                        if (cc.save()) {
                             System.out.println("Cuenta registrada correctamente");
                         } else {
                             System.out.println("Error al registrar la cuenta");
@@ -153,7 +154,8 @@ public class FrmDocente extends javax.swing.JFrame {
 
                 docenteControlador.setDocente(modeloDocente.getDocente().get(fila));
                 txtNombresDoc.setText(docenteControlador.getDocente().getNombre());
-                txtFechaNacim.setText(docenteControlador.getDocente().getFecha_nacimiento());
+                txtApellidos.setText(docenteControlador.getDocente().getApellido());
+                //txtFechaNacim.setText(docenteControlador.getDocente().getFecha_nacimiento());
                 txtCorreoPersonal.setText(docenteControlador.getDocente().getCorreo_personal());
                 txtDNI.setText(docenteControlador.getDocente().getDni());
                 txtTelefn.setText(docenteControlador.getDocente().getTelefono());
@@ -195,7 +197,6 @@ public class FrmDocente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         Jlabel111111 = new javax.swing.JLabel();
-        txtFechaNacim = new javax.swing.JTextField();
         txtCorreoPersonal = new javax.swing.JTextField();
         txtDNI = new javax.swing.JTextField();
         txtTelefn = new javax.swing.JTextField();
@@ -203,6 +204,7 @@ public class FrmDocente extends javax.swing.JFrame {
         txtGradoAcademico = new javax.swing.JTextField();
         txtCodigoEmp = new javax.swing.JTextField();
         txtNombresDoc = new javax.swing.JTextField();
+        txtFechaNacim = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtApellidos = new javax.swing.JTextField();
@@ -324,9 +326,6 @@ public class FrmDocente extends javax.swing.JFrame {
         Jlabel111111.setText("Codigo Empleado:");
         roundPanel5.add(Jlabel111111, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
-        txtFechaNacim.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 230, -1));
-
         txtCorreoPersonal.setBackground(new java.awt.Color(204, 204, 204));
         roundPanel5.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 231, -1));
 
@@ -352,6 +351,10 @@ public class FrmDocente extends javax.swing.JFrame {
             }
         });
         roundPanel5.add(txtNombresDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
+
+        txtFechaNacim.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel5.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 230, 30));
 
         roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 480, 260));
 
@@ -448,7 +451,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private javax.swing.JTextField txtCodigoEmp;
     private javax.swing.JTextField txtCorreoPersonal;
     private javax.swing.JTextField txtDNI;
-    private javax.swing.JTextField txtFechaNacim;
+    private com.toedter.calendar.JDateChooser txtFechaNacim;
     private javax.swing.JTextField txtGradoAcademico;
     private javax.swing.JTextField txtNombresDoc;
     private javax.swing.JTextField txtTelefn;

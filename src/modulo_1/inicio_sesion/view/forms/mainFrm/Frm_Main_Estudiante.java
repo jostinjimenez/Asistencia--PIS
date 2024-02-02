@@ -1,11 +1,16 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
+import ModuloEstudianteDocente.controlador.ControladorEstudiante;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import java.io.File;
+import java.util.UUID;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import modulo_1.inicio_sesion.controller.PersonaController;
+import static modulo_1.inicio_sesion.view.util.Utiles.copiarArchivo;
+import static modulo_1.inicio_sesion.view.util.Utiles.extension;
 
 public class Frm_Main_Estudiante extends javax.swing.JFrame {
 
@@ -20,19 +25,46 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
 
         labelCorreo.setText(cc.getCuenta().getCorreo());
         txtFoto.setVisible(false);
+        fotoUsuario.setIcon(new ImageIcon("multimedia/" + cc.getPersona(cc.getCuenta().getIdPersona()).getFoto()));
     }
 
     // Metodos
-    private void filechooserFoto() {
-        JFileChooser fileChoosser = new JFileChooser();
-        fileChoosser.setAcceptAllFileFilterUsed(false);
+private void filechooserFoto() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Multimedia", "jpg", "png", "jpeg");
-        fileChoosser.addChoosableFileFilter(filter);
-        int i = fileChoosser.showOpenDialog(null);
-        if (i == JFileChooser.APPROVE_OPTION) {
-            foto = fileChoosser.getSelectedFile();
-            txtFoto.setText(foto.getAbsolutePath());
-            fotoUsuario.setIcon(new ImageIcon(foto.getAbsolutePath()));
+        fileChooser.addChoosableFileFilter(filter);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                foto = fileChooser.getSelectedFile();
+                if (foto != null) {
+                    String imagePath = foto.getAbsolutePath();
+                    txtFoto.setText(imagePath);
+                    if (new File(imagePath).exists()) {
+                        ImageIcon imageIcon = new ImageIcon(imagePath);
+                        fotoUsuario.setIcon(imageIcon);
+                        fotoUsuario.updateUI();
+                        String uuid = UUID.randomUUID().toString();
+                        ControladorEstudiante ce = new ControladorEstudiante();
+                        PersonaController pc = new PersonaController();
+                        copiarArchivo(foto, new File("multimedia/" + uuid + "." + extension(foto.getName())));
+                        pc.getPersona().setFoto(uuid + "." + extension(foto.getName()));
+                        ce.getEstudiante().setFoto(uuid + "." + extension(foto.getName()));
+                        if (pc.update() && ce.update()) {
+                            JOptionPane.showMessageDialog(null, "Foto actualizada", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se pudo actualizar la foto", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontró la imagen", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una imagen", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -42,8 +74,8 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
 
         bg_panel = new javax.swing.JPanel();
         menu_Estudiante1 = new plantilla.components.Menu_Estudiante();
-        header2 = new plantilla.components.Header();
-        roundPanel1 = new plantilla.swing.RoundPanel();
+        roundPanel2 = new plantilla.swing.RoundPanel();
+        jLabel2 = new javax.swing.JLabel();
         panelInfomacion = new plantilla.swing.RoundPanel();
         fotoUsuario = new com.raven.swing.ImageAvatar();
         jSeparator1 = new javax.swing.JSeparator();
@@ -51,8 +83,7 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         btnActualizarFoto = new javax.swing.JButton();
         txtFoto = new javax.swing.JTextField();
-        roundPanel2 = new plantilla.swing.RoundPanel();
-        jLabel2 = new javax.swing.JLabel();
+        header1 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -65,16 +96,18 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
-        header2.setBackground(new java.awt.Color(234, 238, 243));
-        bg_panel.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
+        roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(234, 238, 243));
-        roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Información personal");
+        roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        panelInfomacion.setBackground(new java.awt.Color(255, 255, 255));
+        bg_panel.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 590, 570));
+
+        panelInfomacion.setBackground(new java.awt.Color(51, 51, 51));
         panelInfomacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        fotoUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/user.png"))); // NOI18N
         panelInfomacion.add(fotoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 220, 160));
 
         jSeparator1.setBackground(new java.awt.Color(90, 90, 90));
@@ -82,7 +115,7 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
         panelInfomacion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 290, 10));
 
         labelCorreo.setFont(new java.awt.Font("Dubai Light", 0, 24)); // NOI18N
-        labelCorreo.setForeground(new java.awt.Color(0, 0, 0));
+        labelCorreo.setForeground(new java.awt.Color(255, 255, 255));
         labelCorreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         panelInfomacion.add(labelCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 290, 30));
 
@@ -90,7 +123,7 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(223, 223, 223));
         panelInfomacion.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 290, 10));
 
-        btnActualizarFoto.setBackground(new java.awt.Color(249, 248, 248));
+        btnActualizarFoto.setBackground(new java.awt.Color(51, 51, 51));
         btnActualizarFoto.setFont(new java.awt.Font("Dubai Light", 0, 14)); // NOI18N
         btnActualizarFoto.setForeground(new java.awt.Color(49, 135, 164));
         btnActualizarFoto.setText("Actualizar foto");
@@ -102,22 +135,12 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
         });
         panelInfomacion.add(btnActualizarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 110, -1));
 
+        txtFoto.setBackground(new java.awt.Color(51, 51, 51));
         txtFoto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         panelInfomacion.add(txtFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
 
-        roundPanel1.add(panelInfomacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 360, 350));
-
-        roundPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Información personal");
-        roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
-
-        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 560, 570));
-
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        bg_panel.add(panelInfomacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 100, 360, 350));
+        bg_panel.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,14 +186,13 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
     private javax.swing.JPanel bg_panel;
     private javax.swing.JButton btnActualizarFoto;
     private com.raven.swing.ImageAvatar fotoUsuario;
-    private plantilla.components.Header header2;
+    private plantilla.components.Header header1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel labelCorreo;
     private plantilla.components.Menu_Estudiante menu_Estudiante1;
     private plantilla.swing.RoundPanel panelInfomacion;
-    private plantilla.swing.RoundPanel roundPanel1;
     private plantilla.swing.RoundPanel roundPanel2;
     private javax.swing.JTextField txtFoto;
     // End of variables declaration//GEN-END:variables

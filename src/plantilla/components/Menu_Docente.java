@@ -19,6 +19,7 @@ import modelLuis.view.Frm_DocenteHorario;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
+import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
@@ -135,7 +136,11 @@ public class Menu_Docente extends javax.swing.JPanel {
 
         imageAvatar1.setForeground(new java.awt.Color(231, 231, 231));
         imageAvatar1.setBorderSize(2);
-        imageAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/profile.jpg"))); // NOI18N
+        imageAvatar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageAvatar1MouseClicked(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(203, 203, 203));
         jLabel2.setText("Docente");
@@ -227,6 +232,11 @@ public class Menu_Docente extends javax.swing.JPanel {
                 .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void imageAvatar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageAvatar1MouseClicked
+        Perfil_Modal pm = new Perfil_Modal(null, true, cc);
+        pm.setVisible(true);
+    }//GEN-LAST:event_imageAvatar1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.ImageAvatar imageAvatar1;

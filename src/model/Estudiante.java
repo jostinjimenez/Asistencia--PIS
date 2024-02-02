@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import tda_listas.ListaEnlazada;
 
 public class Estudiante extends Persona {
@@ -13,7 +14,7 @@ public class Estudiante extends Persona {
     public Estudiante() {
     }
 
-    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller, ListaEnlazada<Integer> id_matriculas) {
+    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, Date fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller, ListaEnlazada<Integer> id_matriculas) {
         super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
         this.direccion = direccion;
         this.etnia = etnia;

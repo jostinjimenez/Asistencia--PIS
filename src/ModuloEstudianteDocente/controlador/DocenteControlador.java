@@ -6,6 +6,7 @@ package ModuloEstudianteDocente.controlador;
 
 import DAO.DataAccessObject;
 import model.Docente;
+import model.Persona;
 import modulo_1.inicio_sesion.controller.PersonaController;
 
 import java.io.IOException;
@@ -47,20 +48,29 @@ public class DocenteControlador extends DataAccessObject<Docente> {
         pc.getPersona().setTelefono(docente.getTelefono());
         pc.getPersona().setIdRol(3);
         pc.getPersona().setId(id);
+        pc.getPersona().setActivo(true);
+        pc.getPersona().setFoto("/plantilla/img/user.png");
         pc.save();
 
         return result;
     }
 
-    public void update(Integer pos) throws IOException {
-        this.update(docente, pos);
+    public Boolean update() throws IOException {
+        return update(docente, buscarIndex(docente.getId() + 1));
     }
 
-
-    public static void main(String[] args) {
-        DocenteControlador dc = new DocenteControlador();
-        dc.getDocente().setNombre("Juan");
-        dc.getDocente().setApellido("Perez");
-        dc.save();
+    public Integer buscarIndex(Integer id) {
+        int ind = 0;
+        if (list_All().isEmpty()) {
+            Docente[] personas1 = list_All().toArray();
+            for (Docente persona : personas1) {
+                if (id.intValue() == persona.getId().intValue()) {
+                    ind = 1;
+                    break;
+                }
+            }
+        }
+        return ind;
     }
+
 }

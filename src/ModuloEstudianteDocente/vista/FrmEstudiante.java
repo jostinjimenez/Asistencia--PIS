@@ -56,7 +56,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         this.cc = cc;
     }
 
-    private void cargarTabla() {
+    public void cargarTabla() {
         modeloEstudiante.setEstudiante(estudianteControlador.list_All());
         tblEstudiante.setModel(modeloEstudiante);
         tblEstudiante.updateUI();

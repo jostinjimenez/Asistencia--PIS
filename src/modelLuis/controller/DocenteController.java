@@ -54,11 +54,5 @@ public class DocenteController extends DataAccessObject<Docente> {
     public Boolean update(Integer index) {
         return update(docente, index);
     }
-    
-    public static void main(String[] args) {
-        
-        DocenteController a = new DocenteController();
-        Docente doc = new Docente(2, "Javier Masherano", "Castro Cueva", "javierMashe@gmail.com", "12/3/1980", "0939383838", "1192452529", 20, "6691936AS", "4 nivel");
-        a.save(doc);
-    }
+
 }

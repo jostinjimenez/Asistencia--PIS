@@ -8,6 +8,8 @@ import java.io.IOException;
 import DAO.DataAccessObject;
 import java.awt.List;
 import java.io.FileOutputStream;
+
+import model.Docente;
 import model.Estudiante;
 import model.Persona;
 import modulo_1.inicio_sesion.controller.PersonaController;
@@ -80,13 +82,29 @@ public class ControladorEstudiante extends DataAccessObject<Estudiante>{
         pc.getPersona().setTelefono(estudiante.getTelefono());
         pc.getPersona().setIdRol(2);
         pc.getPersona().setId(id);
+        pc.getPersona().setActivo(true);
+        pc.getPersona().setFoto("/plantilla/img/user.png");
         pc.save();
 
         return result;
     }
 
-    public void update(Integer pos) throws IOException{
-        this.update(estudiante, pos);
+    public Boolean update() throws IOException{
+        return update(estudiante, buscarIndex(estudiante.getId() + 1));
+    }
+
+    public Integer buscarIndex(Integer id) {
+        int ind = 0;
+        if (list_All().isEmpty()) {
+            Estudiante[] personas1 = list_All().toArray();
+            for (Estudiante persona : personas1) {
+                if (id.intValue() == persona.getId().intValue()) {
+                    ind = 1;
+                    break;
+                }
+            }
+        }
+        return ind;
     }
 
 

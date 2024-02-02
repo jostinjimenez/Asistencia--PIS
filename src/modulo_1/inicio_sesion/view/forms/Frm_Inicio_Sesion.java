@@ -43,31 +43,27 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
         if (usuario.isEmpty() || clave.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
-        }
-        else {
+        } else {
             Cuenta cuenta = cc.validarCuenta(usuario, clave);
             cc.setCuenta(cuenta);
             Utiles.setCc(cc);
             Utiles.setCuentaUsu(cuenta);
             if (cuenta != null) {
-                switch (cc.getPersona(cc.getCuenta().getIdPersona()).getIdRol()) {
+                switch (cc.getPersona(cuenta.getIdPersona()).getIdRol()) {
                     case 1 -> {
-                        Frm_Main_Admin frm = new Frm_Main_Admin(cc);
-                        frm.setVisible(true);
+                        Frm_Main_Admin fma = new Frm_Main_Admin(cc);
+                        fma.setVisible(true);
                         this.dispose();
                     }
                     case 2 -> {
-                        Frm_Main_Estudiante mp = new Frm_Main_Estudiante(cc);
-                        mp.setVisible(true);
+                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
+                        fme.setVisible(true);
                         this.dispose();
                     }
                     case 3 -> {
-                        Frm_Main_Docente mp1 = new Frm_Main_Docente(cc);
-                        mp1.setVisible(true);
+                        Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
+                        fmd.setVisible(true);
                         this.dispose();
-                    }
-                    default -> {
-                        JOptionPane.showMessageDialog(null, "No se pudo iniciar sesion");
                     }
                 }
             }
@@ -165,8 +161,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        }
-        catch (UnsupportedLookAndFeelException ex) {
+        } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }
         java.awt.EventQueue.invokeLater(() -> {

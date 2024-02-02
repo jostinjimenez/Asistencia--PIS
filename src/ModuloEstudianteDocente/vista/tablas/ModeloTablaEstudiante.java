@@ -4,20 +4,23 @@
  */
 package ModuloEstudianteDocente.vista.tablas;
 
+import ModuloEstudianteDocente.controlador.ControladorEstudiante;
 import tda_listas.ListaEnlazada;
+
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
+
 import model.Estudiante;
 
+import java.text.SimpleDateFormat;
+
 /**
- *
  * @author santiago
  */
 public class ModeloTablaEstudiante extends AbstractTableModel {
 
     private ListaEnlazada<Estudiante> estudiante = new ListaEnlazada<>();
-    
-    
+
 
     public ListaEnlazada<Estudiante> getEstudiante() {
         return estudiante;
@@ -34,8 +37,7 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
     public void setListenerList(EventListenerList listenerList) {
         this.listenerList = listenerList;
     }
-    
-    
+
 
     @Override
     public int getRowCount() {
@@ -54,40 +56,32 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         Estudiante est = null;
-        
+        ControladorEstudiante ce = new ControladorEstudiante();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+
         try {
             est = estudiante.get(row);
+            ce.setEstudiante(est);
+            String fechaFormateada = sdf.format(ce.getEstudiante().getFecha_nacimiento());
+            return switch (col) {
+                case 0 -> (est != null) ? est.getId() : " ";
+                case 1 -> (est != null) ? est.getNombre() : " ";
+                case 2 -> (est != null) ? fechaFormateada : " ";
+                case 3 -> (est != null) ? est.getCorreo_personal() : " ";
+                case 4 -> (est != null) ? est.getDni() : " ";
+                case 5 -> (est != null) ? est.getTelefono() : " ";
+                case 6 -> (est != null) ? est.getEtnia() : " ";
+                case 7 -> (est != null && est.getTitulo_bachiller() != null)
+                        ? (est.getTitulo_bachiller() ? "Si" : "No")
+                        : " ";
+                case 8 -> (est != null) ? est.getDireccion() : " ";
+                default -> null;
+            };
         } catch (Exception e) {
-        }
-        
-        switch (col) {
-            case 0:
-                return (est != null) ? est.getId(): " ";
-            case 1:
-                return (est != null) ? est.getNombre() : " ";
-            case 2:
-                return (est != null) ? est.getFecha_nacimiento() : " ";
-            case 3:
-                return (est != null) ? est.getCorreo_personal() : " ";
-            case 4:
-                return (est != null) ? est.getDni() : " ";
-            case 5:
-                return (est != null) ? est.getTelefono() : " ";
-            case 6:
-                return (est != null) ? est.getEtnia() : " ";
-            case 7:
-                return (est != null && est.getTitulo_bachiller() != null)
-                    ? (est.getTitulo_bachiller() ? "Si" : "No")
-                    : " ";
-            case 8:
-                return (est != null) ? est.getDireccion() : " ";
-            
-
-            default:
-                return null;
+            throw new RuntimeException(e);
         }
     }
-    
+
     @Override
     public String getColumnName(int col) {
         switch (col) {
@@ -99,21 +93,20 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
                 return "Fecha Nacimiento";
             case 3:
                 return "Correo";
-            case 4: 
+            case 4:
                 return "DNI";
-            case 5: 
+            case 5:
                 return "Telefono";
-            case 6: 
+            case 6:
                 return "Etnia";
-            case 7: 
+            case 7:
                 return "Titulo de bachiller";
-            case 8: 
+            case 8:
                 return "Direccion";
             default:
                 return null;
         }
     }
 
-   
 
 }

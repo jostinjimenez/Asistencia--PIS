@@ -1,6 +1,7 @@
 package ModuloEstudianteDocente.vista.modals;
 
 import ModuloEstudianteDocente.controlador.ControladorEstudiante;
+import ModuloEstudianteDocente.vista.FrmEstudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -55,7 +56,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 estudianteControlador.setEstudiante(mte.getEstudiante().get(fila));
                 txtNombres.setText(estudianteControlador.getEstudiante().getNombre());
                 txtApellidos.setText(estudianteControlador.getEstudiante().getApellido());
-                txtFechaNac.setText(estudianteControlador.getEstudiante().getFecha_nacimiento());
+                txtFechaNacim.setDate(cc.getPersona(cc.getCuenta().getId()).getFecha_nacimiento());
                 txtCorreo.setText(estudianteControlador.getEstudiante().getCorreo_personal());
                 txtCedula.setText(estudianteControlador.getEstudiante().getDni());
                 txtTelefono.setText(estudianteControlador.getEstudiante().getTelefono());
@@ -74,7 +75,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
 
     private Boolean validar() {
         return !txtApellidos.getText().trim().isEmpty()
-                && !txtFechaNac.getText().trim().isEmpty()
+                && !txtFechaNacim.getDate().toString().isEmpty()
                 && !txtCorreo.getText().trim().isEmpty()
                 && !txtCedula.getText().trim().isEmpty()
                 && !txtTelefono.getText().trim().isEmpty()
@@ -89,7 +90,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
             try {
                 estudianteControlador.getEstudiante().setNombre(txtNombres.getText());
                 estudianteControlador.getEstudiante().setApellido(txtApellidos.getText());
-                estudianteControlador.getEstudiante().setFecha_nacimiento(txtFechaNac.getText());
+                estudianteControlador.getEstudiante().setFecha_nacimiento(txtFechaNacim.getDate());
                 estudianteControlador.getEstudiante().setCorreo_personal(txtCorreo.getText());
                 estudianteControlador.getEstudiante().setDni(txtCedula.getText());
                 estudianteControlador.getEstudiante().setTelefono(txtTelefono.getText());
@@ -101,10 +102,11 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 estudianteControlador.getEstudiante().setDireccion(txtDireccion.getText());
                 estudianteControlador.getEstudiante().setIdRol(2);
                 estudianteControlador.getEstudiante().setActivo(true);
+                estudianteControlador.getEstudiante().setFoto("/plantilla/img/user.png");
 
                 if (fila != -1) {
                     estudianteControlador.getEstudiante().setId(estudianteControlador.getEstudiante().getId());
-                    estudianteControlador.update(fila);
+                    estudianteControlador.update();
 
                     JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
@@ -114,6 +116,8 @@ public class modal_Estudiante extends javax.swing.JDialog {
                         cc.getCuenta().setClave(txtCedula.getText());
                         cc.getCuenta().setIdPersona(cc.generarID());
                         cc.save();
+                        
+                        ((FrmEstudiante) getParent()).cargarTabla();
 
                         JOptionPane.showMessageDialog(null, "Estudiante registrado correctamente",
                                 "Mensaje",
@@ -156,7 +160,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 estudianteControlador.setEstudiante(modeloEstudiante.getEstudiante().get(fila));
                 txtNombres.setText(estudianteControlador.getEstudiante().getNombre());
                 txtApellidos.setText(estudianteControlador.getEstudiante().getApellido());
-                txtFechaNac.setText(estudianteControlador.getEstudiante().getFecha_nacimiento());
+                //txtFechaNac.setText(estudianteControlador.getEstudiante().getFecha_nacimiento());
                 txtCorreo.setText(estudianteControlador.getEstudiante().getCorreo_personal());
                 txtCedula.setText(estudianteControlador.getEstudiante().getDni());
                 txtTelefono.setText(estudianteControlador.getEstudiante().getTelefono());
@@ -197,20 +201,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 }
             }
         });
-
-        txtFechaNac.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || c == '/') || txtFechaNac.getText().length() >= 11) {
-                    e.consume();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
     }
 
     @SuppressWarnings("unchecked")
@@ -227,7 +217,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         Jlabelll = new javax.swing.JLabel();
         txtNombres = new javax.swing.JTextField();
-        txtFechaNac = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
@@ -238,6 +227,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtApellidos = new javax.swing.JTextField();
+        txtFechaNacim = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -294,10 +284,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
             }
         });
         jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 230, -1));
-
-        txtFechaNac.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtFechaNac.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 230, -1));
 
         txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
@@ -356,6 +342,10 @@ public class modal_Estudiante extends javax.swing.JDialog {
             }
         });
         jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 230, -1));
+
+        txtFechaNacim.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 230, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 400));
 
@@ -436,7 +426,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEtnia;
-    private javax.swing.JTextField txtFechaNac;
+    private com.toedter.calendar.JDateChooser txtFechaNacim;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables

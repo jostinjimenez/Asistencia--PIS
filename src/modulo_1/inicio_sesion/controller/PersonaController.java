@@ -59,7 +59,7 @@ public class PersonaController extends DataAccessObject<Persona> {
     }
 
     public Boolean update() {
-        System.out.println(persona.toString() + " ---- " + buscarIndex(persona.getId() + 1));
+        System.out.println("Update " + buscarIndex(persona.getId() + 1));
         return update(persona, buscarIndex(persona.getId() + 1));
     }
 
@@ -322,18 +322,4 @@ public class PersonaController extends DataAccessObject<Persona> {
         return result;
     }
 
-    public static void main(String[] args) throws Exception {
-        PersonaController pc = new PersonaController();
-
-        pc.getPersona().setNombre("Jostin");
-        pc.getPersona().setApellido("Jimenez");
-        pc.getPersona().setDni("1150696977");
-        pc.getPersona().setFecha_nacimiento("Calle 1");
-        pc.getPersona().setTelefono("0999999999");
-        pc.getPersona().setCorreo_personal("asdasd");
-        pc.getPersona().setIdRol(1);
-        pc.getPersona().setActivo(true);
-        pc.getPersona().setId(1);
-        pc.save();
-    }
 }
