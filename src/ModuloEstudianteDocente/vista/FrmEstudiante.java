@@ -4,22 +4,15 @@
  */
 package ModuloEstudianteDocente.vista;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import ModuloEstudianteDocente.vista.modals.modal_Estudiante;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import java.awt.Frame;
-import javax.swing.JComboBox;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import model.Estudiante;
+
 import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
 
 /**
  *
@@ -27,7 +20,7 @@ import modulo_1.inicio_sesion.controller.PersonaController;
  */
 public class FrmEstudiante extends javax.swing.JFrame {
 
-    private ControladorEstudiante estudianteControlador = new ControladorEstudiante();
+    private EstudianteController estudianteControlador = new EstudianteController();
     private ModeloTablaEstudiante modeloEstudiante = new ModeloTablaEstudiante();
     private CuentaController cc;
     private Integer fila = -1;

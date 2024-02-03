@@ -4,7 +4,7 @@
  */
 package ModuloEstudianteDocente.vista.tablas;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import tda_listas.ListaEnlazada;
 
 import javax.swing.event.EventListenerList;
@@ -56,7 +56,7 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         Estudiante est = null;
-        ControladorEstudiante ce = new ControladorEstudiante();
+        EstudianteController ce = new EstudianteController();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
 
         try {

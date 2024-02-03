@@ -7,9 +7,8 @@ package ModuloEstudianteDocente.vista.tablas;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
+import ModuloEstudianteDocente.controlador.DocenteController;
 import model.Docente;
-import modelLuis.controller.DocenteController;
 import tda_listas.ListaEnlazada;
 
 import java.text.SimpleDateFormat;

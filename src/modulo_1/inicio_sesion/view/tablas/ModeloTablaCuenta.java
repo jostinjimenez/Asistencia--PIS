@@ -1,6 +1,5 @@
 package modulo_1.inicio_sesion.view.tablas;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
 import model.Persona;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -8,7 +7,6 @@ import tda_listas.exceptions.VacioExceptions;
 import javax.swing.table.AbstractTableModel;
 
 import model.Cuenta;
-import model.Estudiante;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
 public class ModeloTablaCuenta extends AbstractTableModel {

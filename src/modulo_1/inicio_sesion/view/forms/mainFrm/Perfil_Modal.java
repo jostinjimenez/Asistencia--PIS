@@ -1,9 +1,10 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
-import ModuloEstudianteDocente.controlador.DocenteControlador;
+import ModuloEstudianteDocente.controlador.EstudianteController;
+import ModuloEstudianteDocente.controlador.DocenteController;
 import model.Docente;
 import model.Estudiante;
+import model.Persona;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
 
@@ -89,29 +90,37 @@ public class Perfil_Modal extends javax.swing.JDialog {
 
     private void updateFoto(String newFileName) {
         try {
-            ControladorEstudiante ce = new ControladorEstudiante();
+            EstudianteController ce = new EstudianteController();
             PersonaController pc = new PersonaController();
-            DocenteControlador dc = new DocenteControlador();
+            DocenteController dc = new DocenteController();
 
-            pc.setPersona(cc.getPersona(cc.getCuenta().getIdPersona()));
+            Persona p = cc.getPersona(cc.getCuenta().getIdPersona());
+
+            pc.setPersona(p);
             pc.getPersona().setFoto(newFileName);
 
             if (pc.update()) {
-                System.out.println("Perfil " + cc.getPersona(cc.getCuenta().getIdPersona()).getIdRol());
+                System.out.println("Perfil " + p.getIdRol() + " actualizado");
 
-                switch (cc.getPersona(cc.getCuenta().getIdPersona()).getIdRol()) {
+                switch (p.getIdRol()) {
                     case 2:
-                        ce.setEstudiante((Estudiante) cc.getPersona(cc.getCuenta().getIdPersona()));
-                        ce.getEstudiante().setFoto(newFileName);
-                        if (ce.update()){
-                            System.out.println("Foto actualizada");
+                        Estudiante estudiante = (Estudiante) p;
+                        estudiante.setFoto(newFileName);
+                        ce.setEstudiante(estudiante);
+                        if (ce.update()) {
+                            System.out.println("Foto del estudiante actualizada");
+                        } else {
+                            mostrarError("No se pudo actualizar la foto del estudiante");
                         }
                         break;
                     case 3:
-                        dc.setDocente((Docente) cc.getPersona(cc.getCuenta().getIdPersona()));
-                        dc.getDocente().setFoto(newFileName);
-                        if (dc.update()){
-                            System.out.println("Foto actualizada");
+                        Docente docente = (Docente) p;
+                        docente.setFoto(newFileName);
+                        dc.setDocente(docente);
+                        if (dc.update()) {
+                            System.out.println("Foto del docente actualizada");
+                        } else {
+                            mostrarError("No se pudo actualizar la foto del docente");
                         }
                         break;
                 }
@@ -244,12 +253,12 @@ public class Perfil_Modal extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 969, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 969, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
         );
 
         pack();

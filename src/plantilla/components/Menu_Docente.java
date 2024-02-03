@@ -5,14 +5,14 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
+import model.Cuenta;
 import model.Persona;
 import modelLuis.view.Frm_AsistenciaJ;
 import modelLuis.view.Frm_DocenteHorario;
@@ -24,9 +24,11 @@ import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
+
 public class Menu_Docente extends javax.swing.JPanel {
 
     CuentaController cc = Utiles.getCc();
+    Cuenta cuentaUsu = Utiles.getCuentaUsu();
 
     public Menu_Docente() {
 
@@ -38,11 +40,14 @@ public class Menu_Docente extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
+        Persona persona = cc.getPersona(cuentaUsu.getIdPersona());
         if (persona != null) {
             txtUsername.setText(persona.toString());
+            imageAvatar1.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
         }
         else {
             txtUsername.setText("Username");
+            imageAvatar1.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
         }
     }
     Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());

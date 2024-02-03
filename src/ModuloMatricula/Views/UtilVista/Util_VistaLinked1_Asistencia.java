@@ -1,6 +1,8 @@
 package ModuloMatricula.Views.UtilVista;
 
 import javax.swing.JComboBox;
+
+import ModuloEstudianteDocente.controlador.DocenteController;
 import model.Asignatura;
 import model.Cursa;
 import model.Docente;
@@ -9,11 +11,8 @@ import model.Horario;
 import model.Matricula;
 import model.PeriodoAcademico;
 import modelLuis.controller.ControllerAsignatura;
-import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerEstudiante;
 import modelLuis.controller.ControllerHorario;
-import modelLuis.controller.ControllerMatricula;
-import modulo_1.inicio_sesion.controller.DocenteController;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;

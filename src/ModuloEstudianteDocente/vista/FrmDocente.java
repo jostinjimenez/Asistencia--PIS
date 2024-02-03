@@ -4,14 +4,13 @@
  */
 package ModuloEstudianteDocente.vista;
 
-import ModuloEstudianteDocente.controlador.DocenteControlador;
+import ModuloEstudianteDocente.controlador.DocenteController;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import model.Docente;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
 /**
@@ -19,7 +18,7 @@ import modulo_1.inicio_sesion.controller.CuentaController;
  */
 public class FrmDocente extends javax.swing.JFrame {
 
-    private DocenteControlador docenteControlador = new DocenteControlador();
+    private DocenteController docenteController = new DocenteController();
     private ModeloTablaDocente modeloDocente = new ModeloTablaDocente();
     private Integer fila = -1;
     private CuentaController cc;
@@ -43,7 +42,7 @@ public class FrmDocente extends javax.swing.JFrame {
     }
 
     private void cargarTabla() {
-        modeloDocente.setDocente(docenteControlador.list_All());
+        modeloDocente.setDocente(docenteController.list_All());
         tblDocente.setModel(modeloDocente);
         tblDocente.updateUI();
     }
@@ -59,7 +58,7 @@ public class FrmDocente extends javax.swing.JFrame {
         txtAniosExpe.setText(" ");
         txtGradoAcademico.setText(" ");
 
-        docenteControlador.setDocente(null);
+        docenteController.setDocente(null);
         cargarTabla();
         fila = -1;
         tblDocente.clearSelection();
@@ -81,29 +80,29 @@ public class FrmDocente extends javax.swing.JFrame {
     public void guardar() {
         if (validar()) {
             try {
-                docenteControlador.getDocente().setNombre(txtNombresDoc.getText());
-                docenteControlador.getDocente().setApellido(txtApellidos.getText());
-                docenteControlador.getDocente().setFecha_nacimiento(txtFechaNacim.getDate());
-                docenteControlador.getDocente().setCorreo_personal(txtCorreoPersonal.getText());
-                docenteControlador.getDocente().setDni(txtDNI.getText());
-                docenteControlador.getDocente().setTelefono(txtTelefn.getText());
-                docenteControlador.getDocente().setCodigo_empleado(txtCodigoEmp.getText());
+                docenteController.getDocente().setNombre(txtNombresDoc.getText());
+                docenteController.getDocente().setApellido(txtApellidos.getText());
+                docenteController.getDocente().setFecha_nacimiento(txtFechaNacim.getDate());
+                docenteController.getDocente().setCorreo_personal(txtCorreoPersonal.getText());
+                docenteController.getDocente().setDni(txtDNI.getText());
+                docenteController.getDocente().setTelefono(txtTelefn.getText());
+                docenteController.getDocente().setCodigo_empleado(txtCodigoEmp.getText());
                 int aniosExperiencia = Integer.parseInt(txtAniosExpe.getText());
-                docenteControlador.getDocente().setAnios_experiencia(aniosExperiencia);
-                docenteControlador.getDocente().setGrado_academico(txtGradoAcademico.getText());
-                docenteControlador.getDocente().setIdRol(3);
-                docenteControlador.getDocente().setActivo(true);
-                docenteControlador.getDocente().setFoto("/plantilla/img/user.png");
+                docenteController.getDocente().setAnios_experiencia(aniosExperiencia);
+                docenteController.getDocente().setGrado_academico(txtGradoAcademico.getText());
+                docenteController.getDocente().setIdRol(3);
+                docenteController.getDocente().setActivo(true);
+                docenteController.getDocente().setFoto("user.png");
 
                 if (fila != -1) {
-                    docenteControlador.getDocente().setId(docenteControlador.getDocente().getId());
-                    docenteControlador.update(docenteControlador.getDocente(), fila);
+                    docenteController.getDocente().setId(docenteController.getDocente().getId());
+                    docenteController.update(docenteController.getDocente(), fila);
                     limpiar();
                     JOptionPane.showMessageDialog(null, "Docente actualizado correctamente",
                             "Mensaje",
                             JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    if (docenteControlador.save()) {
+                    if (docenteController.save()) {
                         cc.getCuenta().setCorreo(generarCorreoInst());
                         cc.getCuenta().setClave(txtDNI.getText());
                         cc.getCuenta().setIdPersona(cc.generarID());
@@ -152,16 +151,16 @@ public class FrmDocente extends javax.swing.JFrame {
             try {
                 this.fila = fila;
 
-                docenteControlador.setDocente(modeloDocente.getDocente().get(fila));
-                txtNombresDoc.setText(docenteControlador.getDocente().getNombre());
-                txtApellidos.setText(docenteControlador.getDocente().getApellido());
+                docenteController.setDocente(modeloDocente.getDocente().get(fila));
+                txtNombresDoc.setText(docenteController.getDocente().getNombre());
+                txtApellidos.setText(docenteController.getDocente().getApellido());
                 //txtFechaNacim.setText(docenteControlador.getDocente().getFecha_nacimiento());
-                txtCorreoPersonal.setText(docenteControlador.getDocente().getCorreo_personal());
-                txtDNI.setText(docenteControlador.getDocente().getDni());
-                txtTelefn.setText(docenteControlador.getDocente().getTelefono());
-                txtCodigoEmp.setText(docenteControlador.getDocente().getCodigo_empleado());
-                txtAniosExpe.setText(String.valueOf(docenteControlador.getDocente().getAnios_experiencia()));
-                txtGradoAcademico.setText(docenteControlador.getDocente().getGrado_academico());
+                txtCorreoPersonal.setText(docenteController.getDocente().getCorreo_personal());
+                txtDNI.setText(docenteController.getDocente().getDni());
+                txtTelefn.setText(docenteController.getDocente().getTelefono());
+                txtCodigoEmp.setText(docenteController.getDocente().getCodigo_empleado());
+                txtAniosExpe.setText(String.valueOf(docenteController.getDocente().getAnios_experiencia()));
+                txtGradoAcademico.setText(docenteController.getDocente().getGrado_academico());
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,

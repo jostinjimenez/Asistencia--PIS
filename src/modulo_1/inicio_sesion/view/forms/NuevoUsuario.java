@@ -1,8 +1,7 @@
 package modulo_1.inicio_sesion.view.forms;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
-import ModuloEstudianteDocente.controlador.DocenteControlador;
-import modulo_1.inicio_sesion.view.util.TextPrompt;
+import ModuloEstudianteDocente.controlador.EstudianteController;
+import ModuloEstudianteDocente.controlador.DocenteController;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
 
@@ -41,8 +40,8 @@ public class NuevoUsuario extends javax.swing.JDialog {
     //Variables
     private PersonaController pc = new PersonaController();
     private CuentaController cc = new CuentaController();
-    private ControladorEstudiante ec = new ControladorEstudiante();
-    private DocenteControlador dc = new DocenteControlador();
+    private EstudianteController ec = new EstudianteController();
+    private DocenteController dc = new DocenteController();
     private boolean isEditing = false;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -101,7 +100,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pc.getPersona().setTelefono(txtTelefono.getText());
         pc.getPersona().setActivo(true);
         pc.getPersona().setIdRol(1);
-        pc.getPersona().setFoto("/plantilla/img/user.png");
+        pc.getPersona().setFoto("user.png");
 
         if (pc.save()) {
             cc.getCuenta().setCorreo(generarCorreoInst());

@@ -1,6 +1,6 @@
 package ModuloEstudianteDocente.vista.modals;
 
-import ModuloEstudianteDocente.controlador.ControladorEstudiante;
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import ModuloEstudianteDocente.vista.FrmEstudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import java.awt.event.KeyAdapter;
@@ -40,7 +40,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
     }
 
     // Variables
-    private ControladorEstudiante estudianteControlador = new ControladorEstudiante();
+    private EstudianteController estudianteControlador = new EstudianteController();
     private CuentaController cc = new CuentaController();
     private Integer fila = -1;
 
@@ -102,7 +102,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 estudianteControlador.getEstudiante().setDireccion(txtDireccion.getText());
                 estudianteControlador.getEstudiante().setIdRol(2);
                 estudianteControlador.getEstudiante().setActivo(true);
-                estudianteControlador.getEstudiante().setFoto("/plantilla/img/user.png");
+                estudianteControlador.getEstudiante().setFoto("user.png");
 
                 if (fila != -1) {
                     estudianteControlador.getEstudiante().setId(estudianteControlador.getEstudiante().getId());

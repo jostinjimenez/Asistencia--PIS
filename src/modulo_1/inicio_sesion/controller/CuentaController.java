@@ -4,9 +4,9 @@ import DAO.DataAccessObject;
 
 import java.io.FileOutputStream;
 
-import model.Cuenta;
-import model.Persona;
-import model.Rol;
+import ModuloEstudianteDocente.controlador.DocenteController;
+import ModuloEstudianteDocente.controlador.EstudianteController;
+import model.*;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -146,16 +146,80 @@ public class CuentaController extends DataAccessObject<Cuenta> {
             if (midPersona.getId().equals(idPersona)) {
                 return midPersona;
             }
-
             if (midPersona.getId() < idPersona) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-
         return null;
     }
+
+//    public Estudiante getEstudianteCuenta(Integer idPersona) {
+//        EstudianteController ce = new EstudianteController();
+//        ListaEnlazada<Estudiante> personas = ce.getEstudiantes();
+//        try {
+//            personas = ce.ordenarQS(personas, 0, "nombre");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        int left = 0;
+//        int right = personas.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//            Estudiante midPersona = null;
+//            try {
+//                midPersona = personas.get(mid);
+//            } catch (VacioExceptions e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (midPersona.getId().equals(idPersona)) {
+//                return midPersona;
+//            }
+//            if (midPersona.getId() < idPersona) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public Docente getDocenteCuenta(Integer idPersona) {
+//        DocenteController ce = new DocenteController();
+//        ListaEnlazada<Docente> personas = ce.getDocentes();
+//        try {
+//            personas = ce.ordenarQS(personas, 0, "nombre");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        int left = 0;
+//        int right = personas.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//            Docente midPersona = null;
+//            try {
+//                midPersona = personas.get(mid);
+//            } catch (VacioExceptions e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (midPersona.getId().equals(idPersona)) {
+//                return midPersona;
+//            }
+//            if (midPersona.getId() < idPersona) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return null;
+//    }
 
 
 }

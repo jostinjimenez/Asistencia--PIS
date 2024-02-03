@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
+import model.Cuenta;
 import model.Persona;
 import modelLuis.view.Frm_HorarioEstudiante;
 import modulo_1.inicio_sesion.controller.CuentaController;
@@ -26,6 +28,7 @@ import plantilla.swing.scrollbar.ScrollBarCustom;
 public class Menu_Estudiante extends javax.swing.JPanel {
 
     CuentaController cc = Utiles.getCc();
+    Cuenta cuentaUsu = Utiles.getCuentaUsu();
 
     public Menu_Estudiante() {
 
@@ -37,12 +40,15 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
-        Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
+        Persona persona = cc.getPersona(cuentaUsu.getIdPersona());
         if (persona != null) {
             txtUsername.setText(persona.toString());
+            imageAvatar1.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
         }
         else {
             txtUsername.setText("Username");
+            imageAvatar1.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
+
         }
 
     }
