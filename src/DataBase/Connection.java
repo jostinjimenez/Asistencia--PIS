@@ -9,33 +9,30 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * 
  * @author walter
  */
 public class Connection {
-    //https://www.codejava.net/java-se/jdbc/connect-to-oracle-database-via-jdbc
     private java.sql.Connection connection;
     // Librería de MySQL
-    public String driver = "com.mysql.cj.jdbc.Driver";//oracle.jdbc.driver.OracleDriver
+    public String driver = "oracle.jdbc.driver.OracleDriver";
 
     // Nombre de la base de datos
-    public String database = "pelidb";
+    public String database = "xe";
 
     // Host
     public String hostname = "localhost";
 
     // Puerto
-    public String port = "3306";//1521
+    public String port = "1521";
 
     // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
-    //String aux = "jdbc:oracle:thin:@"+hostname+":"+port+":"+database;
-    public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";//"jdbc:oracle:thin:@"+hostname+":"+port+":"+database;
+    public String url = "jdbc:oracle:thin:@" + hostname + ":" + port + ":" + database;
 
     // Nombre de usuario
-    public String username = "desarrollo";
+    public String username = "AXLDM_DBA";
 
     // Clave de usuario
-    public String password = "desarrollo";
+    public String password = "dwgkoro16";
 
     private java.sql.Connection conectar() {
         java.sql.Connection conn = null;
@@ -52,7 +49,7 @@ public class Connection {
     }
 
     public java.sql.Connection getConnection() {
-        if(connection == null)
+        if (connection == null)
             connection = conectar();
         return connection;
     }
@@ -64,22 +61,4 @@ public class Connection {
     public static void main(String[] args) {
         new Connection().conectar();
     }
-    
-    /*private XStream xstream;
-    public static String URL = "data/";
-    private void conectar() {         
-        xstream = new XStream(new JettisonMappedXmlDriver());        
-         xstream.setMode(XStream.NO_REFERENCES);
-         xstream.addPermission(AnyTypePermission.ANY);
-    }
-    public XStream getXstream() {
-        if(xstream == null)
-            conectar();
-        return xstream;
-    }
-    public void setXstream(XStream xstream) {
-        this.xstream = xstream;
-    }*/    
-
-    
 }
