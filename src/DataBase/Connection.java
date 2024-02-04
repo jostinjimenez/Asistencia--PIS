@@ -29,10 +29,10 @@ public class Connection {
     public String url = "jdbc:oracle:thin:@" + hostname + ":" + port + ":" + database;
 
     // Nombre de usuario
-    public String username = "AXLDM_DBA";
+    public String username = "AXLMD";
 
     // Clave de usuario
-    public String password = "dwgkoro16";
+    public String password = "AXLMD";
 
     private java.sql.Connection conectar() {
         java.sql.Connection conn = null;

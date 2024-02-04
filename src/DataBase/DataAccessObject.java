@@ -17,7 +17,7 @@ import java.util.Map;
  * Clase adaptadora para los metodos de guardar, modificar, listar y buscar por id desde la Base de datos
  * @author infierno
  */
-public class DataAccessObject<E> implements TransferObject<E> {
+public class DataAccessObject<T> implements TransferObject<T> {
     /**
      * Obejto Conexion
      */
@@ -26,7 +26,6 @@ public class DataAccessObject<E> implements TransferObject<E> {
      * Class del modelo a usar
      */
     private Class clazz;
-    
     /**
      * Constructor de la clase
      * @param clazz El objeto de la clase del modelo Ejemplo: Persona.class
@@ -42,7 +41,7 @@ public class DataAccessObject<E> implements TransferObject<E> {
      * @throws Exception Cuando no se puede guardar en la base de datos
      */
     @Override
-    public Integer save(E obj) throws Exception {
+    public Integer save(T obj) throws Exception {
         //INSERT INTO <TABLA> (..) value (...)
         String query = queryInsert(obj);
         Integer idGenerado = -1;
@@ -65,7 +64,7 @@ public class DataAccessObject<E> implements TransferObject<E> {
      * @throws Exception Alguna Excepcion si no modifica
      */
     @Override
-    public void update(E obj) throws Exception {
+    public void update(T obj) throws Exception {
         String query = queryUpdate(obj);
         Statement st = connection.getConnection().createStatement();
         st.executeUpdate(query);
@@ -77,9 +76,8 @@ public class DataAccessObject<E> implements TransferObject<E> {
      * @return Un Objeto de la ListaEnlazada con los datos llenos
      */
     @Override
-    public ListaEnlazada<E> list_All() {
-
-        ListaEnlazada<E> lista = new ListaEnlazada<>();
+    public ListaEnlazada<T> list_All() {
+        ListaEnlazada<T> lista = new ListaEnlazada<>();
         try {
             Statement stmt = connection.getConnection().createStatement();
             String query = "SELECT * FROM " + clazz.getSimpleName().toLowerCase();
@@ -87,7 +85,6 @@ public class DataAccessObject<E> implements TransferObject<E> {
             while (rs.next()) {
                 lista.add(llenarObjeto(rs));
             }
-
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -99,8 +96,8 @@ public class DataAccessObject<E> implements TransferObject<E> {
      * @return El objeto buscado, es null si no esxiste el objeto
      */
     @Override
-    public E find(Integer id) {
-        E data = null;
+    public T find(Integer id) {
+        T data = null;
         try {
             Statement stmt = connection.getConnection().createStatement();
             String query = "select * from " + clazz.getSimpleName().toLowerCase() + " where id = " + id;
@@ -115,10 +112,10 @@ public class DataAccessObject<E> implements TransferObject<E> {
 
     //--------------ESTO ES DEL CRUD NO MODIFICAR AL MENOS QUE LO AMERITE------
     
-    private E llenarObjeto(ResultSet rs) {
-        E data = null;
+    private T llenarObjeto(ResultSet rs) {
+        T data = null;
         try {
-            data = (E) clazz.getDeclaredConstructor().newInstance();
+            data = (T) clazz.getDeclaredConstructor().newInstance();
             for (Field f : clazz.getDeclaredFields()) {
                 String atributo = f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
                 fijarDatos(f, rs, data, atributo);
@@ -134,7 +131,7 @@ public class DataAccessObject<E> implements TransferObject<E> {
         return data;
     }
 
-    private void fijarDatos(Field f, ResultSet rs, E data, String atributo) {
+    private void fijarDatos(Field f, ResultSet rs, T data, String atributo) {
         try {
             Method m = null;
 
@@ -173,7 +170,7 @@ public class DataAccessObject<E> implements TransferObject<E> {
         }
     }
 
-    private HashMap<String, Object> obtenerObjeto(E obj) {
+    private HashMap<String, Object> obtenerObjeto(T obj) {
         HashMap<String, Object> mapa = new HashMap<>();
         try {
             for (Field f : clazz.getDeclaredFields()) {
@@ -202,7 +199,7 @@ public class DataAccessObject<E> implements TransferObject<E> {
         return mapa;
     }
 
-    private String queryInsert(E obj) {
+    private String queryInsert(T obj) {
         HashMap<String, Object> mapa = obtenerObjeto(obj);
         String query = "INSERT INTO " + clazz.getSimpleName().toLowerCase() + " (";
         for (Map.Entry<String, Object> entry : mapa.entrySet()) {
@@ -229,7 +226,7 @@ public class DataAccessObject<E> implements TransferObject<E> {
         return query;
     }
 
-    private String queryUpdate(E obj) {
+    private String queryUpdate(T obj) {
         HashMap<String, Object> mapa = obtenerObjeto(obj);
         String query = "UPDATE " + clazz.getSimpleName().toLowerCase() + " SET ";
         Integer id = 0;
@@ -249,7 +246,6 @@ public class DataAccessObject<E> implements TransferObject<E> {
                     query += '"' + entry.getValue().toString() + '"' + ", ";
                 }
             }
-
         }
 
         query += "";
@@ -258,5 +254,4 @@ public class DataAccessObject<E> implements TransferObject<E> {
         query += " WHERE id = " + id;
         return query;
     }
-
 }

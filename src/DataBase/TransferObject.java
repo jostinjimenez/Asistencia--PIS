@@ -11,27 +11,27 @@ import tda_listas.ListaEnlazada;
  *
  * @author walter
  */
-public interface TransferObject<E> {
+public interface TransferObject<T> {
     /**
      * Metodo que permite realizar el guardaddo
      * @param obj Objeto del modelo
      * @return El id generado producto del guardado
      */
-    public Integer save(E obj) throws Exception;
+    public Integer save(T obj) throws Exception;
     /**
      * Permite modificar los datos en un repositorio de datos
      * @param obj Objeto a modificar     
      */
-    public void update(E obj) throws Exception;
+    public void update(T obj) throws Exception;
     /**
      * LIstado de objetos en la BD
      * @return Una ListaEnlazada
      */
-    public ListaEnlazada<E> list_All();
+    public ListaEnlazada<T> list_All();
     /**
      * Permite obtener un objeto de la base de datos a travez del Id
      * @param id El id a buscar en la base de datos
      * @return El objeto buscado, es null si no esxiste el objeto
      */
-    public E find(Integer id);
+    public T find(Integer id);
 }

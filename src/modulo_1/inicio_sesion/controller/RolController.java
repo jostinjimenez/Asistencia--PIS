@@ -1,6 +1,6 @@
 package modulo_1.inicio_sesion.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Rol;
 import tda_listas.ListaEnlazada;
 
@@ -46,26 +46,37 @@ public class RolController extends DataAccessObject<Rol> {
 
     // Metodos
     public Boolean save() {
-        this.rol.setId(generarID());
-        return save(rol);
+        try {
+            Integer idGenerado = super.save(this.rol);
+            return idGenerado != -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public Boolean update(Integer index) {
-        return update(rol, index);
+    public Boolean update() {
+        try {
+            update(this.rol);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
+    public static void main(String[] args) {
+        RolController rc = new RolController();
 
-//    public static void main(String[] args) {
-//        RolController rc = new RolController();
-//        rc.getRol().setId(1);
-//        rc.getRol().setNombre("Administrador");
-//        rc.save();
-//        rc.getRol().setId(2);
-//        rc.getRol().setNombre("Estudiante");
-//        rc.save();
-//        rc.getRol().setId(3);
-//        rc.getRol().setNombre("Docente");
-//        rc.save();
-//    }
+        rc.getRol().setId(1);
+        rc.getRol().setNombre("Administrador");
+        rc.getRol().setDescripcion("Tiene acceso a todas las funcionalidades del sistema");
+
+        if (rc.save()) {
+            System.out.println("Rol guardado con éxito");
+        } else {
+            System.out.println("Error al guardar el rol");
+        }
+    }
 }
 
