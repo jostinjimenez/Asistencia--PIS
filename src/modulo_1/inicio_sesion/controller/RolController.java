@@ -4,6 +4,9 @@ import DataBase.DataAccessObject;
 import model.Rol;
 import tda_listas.ListaEnlazada;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class RolController extends DataAccessObject<Rol> {
     // Atributos
     private ListaEnlazada<Rol> roles;
@@ -45,14 +48,8 @@ public class RolController extends DataAccessObject<Rol> {
     }
 
     // Metodos
-    public Boolean save() {
-        try {
-            Integer idGenerado = super.save(this.rol);
-            return idGenerado != -1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Integer save() throws Exception {
+        return super.save(this.rol);
     }
 
     public Boolean update() {
@@ -60,23 +57,27 @@ public class RolController extends DataAccessObject<Rol> {
             update(this.rol);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println(e.getMessage());
         }
+        return false;
     }
 
     public static void main(String[] args) {
         RolController rc = new RolController();
 
-        rc.getRol().setId(1);
-        rc.getRol().setNombre("Administrador");
-        rc.getRol().setDescripcion("Tiene acceso a todas las funcionalidades del sistema");
+        // Prueba de update
+//        rc.setRol(rc.find(5));
+//        rc.getRol().setNombre("Prueba");
+//        rc.update();
 
-        if (rc.save()) {
-            System.out.println("Rol guardado con éxito");
+        // Prueba de delete
+        if (rc.delete(5)) {
+            System.out.println("Eliminado");
         } else {
-            System.out.println("Error al guardar el rol");
+            System.out.println("No eliminado");
         }
+
+
     }
 }
 

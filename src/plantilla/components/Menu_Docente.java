@@ -40,7 +40,7 @@ public class Menu_Docente extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
-        Persona persona = cc.getPersona(cuentaUsu.getIdPersona());
+        Persona persona = cc.getPersona(cuentaUsu.getPersona_id());
         if (persona != null) {
             txtUsername.setText(persona.toString());
             imageAvatar1.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
@@ -50,7 +50,7 @@ public class Menu_Docente extends javax.swing.JPanel {
             imageAvatar1.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
         }
     }
-    Persona persona = cc.getPersona(cc.getCuenta().getIdPersona());
+    Persona persona = cc.getPersona(cc.getCuenta().getPersona_id());
 
     public void initMenu() {
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/menu.png"))), "Menu Principal", 0);

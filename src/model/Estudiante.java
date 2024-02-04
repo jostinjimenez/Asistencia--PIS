@@ -9,29 +9,8 @@ public class Estudiante extends Persona {
     private String etnia;
     private Boolean titulo_bachiller;
 
-    private ListaEnlazada<Integer> id_matriculas;
 
     public Estudiante() {
-    }
-
-    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, Date fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller, ListaEnlazada<Integer> id_matriculas) {
-        super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
-        this.direccion = direccion;
-        this.etnia = etnia;
-        this.titulo_bachiller = titulo_bachiller;
-        this.id_matriculas = id_matriculas;
-    }
-
-
-    public ListaEnlazada<Integer> getId_matriculas() {
-        if (id_matriculas == null) {
-            id_matriculas = new ListaEnlazada<>();
-        }
-        return id_matriculas;
-    }
-
-    public void setId_matriculas(ListaEnlazada<Integer> id_matriculas) {
-        this.id_matriculas = id_matriculas;
     }
 
     public String getDireccion() {
@@ -82,7 +61,7 @@ public class Estudiante extends Persona {
     public int comparar(Estudiante estudiante, String text, String campo) {
         switch (campo.toLowerCase()) {
             case "id":
-               return Integer.compare(Integer.parseInt(text),estudiante.getId());
+                return Integer.compare(Integer.parseInt(text),estudiante.getId());
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }

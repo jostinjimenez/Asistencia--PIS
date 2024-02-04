@@ -42,7 +42,6 @@ public class Frm_Usuarios extends javax.swing.JFrame {
             btnEliminar.setEnabled(true);
         });
 
-        btnEliminar.addActionListener(e -> eliminarRegistro());
 
 //        txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
 //            @Override
@@ -124,26 +123,26 @@ public class Frm_Usuarios extends javax.swing.JFrame {
     /**
      * Este método se encarga de eliminar un registro de la tabla.
      */
-    public void eliminarRegistro() {
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow >= 0) {
-            try {
-                int idPersona = (int) jTable1.getValueAt(selectedRow, 0);
-                if (pc.delete(idPersona)) {
-                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                    cargarTabla();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println(e.getMessage());
-                throw new RuntimeException(e);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    public void eliminarRegistro() {
+//        int selectedRow = jTable1.getSelectedRow();
+//        if (selectedRow >= 0) {
+//            try {
+//                int idPersona = (int) jTable1.getValueAt(selectedRow, 0);
+//                if (pc.delete(idPersona)) {
+//                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+//                    cargarTabla();
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//                System.out.println(e.getMessage());
+//                throw new RuntimeException(e);
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     /**
      * Este método se encarga de cargar la tabla con los datos de las personas.

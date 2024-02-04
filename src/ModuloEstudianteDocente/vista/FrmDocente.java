@@ -90,47 +90,33 @@ public class FrmDocente extends javax.swing.JFrame {
                 int aniosExperiencia = Integer.parseInt(txtAniosExpe.getText());
                 docenteController.getDocente().setAnios_experiencia(aniosExperiencia);
                 docenteController.getDocente().setGrado_academico(txtGradoAcademico.getText());
-                docenteController.getDocente().setIdRol(3);
+                docenteController.getDocente().setRol_id(3);
                 docenteController.getDocente().setActivo(true);
                 docenteController.getDocente().setFoto("user.png");
 
                 if (fila != -1) {
                     docenteController.getDocente().setId(docenteController.getDocente().getId());
-                    docenteController.update(docenteController.getDocente(), fila);
+                    docenteController.update();
                     limpiar();
-                    JOptionPane.showMessageDialog(null, "Docente actualizado correctamente",
-                            "Mensaje",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Docente actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    if (docenteController.save()) {
-                        cc.getCuenta().setCorreo(generarCorreoInst());
+                    Integer idGenerado = docenteController.save();
+                    if (idGenerado != null) {
+                        cc.getCuenta().setCorreo_institucional(generarCorreoInst());
                         cc.getCuenta().setClave(txtDNI.getText());
-                        cc.getCuenta().setIdPersona(cc.generarID());
-                        if (cc.save()) {
-                            System.out.println("Cuenta registrada correctamente");
-                        } else {
-                            System.out.println("Error al registrar la cuenta");
-                        }
+                        cc.getCuenta().setPersona_id(idGenerado);
+                        cc.save();
                         limpiar();
-                        JOptionPane.showMessageDialog(null, "Docente registrado correctamente",
-                                "Mensaje",
-                                JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Docente registrado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error al registrar el docente",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Error al registrar el docente", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null,
-                    "Por favor llene todos los campos",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -248,39 +234,39 @@ public class FrmDocente extends javax.swing.JFrame {
         javax.swing.GroupLayout roundPanel6Layout = new javax.swing.GroupLayout(roundPanel6);
         roundPanel6.setLayout(roundPanel6Layout);
         roundPanel6Layout.setHorizontalGroup(
-            roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel6Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(roundPanel6Layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                        .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                        .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(32, Short.MAX_VALUE))
         );
         roundPanel6Layout.setVerticalGroup(
-            roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel6Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(roundPanel6Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         roundPanel1.add(roundPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 60, 180, 260));
 
         tblDocente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane1.setViewportView(tblDocente);
 

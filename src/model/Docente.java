@@ -10,13 +10,6 @@ public class Docente extends Persona {
     public Docente() {
     }
 
-    public Docente(Integer id, String nombre, String apellido, String correoPersonal, Date fechaNacimiento, String telefono, String dni, Integer anios_experiencia, String codigo_empleado, String grado_academico) {
-        super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
-        this.anios_experiencia = anios_experiencia;
-        this.codigo_empleado = codigo_empleado;
-        this.grado_academico = grado_academico;
-    }
-
     public Docente(Integer anios_experiencia, String codigo_empleado, String grado_academico) {
         this.anios_experiencia = anios_experiencia;
         this.codigo_empleado = codigo_empleado;

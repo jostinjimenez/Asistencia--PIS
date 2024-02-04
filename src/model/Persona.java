@@ -11,39 +11,15 @@ public class Persona {
     private Date fecha_nacimiento;
     private String telefono;
     private String dni;
-    private boolean activo;
+    private Boolean activo;
     private String foto;
 
-    private Integer idRol;
-
-    public Persona(Integer id, String nombre, String apellido, String correoPersonal, Date fechaNacimiento, String telefono, String dni) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo_personal = correoPersonal;
-        this.fecha_nacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.dni = dni;
-    }
+    private Integer rol_id;
 
     public Persona() {
     }
 
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
+    // Getters y Setters
 
     public Integer getId() {
         return id;
@@ -59,6 +35,14 @@ public class Persona {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getCorreo_personal() {
@@ -93,20 +77,28 @@ public class Persona {
         this.dni = dni;
     }
 
-    public Integer getIdRol() {
-        return idRol;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public Integer getRol_id() {
+        return rol_id;
+    }
+
+    public void setRol_id(Integer rol_id) {
+        this.rol_id = rol_id;
     }
 
     @Override
@@ -130,9 +122,9 @@ public class Persona {
                 } else if (field.equalsIgnoreCase("dni")) {
                     return this.getDni().compareTo(c.getDni()) > 0;
                 } else if (field.equalsIgnoreCase("activo")) {
-                    return this.isActivo() == c.isActivo();
+                    return this.getActivo() == c.getActivo();
                 } else if (field.equalsIgnoreCase("idRol")) {
-                    return this.getIdRol() > (c.getIdRol());
+                    return this.getRol_id() > (c.getRol_id());
                 }
             case 0:
                 if (field.equalsIgnoreCase("nombre")) {
@@ -148,9 +140,9 @@ public class Persona {
                 } else if (field.equalsIgnoreCase("dni")) {
                     return this.getDni().compareTo(c.getDni()) < 0;
                 } else if (field.equalsIgnoreCase("activo")) {
-                    return this.isActivo() != c.isActivo();
+                    return this.getActivo() != c.getActivo();
                 } else if (field.equalsIgnoreCase("idRol")) {
-                    return this.getIdRol() < (c.getIdRol());
+                    return this.getRol_id() < (c.getRol_id());
                 }
             default:
                 return false;

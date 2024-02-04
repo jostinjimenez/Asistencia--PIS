@@ -37,14 +37,14 @@ public class ModeloTablaCuenta extends AbstractTableModel {
         CuentaController cc = new CuentaController();
         try {
             cuenta = cuentas.get(rowIndex);
-            Persona p = cc.getPersona(cuenta.getIdPersona());
+            Persona p = cc.getPersona(cuenta.getPersona_id());
             return switch (columnIndex) {
                 case 0 -> cuenta.getId();
-                case 1 -> cuenta.getCorreo();
+                case 1 -> cuenta.getCorreo_institucional();
                 case 2 -> p.getNombre() + " " + p.getApellido();
-                case 3 -> (p.isActivo()) ? "Activo" : "Inactivo";
+                case 3 -> (p.getActivo()) ? "Activo" : "Inactivo";
                 case 4 -> {
-                    yield switch (p.getIdRol()) {
+                    yield switch (p.getRol_id()) {
                         case 1 -> "Administrador";
                         case 2 -> "Estudiante";
                         case 3 -> "Docente";

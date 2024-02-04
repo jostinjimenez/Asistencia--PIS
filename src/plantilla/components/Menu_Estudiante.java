@@ -4,8 +4,6 @@ import com.raven.swing.ButtonMenu;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,7 +16,6 @@ import model.Persona;
 import modelLuis.view.Frm_HorarioEstudiante;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
 import modulo_1.inicio_sesion.view.util.Utiles;
@@ -40,7 +37,7 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
 
-        Persona persona = cc.getPersona(cuentaUsu.getIdPersona());
+        Persona persona = cc.getPersona(cuentaUsu.getPersona_id());
         if (persona != null) {
             txtUsername.setText(persona.toString());
             imageAvatar1.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));

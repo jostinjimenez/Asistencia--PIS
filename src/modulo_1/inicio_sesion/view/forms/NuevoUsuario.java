@@ -81,17 +81,23 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
     public void guardar() {
         if (validar()) {
-            if (isEditing) {
-                updatePersona();
-            } else {
-                saveUsuario();
+            try {
+                if (isEditing) {
+                    updatePersona();
+                } else {
+                    saveUsuario();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void saveUsuario() {
+    private void saveUsuario() throws Exception {
         pc.getPersona().setNombre(txtNombre.getText());
         pc.getPersona().setApellido(txtApellido.getText());
         pc.getPersona().setDni(txtDni.getText());
@@ -99,23 +105,19 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
         pc.getPersona().setTelefono(txtTelefono.getText());
         pc.getPersona().setActivo(true);
-        pc.getPersona().setIdRol(1);
-        pc.getPersona().setFoto("user.png");
-
-        if (pc.save()) {
-            cc.getCuenta().setCorreo(generarCorreoInst());
-            cc.getCuenta().setClave(txtDni.getText());
-            cc.getCuenta().setIdPersona(cc.generarID());
-            cc.save();
-
-            ((Frm_Usuarios) getParent()).cargarTabla();
-
-            JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+        pc.getPersona().setRol_id(1);
+        //pc.getPersona().setFoto("user.png");
+        cc.getCuenta().setCorreo_institucional(generarCorreoInst());
+        cc.getCuenta().setClave(txtDni.getText());
+        cc.getCuenta().setPersona_id(pc.save());
+        if (cc.save() > 0) {
+            System.out.println("Se guardó correctamente el usuario y la cuenta");
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("No se pudo guardar");
         }
-
+        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }
 
     private void updatePersona() {
@@ -242,12 +244,12 @@ public class NuevoUsuario extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

@@ -3,10 +3,12 @@ package ModuloEstudianteDocente.vista.modals;
 import ModuloEstudianteDocente.controlador.EstudianteController;
 import ModuloEstudianteDocente.vista.FrmEstudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+
 import modulo_1.inicio_sesion.controller.CuentaController;
 
 public class modal_Estudiante extends javax.swing.JDialog {
@@ -98,45 +100,38 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 String seleccion = cbxTituloBach.getSelectedItem().toString();
                 Boolean tituloBachiller = seleccion.equals("Si");
                 estudianteControlador.getEstudiante().setTitulo_bachiller(tituloBachiller);
-                String valorGuardar = tituloBachiller ? "Si" : "No";
                 estudianteControlador.getEstudiante().setDireccion(txtDireccion.getText());
-                estudianteControlador.getEstudiante().setIdRol(2);
+                estudianteControlador.getEstudiante().setRol_id(2);
                 estudianteControlador.getEstudiante().setActivo(true);
-                estudianteControlador.getEstudiante().setFoto("user.png");
+                //estudianteControlador.getEstudiante().setFoto("user.png");
 
                 if (fila != -1) {
                     estudianteControlador.getEstudiante().setId(estudianteControlador.getEstudiante().getId());
-                    estudianteControlador.update();
-
-                    JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-                } else {
-                    if (estudianteControlador.save()) {
-                        cc.getCuenta().setCorreo(generarCorreoInst());
-                        cc.getCuenta().setClave(txtCedula.getText());
-                        cc.getCuenta().setIdPersona(cc.generarID());
-                        cc.save();
-                        
-                        ((FrmEstudiante) getParent()).cargarTabla();
-
-                        JOptionPane.showMessageDialog(null, "Estudiante registrado correctamente",
-                                "Mensaje",
-                                JOptionPane.INFORMATION_MESSAGE);
+                    if (estudianteControlador.update()) {
+                        JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al actualizar el estudiante", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-
+                } else {
+                    Integer idGenerado = estudianteControlador.save();
+                    if (idGenerado != null) {
+                        cc.getCuenta().setCorreo_institucional(generarCorreoInst());
+                        cc.getCuenta().setClave(txtCedula.getText());
+                        cc.getCuenta().setPersona_id(idGenerado);
+                        cc.save();
+                        JOptionPane.showMessageDialog(null, "Estudiante guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al guardar el estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al guardar el estudiante", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
         } else {
-            JOptionPane.showMessageDialog(null,
-                    "Por favor llene todos los campos",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -372,7 +367,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ModuloEstudianteDocente.controlador;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Docente;
-import model.Estudiante;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 
@@ -15,9 +10,6 @@ import java.lang.reflect.Field;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
-/**
- * @author LENOVO
- */
 public class DocenteController extends DataAccessObject<Docente> {
 
     // Atributos
@@ -60,12 +52,11 @@ public class DocenteController extends DataAccessObject<Docente> {
     }
 
     // Metodos
-    public Boolean save() {
-        Integer id = generarID();
-
-        docente.setId(id);
-        Boolean result = save(docente);
-
+    public Integer save() throws Exception {
+        Integer idGenerado = super.save(docente);
+        if (idGenerado == null) {
+            return null;
+        }
         PersonaController pc = new PersonaController();
         pc.getPersona().setNombre(docente.getNombre());
         pc.getPersona().setApellido(docente.getApellido());
@@ -73,32 +64,24 @@ public class DocenteController extends DataAccessObject<Docente> {
         pc.getPersona().setCorreo_personal(docente.getCorreo_personal());
         pc.getPersona().setFecha_nacimiento(docente.getFecha_nacimiento());
         pc.getPersona().setTelefono(docente.getTelefono());
-        pc.getPersona().setIdRol(3);
-        pc.getPersona().setId(id);
+        pc.getPersona().setRol_id(3);
+        pc.getPersona().setId(idGenerado);
         pc.getPersona().setActivo(true);
-        pc.getPersona().setFoto("user.png");
+        //pc.getPersona().setFoto("user.png");
         pc.save();
-
-        return result;
+        return idGenerado;
     }
 
     public Boolean update() throws IOException {
-        return update(docente, buscarIndex(docente.getId() + 1));
+        try {
+            update(this.docente);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public Integer buscarIndex(Integer id) {
-        int ind = 0;
-        if (list_All().isEmpty()) {
-            Docente[] personas1 = list_All().toArray();
-            for (Docente persona : personas1) {
-                if (id.intValue() == persona.getId().intValue()) {
-                    ind = 1;
-                    break;
-                }
-            }
-        }
-        return ind;
-    }
 
     public ListaEnlazada<Docente> ordenarQS(ListaEnlazada<Docente> lista, Integer type, String field) throws Exception {
         Docente[] personas = lista.toArray();
@@ -138,6 +121,25 @@ public class DocenteController extends DataAccessObject<Docente> {
         p[ultimo] = aux;
 
         return i + 1;
+    }
+
+    public static void main(String[] args) {
+        DocenteController dc = new DocenteController();
+        Docente d = new Docente();
+
+        d.setId(1);
+        d.setNombre("Juan");
+        d.setApellido("Perez");
+        d.setDni("1150696977");
+        d.setCorreo_personal("sdasdasd");
+        d.setTelefono("123456789");
+        d.setActivo(true);
+        d.setFoto("user.png");
+        d.setGrado_academico("Ingeniero");
+        d.setActivo(true);
+        d.setFoto("user.png");
+        dc.setDocente(d);
+
     }
 
 }

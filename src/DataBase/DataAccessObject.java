@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * Clase adaptadora para los metodos de guardar, modificar, listar y buscar por id desde la Base de datos
+ *
  * @author infierno
  */
 public class DataAccessObject<T> implements TransferObject<T> {
@@ -26,40 +27,50 @@ public class DataAccessObject<T> implements TransferObject<T> {
      * Class del modelo a usar
      */
     private Class clazz;
+
     /**
      * Constructor de la clase
+     *
      * @param clazz El objeto de la clase del modelo Ejemplo: Persona.class
      */
     public DataAccessObject(Class clazz) {
         this.connection = new Connection();
         this.clazz = clazz;
     }
+
     /**
      * Metodo que permite guardar
+     *
      * @param obj El objeto del modelo lleno
-     * @return La llave primaria generada por el motor de base de datos (se sugiere construir la tabla de base de datos con la generacion de id auto incementable) 
+     * @return La llave primaria generada por el motor de base de datos (se sugiere construir la tabla de base de datos con la generacion de id auto incementable)
      * @throws Exception Cuando no se puede guardar en la base de datos
      */
     @Override
     public Integer save(T obj) throws Exception {
-        //INSERT INTO <TABLA> (..) value (...)
         String query = queryInsert(obj);
         Integer idGenerado = -1;
-        PreparedStatement statement
-                = connection.getConnection().prepareStatement(query,
-                        Statement.RETURN_GENERATED_KEYS);
-        statement.executeUpdate();
-        ResultSet generatedKeys = statement.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            idGenerado = generatedKeys.getInt(1);
-        }
 
-        connection.getConnection().close();
-        connection.setConnection(null);
+        try (PreparedStatement statement = connection.getConnection().prepareStatement(query)) {
+            statement.executeUpdate();
+
+            // Recupera el valor de la secuencia después de la inserción
+            try (Statement seqStatement = connection.getConnection().createStatement()) {
+                ResultSet resultSet = seqStatement.executeQuery("SELECT INCREMENTO.CURRVAL FROM dual");
+                if (resultSet.next()) {
+                    idGenerado = resultSet.getInt(1);
+                }
+            }
+        } finally {
+            connection.getConnection().close();
+            connection.setConnection(null);
+        }
         return idGenerado;
     }
+
+
     /**
      * Metodo que permite modificar un registro en la base de datos, para modificar se debe primero consultar el Objeto haciendo uso del metodo Obtener
+     *
      * @param obj El objeto del modelo a modificar
      * @throws Exception Alguna Excepcion si no modifica
      */
@@ -71,8 +82,10 @@ public class DataAccessObject<T> implements TransferObject<T> {
         connection.getConnection().close();
         connection.setConnection(null);
     }
+
     /**
      * Metodo que permite sacar los datos de la base de datos
+     *
      * @return Un Objeto de la ListaEnlazada con los datos llenos
      */
     @Override
@@ -90,8 +103,10 @@ public class DataAccessObject<T> implements TransferObject<T> {
         }
         return lista;
     }
+
     /**
      * Permite obtener un objeto de la base de datos a travez del Id
+     *
      * @param id El id a buscar en la base de datos
      * @return El objeto buscado, es null si no esxiste el objeto
      */
@@ -110,8 +125,25 @@ public class DataAccessObject<T> implements TransferObject<T> {
         return data;
     }
 
+    /**
+     * Permite eliminar un objeto de la base de datos
+     *
+     * @param id El id a eliminar
+     * @return True si se elimino, False si no se elimino
+     */
+    @Override
+    public Boolean delete(Integer id) {
+        try {
+            Statement stmt = connection.getConnection().createStatement();
+            String query = "DELETE FROM " + clazz.getSimpleName().toLowerCase() + " WHERE id = " + id;
+            stmt.executeUpdate(query);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     //--------------ESTO ES DEL CRUD NO MODIFICAR AL MENOS QUE LO AMERITE------
-    
     private T llenarObjeto(ResultSet rs) {
         T data = null;
         try {
@@ -161,7 +193,6 @@ public class DataAccessObject<T> implements TransferObject<T> {
             }
 
             if (f.getType().isEnum()) {
-
                 m = clazz.getMethod("set" + atributo, (Class<Enum>) f.getType());
                 m.invoke(data, Enum.valueOf((Class<Enum>) f.getType(), rs.getString(atributo)));
             }
@@ -191,7 +222,7 @@ public class DataAccessObject<T> implements TransferObject<T> {
                 if (aux != null) {
                     mapa.put(atributo.toLowerCase(), aux);
                 }
-               
+
             }
         } catch (Exception e) {
             System.out.println("No se pudo tener dato");
@@ -204,21 +235,19 @@ public class DataAccessObject<T> implements TransferObject<T> {
         String query = "INSERT INTO " + clazz.getSimpleName().toLowerCase() + " (";
         for (Map.Entry<String, Object> entry : mapa.entrySet()) {
             query += entry.getKey() + ",";
-
         }
         query = query.substring(0, query.length() - 1);
         query += ") VALUES (";
         for (Map.Entry<String, Object> entry : mapa.entrySet()) {
-
-            if (entry.getValue().getClass().getSuperclass().getSimpleName().equalsIgnoreCase("Number") || entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Boolean")) {
+            if (entry.getValue().getClass().getSuperclass().getSimpleName().equalsIgnoreCase("Number")) {
                 query += entry.getValue() + ", ";
-            }
-            if (entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Date")) {
-                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                query += '"' + formato.format(entry.getValue()) + '"' + ", ";
-            }
-            if (entry.getValue().getClass().isEnum() || entry.getValue().getClass().getSimpleName().equalsIgnoreCase("String")) {
-                query += '"' + entry.getValue().toString() + '"' + ", ";
+            } else if (entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Boolean")) {
+                query += ((Boolean) entry.getValue() ? "1" : "0") + ", ";
+            } else if (entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Date")) {
+                SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-yyyy");
+                query += "'" + formato.format(entry.getValue()) + "'" + ", ";
+            } else {
+                query += "'" + entry.getValue().toString() + "'" + ", ";
             }
         }
         query = query.substring(0, query.length() - 2);
@@ -235,21 +264,18 @@ public class DataAccessObject<T> implements TransferObject<T> {
                 id = (Integer) entry.getValue();
             } else {
                 query += entry.getKey() + " = ";
-                if (entry.getValue().getClass().getSuperclass().getSimpleName().equalsIgnoreCase("Number") || entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Boolean")) {
+                if (entry.getValue().getClass().getSuperclass().getSimpleName().equalsIgnoreCase("Number")) {
                     query += entry.getValue() + ", ";
-                }
-                if (entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Date")) {
-                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    query += '"' + formato.format(entry.getValue()) + '"' + ", ";
-                }
-                if (entry.getValue().getClass().isEnum() || entry.getValue().getClass().getSimpleName().equalsIgnoreCase("String")) {
-                    query += '"' + entry.getValue().toString() + '"' + ", ";
+                } else if (entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Boolean")) {
+                    query += ((Boolean) entry.getValue() ? "1" : "0") + ", ";
+                } else if (entry.getValue().getClass().getSimpleName().equalsIgnoreCase("Date")) {
+                    SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-yyyy");
+                    query += "'" + formato.format(entry.getValue()) + "'" + ", ";
+                } else {
+                    query += "'" + entry.getValue().toString() + "'" + ", ";
                 }
             }
         }
-
-        query += "";
-
         query = query.substring(0, query.length() - 2);
         query += " WHERE id = " + id;
         return query;

@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ModuloEstudianteDocente.controlador;
 
 import java.io.IOException;
-import DAO.DataAccessObject;
+
+import DataBase.DataAccessObject;
 
 import java.lang.reflect.Field;
 
@@ -16,12 +13,7 @@ import tda_listas.exceptions.VacioExceptions;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
-
-/**
- *
- * @author LENOVO
- */
-public class EstudianteController extends DataAccessObject<Estudiante>{
+public class EstudianteController extends DataAccessObject<Estudiante> {
     // Atributos
     private ListaEnlazada<Estudiante> estudiantes;
     private Estudiante estudiante = new Estudiante();
@@ -62,12 +54,11 @@ public class EstudianteController extends DataAccessObject<Estudiante>{
     }
 
     // Metodos
-    public Boolean save() {
-        Integer id = generarID();
-
-        estudiante.setId(id);
-        Boolean result = save(estudiante);
-
+    public Integer save() throws Exception {
+        Integer idGenerado = super.save(estudiante);
+        if (idGenerado == null) {
+            return null;
+        }
         PersonaController pc = new PersonaController();
         pc.getPersona().setNombre(estudiante.getNombre());
         pc.getPersona().setApellido(estudiante.getApellido());
@@ -75,33 +66,23 @@ public class EstudianteController extends DataAccessObject<Estudiante>{
         pc.getPersona().setCorreo_personal(estudiante.getCorreo_personal());
         pc.getPersona().setFecha_nacimiento(estudiante.getFecha_nacimiento());
         pc.getPersona().setTelefono(estudiante.getTelefono());
-        pc.getPersona().setIdRol(2);
-        pc.getPersona().setId(id);
+        pc.getPersona().setRol_id(3);
+        pc.getPersona().setId(idGenerado);
         pc.getPersona().setActivo(true);
-        pc.getPersona().setFoto("user.png");
+        //pc.getPersona().setFoto("user.png");
         pc.save();
-
-        return result;
+        return idGenerado;
     }
 
     public Boolean update() throws IOException {
-        return update(estudiante, buscarIndex(estudiante.getId() + 1));
-    }
-
-    public Integer buscarIndex(Integer id) {
-        int ind = 0;
-        if (list_All().isEmpty()) {
-            Estudiante[] personas1 = list_All().toArray();
-            for (Estudiante persona : personas1) {
-                if (id.intValue() == persona.getId().intValue()) {
-                    ind = 1;
-                    break;
-                }
-            }
+        try {
+            update(this.estudiante);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return ind;
     }
-
 
     public ListaEnlazada<Estudiante> ordenarQS(ListaEnlazada<Estudiante> lista, Integer type, String field) throws Exception {
         Estudiante[] personas = lista.toArray();
@@ -142,18 +123,5 @@ public class EstudianteController extends DataAccessObject<Estudiante>{
 
         return i + 1;
     }
-
-    public Boolean delete(Integer pos) throws IOException, VacioExceptions {
-        ListaEnlazada<Estudiante> estudiantes = list_All();
-
-        if (pos >= 0 && pos < estudiantes.getSize()) {
-            estudiantes.delete(pos);
-            save(estudiantes); 
-            return true;
-        } else {
-            return false; 
-        }
-    }
-
 
 }

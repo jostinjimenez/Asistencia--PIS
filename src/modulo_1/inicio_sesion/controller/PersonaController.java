@@ -1,13 +1,12 @@
 package modulo_1.inicio_sesion.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Persona;
 import model.Rol;
 import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
 
-import java.io.FileOutputStream;
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
@@ -53,50 +52,38 @@ public class PersonaController extends DataAccessObject<Persona> {
     }
 
     // Metodos
-    public Boolean save() {
-        this.persona.setId(generarID());
-        return save(persona);
+    public Integer save() throws Exception {
+        return super.save(this.persona);
     }
 
     public Boolean update() {
-        System.out.println("Update " + buscarIndex(persona.getId() + 1));
-        return update(persona, buscarIndex(persona.getId() + 1));
+        try {
+            update(this.persona);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public Integer buscarIndex(Integer id) {
-        int ind = 0;
-        if (list_All().isEmpty()) {
-            Persona[] personas1 = list_All().toArray();
-            for (Persona persona : personas1) {
-                if (id.intValue() == persona.getId().intValue()) {
-                    ind = 1;
-                    break;
-                }
-            }
-        }
-        return ind;
-    }
+    public static void main(String[] args) {
+        PersonaController pc = new PersonaController();
 
-    public Boolean delete(Integer idPersona) {
-        for (int i = 0; i < personas.getSize(); i++) {
-            Persona persona = null;
-            try {
-                persona = personas.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (persona.getId().equals(idPersona)) {
-                try {
-                    persona.setActivo(false);
-                    this.xStream.toXML(personas, new FileOutputStream(URL));
-                    return true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-            }
+        pc.getPersona().setNombre("Jostin");
+        pc.getPersona().setApellido("Jimenez");
+        pc.getPersona().setDni("1150696977");
+        pc.getPersona().setFecha_nacimiento(new Date());
+        pc.getPersona().setRol_id(1);
+        pc.getPersona().setTelefono("0999170229");
+        pc.getPersona().setCorreo_personal("sdfghg");
+        pc.getPersona().setActivo(true);
+
+        try {
+            System.out.println("Save: " + pc.save());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false;
+
     }
 
 
@@ -153,23 +140,23 @@ public class PersonaController extends DataAccessObject<Persona> {
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
-            if (p[mid].getIdRol().intValue() == rol.getId().intValue()) {
+            if (p[mid].getRol_id().intValue() == rol.getId().intValue()) {
                 result.add(p[mid]);
 
                 int temp = mid - 1;
-                while (temp >= left && p[temp].getIdRol().intValue() == rol.getId().intValue()) {
+                while (temp >= left && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
                     result.add(p[temp]);
                     temp--;
                 }
 
                 temp = mid + 1;
-                while (temp <= right && p[temp].getIdRol().intValue() == rol.getId().intValue()) {
+                while (temp <= right && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
                     result.add(p[temp]);
                     temp++;
                 }
                 return result;
             }
-            if (p[mid].getIdRol().intValue() < rol.getId().intValue()) {
+            if (p[mid].getRol_id().intValue() < rol.getId().intValue()) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
@@ -321,5 +308,6 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
         return result;
     }
+
 
 }

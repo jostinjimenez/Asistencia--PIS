@@ -34,4 +34,10 @@ public interface TransferObject<T> {
      * @return El objeto buscado, es null si no esxiste el objeto
      */
     public T find(Integer id);
+    /**
+     * Permite eliminar un objeto de la base de datos
+     * @param id El id a eliminar
+     * @return True si se elimino, False si no se elimino
+     */
+    public Boolean delete(Integer id);
 }

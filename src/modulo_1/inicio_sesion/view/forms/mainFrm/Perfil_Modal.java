@@ -41,9 +41,9 @@ public class Perfil_Modal extends javax.swing.JDialog {
     }
 
     private void cargarDatos() {
-        labelCorreo.setText(cc.getCuenta().getCorreo());
+        labelCorreo.setText(cc.getCuenta().getCorreo_institucional());
         txtFoto.setVisible(false);
-        fotoUsuario.setIcon(new ImageIcon("multimedia/" + cc.getPersona(cc.getCuenta().getIdPersona()).getFoto()));
+        fotoUsuario.setIcon(new ImageIcon("multimedia/" + cc.getPersona(cc.getCuenta().getPersona_id()).getFoto()));
     }
 
     private void filechooserFoto() {
@@ -94,15 +94,15 @@ public class Perfil_Modal extends javax.swing.JDialog {
             PersonaController pc = new PersonaController();
             DocenteController dc = new DocenteController();
 
-            Persona p = cc.getPersona(cc.getCuenta().getIdPersona());
+            Persona p = cc.getPersona(cc.getCuenta().getPersona_id());
 
             pc.setPersona(p);
             pc.getPersona().setFoto(newFileName);
 
             if (pc.update()) {
-                System.out.println("Perfil " + p.getIdRol() + " actualizado");
+                System.out.println("Perfil " + p.getRol_id() + " actualizado");
 
-                switch (p.getIdRol()) {
+                switch (p.getRol_id()) {
                     case 2:
                         Estudiante estudiante = (Estudiante) p;
                         estudiante.setFoto(newFileName);
