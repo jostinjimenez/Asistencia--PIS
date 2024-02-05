@@ -44,7 +44,7 @@ public class Menu_Admin extends javax.swing.JPanel {
             Persona persona = cc.getPersona(cuentaUsu.getPersona_id());
             if (persona != null) {
                 txtUsername.setText(persona.toString());
-                fotoUsuario.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
+                fotoUsuario.setIcon(new ImageIcon("/multimedia/" + persona.getFoto()));
 
             } else {
                 txtUsername.setText("Username");

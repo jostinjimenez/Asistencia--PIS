@@ -169,7 +169,7 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
             case "id":
                 return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
             case "id_estudiante":
-                return Integer.toString(matricula.getIdEstudiante()).equalsIgnoreCase(text);
+                return Integer.toString(matricula.getEstudiante_id()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }

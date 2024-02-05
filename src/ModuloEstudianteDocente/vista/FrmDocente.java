@@ -12,13 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.controller.PersonaController;
 
 /**
  * @author LENOVO
  */
 public class FrmDocente extends javax.swing.JFrame {
 
-    private DocenteController docenteController = new DocenteController();
+    private DocenteController dc = new DocenteController();
     private ModeloTablaDocente modeloDocente = new ModeloTablaDocente();
     private Integer fila = -1;
     private CuentaController cc;
@@ -42,7 +43,7 @@ public class FrmDocente extends javax.swing.JFrame {
     }
 
     private void cargarTabla() {
-        modeloDocente.setDocente(docenteController.list_All());
+        modeloDocente.setDocente(dc.list_All());
         tblDocente.setModel(modeloDocente);
         tblDocente.updateUI();
     }
@@ -58,7 +59,7 @@ public class FrmDocente extends javax.swing.JFrame {
         txtAniosExpe.setText(" ");
         txtGradoAcademico.setText(" ");
 
-        docenteController.setDocente(null);
+        dc.setDocente(null);
         cargarTabla();
         fila = -1;
         tblDocente.clearSelection();
@@ -80,40 +81,43 @@ public class FrmDocente extends javax.swing.JFrame {
     public void guardar() {
         if (validar()) {
             try {
-                docenteController.getDocente().setNombre(txtNombresDoc.getText());
-                docenteController.getDocente().setApellido(txtApellidos.getText());
-                docenteController.getDocente().setFecha_nacimiento(txtFechaNacim.getDate());
-                docenteController.getDocente().setCorreo_personal(txtCorreoPersonal.getText());
-                docenteController.getDocente().setDni(txtDNI.getText());
-                docenteController.getDocente().setTelefono(txtTelefn.getText());
-                docenteController.getDocente().setCodigo_empleado(txtCodigoEmp.getText());
-                int aniosExperiencia = Integer.parseInt(txtAniosExpe.getText());
-                docenteController.getDocente().setAnios_experiencia(aniosExperiencia);
-                docenteController.getDocente().setGrado_academico(txtGradoAcademico.getText());
-                docenteController.getDocente().setRol_id(3);
-                docenteController.getDocente().setActivo(true);
-                docenteController.getDocente().setFoto("user.png");
+                // Crear y configurar la persona
+                PersonaController pc = new PersonaController();
+                pc.getPersona().setNombre(txtNombresDoc.getText());
+                pc.getPersona().setApellido(txtApellidos.getText());
+                pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
+                pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText());
+                pc.getPersona().setDni(txtDNI.getText());
+                pc.getPersona().setTelefono(txtTelefn.getText());
+                pc.getPersona().setRol_id(2);
+                pc.getPersona().setFoto("user.png");
 
-                if (fila != -1) {
-                    docenteController.getDocente().setId(docenteController.getDocente().getId());
-                    docenteController.update();
-                    limpiar();
-                    JOptionPane.showMessageDialog(null, "Docente actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    Integer idGenerado = docenteController.save();
-                    if (idGenerado != null) {
+                // Guardar la persona y obtener el ID generado
+                Integer idGenerado = pc.save();
+
+                if (idGenerado != null) {
+                    // Configurar el estudiante con el ID de la persona
+                    dc.getDocente().setGrado_academico(txtGradoAcademico.getText());
+                    dc.getDocente().setAnios_experiencia(Integer.parseInt(txtAniosExpe.getText()));
+                    dc.getDocente().setCodigo_empleado(txtCodigoEmp.getText());
+                    dc.getDocente().setId(idGenerado);
+
+                    // Guardar el docente
+                    if (dc.save()) {
+                        // Configurar y guardar la cuenta
                         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
                         cc.getCuenta().setClave(txtDNI.getText());
                         cc.getCuenta().setPersona_id(idGenerado);
                         cc.save();
-                        limpiar();
-                        JOptionPane.showMessageDialog(null, "Docente registrado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error al registrar el docente", "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                    JOptionPane.showMessageDialog(null, "Docente guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar la persona", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al guardar el Docente", "Error", JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException(e);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -137,16 +141,16 @@ public class FrmDocente extends javax.swing.JFrame {
             try {
                 this.fila = fila;
 
-                docenteController.setDocente(modeloDocente.getDocente().get(fila));
-                txtNombresDoc.setText(docenteController.getDocente().getNombre());
-                txtApellidos.setText(docenteController.getDocente().getApellido());
+                dc.setDocente(modeloDocente.getDocente().get(fila));
+                txtNombresDoc.setText(dc.getDocente().getNombre());
+                txtApellidos.setText(dc.getDocente().getApellido());
                 //txtFechaNacim.setText(docenteControlador.getDocente().getFecha_nacimiento());
-                txtCorreoPersonal.setText(docenteController.getDocente().getCorreo_personal());
-                txtDNI.setText(docenteController.getDocente().getDni());
-                txtTelefn.setText(docenteController.getDocente().getTelefono());
-                txtCodigoEmp.setText(docenteController.getDocente().getCodigo_empleado());
-                txtAniosExpe.setText(String.valueOf(docenteController.getDocente().getAnios_experiencia()));
-                txtGradoAcademico.setText(docenteController.getDocente().getGrado_academico());
+                txtCorreoPersonal.setText(dc.getDocente().getCorreo_personal());
+                txtDNI.setText(dc.getDocente().getDni());
+                txtTelefn.setText(dc.getDocente().getTelefono());
+                txtCodigoEmp.setText(dc.getDocente().getCodigo_empleado());
+                txtAniosExpe.setText(String.valueOf(dc.getDocente().getAnios_experiencia()));
+                txtGradoAcademico.setText(dc.getDocente().getGrado_academico());
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,

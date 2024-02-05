@@ -52,24 +52,8 @@ public class DocenteController extends DataAccessObject<Docente> {
     }
 
     // Metodos
-    public Integer save() throws Exception {
-        Integer idGenerado = super.save(docente);
-        if (idGenerado == null) {
-            return null;
-        }
-        PersonaController pc = new PersonaController();
-        pc.getPersona().setNombre(docente.getNombre());
-        pc.getPersona().setApellido(docente.getApellido());
-        pc.getPersona().setDni(docente.getDni());
-        pc.getPersona().setCorreo_personal(docente.getCorreo_personal());
-        pc.getPersona().setFecha_nacimiento(docente.getFecha_nacimiento());
-        pc.getPersona().setTelefono(docente.getTelefono());
-        pc.getPersona().setRol_id(3);
-        pc.getPersona().setId(idGenerado);
-        pc.getPersona().setActivo(true);
-        //pc.getPersona().setFoto("user.png");
-        pc.save();
-        return idGenerado;
+    public Boolean save() throws Exception {
+        return super.saveB(this.docente);
     }
 
     public Boolean update() throws IOException {

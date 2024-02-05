@@ -25,26 +25,13 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Perfil_Modal.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/modals/modal_Estudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Docente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Estudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Maatricula.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Modal_Carrera.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Frm_Carrera.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Perfil_Modal.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/modals/modal_Estudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Docente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Estudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Maatricula.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/model/catalogo/Prueba.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Modal_Carrera.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Frm_Carrera.java</file>
         </group>
     </open-files>
 </project-private>

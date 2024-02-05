@@ -148,8 +148,8 @@ public class Frm_Maatricula extends javax.swing.JFrame {
                 a.getMatricula().setCiclo(ciclo);
                 a.getMatricula().setEstado(es);
                 a.getMatricula().setFechaMatricula(txtFecha.getText());
-                a.getMatricula().setIdEstudiante(Util_VistaLinked1_Asistencia.getComboEstudiante(cbxEstudiante).getId());
-                a.getMatricula().setIdPeriodoAcademico(Util_VistaLinked1_Asistencia.getComboPeriodo(cbxPeriodoAcademico).getId());
+                a.getMatricula().setEstudiante_id(Util_VistaLinked1_Asistencia.getComboEstudiante(cbxEstudiante).getId());
+                a.getMatricula().setPeriodoacademico_id(Util_VistaLinked1_Asistencia.getComboPeriodo(cbxPeriodoAcademico).getId());
                 id = a.generarID();
                 a.getMatricula().setId(id);
                 ListaEnlazada<Integer> ids = new ListaEnlazada();

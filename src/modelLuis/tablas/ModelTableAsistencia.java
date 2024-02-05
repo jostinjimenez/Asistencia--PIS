@@ -100,7 +100,7 @@ public class ModelTableAsistencia extends AbstractTableModel {
 
         try {
             for (Matricula matricula : matriculas) {
-                String iden = matricula.getIdEstudiante().toString();
+                String iden = matricula.getEstudiante_id().toString();
                 Estudiante estudiante = c.busquedaBinaria2(c.list_All(), iden, "id", 0);
                 estudiantes.add(estudiante);
             }

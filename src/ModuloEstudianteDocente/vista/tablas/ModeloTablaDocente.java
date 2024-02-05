@@ -63,15 +63,15 @@ public class ModeloTablaDocente extends AbstractTableModel {
             String fechaFormateada = sdf.format(ce.getDocente().getFecha_nacimiento());
 
             return switch (col) {
-                case 0 -> (doc != null) ? doc.getId(): " ";
-                case 1 -> (doc != null) ? doc.getNombre() : " ";
-                case 2 -> (doc != null) ? fechaFormateada: " ";
-                case 3 -> (doc != null) ? doc.getCorreo_personal() : " ";
-                case 4 -> (doc != null) ? doc.getDni() : " ";
-                case 5 -> (doc != null) ? doc.getTelefono() : " ";
-                case 6 -> (doc != null) ? doc.getCodigo_empleado() : " ";
-                case 7 -> (doc != null) ? doc.getAnios_experiencia() : " ";
-                case 8 -> (doc != null) ? doc.getGrado_academico() : " ";
+//                case 0 -> (doc != null) ? doc.getId(): " ";
+//                case 1 -> (doc != null) ? doc.getNombre() : " ";
+//                case 2 -> (doc != null) ? fechaFormateada: " ";
+//                case 3 -> (doc != null) ? doc.getCorreo_personal() : " ";
+//                case 4 -> (doc != null) ? doc.getDni() : " ";
+//                case 5 -> (doc != null) ? doc.getTelefono() : " ";
+                case 0 -> (doc != null) ? doc.getCodigo_empleado() : " ";
+                case 1 -> (doc != null) ? doc.getAnios_experiencia() : " ";
+                case 2 -> (doc != null) ? doc.getGrado_academico() : " ";
                 default -> null;
             };
         } catch (Exception e) {
@@ -82,15 +82,15 @@ public class ModeloTablaDocente extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         return switch (col) {
-            case 0 -> "ID";
-            case 1 -> "Nombre";
-            case 2 -> "Fecha Nacimiento";
-            case 3 -> "Correo";
-            case 4 -> "DNI";
-            case 5 -> "Telefono";
-            case 6 -> "Codigo";
-            case 7 -> "Años Experiencia";
-            case 8 -> "Grado Academico";
+//            case 0 -> "ID";
+//            case 1 -> "Nombre";
+//            case 2 -> "Fecha Nacimiento";
+//            case 3 -> "Correo";
+//            case 4 -> "DNI";
+//            case 5 -> "Telefono";
+            case 0 -> "Codigo";
+            case 1 -> "Años Experiencia";
+            case 2 -> "Grado Academico";
             default -> null;
         };
     }

@@ -67,6 +67,27 @@ public class DataAccessObject<T> implements TransferObject<T> {
         return idGenerado;
     }
 
+    /**
+     * Metodo que permite guardar
+     *
+     * @param obj El objeto del modelo lleno
+     * @return True si se guardo, False si no se guardo
+     * @throws Exception Cuando no se puede guardar en la base de datos
+     */
+    public Boolean saveB(T obj) throws Exception {
+        String query = queryInsert(obj);
+        Boolean band = false;
+
+        try (PreparedStatement statement = connection.getConnection().prepareStatement(query)) {
+            int affectedRows = statement.executeUpdate();
+            band = affectedRows > 0;
+        } finally {
+            connection.getConnection().close();
+            connection.setConnection(null);
+        }
+        return band;
+    }
+
 
     /**
      * Metodo que permite modificar un registro en la base de datos, para modificar se debe primero consultar el Objeto haciendo uso del metodo Obtener
@@ -166,6 +187,7 @@ public class DataAccessObject<T> implements TransferObject<T> {
     private void fijarDatos(Field f, ResultSet rs, T data, String atributo) {
         try {
             Method m = null;
+            System.out.println("Procesando atributo: " + atributo); // Agrega esta línea
 
             if (f.getType().getSimpleName().equalsIgnoreCase("String")) {
                 m = clazz.getMethod("set" + atributo, String.class);

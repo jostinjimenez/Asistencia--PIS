@@ -104,9 +104,8 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText());
         pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
         pc.getPersona().setTelefono(txtTelefono.getText());
-        pc.getPersona().setActivo(true);
         pc.getPersona().setRol_id(1);
-        //pc.getPersona().setFoto("user.png");
+        pc.getPersona().setFoto("user.png");
         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
         cc.getCuenta().setClave(txtDni.getText());
         cc.getCuenta().setPersona_id(pc.save());
@@ -178,23 +177,23 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
         txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 240, 20));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 240, 30));
 
         txtDni.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtDni.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 240, 20));
+        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 240, 30));
 
         txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 240, 20));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 240, 30));
 
         txtApellido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtApellido.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 240, 20));
+        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, 240, 30));
 
         txtCorreoPersonal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreoPersonal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 240, 20));
+        jPanel1.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 240, 30));
 
         btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -208,7 +207,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
         txtFechaNacim.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 240, 240, 20));
+        jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 230, 240, 30));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -234,7 +233,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cedula: ");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -244,12 +243,12 @@ public class NuevoUsuario extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

@@ -5,20 +5,47 @@ import tda_listas.ListaEnlazada;
 
 public class Estudiante extends Persona {
 
-    private String direccion;
     private String etnia;
     private Boolean titulo_bachiller;
+    private String nacionalidad;
+    private String canton;
+    private String provincia;
+    private String calle_direccion;
 
 
     public Estudiante() {
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getNacionalidad() {
+        return nacionalidad;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public String getCanton() {
+        return canton;
+    }
+
+    public void setCanton(String canton) {
+        this.canton = canton;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getCalle_direccion() {
+        return calle_direccion;
+    }
+
+    public void setCalle_direccion(String calle_direccion) {
+        this.calle_direccion = calle_direccion;
     }
 
     public String getEtnia() {

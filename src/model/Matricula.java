@@ -12,38 +12,38 @@ public class Matricula {
     private String carrera;
 
     private EstadoMatricula estado;
-    private Integer idEstudiante;
-    private Integer idPeriodoAcademico;
+    private Integer estudiante_id;
+    private Integer periodoacademico_id;
     private ListaEnlazada<Integer> id_cursas;
 
     public Matricula() {
     }
 
-    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera, EstadoMatricula estado, Integer idEstudiante, Integer idPeriodoAcademico, ListaEnlazada<Integer> id_cursas) {
+    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera, EstadoMatricula estado, Integer estudiante_id, Integer periodoacademico_id, ListaEnlazada<Integer> id_cursas) {
         this.id = id;
         this.fechaMatricula = fechaMatricula;
         this.ciclo = ciclo;
         this.carrera = carrera;
         this.estado = estado;
-        this.idEstudiante = idEstudiante;
-        this.idPeriodoAcademico = idPeriodoAcademico;
+        this.estudiante_id = estudiante_id;
+        this.periodoacademico_id = periodoacademico_id;
         this.id_cursas = id_cursas;
     }
 
-    public Integer getIdEstudiante() {
-        return idEstudiante;
+    public Integer getEstudiante_id() {
+        return estudiante_id;
     }
 
-    public void setIdEstudiante(Integer idEstudiante) {
-        this.idEstudiante = idEstudiante;
+    public void setEstudiante_id(Integer estudiante_id) {
+        this.estudiante_id = estudiante_id;
     }
 
-    public Integer getIdPeriodoAcademico() {
-        return idPeriodoAcademico;
+    public Integer getPeriodoacademico_id() {
+        return periodoacademico_id;
     }
 
-    public void setIdPeriodoAcademico(Integer idPeriodoAcademico) {
-        this.idPeriodoAcademico = idPeriodoAcademico;
+    public void setPeriodoacademico_id(Integer periodoacademico_id) {
+        this.periodoacademico_id = periodoacademico_id;
     }
 
     public ListaEnlazada<Integer> getId_cursas() {
@@ -106,16 +106,16 @@ public class Matricula {
                 if (field.equalsIgnoreCase("ciclo")) {
                     return getCiclo() > (c.getCiclo());
                 } else if (field.equalsIgnoreCase("id_estudiante")) {
-                    return getIdEstudiante() > (c.getIdEstudiante());
+                    return getEstudiante_id() > (c.getEstudiante_id());
                 } else if (field.equalsIgnoreCase("id")) {
-                    return getIdEstudiante() > (c.getIdEstudiante());
+                    return getEstudiante_id() > (c.getEstudiante_id());
                 }
 
             case 0:
                 if (field.equalsIgnoreCase("ciclo")) {
                     return getCiclo() < (c.getCiclo());
                 } else if (field.equalsIgnoreCase("id_estudiante")) {
-                    return getIdEstudiante() < (c.getIdEstudiante());
+                    return getEstudiante_id() < (c.getEstudiante_id());
                 } else if (field.equalsIgnoreCase("id")) {
                     return getId() < (c.getId());
                 }
@@ -134,7 +134,7 @@ public class Matricula {
             }
             case "id_estudiante":
                try {
-                return Integer.compare(Integer.parseInt(text), matricula.getIdEstudiante());
+                return Integer.compare(Integer.parseInt(text), matricula.getEstudiante_id());
             } catch (Exception e) {
             }
             case "id":
