@@ -84,6 +84,25 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
         return false;
     }
 
+    public void cerrarPeriodoAc(Integer idPeriodoAc) {
+        for (int i = 0; i < periodoAcademicos.getSize(); i++) {
+            PeriodoAcademico pa = null;
+            try {
+                pa = periodoAcademicos.get(i);
+            } catch (VacioExceptions e) {
+                throw new RuntimeException(e);
+            }
+            if (pa.getId().equals(idPeriodoAc)) {
+                try {
+                    pa.setEstado(false);
+                    this.xStream.toXML(periodoAcademicos, new FileOutputStream(URL));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
     // Ordenar por QuickSort
     public ListaEnlazada<PeriodoAcademico> ordenarQS(ListaEnlazada<PeriodoAcademico> lista, Integer type, String field) throws Exception {
         PeriodoAcademico[] periodos = lista.toArray();
@@ -161,41 +180,6 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
         return result;
     }
 
-    public ListaEnlazada<PeriodoAcademico> buscarAnio(ListaEnlazada<PeriodoAcademico> lista, Integer anio) throws Exception {
-        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "anio");
-        PeriodoAcademico[] p = lo.toArray();
-        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getAnio().intValue() == anio.intValue()) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getAnio().intValue() == anio.intValue()) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getAnio().intValue() == anio.intValue()) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getAnio().intValue() < anio.intValue()) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return result;
-    }
 
 //    public ListaEnlazada<PeriodoAcademico> buscarEstado(ListaEnlazada<PeriodoAcademico> lista, Boolean estado) throws Exception {
 //        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "estado");
@@ -303,21 +287,6 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
             }
         }
         return result;
-    }
-
-
-    public static void main(String[] args) {
-        PeriodoAcController pc = new PeriodoAcController();
-
-        System.out.println("Ordenamiento por QuickSort");
-        System.out.println("--------------------------------");
-        try {
-
-            System.out.println(pc.buscarAnio(pc.getPeriodoAcademicos(), 2024).print());
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 

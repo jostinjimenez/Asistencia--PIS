@@ -1,43 +1,51 @@
 package model;
 
+import java.util.Date;
 import tda_listas.ListaEnlazada;
 
 public class Estudiante extends Persona {
 
-    private String direccion;
     private String etnia;
     private Boolean titulo_bachiller;
+    private String nacionalidad;
+    private String canton;
+    private String provincia;
+    private String calle_direccion;
 
-    private ListaEnlazada<Integer> id_matriculas;
 
     public Estudiante() {
     }
 
-    public Estudiante(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni, String direccion, String etnia, Boolean titulo_bachiller, ListaEnlazada<Integer> id_matriculas) {
-        super(id, nombre, apellido, correoPersonal, fechaNacimiento, telefono, dni);
-        this.direccion = direccion;
-        this.etnia = etnia;
-        this.titulo_bachiller = titulo_bachiller;
-        this.id_matriculas = id_matriculas;
+    public String getNacionalidad() {
+        return nacionalidad;
     }
 
-    public ListaEnlazada<Integer> getId_matriculas() {
-        if (id_matriculas == null) {
-            id_matriculas = new ListaEnlazada<>();
-        }
-        return id_matriculas;
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
     }
 
-    public void setId_matriculas(ListaEnlazada<Integer> id_matriculas) {
-        this.id_matriculas = id_matriculas;
+    public String getCanton() {
+        return canton;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public void setCanton(String canton) {
+        this.canton = canton;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getCalle_direccion() {
+        return calle_direccion;
+    }
+
+    public void setCalle_direccion(String calle_direccion) {
+        this.calle_direccion = calle_direccion;
     }
 
     public String getEtnia() {
@@ -80,7 +88,7 @@ public class Estudiante extends Persona {
     public int comparar(Estudiante estudiante, String text, String campo) {
         switch (campo.toLowerCase()) {
             case "id":
-               return Integer.compare(Integer.parseInt(text),estudiante.getId());
+                return Integer.compare(Integer.parseInt(text),estudiante.getId());
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }

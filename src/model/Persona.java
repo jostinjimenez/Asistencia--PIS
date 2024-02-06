@@ -1,47 +1,25 @@
 package model;
 
+import java.util.Date;
+
 public class Persona {
 
     private Integer id;
     private String nombre;
     private String apellido;
     private String correo_personal;
-    private String fecha_nacimiento;
+    private Date fecha_nacimiento;
     private String telefono;
     private String dni;
-    private boolean activo;
+    private Boolean activo;
+    private String foto;
 
-    private Integer idRol;
-    private Integer idCuenta;
-
-    public Persona(Integer id, String nombre, String apellido, String correoPersonal, String fechaNacimiento, String telefono, String dni) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo_personal = correoPersonal;
-        this.fecha_nacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.dni = dni;
-    }
+    private Integer rol_id;
 
     public Persona() {
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    public Integer getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
-    }
+    // Getters y Setters
 
     public Integer getId() {
         return id;
@@ -59,6 +37,14 @@ public class Persona {
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     public String getCorreo_personal() {
         return correo_personal;
     }
@@ -67,11 +53,11 @@ public class Persona {
         this.correo_personal = correo_personal;
     }
 
-    public String getFecha_nacimiento() {
+    public Date getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -91,20 +77,28 @@ public class Persona {
         this.dni = dni;
     }
 
-    public Integer getIdRol() {
-        return idRol;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public Integer getRol_id() {
+        return rol_id;
+    }
+
+    public void setRol_id(Integer rol_id) {
+        this.rol_id = rol_id;
     }
 
     @Override
@@ -123,18 +117,14 @@ public class Persona {
                     return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) > 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
                     return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) > 0;
-                } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
-                    return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) > 0;
                 } else if (field.equalsIgnoreCase("telefono")) {
                     return this.getTelefono().compareTo(c.getTelefono()) > 0;
                 } else if (field.equalsIgnoreCase("dni")) {
                     return this.getDni().compareTo(c.getDni()) > 0;
                 } else if (field.equalsIgnoreCase("activo")) {
-                    return this.isActivo() == c.isActivo();
+                    return this.getActivo() == c.getActivo();
                 } else if (field.equalsIgnoreCase("idRol")) {
-                    return this.getIdRol() > (c.getIdRol());
-                } else if (field.equalsIgnoreCase("idCuenta")) {
-                    return this.getIdCuenta() > (c.getIdCuenta());
+                    return this.getRol_id() > (c.getRol_id());
                 }
             case 0:
                 if (field.equalsIgnoreCase("nombre")) {
@@ -145,18 +135,14 @@ public class Persona {
                     return this.getApellido().toLowerCase().compareTo(c.getApellido().toLowerCase()) < 0;
                 } else if (field.equalsIgnoreCase("correo_personal")) {
                     return this.getCorreo_personal().compareTo(c.getCorreo_personal().toLowerCase()) < 0;
-                } else if (field.equalsIgnoreCase("fecha_nacimiento")) {
-                    return this.getFecha_nacimiento().compareTo(c.getFecha_nacimiento()) < 0;
                 } else if (field.equalsIgnoreCase("telefono")) {
                     return this.getTelefono().compareTo(c.getTelefono()) < 0;
                 } else if (field.equalsIgnoreCase("dni")) {
                     return this.getDni().compareTo(c.getDni()) < 0;
                 } else if (field.equalsIgnoreCase("activo")) {
-                    return this.isActivo() != c.isActivo();
+                    return this.getActivo() != c.getActivo();
                 } else if (field.equalsIgnoreCase("idRol")) {
-                    return this.getIdRol() < (c.getIdRol());
-                } else if (field.equalsIgnoreCase("idCuenta")) {
-                    return this.getIdCuenta() < (c.getIdCuenta());
+                    return this.getRol_id() < (c.getRol_id());
                 }
             default:
                 return false;

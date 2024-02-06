@@ -36,16 +36,23 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     ListaEnlazada<Matricula> result = new ListaEnlazada<>();
     ModelTableAsistencia2 ad = new ModelTableAsistencia2();
     Integer idtematica;
+<<<<<<< HEAD
 
     Integer id;
+=======
+    Integer id = 0;
+>>>>>>> dd1d271620e78c2f09e43f1f257bdf3f98ee4dd9
 
-    public Frm_AsistenciaJ(Persona persona) {
+    public Frm_AsistenciaJ() {
         initComponents();
         try {
             cargarCombos();
+<<<<<<< HEAD
 
         } catch (Exception e) {
             id = persona.getId();
+=======
+>>>>>>> dd1d271620e78c2f09e43f1f257bdf3f98ee4dd9
         }
         limpiar();
         this.setLocationRelativeTo(null);
@@ -239,7 +246,10 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel1.setText("Paralelo:");
+        roundPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 6, -1, -1));
 
         cbxCiclos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
         cbxCiclos.addItemListener(new java.awt.event.ItemListener() {
@@ -247,8 +257,10 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 cbxCiclosItemStateChanged(evt);
             }
         });
+        roundPanel2.add(cbxCiclos, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 28, 150, -1));
 
         jLabel2.setText("Ciclo:");
+        roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 6, -1, -1));
 
         buttonMenu2.setText("Buscar Lista");
         buttonMenu2.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +268,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 buttonMenu2ActionPerformed(evt);
             }
         });
+        roundPanel2.add(buttonMenu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 120, 136, -1));
 
         buttonMenu4.setText("           Asistencia");
         buttonMenu4.addActionListener(new java.awt.event.ActionListener() {
@@ -263,12 +276,16 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 buttonMenu4ActionPerformed(evt);
             }
         });
+        roundPanel2.add(buttonMenu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 120, 150, -1));
 
         cbxAsig.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel2.add(cbxAsig, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 28, 136, -1));
 
         cbxParalelos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel2.add(cbxParalelos, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 88, 136, -1));
 
         jLabel6.setText("Asignaturas:");
+<<<<<<< HEAD
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
@@ -346,6 +363,9 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                         .addComponent(cbxCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
+=======
+        roundPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 66, -1, -1));
+>>>>>>> dd1d271620e78c2f09e43f1f257bdf3f98ee4dd9
 
         roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, 160));
 
@@ -503,7 +523,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            //new Frm_AsistenciaJ().setVisible(true);
+            new Frm_AsistenciaJ().setVisible(true);
         });
     }
 

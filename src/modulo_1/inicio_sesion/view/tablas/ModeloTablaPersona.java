@@ -42,7 +42,7 @@ public class ModeloTablaPersona extends AbstractTableModel {
             case 2 -> (persona != null) ? persona.getApellido() : "";
             case 3 -> (persona != null) ? persona.getTelefono() : "";
             case 4 -> (persona != null) ? persona.getDni() : "";
-            case 5 -> (persona != null) ? persona.getIdRol() : "";
+            case 5 -> (persona != null) ? persona.getRol_id() : "";
             default -> null;
         };
     }

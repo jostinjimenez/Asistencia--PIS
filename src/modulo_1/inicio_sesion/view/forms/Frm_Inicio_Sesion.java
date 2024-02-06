@@ -43,30 +43,27 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
         if (usuario.isEmpty() || clave.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
-        }
-        else {
+        } else {
             Cuenta cuenta = cc.validarCuenta(usuario, clave);
             cc.setCuenta(cuenta);
             Utiles.setCc(cc);
+            Utiles.setCuentaUsu(cuenta);
             if (cuenta != null) {
-                switch (cc.identificarRolPersona(cc.getPersona(cuenta.getIdPersona()))) {
+                switch (cc.getPersona(cuenta.getPersona_id()).getRol_id()) {
                     case 1 -> {
-                        Frm_Main_Admin frm = new Frm_Main_Admin(cc);
-                        frm.setVisible(true);
+                        Frm_Main_Admin fma = new Frm_Main_Admin(cc);
+                        fma.setVisible(true);
                         this.dispose();
                     }
                     case 2 -> {
-                        Frm_Main_Estudiante mp = new Frm_Main_Estudiante(cc);
-                        mp.setVisible(true);
+                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
+                        fme.setVisible(true);
                         this.dispose();
                     }
                     case 3 -> {
-                        Frm_Main_Docente mp1 = new Frm_Main_Docente(cc);
-                        mp1.setVisible(true);
+                        Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
+                        fmd.setVisible(true);
                         this.dispose();
-                    }
-                    default -> {
-                        JOptionPane.showMessageDialog(null, "No se pudo iniciar sesion");
                     }
                 }
             }
@@ -101,34 +98,34 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
         jSeparator2.setBackground(new java.awt.Color(229, 229, 229));
         jSeparator2.setForeground(new java.awt.Color(21, 21, 21));
-        roundPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 330, 30));
+        roundPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, 330, 30));
 
         jLabel3.setFont(new java.awt.Font("Dubai Light", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Iniciar Sesión");
-        roundPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 190, 30));
+        roundPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 190, 30));
 
         txtClave.setBackground(new java.awt.Color(51, 51, 51));
         txtClave.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtClave.setForeground(new java.awt.Color(204, 204, 204));
         txtClave.setBorder(null);
-        roundPanel2.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 330, 40));
+        roundPanel2.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 330, 40));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/icons8-llave-32.png"))); // NOI18N
         jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        roundPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 40, 40));
+        roundPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 40, 40));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/Imagen1.png"))); // NOI18N
-        roundPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 320, 110));
+        roundPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 320, 110));
 
         jSeparator4.setBackground(new java.awt.Color(229, 229, 229));
         jSeparator4.setForeground(new java.awt.Color(21, 21, 21));
-        roundPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 330, 30));
+        roundPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 330, 30));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/icons8-usuario-32.png"))); // NOI18N
         jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        roundPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 40, 40));
+        roundPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 40, 40));
 
         btnIngresar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         btnIngresar.setText("Ingresar");
@@ -139,20 +136,20 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        roundPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, 110, 30));
+        roundPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 560, 110, 30));
 
         txtUsuario.setBackground(new java.awt.Color(51, 51, 51));
         txtUsuario.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
         txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 330, 40));
+        roundPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 330, 40));
 
-        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 500, 530));
+        jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, -10, 500, 720));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modulo_1/inicio_sesion/view/forms/img/unl.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, -10, 610, 650));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 700, 530));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -164,8 +161,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        }
-        catch (UnsupportedLookAndFeelException ex) {
+        } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }
         java.awt.EventQueue.invokeLater(() -> {

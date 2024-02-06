@@ -1,11 +1,19 @@
 package modulo_1.inicio_sesion.view.util;
 
+import model.PeriodoAcademico;
 import model.Rol;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.RolController;
+import modulo_1.periodo_academico.controller.PeriodoAcController;
 import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
+
+import model.Cuenta;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class Utiles {
 
@@ -24,16 +32,25 @@ public class Utiles {
         }
     }
 
-    public static void cargaRoll(JComboBox cbxRol) {
-        RolController rc = new RolController();
-        cbxRol.removeAllItems();
+    public static void cargarPeriodo(JComboBox cbxPeriodo) {
+        PeriodoAcController rc = new PeriodoAcController();
+        cbxPeriodo.removeAllItems();
+
         try {
-            for (int i = 0; i < rc.getRoles().getSize(); i++) {
-                cbxRol.addItem(rc.getRoles().get(i));
+            if (rc.getPeriodoAcademicos().getSize() > 0) {
+                for (int i = 0; i < rc.getPeriodoAcademicos().getSize(); i++) {
+                    cbxPeriodo.addItem(rc.getPeriodoAcademicos().get(i));
+                }
+            } else {
+                cbxPeriodo.addItem("No hay periodos academicos");
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();
         }
+    }
+
+    public static PeriodoAcademico getComboPeriodo(JComboBox cbx) {
+        return (PeriodoAcademico) cbx.getSelectedItem();
     }
 
     public static Rol getComboRol(JComboBox cbx) {
@@ -70,6 +87,17 @@ public class Utiles {
     }
 
     private static CuentaController cc;
+    private static Cuenta cuentaUsu;
+
+    public static Cuenta getCuentaUsu() {
+        if (cuentaUsu == null)
+            cuentaUsu = new Cuenta();
+        return cuentaUsu;
+    }
+
+    public static void setCuentaUsu(Cuenta cuentaUsu) {
+        Utiles.cuentaUsu = cuentaUsu;
+    }
 
     public static CuentaController getCc() {
         if (cc == null)
@@ -79,6 +107,36 @@ public class Utiles {
 
     public static void setCc(CuentaController cc) {
         Utiles.cc = cc;
+    }
+
+    public void GenerarCorreoInstitucional(String nombre, String apellido) {
+        String correo = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
+    }
+
+    PeriodoAcController pac = new PeriodoAcController();
+
+    public PeriodoAcController getPac() {
+        return pac;
+    }
+
+    public void setPac(PeriodoAcController pac) {
+        this.pac = pac;
+    }
+
+    public static void copiarArchivo(File origen, File destino) throws Exception {
+        Files.copy(origen.toPath(),
+                (destino).toPath(),
+                StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    public static String extension(String fileName) {
+        String extension = "";
+
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i + 1);
+        }
+        return extension;
     }
 }
 

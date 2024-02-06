@@ -1,19 +1,17 @@
 package modulo_1.inicio_sesion.controller;
 
-import DAO.DataAccessObject;
-import model.Cuenta;
+import DataBase.DataAccessObject;
 import model.Persona;
 import model.Rol;
-import modulo_1.inicio_sesion.controller.util.Utilidades;
 import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
 
-import java.io.FileOutputStream;
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
 public class PersonaController extends DataAccessObject<Persona> {
+
     // Atributos
     private ListaEnlazada<Persona> personas;
     private Persona persona = new Persona();
@@ -27,13 +25,10 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     // Getters y Setters
     public ListaEnlazada<Persona> getPersonas() {
-        ListaEnlazada<Persona> personasActivas = new ListaEnlazada<>();
-        for (Persona persona : personas) {
-            if (persona.isActivo()) {
-                personasActivas.add(persona);
-            }
+        if (personas == null || personas.isEmpty()) {
+            personas = this.list_All();
         }
-        return personasActivas;
+        return personas;
     }
 
     public void setPersonas(ListaEnlazada<Persona> personas) {
@@ -42,21 +37,6 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     public Persona getPersona() {
         return persona != null ? persona : new Persona();
-    }
-
-    public Persona getPersonaID(Integer id) {
-        for (int i = 0; i < personas.getSize(); i++) {
-            Persona persona = null;
-            try {
-                persona = personas.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (persona.getId().equals(id)) {
-                return persona;
-            }
-        }
-        return null;
     }
 
     public void setPersona(Persona persona) {
@@ -72,36 +52,40 @@ public class PersonaController extends DataAccessObject<Persona> {
     }
 
     // Metodos
-    public Boolean save() {
-        this.persona.setId(generarID());
-        return save(persona);
+    public Integer save() throws Exception {
+        return super.save(this.persona);
     }
 
-    public Boolean update(Integer index) {
-        return update(persona, index);
-    }
-
-    public Boolean delete(Integer idPersona) {
-        for (int i = 0; i < personas.getSize(); i++) {
-            Persona persona = null;
-            try {
-                persona = personas.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (persona.getId().equals(idPersona)) {
-                try {
-                    persona.setActivo(false);
-                    this.xStream.toXML(personas, new FileOutputStream(URL));
-                    return true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-            }
+    public Boolean update() {
+        try {
+            update(this.persona);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
+    public static void main(String[] args) {
+        PersonaController pc = new PersonaController();
+
+        pc.getPersona().setNombre("Jostin");
+        pc.getPersona().setApellido("Jimenez");
+        pc.getPersona().setDni("1150696977");
+        pc.getPersona().setFecha_nacimiento(new Date());
+        pc.getPersona().setRol_id(1);
+        pc.getPersona().setTelefono("0999170229");
+        pc.getPersona().setCorreo_personal("sdfghg");
+        pc.getPersona().setActivo(true);
+
+        try {
+            System.out.println("Save: " + pc.save());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
@@ -156,23 +140,23 @@ public class PersonaController extends DataAccessObject<Persona> {
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
-            if (p[mid].getIdRol().intValue() == rol.getId().intValue()) {
+            if (p[mid].getRol_id().intValue() == rol.getId().intValue()) {
                 result.add(p[mid]);
 
                 int temp = mid - 1;
-                while (temp >= left && p[temp].getIdRol().intValue() == rol.getId().intValue()) {
+                while (temp >= left && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
                     result.add(p[temp]);
                     temp--;
                 }
 
                 temp = mid + 1;
-                while (temp <= right && p[temp].getIdRol().intValue() == rol.getId().intValue()) {
+                while (temp <= right && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
                     result.add(p[temp]);
                     temp++;
                 }
                 return result;
             }
-            if (p[mid].getIdRol().intValue() < rol.getId().intValue()) {
+            if (p[mid].getRol_id().intValue() < rol.getId().intValue()) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
@@ -325,9 +309,5 @@ public class PersonaController extends DataAccessObject<Persona> {
         return result;
     }
 
-    public static void main(String[] args) throws Exception {
-        PersonaController pc = new PersonaController();
 
-        System.out.println(pc.buscarNombre(pc.list_All(), "Juan").print());
-    }
 }

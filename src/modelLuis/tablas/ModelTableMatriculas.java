@@ -42,7 +42,7 @@ public class ModelTableMatriculas extends AbstractTableModel {
                 return (matricula != null) ? matricula.getCiclo() : "";
             case 4:
                 try {
-                Estudiante estudiante = aa.busquedaBinaria2(aa.list_All(), matricula.getIdEstudiante().toString(), "id", 0);
+                Estudiante estudiante = aa.busquedaBinaria2(aa.list_All(), matricula.getEstudiante_id().toString(), "id", 0);
                 return (estudiante != null) ? estudiante.getNombre() + " " + estudiante.getApellido() : "";
             } catch (Exception e) {
             }

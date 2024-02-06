@@ -17,7 +17,7 @@ public class ModeloTablaPeriodoAc extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 4;
     }
 
     public ListaEnlazada<PeriodoAcademico> getPeriodoAcademicos() {
@@ -38,10 +38,9 @@ public class ModeloTablaPeriodoAc extends AbstractTableModel {
         }
         return switch (columnIndex) {
             case 0 -> (pa != null) ? pa.getId() : "";
-            case 1 -> (pa != null) ? pa.getAnio() : "";
-            case 2 -> (pa != null) ? pa.getFechaInicio() : "";
-            case 3 -> (pa != null) ? pa.getFechaFin() : "";
-            case 4 -> (pa != null) ? pa.getEstado() : "";
+            case 1 -> (pa != null) ? pa.getFechaInicio() : "";
+            case 2 -> (pa != null) ? pa.getFechaFin() : "";
+            case 3 -> (pa != null) ? pa.getEstado() : "";
             default -> null;
         };
     }
@@ -49,10 +48,9 @@ public class ModeloTablaPeriodoAc extends AbstractTableModel {
     public String getColumnName(int column) {
         return switch (column) {
             case 0 -> "ID";
-            case 1 -> "Año";
-            case 2 -> "Fecha Inicio";
-            case 3 -> "Fecha Fin";
-            case 4 -> "Estado";
+            case 1 -> "Fecha Inicio";
+            case 2 -> "Fecha Fin";
+            case 3 -> "Estado";
             default -> null;
         };
     }

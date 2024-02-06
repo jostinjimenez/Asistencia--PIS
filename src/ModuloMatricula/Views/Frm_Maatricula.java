@@ -148,8 +148,8 @@ public class Frm_Maatricula extends javax.swing.JFrame {
                 a.getMatricula().setCiclo(ciclo);
                 a.getMatricula().setEstado(es);
                 a.getMatricula().setFechaMatricula(txtFecha.getText());
-                a.getMatricula().setIdEstudiante(Util_VistaLinked1_Asistencia.getComboEstudiante(cbxEstudiante).getId());
-                a.getMatricula().setIdPeriodoAcademico(Util_VistaLinked1_Asistencia.getComboPeriodo(cbxPeriodoAcademico).getId());
+                a.getMatricula().setEstudiante_id(Util_VistaLinked1_Asistencia.getComboEstudiante(cbxEstudiante).getId());
+                a.getMatricula().setPeriodoacademico_id(Util_VistaLinked1_Asistencia.getComboPeriodo(cbxPeriodoAcademico).getId());
                 id = a.generarID();
                 a.getMatricula().setId(id);
                 ListaEnlazada<Integer> ids = new ListaEnlazada();
@@ -202,9 +202,9 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         tbl1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         menu_Admin1 = new plantilla.components.Menu_Admin();
+        header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bg_panel.setBackground(new java.awt.Color(21, 21, 21));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -212,37 +212,57 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Fecha:");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-        roundPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, -1));
+        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
+        txtFecha.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 130, -1));
+
+        cbxCiclo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
-        roundPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 130, -1));
+        roundPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 130, -1));
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Ciclo:");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Carrera:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
-        roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 140, -1));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
+        txtCarrera.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 140, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Estado Matricula:");
-        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
+        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Estudiante:");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, -1, -1));
 
+        cbxEstudiante.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, 160, -1));
+        roundPanel1.add(cbxEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 160, -1));
 
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Periodo  Academico:");
-        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, -1, -1));
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
 
+        cbxPeriodoAcademico.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxPeriodoAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxPeriodoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 140, -1));
+        roundPanel1.add(cbxPeriodoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 140, -1));
 
+        cbxEstado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matriculado", "Reprobado", "Aprobado", "Retirado" }));
-        roundPanel1.add(cbxEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 140, -1));
+        roundPanel1.add(cbxEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 140, -1));
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -324,10 +344,20 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 130, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1020, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 1030, 630));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
+        bg_panel.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, -1));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -378,6 +408,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxEstudiante;
     private javax.swing.JComboBox<String> cbxPeriodoAcademico;
+    private plantilla.components.Header header2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

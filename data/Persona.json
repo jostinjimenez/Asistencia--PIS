@@ -1,1 +1,38 @@
-{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Persona","id":1,"nombre":"Jostin","apellido":"Jimenez","correo_personal":"jostinjimenez16@gmail.com","fecha_nacimiento":"23 de mayo","telefono":"0999170229","dni":1150696977,"activo":true,"idRol":1},"next":{"data":{"@class":"model.Persona","id":2,"nombre":"Juan","apellido":"Perez","correo_personal":"juanperez@gmail.com","fecha_nacimiento":"14 de junio","telefono":"0966475216","dni":1150696977,"activo":true,"idRol":2},"next":{"data":{"@class":"model.Persona","id":3,"nombre":"Ana","apellido":"Flores","correo_personal":"anaflores@gmail.com","fecha_nacimiento":"18 de septiembre","telefono":"0999170229","dni":1150696977,"activo":true,"idRol":3},"next":{"data":{"@class":"model.Persona","id":4,"nombre":"Jostin S","apellido":"Jimenez U","correo_personal":"jostinjimenes2@gmail.com","fecha_nacimiento":"23\/05\/2023","telefono":"0999170229","dni":1150696977,"activo":true,"idRol":2},"next":{"data":{"@class":"model.Persona","id":5,"nombre":"Jhon","apellido":"Smitt","correo_personal":"jhonsmitt@gmail.com","fecha_nacimiento":"16 de mayo","telefono":"0999170229","dni":1150696977,"activo":false,"idRol":1},"next":{"data":{"@class":"model.Persona","id":6,"nombre":"David","apellido":"Ford","correo_personal":"davidford@gmail.edu,ec","fecha_nacimiento":"23 de mayo","telefono":"0999170229","dni":1150696977,"activo":true,"idRol":1}}}}}}},"last":{"@reference":"..\/head\/next\/next\/next\/next\/next"},"size":6}}
+{
+  "tda_listas.ListaEnlazada": {
+    "head": {
+      "data": {
+        "@class": "model.Persona",
+        "id": 2,
+        "nombre": "Juan",
+        "apellido": "Perez",
+        "correo_personal": "juanperez@gmail.com",
+        "fecha_nacimiento": "2007-02-07 05:00:00.0 UTC",
+        "telefono": "0999652415",
+        "dni": 1150696977,
+        "activo": true,
+        "foto": "d3fc9d4d-6efa-4edd-8de8-751d9834e32d.jpg",
+        "idRol": 2
+      },
+      "next": {
+        "data": {
+          "@class": "model.Persona",
+          "id": 2,
+          "nombre": "Juan",
+          "apellido": "Perez",
+          "correo_personal": "juanperez@gmail.com",
+          "fecha_nacimiento": "2007-02-07 05:00:00.0 UTC",
+          "telefono": "0999652415",
+          "dni": 1150696977,
+          "activo": true,
+          "foto": "\/plantilla\/img\/user.png",
+          "idRol": 2
+        }
+      }
+    },
+    "last": {
+      "@reference": "..\/head\/next"
+    },
+    "size": 2
+  }
+}

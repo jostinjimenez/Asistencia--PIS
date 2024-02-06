@@ -1,24 +1,23 @@
 package model;
 
 public class Cuenta {
+
     // Atributos
     private Integer id;
-    private String correo;
+    private String correo_institucional;
     private String clave;
-    private Boolean estado;
 
-    private Integer idPersona;
+    private Integer persona_id;
 
     //Constructor
     public Cuenta() {
     }
 
-    public Cuenta(Integer id, String correo, String clave, Boolean estado, Integer idPersona) {
+    public Cuenta(Integer id, String correo_institucional, String clave, Boolean estado, Integer persona_id) {
         this.id = id;
-        this.correo = correo;
+        this.correo_institucional = correo_institucional;
         this.clave = clave;
-        this.estado = estado;
-        this.idPersona = idPersona;
+        this.persona_id = persona_id;
     }
 
     //Getters y Setters
@@ -30,12 +29,12 @@ public class Cuenta {
         this.id = id;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getCorreo_institucional() {
+        return correo_institucional;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setCorreo_institucional(String correo_institucional) {
+        this.correo_institucional = correo_institucional;
     }
 
     public String getClave() {
@@ -46,58 +45,52 @@ public class Cuenta {
         this.clave = clave;
     }
 
-    public Boolean getEstado() {
-        return estado;
+    public Integer getPersona_id() {
+        return persona_id;
     }
 
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Integer getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
+    public void setPersona_id(Integer persona_id) {
+        this.persona_id = persona_id;
     }
 
     @Override
     public String toString() {
-        return "Cuenta{" +
-                "correo='" + correo + '\'' +
-                '}';
+        return "Cuenta{"
+                  + "correo='" + correo_institucional + '\''
+                  + '}';
     }
 
     public Boolean compareTo(Cuenta c, String field, Integer type) {
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("correo")) {
-                    return this.getCorreo().compareTo(c.getCorreo()) > 0;
-                } else if (field.equalsIgnoreCase("id")) {
+                    return this.getCorreo_institucional().compareTo(c.getCorreo_institucional()) > 0;
+                }
+                else if (field.equalsIgnoreCase("id")) {
                     return this.getId() > (c.getId());
-                } else if (field.equalsIgnoreCase("estado")) {
-                    return this.getEstado().compareTo(c.getEstado()) > 0;
-                } else if (field.equalsIgnoreCase("clave")) {
+
+                }
+                else if (field.equalsIgnoreCase("clave")) {
                     return this.getClave().compareTo(c.getClave()) > 0;
-                } else if (field.equalsIgnoreCase("idPersona")) {
-                    return this.getIdPersona() > (c.getIdPersona());
+                }
+                else if (field.equalsIgnoreCase("idPersona")) {
+                    return this.getPersona_id() > (c.getPersona_id());
                 }
             case 0:
                 if (field.equalsIgnoreCase("correo")) {
-                    return this.getCorreo().compareTo(c.getCorreo()) < 0;
-                } else if (field.equalsIgnoreCase("id")) {
+                    return this.getCorreo_institucional().compareTo(c.getCorreo_institucional()) < 0;
+                }
+                else if (field.equalsIgnoreCase("id")) {
                     return this.getId() < (c.getId());
-                } else if (field.equalsIgnoreCase("estado")) {
-                    return this.getEstado().compareTo(c.getEstado()) < 0;
-                } else if (field.equalsIgnoreCase("clave")) {
+                }
+                else if (field.equalsIgnoreCase("clave")) {
                     return this.getClave().compareTo(c.getClave()) < 0;
-                } else if (field.equalsIgnoreCase("idPersona")) {
-                    return this.getIdPersona() < (c.getIdPersona());
+                }
+                else if (field.equalsIgnoreCase("idPersona")) {
+                    return this.getPersona_id() < (c.getPersona_id());
                 }
             default:
                 return false;
         }
     }
 }
-
