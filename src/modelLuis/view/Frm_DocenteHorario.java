@@ -8,17 +8,16 @@ import model.Asignatura;
 import model.Cursa;
 import model.Docente;
 import model.Horario;
-<<<<<<< HEAD
+
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
-=======
+
 import model.Matricula;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.controller.ControllerMatricula;
->>>>>>> master
 import modelLuis.tablas.ModelTableAsistenciaDocente;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -70,7 +69,6 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
             String id_asi = asig.getId().toString();
             ListaEnlazada<Horario> listaHorarios = controlHorario.busquedaBinaria(controlHorario.list_All(), id_asi, "id_asignatura", "quicksort");
             for (Horario horario : listaHorarios) {
-<<<<<<< HEAD
                 if (!isHorarioAgregado(horario.getId())) {
                     if (Objects.equals(horario.getIdAsignatura(), asig.getId())) {
                         horarios.add(horario);
@@ -89,13 +87,11 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
             }
         }
         return false;
-=======
                 if (Objects.equals(horario.getIdAsignatura(), asig.getId())) {
                     horarios.add(horario);
                 }
             }
         }
->>>>>>> master
     }
 
     @SuppressWarnings("unchecked")

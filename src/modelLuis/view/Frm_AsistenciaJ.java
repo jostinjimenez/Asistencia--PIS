@@ -19,7 +19,6 @@ import modelLuis.controller.ControllerMatricula;
 import modelLuis.controller.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
 import modelLuis.tablas.ModelTableAsistencia2;
-import modelLuis.view.util.Util_VistaLinked1_Asistencia;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
