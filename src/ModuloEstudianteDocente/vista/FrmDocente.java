@@ -106,7 +106,8 @@ public class FrmDocente extends javax.swing.JFrame {
                     if (dc.save()) {
                         // Configurar y guardar la cuenta
                         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
-                        cc.getCuenta().setClave(txtDNI.getText());
+                        String claveCifrada = cc.cifrar(txtDNI.getText(), 10);
+                        cc.getCuenta().setClave(claveCifrada);
                         cc.getCuenta().setPersona_id(idGenerado);
                         cc.save();
                     }

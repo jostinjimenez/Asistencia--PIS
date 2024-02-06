@@ -10,30 +10,32 @@ import javax.swing.*;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 
 import java.text.SimpleDateFormat;
+import model.Cuenta;
+import model.Persona;
 
-public class NuevoUsuario extends javax.swing.JDialog {
-
-    public NuevoUsuario(java.awt.Frame parent, boolean modal, ModeloTablaCuenta mtp, JTable jTable1) {
+public class NuevaClave extends javax.swing.JDialog {
+    
+    public NuevaClave(java.awt.Frame parent, boolean modal, ModeloTablaCuenta mtp, JTable jTable1) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
+        
         pc.setIndex(-1);
         cc.setIndex(-1);
 
-        cargarVista(mtp, jTable1);
-        btnGuardar.addActionListener(e -> guardar());
+//        cargarVista(mtp, jTable1);
+        btnGuardar.addActionListener(e -> validarCuenta());
         btnCancelar.addActionListener(e -> this.dispose());
     }
-
-    public NuevoUsuario(java.awt.Frame parent, boolean modal) {
+    
+    public NuevaClave(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
-        btnGuardar.addActionListener(e -> guardar());
+        
+        btnGuardar.addActionListener(e -> validarCuenta());
         btnCancelar.addActionListener(e -> this.dispose());
     }
 
@@ -45,96 +47,75 @@ public class NuevoUsuario extends javax.swing.JDialog {
     private boolean isEditing = false;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    //Metodos
-    public void cargarVista(ModeloTablaCuenta mtp, JTable jTable1) {
-        pc.setIndex(jTable1.getSelectedRow());
-        if (pc.getIndex() < 0) {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                isEditing = true;
-                cc.setCuenta(mtp.getCuentas().get(cc.getIndex()));
-                txtNombre.setText(cc.getPersona(cc.getCuenta().getId()).getNombre());
-                txtApellido.setText(cc.getPersona(cc.getCuenta().getId()).getApellido());
-                txtDni.setText(cc.getPersona(cc.getCuenta().getId()).getDni());
-                txtCorreoPersonal.setText(cc.getPersona(cc.getCuenta().getId()).getCorreo_personal());
-                txtFechaNacim.setDate(cc.getPersona(cc.getCuenta().getId()).getFecha_nacimiento());
-                txtTelefono.setText(cc.getPersona(cc.getCuenta().getId()).getTelefono());
-                txtDni.setEnabled(false);
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println(e.getMessage());
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
+//    //Metodos
+//    public void cargarVista(ModeloTablaCuenta mtp, JTable jTable1) {
+//        pc.setIndex(jTable1.getSelectedRow());
+//        if (pc.getIndex() < 0) {
+//            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            try {
+//                isEditing = true;
+//                cc.setCuenta(mtp.getCuentas().get(cc.getIndex()));
+//                txtCorreoInst.setText(cc.getPersona(cc.getCuenta().getId()).getNombre());
+//                txtNuevaClave.setText(cc.getPersona(cc.getCuenta().getId()).getApellido());
+//                txtTelefono.setText(cc.getPersona(cc.getCuenta().getId()).getDni());
+//                txtVerClave.setText(cc.getPersona(cc.getCuenta().getId()).getCorreo_personal());
+////                txtFechaNacim.setDate(cc.getPersona(cc.getCuenta().getId()).getFecha_nacimiento());
+//                txtClaveAnterior.setText(cc.getPersona(cc.getCuenta().getId()).getTelefono());
+//                txtTelefono.setEnabled(false);
+//
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//                System.out.println(e.getMessage());
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
     public Boolean validar() {
-        return !txtNombre.getText().trim().isEmpty()
-                && !txtApellido.getText().trim().isEmpty()
-                && !txtDni.getText().trim().isEmpty()
-                && !txtCorreoPersonal.getText().trim().isEmpty()
-                && !txtFechaNacim.getDate().toString().isEmpty()
-                && !txtTelefono.getText().trim().isEmpty();
+        return !txtCorreoInst.getText().trim().isEmpty()
+                && !txtNuevaClave.getText().trim().isEmpty()
+                && !txtDNI.getText().trim().isEmpty()
+                && !txtNuevaClave2.getText().trim().isEmpty()
+                && !txtClaveAn.getText().trim().isEmpty();
     }
-
-    public void guardar() {
+    
+    
+    
+    public void validarCuenta() {
         if (validar()) {
             try {
-                if (isEditing) {
-                    updatePersona();
+                Persona persona = pc.buscarDni1(pc.getPersonas(), txtDNI.getText());
+                Cuenta cuenta = cc.validarCuenta(txtCorreoInst.getText(), persona);
+                if (cuenta == null) {
+                    JOptionPane.showMessageDialog(null, "La cuenta no existe", "Error", JOptionPane.ERROR_MESSAGE);         
                 } else {
-                    saveUsuario();
+                    if (verificarClaves() == true) {
+                    String claveCifrada = cc.cifrar(txtNuevaClave.getText(), 10);
+                    cc.getCuenta().setClave(claveCifrada);
+                    if (cc.update()) {
+                        JOptionPane.showMessageDialog(null, "Su clave ha sido actualizada", "Clave Actualizada", JOptionPane.INFORMATION_MESSAGE);
+                    }    
+                    }
+                    
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println(e.getMessage());
-                throw new RuntimeException(e);
+                System.out.println("ERROR AL VALIDAR SU CUENTA " + e);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void saveUsuario() throws Exception {
-        pc.getPersona().setNombre(txtNombre.getText());
-        pc.getPersona().setApellido(txtApellido.getText());
-        pc.getPersona().setDni(txtDni.getText());
-        pc.getPersona().setCorreo_personal(txtCorreoPersonal.getText());
-        pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
-        pc.getPersona().setTelefono(txtTelefono.getText());
-        pc.getPersona().setRol_id(1);
-        pc.getPersona().setFoto("user.png");
-        cc.getCuenta().setCorreo_institucional(generarCorreoInst());
-        String claveCifrada = cc.cifrar(txtDni.getText(), 10);
-        cc.getCuenta().setClave(claveCifrada);
-        cc.getCuenta().setPersona_id(pc.save());
-        if (cc.save() > 0) {
-            System.out.println("Se guardó correctamente el usuario y la cuenta");
-            this.dispose();
+    
+    private Boolean verificarClaves() {
+        
+        if (txtNuevaClave.getText().equalsIgnoreCase(txtNuevaClave2.getText())) {
+            lblMessage.setText("Claves validadas");
+            return true;
         } else {
-            System.out.println("No se pudo guardar");
-        }
-        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-        this.dispose();
-    }
-
-    private void updatePersona() {
-        if (pc.update()) {
-            JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+            lblMessage.setText("Claves no son considentes");
+            return false;
+            
         }
     }
-
-    private String generarCorreoInst() {
-        String nombre = txtNombre.getText().contains(" ") ? txtNombre.getText().substring(0, txtNombre.getText().indexOf(" ")) : txtNombre.getText();
-        String apellido = txtApellido.getText().contains(" ") ? txtApellido.getText().substring(0, txtApellido.getText().indexOf(" ")) : txtApellido.getText();
-        return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
-    }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,19 +123,18 @@ public class NuevoUsuario extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtDni = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        txtApellido = new javax.swing.JTextField();
-        txtCorreoPersonal = new javax.swing.JTextField();
+        txtCorreoInst = new javax.swing.JTextField();
+        txtDNI = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        txtFechaNacim = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
+        txtNuevaClave = new javax.swing.JPasswordField();
+        txtNuevaClave2 = new javax.swing.JPasswordField();
+        txtClaveAn = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -173,28 +153,21 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel1.setText("Nuevo Administrador");
+        jLabel1.setText("Modificar Contrasenia");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
-        txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 240, 30));
+        txtCorreoInst.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCorreoInst.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        txtCorreoInst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoInstActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtCorreoInst, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 240, 30));
 
-        txtDni.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtDni.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 240, 30));
-
-        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 240, 30));
-
-        txtApellido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtApellido.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, 240, 30));
-
-        txtCorreoPersonal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCorreoPersonal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 240, 30));
+        txtDNI.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtDNI.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jPanel1.add(txtDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 240, 30));
 
         btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -206,40 +179,34 @@ public class NuevoUsuario extends javax.swing.JDialog {
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 110, 30));
 
-        txtFechaNacim.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 230, 240, 30));
-
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Nombres: ");
+        jLabel8.setText("Correo INST:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Apellidos:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Fecha de nacimiento:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, -1, -1));
+        jLabel2.setText("Nueva Clave:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Correo Personal:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, -1, -1));
+        jLabel4.setText("Nueva Clave:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cedula: ");
+        jLabel5.setText("Cedula:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Telefono:");
+        jLabel6.setText("Clave Anterior:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
+        jPanel1.add(lblMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 220, 240, 20));
+        jPanel1.add(txtNuevaClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, 240, 30));
+        jPanel1.add(txtNuevaClave2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 240, 30));
+        jPanel1.add(txtClaveAn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 240, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,12 +222,16 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtCorreoInstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoInstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoInstActionPerformed
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-
+        
     }
-
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-
+        
     }
 
 //    public static void main(String args[]) {
@@ -307,17 +278,16 @@ public class NuevoUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtCorreoPersonal;
-    private javax.swing.JTextField txtDni;
-    private com.toedter.calendar.JDateChooser txtFechaNacim;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JLabel lblMessage;
+    private javax.swing.JPasswordField txtClaveAn;
+    private javax.swing.JTextField txtCorreoInst;
+    private javax.swing.JTextField txtDNI;
+    private javax.swing.JPasswordField txtNuevaClave;
+    private javax.swing.JPasswordField txtNuevaClave2;
     // End of variables declaration//GEN-END:variables
 }

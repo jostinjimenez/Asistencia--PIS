@@ -1,1 +1,26 @@
-{"tda_listas.ListaEnlazada":{"head":{"data":{"@class":"model.Cuenta","id":1,"correo":"jostin.jimenez@unl.edu.ec","clave":1150696977,"idPersona":1},"next":{"data":{"@class":"model.Cuenta","id":2,"correo":"juan.perez@unl.edu.ec","clave":1150696977,"idPersona":2}}},"last":{"@reference":"..\/head\/next"},"size":2}}
+{
+    "tda_listas.ListaEnlazada": {
+        "head": {
+            "data": {
+                "@class": "model.Cuenta",
+                "id": 1,
+                "correo": "jostin.jimenez@unl.edu.ec",
+                "clave": 1150696977,
+                "idPersona": 1
+            },
+            "next": {
+                "data": {
+                    "@class": "model.Cuenta",
+                    "id": 2,
+                    "correo": "juan.perez@unl.edu.ec",
+                    "clave": 1150696977,
+                    "idPersona": 2
+                }
+            }
+        },
+        "last": {
+            "@reference": "..\/head\/next"
+        },
+        "size": 2
+    }
+}

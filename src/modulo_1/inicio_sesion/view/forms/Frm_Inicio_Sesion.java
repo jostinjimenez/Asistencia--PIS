@@ -17,8 +17,8 @@ import modulo_1.inicio_sesion.view.util.Utiles;
 public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
     /**
-     * Constructor de Frm_Inicio_Sesion.
-     * Inicializa los componentes del formulario y establece su ubicación.
+     * Constructor de Frm_Inicio_Sesion. Inicializa los componentes del
+     * formulario y establece su ubicación.
      */
     public Frm_Inicio_Sesion() {
         initComponents();
@@ -34,17 +34,18 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     CuentaController cc = new CuentaController();
 
     /**
-     * Este método se encarga de iniciar la sesión del usuario.
-     * Valida la cuenta del usuario y, si es válida, identifica el rol de la persona y abre el formulario correspondiente.
+     * Este método se encarga de iniciar la sesión del usuario. Valida la cuenta
+     * del usuario y, si es válida, identifica el rol de la persona y abre el
+     * formulario correspondiente.
      */
     public void iniciarSesion() {
         String usuario = txtUsuario.getText();
-        String clave = txtClave.getText();
+        String claveCifrada = cc.cifrar(txtClave.getText(), 10);
 
-        if (usuario.isEmpty() || clave.isEmpty()) {
+        if (usuario.isEmpty() || claveCifrada.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         } else {
-            Cuenta cuenta = cc.validarCuenta(usuario, clave);
+            Cuenta cuenta = cc.validarCuenta(usuario, claveCifrada);
             cc.setCuenta(cuenta);
             Utiles.setCc(cc);
             Utiles.setCuentaUsu(cuenta);
@@ -85,6 +86,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,6 +96,11 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roundPanel2MouseClicked(evt);
+            }
+        });
         roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jSeparator2.setBackground(new java.awt.Color(229, 229, 229));
@@ -136,13 +143,22 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        roundPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 560, 110, 30));
+        roundPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 560, 110, 30));
 
         txtUsuario.setBackground(new java.awt.Color(51, 51, 51));
         txtUsuario.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
         txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         roundPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 330, 40));
+
+        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel2.setText("¿Olvidaste tu contraseña? ");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 570, -1, -1));
 
         jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, -10, 500, 720));
 
@@ -157,6 +173,15 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         iniciarSesion();
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        NuevaClave nu = new NuevaClave(this, true);
+        nu.setVisible(true);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void roundPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundPanel2MouseClicked
+
+    }//GEN-LAST:event_roundPanel2MouseClicked
 
     public static void main(String args[]) {
         try {
@@ -173,6 +198,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

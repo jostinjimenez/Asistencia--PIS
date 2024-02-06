@@ -25,13 +25,30 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Modal_Carrera.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Frm_Carrera.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/RecuperarClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevaClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/data/Cuenta.json</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/vista/modals/modal_Estudiante.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/model/catalogo/Prueba.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Modal_Carrera.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_carrera/view/forms/Frm_Carrera.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/RecuperarClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevaClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/data/Cuenta.json</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/vista/modals/modal_Estudiante.java</file>
         </group>
     </open-files>
 </project-private>

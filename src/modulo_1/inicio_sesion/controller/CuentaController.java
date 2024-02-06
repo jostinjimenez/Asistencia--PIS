@@ -23,7 +23,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
 
     // Getters y Setters
     public ListaEnlazada<Cuenta> getCuentas() {
-        if (cuentas.isEmpty()){
+        if (cuentas.isEmpty()) {
             cuentas = this.list_All();
         }
         return cuentas;
@@ -54,7 +54,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return super.save(this.cuenta);
     }
 
-    public Boolean update(Integer index) {
+    public Boolean update() {
         try {
             update(this.cuenta);
             return true;
@@ -63,6 +63,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
             return false;
         }
     }
+    
 
     public Cuenta validarCuenta(String usuario, String clave) {
         for (Cuenta c : this.getCuentas()) {
@@ -125,21 +126,50 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return null;
     }
 
+    public Cuenta validarCuenta(String usuario, Persona persona) {
+        PersonaController pc = new PersonaController();
+        try {
+            for (Cuenta c : this.getCuentas()) {
+                Persona personaCuenta = pc.buscarID1(pc.getPersonas(), c.getPersona_id());
+                if (c.getCorreo_institucional().equalsIgnoreCase(usuario)) {
+                    if (personaCuenta.getDni().equalsIgnoreCase(persona.getDni())) {
+                        return c;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La cedula no es la correcta", "Error", JOptionPane.ERROR_MESSAGE);
+                        return null;
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+        JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+        return null;
+    }
 
+    public String cifrar(String texto, int clave) {
+        StringBuilder textoCifrado = new StringBuilder();
+        for (int i = 0; i < texto.length(); i++) {
+            char caracter = texto.charAt(i);
+            if (Character.isLetter(caracter)) {
+                char inicio = Character.isUpperCase(caracter) ? 'A' : 'a';
+                caracter = (char) (((int) caracter - inicio + clave) % 26 + inicio);
+            }
+            textoCifrado.append(caracter);
+        }
+        return textoCifrado.toString();
+    }
 
+    public String descifrar(String textoCifrado, int clave) {
+        StringBuilder textoDescifrado = new StringBuilder();
+        for (int i = 0; i < textoCifrado.length(); i++) {
+            char caracter = textoCifrado.charAt(i);
+            if (Character.isLetter(caracter)) {
+                char inicio = Character.isUpperCase(caracter) ? 'Z' : 'z';
+                caracter = (char) (((int) caracter - inicio - clave + 26) % 26 + inicio);
+            }
+            textoDescifrado.append(caracter);
+        }
+        return textoDescifrado.toString();
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

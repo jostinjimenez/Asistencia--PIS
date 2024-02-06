@@ -117,10 +117,11 @@ public class modal_Estudiante extends javax.swing.JDialog {
                     ec.getEstudiante().setEtnia(txtEtnia.getText());
 
                     // Guardar el estudiante
-                    if (ec.save()){
+                    if (ec.save()) {
                         // Configurar y guardar la cuenta
                         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
-                        cc.getCuenta().setClave(txtCedula.getText());
+                        String claveCifrada = cc.cifrar(txtCedula.getText(), 10);
+                        cc.getCuenta().setClave(claveCifrada);
                         cc.getCuenta().setPersona_id(idGenerado);
                         cc.save();
                     }
@@ -168,7 +169,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 cbxTituloBach.setSelectedItem(seleccion);
 
                 //txtDireccion.setText(ec.getEstudiante().getDireccion());
-
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,
                         "Error al cargar los datos",
@@ -189,7 +189,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
 //                }
 //            }
 //        });
-
         txtTelefono.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

@@ -86,7 +86,6 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     }
 
-
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
         Persona[] personas = lista.toArray();
@@ -273,6 +272,50 @@ public class PersonaController extends DataAccessObject<Persona> {
         return result;
     }
 
+    public Persona buscarDni1(ListaEnlazada<Persona> lista, String txt) throws Exception {
+        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "dni");
+        Persona[] p = lo.toArray();
+
+        int left = 0;
+        int right = lista.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (p[mid].getDni().equalsIgnoreCase(txt)) {
+                return p[mid];
+            }
+            if (p[mid].getDni().compareToIgnoreCase(txt) < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return null; // Si no se encuentra ningún objeto con el DNI dado.
+    }
+
+    public Persona buscarID1(ListaEnlazada<Persona> lista, Integer id) throws Exception {
+        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "id");
+        Persona[] p = lo.toArray();
+
+        int left = 0;
+        int right = lista.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (p[mid].getId().intValue() == id.intValue()) {
+                return p[mid];
+            }
+            if (p[mid].getId().intValue() < id.intValue()) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return null; // Si no se encuentra ningún objeto con el DNI dado.
+    }
+
     public ListaEnlazada<Persona> buscarId(ListaEnlazada<Persona> lista, Integer id) throws Exception {
         ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "id");
         Persona[] p = lo.toArray();
@@ -308,6 +351,5 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
         return result;
     }
-
 
 }
