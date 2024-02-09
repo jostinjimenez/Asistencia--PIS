@@ -63,7 +63,6 @@ public class CuentaController extends DataAccessObject<Cuenta> {
             return false;
         }
     }
-    
 
     public Cuenta validarCuenta(String usuario, String clave) {
         for (Cuenta c : this.getCuentas()) {
@@ -130,7 +129,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         PersonaController pc = new PersonaController();
         try {
             for (Cuenta c : this.getCuentas()) {
-                Persona personaCuenta = pc.buscarID1(pc.getPersonas(), c.getPersona_id());
+                Persona personaCuenta = pc.busquedaBinaria2(pc.getPersonas(), c.getPersona_id().toString(), "id");
                 if (c.getCorreo_institucional().equalsIgnoreCase(usuario)) {
                     if (personaCuenta.getDni().equalsIgnoreCase(persona.getDni())) {
                         return c;
@@ -170,6 +169,26 @@ public class CuentaController extends DataAccessObject<Cuenta> {
             textoDescifrado.append(caracter);
         }
         return textoDescifrado.toString();
+    }
+
+    public Boolean getFirstKey(String clave, Integer id) {
+
+        PersonaController pc = new PersonaController();
+        try {
+            for (Cuenta c : this.getCuentas()) {
+                Persona personaCuenta = pc.busquedaBinaria2(pc.getPersonas(), c.getPersona_id().toString(), "id");
+                String claveDescifrada = descifrar(clave, 10);
+                if (personaCuenta.getDni().equalsIgnoreCase(claveDescifrada)) {
+                    JOptionPane.showMessageDialog(null, "Debe modificar su clave", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return true;
+                } else {                   
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+        }
+        JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+        return null;
     }
 
 }

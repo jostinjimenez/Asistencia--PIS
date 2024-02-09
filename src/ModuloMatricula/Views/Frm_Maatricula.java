@@ -10,6 +10,7 @@ import modelLuis.controller.ControllerMatricula;
 import modelLuis.tablas.ModelTableMateria;
 import modelLuis.tablas.ModelTableMatriculas;
 import ModuloMatricula.Views.UtilVista.Util_VistaLinked1_Asistencia;
+import model.Carrera;
 import tda_listas.ListaEnlazada;
 
 public class Frm_Maatricula extends javax.swing.JFrame {
@@ -17,7 +18,6 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     ControllerMatricula a = new ControllerMatricula();
     private static ModelTableMateria z = new ModelTableMateria();
     private static ListaEnlazada<Asignatura> n = new ListaEnlazada<>();
-    private static ListaEnlazada<Asignatura> d = new ListaEnlazada<>();
     ControllerCursa c = new ControllerCursa();
     ListaEnlazada<Integer> ids2 = new ListaEnlazada<>();
     Integer id = 0;
@@ -38,11 +38,14 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     }
     
     public static void cargarMaterias(Asignatura asignatura) {
-        d.add(asignatura);
         n.add(asignatura);
-        z.setAsignaturas(d);
+        z.setAsignaturas(n);
         tabla.setModel(z);
         tabla.updateUI();
+    }
+    
+    public static void cargarCarreras(Carrera carrera) {
+        txtCarrera.setText(carrera.getNombre());
     }
     
     private void limpiar() {
@@ -201,6 +204,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -297,7 +301,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 480, 140, -1));
+        roundPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, 140, -1));
 
         cbxDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         roundPanel1.add(cbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, 140, -1));
@@ -344,6 +348,14 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 130, -1));
 
+        jButton5.setText("Cargar Carrera");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, 130, -1));
+
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 1030, 630));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
         bg_panel.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, -1));
@@ -381,6 +393,10 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         cargarVista();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       new Frm_BuscarCarreras().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -413,6 +429,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -428,7 +445,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     private plantilla.swing.RoundPanel roundPanel1;
     private static javax.swing.JTable tabla;
     private javax.swing.JTable tbl1;
-    private javax.swing.JTextField txtCarrera;
+    private static javax.swing.JTextField txtCarrera;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtParalelo;
     // End of variables declaration//GEN-END:variables

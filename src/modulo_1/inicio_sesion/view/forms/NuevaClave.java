@@ -8,8 +8,6 @@ import modulo_1.inicio_sesion.controller.PersonaController;
 import javax.swing.*;
 
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
-
-import java.text.SimpleDateFormat;
 import model.Cuenta;
 import model.Persona;
 
@@ -42,10 +40,6 @@ public class NuevaClave extends javax.swing.JDialog {
     //Variables
     private PersonaController pc = new PersonaController();
     private CuentaController cc = new CuentaController();
-    private EstudianteController ec = new EstudianteController();
-    private DocenteController dc = new DocenteController();
-    private boolean isEditing = false;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 //    //Metodos
 //    public void cargarVista(ModeloTablaCuenta mtp, JTable jTable1) {
@@ -84,7 +78,7 @@ public class NuevaClave extends javax.swing.JDialog {
     public void validarCuenta() {
         if (validar()) {
             try {
-                Persona persona = pc.buscarDni1(pc.getPersonas(), txtDNI.getText());
+                Persona persona = pc.busquedaBinaria2(pc.getPersonas(), txtDNI.getText(),"dni");
                 Cuenta cuenta = cc.validarCuenta(txtCorreoInst.getText(), persona);
                 if (cuenta == null) {
                     JOptionPane.showMessageDialog(null, "La cuenta no existe", "Error", JOptionPane.ERROR_MESSAGE);         

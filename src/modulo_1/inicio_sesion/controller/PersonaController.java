@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.util.Date;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
+import tda_listas.exceptions.VacioExceptions;
 
 public class PersonaController extends DataAccessObject<Persona> {
 
@@ -128,150 +129,220 @@ public class PersonaController extends DataAccessObject<Persona> {
     }
 
     // Buscar por Busqueda Binaria
-    public ListaEnlazada<Persona> buscarRol(ListaEnlazada<Persona> lista, String field, Rol rol) throws Exception {
-        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, field);
-        Persona[] p = lo.toArray();
-        ListaEnlazada<Persona> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getRol_id().intValue() == rol.getId().intValue()) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getRol_id().intValue() < rol.getId().intValue()) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+    public Persona busquedaBinaria2(ListaEnlazada<Persona> lista, String text, String campo) throws VacioExceptions, Exception {
+        ListaEnlazada<Persona> listaOrdenada = ordenarQS(lista, 0, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
         }
-        return result;
     }
 
-    public ListaEnlazada<Persona> buscarNombre(ListaEnlazada<Persona> lista, String txt) throws Exception {
-        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "nombre");
-        Persona[] p = lo.toArray();
-        ListaEnlazada<Persona> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getNombre().equalsIgnoreCase(txt)) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getNombre().equalsIgnoreCase(txt)) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getNombre().equalsIgnoreCase(txt)) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
+    public ListaEnlazada<Persona> busquedaBinaria(ListaEnlazada<Persona> lista, String text, String campo, String tipo, Integer type) throws VacioExceptions, Exception {
+        ListaEnlazada<Persona> listaOrdenada = ordenarQS(lista, 0, campo);
+        ListaEnlazada<Persona> marc = new ListaEnlazada<>();
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+        if (index != -1) {
+            while (index < listaOrdenada.getSize() && getForm(listaOrdenada.get(index), text, campo)) {
+                marc.add(listaOrdenada.get(index));
+                index++;
             }
-            if (p[mid].getNombre().compareToIgnoreCase(txt) < 0) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+
+        } else {
+            System.out.println("Elemento no encontrado");
         }
-        return result;
+
+        return marc;
     }
 
-    public ListaEnlazada<Persona> buscarApellido(ListaEnlazada<Persona> lista, String txt) throws Exception {
-        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "apellido");
-        Persona[] p = lo.toArray();
-        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+    private int busquedaBinaria1(ListaEnlazada<Persona> lista, String text, String campo) throws VacioExceptions {
+        int infe = 0;
+        int sup = lista.getSize() - 1;
 
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getApellido().equalsIgnoreCase(txt)) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getApellido().equalsIgnoreCase(txt)) {
-                    result.add(p[temp]);
-                    temp--;
+        while (infe <= sup) {
+            int indice = (infe + sup) / 2;
+            Persona mid = lista.get(indice);
+            int resultado = mid.comparar(mid, text, campo);
+            if (resultado == 0) {
+                int izquierda = indice - 1;
+                while (izquierda >= 0 && getForm(lista.get(izquierda), text, campo)) {
+                    indice = izquierda;
+                    izquierda--;
                 }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getApellido().equalsIgnoreCase(txt)) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getApellido().compareToIgnoreCase(txt) < 0) {
-                left = mid + 1;
+                return indice;
+            } else if (resultado < 0) {
+                sup = indice - 1;
             } else {
-                right = mid - 1;
+                infe = indice + 1;
             }
         }
-        return result;
+
+        return -1;
     }
 
-    public ListaEnlazada<Persona> buscarDni(ListaEnlazada<Persona> lista, String txt) throws Exception {
-        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "dni");
-        Persona[] p = lo.toArray();
-        ListaEnlazada<Persona> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getDni().equalsIgnoreCase(txt)) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getDni().equalsIgnoreCase(txt)) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getDni().equalsIgnoreCase(txt)) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getDni().compareToIgnoreCase(txt) < 0) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+    private boolean getForm(Persona persona, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "dni":
+                return persona.getNombre().equalsIgnoreCase(text);
+            case "id":
+                return Integer.toString(persona.getId()).equalsIgnoreCase(text);
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
         }
-        return result;
     }
 
+    private ListaEnlazada<Persona> ordenarLista(ListaEnlazada<Persona> lista, String campo) throws VacioExceptions, Exception {
+        ListaEnlazada<Persona> listaOrdenada = new ListaEnlazada<>();
+        listaOrdenada = ordenarQS(lista, 0, campo);
+        return listaOrdenada;
+    }
+
+//    public ListaEnlazada<Persona> buscarRol(ListaEnlazada<Persona> lista, String field, Rol rol) throws Exception {
+//        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, field);
+//        Persona[] p = lo.toArray();
+//        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+//
+//        int left = 0;
+//        int right = lista.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//
+//            if (p[mid].getRol_id().intValue() == rol.getId().intValue()) {
+//                result.add(p[mid]);
+//
+//                int temp = mid - 1;
+//                while (temp >= left && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
+//                    result.add(p[temp]);
+//                    temp--;
+//                }
+//
+//                temp = mid + 1;
+//                while (temp <= right && p[temp].getRol_id().intValue() == rol.getId().intValue()) {
+//                    result.add(p[temp]);
+//                    temp++;
+//                }
+//                return result;
+//            }
+//            if (p[mid].getRol_id().intValue() < rol.getId().intValue()) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return result;
+//    }
+//
+//    public ListaEnlazada<Persona> buscarNombre(ListaEnlazada<Persona> lista, String txt) throws Exception {
+//        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "nombre");
+//        Persona[] p = lo.toArray();
+//        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+//
+//        int left = 0;
+//        int right = lista.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//
+//            if (p[mid].getNombre().equalsIgnoreCase(txt)) {
+//                result.add(p[mid]);
+//
+//                int temp = mid - 1;
+//                while (temp >= left && p[temp].getNombre().equalsIgnoreCase(txt)) {
+//                    result.add(p[temp]);
+//                    temp--;
+//                }
+//
+//                temp = mid + 1;
+//                while (temp <= right && p[temp].getNombre().equalsIgnoreCase(txt)) {
+//                    result.add(p[temp]);
+//                    temp++;
+//                }
+//                return result;
+//            }
+//            if (p[mid].getNombre().compareToIgnoreCase(txt) < 0) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return result;
+//    }
+//
+//    public ListaEnlazada<Persona> buscarApellido(ListaEnlazada<Persona> lista, String txt) throws Exception {
+//        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "apellido");
+//        Persona[] p = lo.toArray();
+//        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+//
+//        int left = 0;
+//        int right = lista.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//
+//            if (p[mid].getApellido().equalsIgnoreCase(txt)) {
+//                result.add(p[mid]);
+//
+//                int temp = mid - 1;
+//                while (temp >= left && p[temp].getApellido().equalsIgnoreCase(txt)) {
+//                    result.add(p[temp]);
+//                    temp--;
+//                }
+//
+//                temp = mid + 1;
+//                while (temp <= right && p[temp].getApellido().equalsIgnoreCase(txt)) {
+//                    result.add(p[temp]);
+//                    temp++;
+//                }
+//                return result;
+//            }
+//            if (p[mid].getApellido().compareToIgnoreCase(txt) < 0) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return result;
+//    }
+//
+//    public ListaEnlazada<Persona> buscarDni(ListaEnlazada<Persona> lista, String txt) throws Exception {
+//        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "dni");
+//        Persona[] p = lo.toArray();
+//        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+//
+//        int left = 0;
+//        int right = lista.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//
+//            if (p[mid].getDni().equalsIgnoreCase(txt)) {
+//                result.add(p[mid]);
+//
+//                int temp = mid - 1;
+//                while (temp >= left && p[temp].getDni().equalsIgnoreCase(txt)) {
+//                    result.add(p[temp]);
+//                    temp--;
+//                }
+//
+//                temp = mid + 1;
+//                while (temp <= right && p[temp].getDni().equalsIgnoreCase(txt)) {
+//                    result.add(p[temp]);
+//                    temp++;
+//                }
+//                return result;
+//            }
+//            if (p[mid].getDni().compareToIgnoreCase(txt) < 0) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return result;
+//    }
+//
     public Persona buscarDni1(ListaEnlazada<Persona> lista, String txt) throws Exception {
         ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "dni");
         Persona[] p = lo.toArray();
@@ -316,40 +387,39 @@ public class PersonaController extends DataAccessObject<Persona> {
         return null; // Si no se encuentra ningún objeto con el DNI dado.
     }
 
-    public ListaEnlazada<Persona> buscarId(ListaEnlazada<Persona> lista, Integer id) throws Exception {
-        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "id");
-        Persona[] p = lo.toArray();
-        ListaEnlazada<Persona> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getId().intValue() == id.intValue()) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getId().intValue() == id.intValue()) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getId().intValue() == id.intValue()) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getId().intValue() < id.intValue()) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return result;
-    }
-
+//    public ListaEnlazada<Persona> buscarId(ListaEnlazada<Persona> lista, Integer id) throws Exception {
+//        ListaEnlazada<Persona> lo = this.ordenarQS(lista, 0, "id");
+//        Persona[] p = lo.toArray();
+//        ListaEnlazada<Persona> result = new ListaEnlazada<>();
+//
+//        int left = 0;
+//        int right = lista.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//
+//            if (p[mid].getId().intValue() == id.intValue()) {
+//                result.add(p[mid]);
+//
+//                int temp = mid - 1;
+//                while (temp >= left && p[temp].getId().intValue() == id.intValue()) {
+//                    result.add(p[temp]);
+//                    temp--;
+//                }
+//
+//                temp = mid + 1;
+//                while (temp <= right && p[temp].getId().intValue() == id.intValue()) {
+//                    result.add(p[temp]);
+//                    temp++;
+//                }
+//                return result;
+//            }
+//            if (p[mid].getId().intValue() < id.intValue()) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return result;
+//    }
 }

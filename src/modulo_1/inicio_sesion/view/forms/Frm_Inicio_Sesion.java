@@ -5,6 +5,7 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 import model.Cuenta;
 import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.controller.PersonaController;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
@@ -47,24 +48,26 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         } else {
             Cuenta cuenta = cc.validarCuenta(usuario, claveCifrada);
             cc.setCuenta(cuenta);
-            Utiles.setCc(cc);
-            Utiles.setCuentaUsu(cuenta);
-            if (cuenta != null) {
-                switch (cc.getPersona(cuenta.getPersona_id()).getRol_id()) {
-                    case 1 -> {
-                        Frm_Main_Admin fma = new Frm_Main_Admin(cc);
-                        fma.setVisible(true);
-                        this.dispose();
-                    }
-                    case 2 -> {
-                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
-                        fme.setVisible(true);
-                        this.dispose();
-                    }
-                    case 3 -> {
-                        Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
-                        fmd.setVisible(true);
-                        this.dispose();
+            if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
+                Utiles.setCc(cc);
+                Utiles.setCuentaUsu(cuenta);
+                if (cuenta != null) {
+                    switch (cc.getPersona(cuenta.getPersona_id()).getRol_id()) {
+                        case 1 -> {
+                            Frm_Main_Admin fma = new Frm_Main_Admin(cc);
+                            fma.setVisible(true);
+                            this.dispose();
+                        }
+                        case 2 -> {
+                            Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
+                            fme.setVisible(true);
+                            this.dispose();
+                        }
+                        case 3 -> {
+                            Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
+                            fmd.setVisible(true);
+                            this.dispose();
+                        }
                     }
                 }
             }
