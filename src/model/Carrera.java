@@ -1,17 +1,18 @@
 package model;
 
 public class Carrera {
+
     private Integer id;
     private String nombre;
     private String area_estudio;
     private String modalidad;
     private String titulo_otorgado;
+    private String codigo;
 
     public Carrera() {
     }
 
     // Getters and Setters
-
     public Integer getId() {
         return id;
     }
@@ -52,8 +53,60 @@ public class Carrera {
         this.titulo_otorgado = titulo_otorgado;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public String toString() {
         return nombre;
     }
+
+    public Boolean comparar(Carrera c, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("nombre")) {
+                    return getNombre().compareTo(c.getNombre()) > 0;
+                } else if (field.equalsIgnoreCase("area_estudio")) {
+                    return getArea_estudio().compareTo(c.getArea_estudio()) > 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    return id > (c.getId());
+                }
+
+            case 0:
+                if (field.equalsIgnoreCase("nombre")) {
+                    return getNombre().compareTo(c.getNombre()) < 0;
+                } else if (field.equalsIgnoreCase("area_estudio")) {
+                    return getArea_estudio().compareTo(c.getArea_estudio()) < 0;
+                } else if (field.equalsIgnoreCase("id")) {
+                    return id < (c.getId());
+                }
+
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Carrera carrera, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "nombre":
+                return text.compareTo(carrera.getNombre().toLowerCase());
+            case "area_estudio":
+                return text.compareTo(carrera.getArea_estudio().toLowerCase());
+            case "id":
+                try {
+                return Integer.compare(Integer.parseInt(text), carrera.getId());
+            } catch (Exception e) {
+                System.out.println("errorr" + e);
+            }
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
+
 }

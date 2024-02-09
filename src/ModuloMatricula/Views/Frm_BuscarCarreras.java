@@ -1,22 +1,20 @@
 package ModuloMatricula.Views;
 
+import Modelo.ControllerCarrera.ControllerCarrera;
+import Modelo.ControllerCarrera.Tabla.ModeloTablaCarrera;
+import Modelo.ControllerCarrera.Tabla.ModeloTablaCarreras;
 import com.formdev.flatlaf.FlatDarkLaf;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
-import model.Asignatura;
-import modelLuis.controller.ControllerAsignatura;
-import modelLuis.tablas.ModelTableMateria;
-import modelLuis.tablas.ModelTableMaterias;
+import model.Carrera;
 import tda_listas.exceptions.VacioExceptions;
 
-public class Frm_BuscarMateria extends javax.swing.JFrame {
+public class Frm_BuscarCarreras extends javax.swing.JFrame {
 
-    ModelTableMateria m = new ModelTableMateria();
-    ModelTableMaterias y = new ModelTableMaterias();
-    ControllerAsignatura a = new ControllerAsignatura();
+    ModeloTablaCarrera m = new ModeloTablaCarrera();
+    ModeloTablaCarreras y = new ModeloTablaCarreras();
+    ControllerCarrera a = new ControllerCarrera();
 
-    public Frm_BuscarMateria() {
+    public Frm_BuscarCarreras() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -24,7 +22,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
     }
 
     public void cargar() {
-        m.setAsignaturas(a.list_All());
+        m.setLista(a.list_All());
         tabla.setModel(m);
         tabla.updateUI();
     }
@@ -85,7 +83,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
                 rbutton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(rbutton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
+        roundPanel1.add(rbutton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         buttonGroup1.add(rbutton2);
         rbutton2.setText("Codigo");
@@ -94,7 +92,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
                 rbutton2ActionPerformed(evt);
             }
         });
-        roundPanel1.add(rbutton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, -1, -1));
+        roundPanel1.add(rbutton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,10 +104,12 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
                 txtBusquedaKeyReleased(evt);
             }
         });
-        roundPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 350, -1));
+        roundPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 350, -1));
 
-        jLabel2.setText("Busqueda de Materias");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel2.setText("Busqueda de Carrera:");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, -1));
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +117,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 170, -1));
+        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 170, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 630));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
@@ -130,8 +130,8 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         if (evt.getClickCount() == 1) {
             try {
-                Asignatura p = m.getAsignatura(tabla.getSelectedRow());
-                Frm_Maatricula.cargarMaterias(p);
+                Carrera p = m.getCarrera(tabla.getSelectedRow());
+                Frm_Maatricula.cargarCarreras(p);
             } catch (Exception e) {
             }
         }
@@ -149,9 +149,9 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
         if (rbutton1.isSelected()) {
             String text = txtBusqueda.getText();
             try {
-                y.setAsig(a.busquedaBinaria2(a.list_All(), text, "nombre", 0));
+                y.setCarrera(a.busquedaBinaria2(a.list_All(), text, "nombre", 0));
             } catch (VacioExceptions ex) {
-                Logger.getLogger(Frm_BuscarMateria.class.getName()).log(Level.SEVERE, null, ex);
+            
             }
             tabla.setModel(y);
             tabla.updateUI();
@@ -159,9 +159,8 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
             if (rbutton2.isSelected()) {
                 String text = txtBusqueda.getText();
                 try {
-                    y.setAsig(a.busquedaBinaria2(a.list_All(), text, "codigo", 0));
+                    y.setCarrera(a.busquedaBinaria2(a.list_All(), text, "codigo", 0));
                 } catch (VacioExceptions ex) {
-                    Logger.getLogger(Frm_BuscarMateria.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 tabla.setModel(y);
                 tabla.updateUI();
@@ -192,7 +191,7 @@ public class Frm_BuscarMateria extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_BuscarMateria().setVisible(true);
+            new Frm_BuscarCarreras().setVisible(true);
         });
     }
 

@@ -11,9 +11,9 @@ import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 
 import java.text.SimpleDateFormat;
 
-public class NuevoUsuario extends javax.swing.JDialog {
+public class RecuperarClave extends javax.swing.JDialog {
 
-    public NuevoUsuario(java.awt.Frame parent, boolean modal, ModeloTablaCuenta mtp, JTable jTable1) {
+    public RecuperarClave(java.awt.Frame parent, boolean modal, ModeloTablaCuenta mtp, JTable jTable1) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -27,7 +27,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         btnCancelar.addActionListener(e -> this.dispose());
     }
 
-    public NuevoUsuario(java.awt.Frame parent, boolean modal) {
+    public RecuperarClave(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -173,7 +173,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel1.setText("Nuevo Administrador");
+        jLabel1.setText("Modificar Contrasenia");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
