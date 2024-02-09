@@ -17,14 +17,14 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return (asignaturaController != null && asignaturaController.getLista() != null) ? asignaturaController.getLista().getSize() : 0;
+        return (asignaturaController != null && asignaturaController.getAsignaturas() != null) ? asignaturaController.getAsignaturas().getSize() : 0;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
         Asignatura asignatura;
         try {
-            asignatura = asignaturaController.getLista().get(row);
+            asignatura = asignaturaController.getAsignaturas().get(row);
         } catch (VacioExceptions e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +79,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
     }
 
     public void ordenar(String campo, String tipoOrden) {
-        System.out.println("Antes de ordenar: " + asignaturaController.getLista().print());
+        System.out.println("Antes de ordenar: " + asignaturaController.getAsignaturas().print());
 
         Comparator<Asignatura> comparador = (campo.equals("nombre"))
                 ? Comparator.comparing(Asignatura::getNombre)
@@ -89,7 +89,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
             comparador = comparador.reversed();
         }
 
-        System.out.println("Después de ordenar: " + asignaturaController.getLista().print());
+        System.out.println("Después de ordenar: " + asignaturaController.getAsignaturas().print());
 
         fireTableDataChanged();
     }

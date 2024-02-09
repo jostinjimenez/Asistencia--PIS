@@ -11,13 +11,15 @@ import model.Asignatura;
 public class AsignaturaController extends DataAccessObject<Asignatura> {
 
     private Asignatura asignatura = new Asignatura();
-    private ListaEnlazada<Asignatura> lista;
+    private ListaEnlazada<Asignatura> asignaturas;
     private static Integer lastUsedId = 0;
 
     public AsignaturaController() {
         super(Asignatura.class);
         lastUsedId = generarID();
     }
+
+
 
     public Asignatura getAsignatura() {
         if (asignatura == null) {
@@ -61,7 +63,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
                 // Guardar la Asignatura
                 boolean isSaved = save(asignaturaGuardar);
                 if (isSaved) {
-                    lista = getLista(); // Actualizar la lista después de guardar
+                    asignaturas = getAsignaturas(); // Actualizar la lista después de guardar
                 }
 
                 return isSaved;
@@ -80,17 +82,19 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return String.format("%04d", getLastUsedIdFromDatabase());
     }
 
-    public ListaEnlazada<Asignatura> getLista() {
-        lista = list_All(); // Actualizar la lista desde la base de datos
-        return lista;
+    public ListaEnlazada<Asignatura> getAsignaturas() {
+        if (asignaturas.isEmpty()){
+            asignaturas = this.list_All();
+        }
+        return asignaturas;
     }
 
     public Boolean update(Integer i) {
         return update(asignatura, i);
     }
 
-    public void setLista(ListaEnlazada<Asignatura> lista) {
-        this.lista = lista;
+    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     private Integer getLastUsedIdFromDatabase() throws VacioExceptions {
@@ -99,7 +103,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
     }
 
     public int busquedaLineal(Asignatura elemento, Comparator<Asignatura> comparador) {
-        Nodo<Asignatura> current = lista.getHead();
+        Nodo<Asignatura> current = asignaturas.getHead();
         int index = 0;
 
         while (current != null) {
@@ -115,7 +119,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
     }
 
     public int buscar(String criterioBusqueda, Comparator<Asignatura> comparador, String criterio) {
-        Nodo<Asignatura> current = (Nodo<Asignatura>) lista.getHead();
+        Nodo<Asignatura> current = (Nodo<Asignatura>) asignaturas.getHead();
 
         int index = 0;
 
@@ -137,7 +141,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
     }
 
     public Integer getIndex() {
-        Iterator<Asignatura> iterator = lista.iterator();
+        Iterator<Asignatura> iterator = asignaturas.iterator();
         int index = 0;
 
         while (iterator.hasNext()) {

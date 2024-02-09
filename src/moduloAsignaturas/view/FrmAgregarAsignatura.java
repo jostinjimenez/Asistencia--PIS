@@ -1,9 +1,5 @@
 package moduloAsignaturas.view;
 
-import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatArcDarkIJTheme;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import moduloAsignaturas.controller.AsignaturaController;
 import java.util.Comparator;
 import java.util.logging.Level;
@@ -25,33 +21,23 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
      */
     public FrmAgregarAsignatura() {
         initComponents();
-
-        // Centrar la ventana
         setLocationRelativeTo(null);
-
-        // Deshabilitar la modificación del tamaño
         setResizable(false);
-
-        // Establecer el nombre de la ventana
         setTitle("Agregar Asignaturas");
 
-        // Inicializar el controlador y el modelo de la tabla
         ac = new AsignaturaController();
         mta = new ModeloTablaAsignaturas();
         mta.setAsignaturaController(ac);
 
-        // Cargar contenido en la tabla al iniciar
         cargarTabla();
     }
 
     public void cargarTabla() {
-        System.out.println("Cargando la tabla...");
-        mta.getAsignaturaController().setLista(mta.getAsignaturaController().list_All());
+        mta.getAsignaturaController().setAsignaturas(mta.getAsignaturaController().list_All());
         tablaAsignaturas.setModel(mta);
         mta.fireTableDataChanged();
         tablaAsignaturas.updateUI();
         tablaAsignaturas.repaint();  // Agrega esta línea
-        System.out.println("Tabla cargada exitosamente.");
     }
 
     public Boolean validar() {
@@ -81,12 +67,6 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
                 ac.getAsignatura().setCodigo(codigo);  
                 ac.getAsignatura().setHorasTotales(horasTotales);
 
-                // Agregamos mensajes de depuración
-                System.out.println("Datos de la Asignatura antes de guardar:");
-                System.out.println("ID: " + ac.getAsignatura().getId());
-                System.out.println("Nombre: " + ac.getAsignatura().getNombre());
-                System.out.println("Código: " + ac.getAsignatura().getCodigo());
-                System.out.println("Horas Totales: " + ac.getAsignatura().getHorasTotales());
 
                 if (ac.saved()) {
                     cargarTabla();
@@ -119,7 +99,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 try {
                     // Obtener el objeto Asignatura correspondiente a la fila seleccionada
-                    Asignatura asignaturaAEliminar = ac.getLista().get(filaSeleccionada);
+                    Asignatura asignaturaAEliminar = ac.getAsignaturas().get(filaSeleccionada);
 
                     // Eliminar el objeto Asignatura utilizando el método delete del controlador
                     if (ac.delete(asignaturaAEliminar)) {
