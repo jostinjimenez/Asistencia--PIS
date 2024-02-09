@@ -148,4 +148,16 @@ public class Persona {
                 return false;
         }
     }
+    
+    
+    public int comparar(Persona persona, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "dni":
+                return text.compareTo(persona.getDni().toLowerCase());
+            case "id":
+                return Integer.compare(Integer.parseInt(text), persona.getId());
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
 }
