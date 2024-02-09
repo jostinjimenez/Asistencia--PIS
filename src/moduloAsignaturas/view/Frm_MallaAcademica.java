@@ -1,210 +1,202 @@
 package moduloAsignaturas.view;
 
 import moduloAsignaturas.controller.MallaController;
-import java.util.Comparator;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 import model.Malla;
+import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 import tda_listas.exceptions.VacioExceptions;
 import moduloAsignaturas.view.tablas.ModeloTablaMallas;
+
+import static moduloAsignaturas.view.util_vista.Utiles.cargarCarrera;
+import static moduloAsignaturas.view.util_vista.Utiles.getComboCarrera;
 
 public class Frm_MallaAcademica extends javax.swing.JFrame {
 
     private MallaController mallaController = new MallaController();
     private ModeloTablaMallas modeloTablaMallas = new ModeloTablaMallas();
+    private boolean isEditing = false;
 
     public Frm_MallaAcademica() {
         initComponents();
+        limpiar();
 
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Mallas Académicas");
 
-        mallaController = new MallaController();
-        modeloTablaMallas = new ModeloTablaMallas();
-        modeloTablaMallas.setMallaController(mallaController);
 
-        cargarTabla();
     }
 
     public void cargarTabla() {
-        modeloTablaMallas.getMallaController().setLista(modeloTablaMallas.getMallaController().list_All());
+        modeloTablaMallas.setMallas(mallaController.list_All());
         tablaMallas.setModel(modeloTablaMallas);
         tablaMallas.updateUI();
     }
 
     public Boolean validar() {
-        return !txtDuracion.getText().trim().isEmpty()
+        return !txtNro_Asignaturas.getText().trim().isEmpty()
                 && !txtDescripcion.getText().trim().isEmpty()
-                && !txtNombreSilabo.getText().trim().isEmpty();
+                && !txtCodigo.getText().trim().isEmpty()
+                && !txtHorasT.getText().trim().isEmpty()
+                && cbxCarrera.getSelectedIndex() > 0;
     }
 
-    public void agregar() {
+    public void guardar() {
         if (validar()) {
             try {
-                // Obtener los datos del formulario
-                String descripcion = txtDescripcion.getText();
-                String duracion = txtDuracion.getText();
-                String silabo = txtNombreSilabo.getText();
-
-                // Generar nuevo id
-                Integer nuevoId = Integer.parseInt(mallaController.generatedCode());
-
-                // Configurar los datos en el controlador
-                mallaController.getMalla().setId(nuevoId);
-                mallaController.getMalla().setDescripcion(descripcion);
-                mallaController.getMalla().setDuracion(duracion);
-                mallaController.getMalla().setNombreSilabo(silabo);
-
-                if (mallaController.saved()) {
-                    cargarTabla();
-                    JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                if (isEditing) {
+                    updateMalla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+                    saveMalla();
                 }
             } catch (Exception e) {
-                // Manejar la excepción aquí
-                System.out.println("Error al guardar la Asignatura desde el formulario: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            JOptionPane.showMessageDialog(null, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private int obtenerIdDesdeFilaSeleccionada(int filaSeleccionada) {
-        int columnaId = 0;
-        return (int) tablaMallas.getValueAt(filaSeleccionada, columnaId);
-    }
+    private void saveMalla() throws Exception {
+        mallaController.getMalla().setDescripcion(txtDescripcion.getText());
+        mallaController.getMalla().setCodigo(txtCodigo.getText());
+        mallaController.getMalla().setNro_asignaturas(Integer.parseInt(txtNro_Asignaturas.getText()));
+        mallaController.getMalla().setTotal_horas(Integer.parseInt(txtHorasT.getText()));
+        mallaController.getMalla().setCarrera_id(getComboCarrera(cbxCarrera).getId());
 
-    private void eliminar() {
-        int filaSeleccionada = tablaMallas.getSelectedRow();
+        if (mallaController.save() > 0) {
+            limpiar();
+            cargarTabla();
+            JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
 
-        if (filaSeleccionada >= 0) {
-            int confirmacion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Está seguro de que desea eliminar la malla académica seleccionada?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                int mallaAEliminar = obtenerIdDesdeFilaSeleccionada(filaSeleccionada);
-
-                if (mallaController.delete(mallaAEliminar)) {
-                    cargarTabla();
-
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Se eliminó correctamente",
-                            "OK",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Error al eliminar la malla académica",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
         } else {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Seleccione una fila para eliminar",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }
+
+
+//    private void eliminar() {
+//        int filaSeleccionada = tablaMallas.getSelectedRow();
+//
+//        if (filaSeleccionada >= 0) {
+//            int confirmacion = JOptionPane.showConfirmDialog(
+//                    this,
+//                    "¿Está seguro de que desea eliminar la malla académica seleccionada?",
+//                    "Confirmar eliminación",
+//                    JOptionPane.YES_NO_OPTION);
+//
+//            if (confirmacion == JOptionPane.YES_OPTION) {
+//                int mallaAEliminar = obtenerIdDesdeFilaSeleccionada(filaSeleccionada);
+//
+//                if (mallaController.delete(mallaAEliminar)) {
+//                    cargarTabla();
+//
+//                    JOptionPane.showMessageDialog(
+//                            null,
+//                            "Se eliminó correctamente",
+//                            "OK",
+//                            JOptionPane.INFORMATION_MESSAGE);
+//                } else {
+//                    JOptionPane.showMessageDialog(
+//                            null,
+//                            "Error al eliminar la malla académica",
+//                            "Error",
+//                            JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(
+//                    null,
+//                    "Seleccione una fila para eliminar",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     public void limpiar() {
-        txtDuracion.setText("");
+        txtNro_Asignaturas.setText("");
+        txtHorasT.setText("");
         txtDescripcion.setText("");
-        txtNombreSilabo.setText("");
+        txtCodigo.setText("");
+        cbxCarrera.setSelectedIndex(0);
+        isEditing = false;
+        cargarTabla();
+        cargarCarrera(cbxCarrera);
     }
 
-    public void modificar() throws VacioExceptions {
-        if (validar()) {
-            String duracion = txtDuracion.getText();
-            String descripcion = txtDescripcion.getText();
-            String nombreSilabo = txtNombreSilabo.getText();
-
-            mallaController.getMalla().setDuracion(duracion);
-            mallaController.getMalla().setDescripcion(descripcion);
-            mallaController.getMalla().setNombreSilabo(nombreSilabo);
-
-            int filaSeleccionada = tablaMallas.getSelectedRow();
-
-            if (filaSeleccionada >= 0 && filaSeleccionada < mallaController.getLista().getSize()) {
-                Malla nuevaMalla = cargarDatosSeleccionados();
-                mallaController.update(nuevaMalla, filaSeleccionada);
-
-                cargarTabla();
-                JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
-        }
-    }
-
-    private Malla cargarDatosSeleccionados() {
-        int filaSeleccionada = tablaMallas.getSelectedRow();
-        int id = obtenerIdDesdeFilaSeleccionada(filaSeleccionada);
-        String duracion = txtDuracion.getText();
-        String descripcion = txtDescripcion.getText();
-        String nombreSilabo = txtNombreSilabo.getText();
-
-        return new Malla(id, duracion, descripcion, nombreSilabo, null);
-    }
-
-    private void buscar() {
-        // Obtener el criterio ingresado en el campo de búsqueda
-        String criterioBusqueda = txtBuscarCriterio.getText();  // No convertir a minúsculas
-
-        // Obtener el criterio de búsqueda seleccionado en el combobox
-        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
-
-        // Verificar si se ingresó un criterio válido
-        if (!criterio.isEmpty()) {
-            // Seleccionar el comparador adecuado según el criterio de búsqueda
-            Comparator<Malla> comparador = (criterio.equals("descripcion"))
-                    ? Comparator.comparing(Malla::getDescripcion)
-                    : (criterio.equals("duracion"))
-                    ? Comparator.comparing(Malla::getDuracion)
-                    : Comparator.comparing(Malla::getNombreSilabo);
-
-            // Realizar la búsqueda en el modelo de la tabla
-            int indice = modeloTablaMallas.buscar(criterioBusqueda, comparador, criterio);
-
-            // Verificar si se encontró la asignatura
-            if (indice >= 0) {
-                // Seleccionar la fila encontrada
-                tablaMallas.setRowSelectionInterval(indice, indice);
-                // Cargar los datos seleccionados en los campos de texto
-                cargarDatosSeleccionados();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void ordenar() {
-        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
-        String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
-
-        if (!campoOrden.isEmpty() && modeloTablaMallas.esCampoValido(campoOrden)) {
-            modeloTablaMallas.ordenar(campoOrden, tipoOrden);
+    private void updateMalla() {
+        if (mallaController.update()) {
+            JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+            limpiar();
             cargarTabla();
         } else {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Campo de orden inválido",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public void cargarVista() {
+        mallaController.setIndex(tablaMallas.getSelectedRow());
+        if (mallaController.getIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                isEditing = true;
+                mallaController.setMalla(modeloTablaMallas.getMallas().get(mallaController.getIndex()));
+                txtCodigo.setText(mallaController.getMalla().getCodigo());
+                txtDescripcion.setText(mallaController.getMalla().getDescripcion());
+                txtHorasT.setText(mallaController.getMalla().getTotal_horas().toString());
+                txtNro_Asignaturas.setText(mallaController.getMalla().getNro_asignaturas().toString());
+                cbxCarrera.setSelectedIndex(mallaController.getMalla().getCarrera_id());
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+//    private void buscar() {
+//        // Obtener el criterio ingresado en el campo de búsqueda
+//        String criterioBusqueda = txtBuscarCriterio.getText();  // No convertir a minúsculas
+//
+//        // Obtener el criterio de búsqueda seleccionado en el combobox
+//        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
+//
+//        // Verificar si se ingresó un criterio válido
+//        if (!criterio.isEmpty()) {
+//            // Seleccionar el comparador adecuado según el criterio de búsqueda
+//            Comparator<Malla> comparador = (criterio.equals("descripcion"))
+//                    ? Comparator.comparing(Malla::getDescripcion)
+//                    : (criterio.equals("duracion"))
+//                    ? Comparator.comparing(Malla::getDuracion)
+//                    : Comparator.comparing(Malla::getNombreSilabo);
+//
+//            // Realizar la búsqueda en el modelo de la tabla
+//            int indice = modeloTablaMallas.buscar(criterioBusqueda, comparador, criterio);
+//
+//            // Verificar si se encontró la asignatura
+//            if (indice >= 0) {
+//                // Seleccionar la fila encontrada
+//                tablaMallas.setRowSelectionInterval(indice, indice);
+//                // Cargar los datos seleccionados en los campos de texto
+//                cargarDatosSeleccionados();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,9 +213,8 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtNombreSilabo = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
-        txtDuracion = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -236,6 +227,11 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         btnOrdenar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        txtHorasT = new javax.swing.JTextField();
+        cbxCarrera = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        txtNro_Asignaturas = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -252,22 +248,22 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Silabo:");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
+        jLabel1.setText("Horas Totales:");
+        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Duración:");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
+        jLabel2.setText("Carrera");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 90, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Descripción:");
-        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
-        txtNombreSilabo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNombreSilabo.setForeground(new java.awt.Color(255, 255, 255));
-        roundPanel1.add(txtNombreSilabo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 254, 31));
+        txtCodigo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        roundPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 254, 31));
 
         txtDescripcion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtDescripcion.setForeground(new java.awt.Color(255, 255, 255));
@@ -276,11 +272,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
                 txtDescripcionActionPerformed(evt);
             }
         });
-        roundPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 254, 30));
-
-        txtDuracion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtDuracion.setForeground(new java.awt.Color(255, 255, 255));
-        roundPanel1.add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 254, 30));
+        roundPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 254, 30));
 
         btnAgregar.setBackground(new java.awt.Color(242, 242, 242));
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictures/boton-agregar.png"))); // NOI18N
@@ -291,7 +283,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 111, 30));
+        roundPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 111, 30));
 
         btnModificar.setBackground(new java.awt.Color(242, 242, 242));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictures/lista-de-verificacion (1).png"))); // NOI18N
@@ -366,6 +358,27 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 550, -1));
 
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Nro. Asignaturas:");
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, -1, -1));
+
+        txtHorasT.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtHorasT.setForeground(new java.awt.Color(255, 255, 255));
+        roundPanel1.add(txtHorasT, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 254, 31));
+
+        cbxCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel1.add(cbxCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 120, 200, -1));
+
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Codigo:");
+        roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+
+        txtNro_Asignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtNro_Asignaturas.setForeground(new java.awt.Color(255, 255, 255));
+        roundPanel1.add(txtNro_Asignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 254, 31));
+
         jPanel3.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
         jPanel3.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
         jPanel3.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
@@ -376,23 +389,19 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        agregar();
+        guardar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try {
-            modificar();
-        } catch (VacioExceptions ex) {
-            Logger.getLogger(Frm_MallaAcademica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        guardar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminar();
+        //eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tablaMallasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMallasMouseClicked
-        cargarDatosSeleccionados();
+
     }//GEN-LAST:event_tablaMallasMouseClicked
 
     private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
@@ -400,11 +409,11 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescripcionActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscar();
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
-        ordenar();
+
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
@@ -414,7 +423,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -449,6 +458,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> cbxCarrera;
     private javax.swing.JComboBox<String> comboBoxCriterio;
     private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel1;
@@ -456,6 +466,8 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -463,8 +475,9 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tablaMallas;
     private javax.swing.JTextField txtBuscarCriterio;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtDuracion;
-    private javax.swing.JTextField txtNombreSilabo;
+    private javax.swing.JTextField txtHorasT;
+    private javax.swing.JTextField txtNro_Asignaturas;
     // End of variables declaration//GEN-END:variables
 }

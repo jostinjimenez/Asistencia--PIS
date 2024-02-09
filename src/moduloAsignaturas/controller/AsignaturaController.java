@@ -1,11 +1,13 @@
 package moduloAsignaturas.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import tda_listas.ListaEnlazada;
 import tda_listas.Nodo;
 import tda_listas.exceptions.VacioExceptions;
+
 import java.util.Comparator;
 import java.util.Iterator;
+
 import model.Asignatura;
 
 public class AsignaturaController extends DataAccessObject<Asignatura> {
@@ -16,16 +18,24 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
 
     public AsignaturaController() {
         super(Asignatura.class);
-        lastUsedId = generarID();
     }
 
-
+    public ListaEnlazada<Asignatura> getAsignaturas() {
+        if (asignaturas.isEmpty()) {
+            asignaturas = this.list_All();
+        }
+        return asignaturas;
+    }
 
     public Asignatura getAsignatura() {
         if (asignatura == null) {
             asignatura = new Asignatura();
         }
         return asignatura;
+    }
+
+    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     public void setAsignatura(Asignatura asignatura) {
@@ -42,64 +52,18 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return asignatura.isValid();
     }
 
-    public Boolean saved() {
-        if (validar()) {
-            try {
-                // Obtener los datos del formulario
-                String nombre = asignatura.getNombre();
-                Integer codigo = asignatura.getCodigo();
-                Integer horasTotales = asignatura.getHorasTotales();
+    public Integer save() throws Exception {
+        return super.save(this.asignatura);
+    }
 
-                // Incrementar el lastUsedId antes de asignarlo al nuevo ID
-                Integer id = ++lastUsedId;
-
-                // Crear una nueva instancia de Asignatura con los valores correctos
-                Asignatura asignaturaGuardar = new Asignatura();
-                asignaturaGuardar.setId(id);
-                asignaturaGuardar.setNombre(nombre);
-                asignaturaGuardar.setCodigo(codigo);
-                asignaturaGuardar.setHorasTotales(horasTotales);
-
-                // Guardar la Asignatura
-                boolean isSaved = save(asignaturaGuardar);
-                if (isSaved) {
-                    asignaturas = getAsignaturas(); // Actualizar la lista después de guardar
-                }
-
-                return isSaved;
-            } catch (Exception e) {
-                // Manejar la excepción aquí
-                System.out.println("Error al guardar la Asignatura: " + e.getMessage());
-                return false;
-            }
-        } else {
-            System.out.println("Error: los datos de la Asignatura no son válidos");
+    public Boolean update() {
+        try {
+            update(this.asignatura);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-    }
-
-    public String generatedCode() throws VacioExceptions {
-        return String.format("%04d", getLastUsedIdFromDatabase());
-    }
-
-    public ListaEnlazada<Asignatura> getAsignaturas() {
-        if (asignaturas.isEmpty()){
-            asignaturas = this.list_All();
-        }
-        return asignaturas;
-    }
-
-    public Boolean update(Integer i) {
-        return update(asignatura, i);
-    }
-
-    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
-        this.asignaturas = asignaturas;
-    }
-
-    private Integer getLastUsedIdFromDatabase() throws VacioExceptions {
-        // Obtener el último ID generado por el DataAccessObject
-        return generarID();
     }
 
     public int busquedaLineal(Asignatura elemento, Comparator<Asignatura> comparador) {
@@ -128,7 +92,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
 
             if ("nombre".equalsIgnoreCase(criterio) && asignatura.getNombre().equals(criterioBusqueda)) {
                 return index;
-            } else if ("codigo".equalsIgnoreCase(criterio) && asignatura.getCodigo().equals(criterioBusqueda)) {
+            } else if ("codigo".equalsIgnoreCase(criterio) && asignatura.getCodigo_materia().equals(criterioBusqueda)) {
                 return index;
             }
 
@@ -154,47 +118,92 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return -1;
     }
 
-    public void quicksort(ListaEnlazada<Asignatura> lista, Comparator<Asignatura> comparador, boolean ascendente) throws VacioExceptions {
-        quicksortRecursivo(lista, 0, lista.getSize() - 1, comparador, ascendente);
+    public ListaEnlazada<Asignatura> quicksort(ListaEnlazada<Asignatura> lista, Integer type, String field) throws VacioExceptions {
+
+        Asignatura[] m = lista.toArray();
+        quicksort(m, 0, m.length - 1, type, field);
+        lista.toList(m);
+        return lista;
     }
 
-    private void quicksortRecursivo(ListaEnlazada<Asignatura> lista, int low, int high, Comparator<Asignatura> comparador, boolean ascendente) throws VacioExceptions {
+    private void quicksort(Asignatura[] m, int low, int high, Integer type, String field) {
         if (low < high) {
-            int pivotIndex = particion(lista, low, high, comparador, ascendente);
-
-            // Recursivamente ordenar los elementos antes y después del pivote
-            quicksortRecursivo(lista, low, pivotIndex - 1, comparador, ascendente);
-            quicksortRecursivo(lista, pivotIndex + 1, high, comparador, ascendente);
+            int pivotIndex = partition(m, low, high, type, field);
+            quicksort(m, low, pivotIndex - 1, type, field);
+            quicksort(m, pivotIndex + 1, high, type, field);
         }
     }
 
-    private int particion(ListaEnlazada<Asignatura> lista, int low, int high, Comparator<Asignatura> comparador, boolean ascendente) throws VacioExceptions {
-        Asignatura pivot = lista.get(high);
+    private int partition(Asignatura[] array, int low, int high, Integer type, String field) {
+        Asignatura pivote = array[high];
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (compareAsignaturas(lista.get(j), pivot, comparador, ascendente) <= 0) {
+            if (array[j].comparar(pivote, field, type)) {
                 i++;
-                swap(lista, i, j);
+                swap(array, i, j);
             }
         }
 
-        swap(lista, i + 1, high);
+        swap(array, i + 1, high);
         return i + 1;
     }
 
-    private void swap(ListaEnlazada<Asignatura> lista, int i, int j) throws VacioExceptions {
-        Asignatura temp = lista.get(i);
-        lista.update(i, lista.get(j));
-        lista.update(j, temp);
+    private void swap(Asignatura[] array, int i, int j) {
+        Asignatura temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 
-    private int compareAsignaturas(Asignatura a1, Asignatura a2, Comparator<Asignatura> comparador, boolean ascendente) {
-        int resultado = comparador.compare(a1, a2);
-        return ascendente ? resultado : -resultado;
+
+    private int busquedaBinaria1(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
+        int infe = 0;
+        int sup = lista.getSize() - 1;
+
+        while (infe <= sup) {
+            int indice = (infe + sup) / 2;
+            Asignatura mid = lista.get(indice);
+            int resultado = mid.comparar(mid, text, campo);
+            if (resultado == 0) {
+                int izquierda = indice - 1;
+                while (izquierda >= 0 && getForm(lista.get(izquierda), text, campo)) {
+                    indice = izquierda;
+                    izquierda--;
+                }
+                return indice;
+            } else if (resultado < 0) {
+                sup = indice - 1;
+            } else {
+                infe = indice + 1;
+            }
+        }
+
+        return -1;
     }
 
-    public boolean delete(Asignatura asignaturaAEliminar) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private boolean getForm(Asignatura matricula, String text, String campo) {
+        switch (campo.toLowerCase()) {
+            case "id":
+                return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
+
+    private ListaEnlazada<Asignatura> ordenarLista(ListaEnlazada<Asignatura> lista, String campo) throws VacioExceptions {
+        ListaEnlazada<Asignatura> listaOrdenada = quicksort(lista, 0, campo);
+        return listaOrdenada;
+    }
+
+    public Asignatura busquedaBinaria2(ListaEnlazada<Asignatura> lista, String text, String campo, Integer type) throws VacioExceptions {
+        ListaEnlazada<Asignatura> listaOrdenada = ordenarLista(lista, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
     }
 }

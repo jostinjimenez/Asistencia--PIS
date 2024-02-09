@@ -57,8 +57,8 @@ public class Util_VistaLinked1_Asistencia {
         ControllerAsignatura ac = new ControllerAsignatura();
         cbxmarca.removeAllItems();
         try {
-            for (int i = 0; i < ac.getLista().getSize(); i++) {
-                cbxmarca.addItem(ac.getLista().get(i));
+            for (int i = 0; i < ac.getAsignaturas().getSize(); i++) {
+                cbxmarca.addItem(ac.getAsignaturas().get(i));
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();

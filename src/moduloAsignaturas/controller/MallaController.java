@@ -1,6 +1,6 @@
 package moduloAsignaturas.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import tda_listas.ListaEnlazada;
 import tda_listas.Nodo;
 import tda_listas.exceptions.VacioExceptions;
@@ -11,12 +11,35 @@ import model.Malla;
 public class MallaController extends DataAccessObject<Malla> {
 
     private Malla malla = new Malla();
-    private ListaEnlazada<Malla> lista;
-    private static Integer lastUsedId = 0;
+    private ListaEnlazada<Malla> mallas;
+    private Integer index = -1;
 
     public MallaController() {
         super(Malla.class);
-        lastUsedId = generarID();
+    }
+
+    public ListaEnlazada<Malla> getMallas() {
+        if (mallas.isEmpty()) {
+            mallas = list_All();
+        }
+        return mallas;
+
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public void setMallas(ListaEnlazada<Malla> mallas) {
+        this.mallas = mallas;
+    }
+
+    public void setMalla(Malla malla) {
+        this.malla = malla;
     }
 
     public Malla getMalla() {
@@ -26,82 +49,23 @@ public class MallaController extends DataAccessObject<Malla> {
         return malla;
     }
 
-    public void setMalla(Malla malla) {
-        this.malla = malla;
+    public Integer save() throws Exception {
+        return super.save(this.malla);
     }
 
-    public boolean validar() {
-        // Verificar que la Malla no es null
-        if (malla == null) {
-            return false;
-        }
-
-        // Verificar que los campos de la Malla no son null o vacíos
-        return malla.isValid();
-    }
-
-    public Boolean saved() {
-        if (validar()) {
-            try {
-                // Obtener los datos del formulario
-                String duracion = malla.getDuracion();
-                String descripcion = malla.getDescripcion();
-                String nombreSilabo = malla.getNombreSilabo();
-                byte[] silabo = malla.getSilabo();
-
-                // Incrementar el lastUsedId antes de asignarlo al nuevo ID
-                Integer id = ++lastUsedId;
-
-                // Crear una nueva instancia de Malla con los valores correctos
-                Malla mallaGuardar = new Malla();
-                mallaGuardar.setId(id);
-                mallaGuardar.setDuracion(duracion);
-                mallaGuardar.setDescripcion(descripcion);
-                mallaGuardar.setNombreSilabo(nombreSilabo);
-                mallaGuardar.setSilabo(silabo);
-
-                // Guardar la Malla
-                boolean isSaved = save(mallaGuardar);
-                if (isSaved) {
-                    lista = getLista(); // Actualizar la lista después de guardar
-                }
-
-                return isSaved;
-            } catch (Exception e) {
-                // Manejar la excepción aquí
-                System.out.println("Error al guardar la Malla: " + e.getMessage());
-                return false;
-            }
-        } else {
-            System.out.println("Error: los datos de la Malla no son válidos");
+    public Boolean update() {
+        try {
+            update(this.malla);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    public String generatedCode() throws VacioExceptions {
-        return String.format("%04d", getLastUsedIdFromDatabase());
-    }
-
-    public ListaEnlazada<Malla> getLista() {
-        lista = list_All(); // Actualizar la lista desde la base de datos
-        return lista;
-    }
-
-    public Boolean update(Integer i) {
-        return update(malla, i);
-    }
-
-    public void setLista(ListaEnlazada<Malla> lista) {
-        this.lista = lista;
-    }
-
-    private Integer getLastUsedIdFromDatabase() throws VacioExceptions {
-        // Obtener el último ID generado por el DataAccessObject
-        return generarID();
-    }
 
     public int busquedaLineal(Malla elemento, Comparator<Malla> comparador) {
-        Nodo<Malla> current = lista.getHead();
+        Nodo<Malla> current = mallas.getHead();
         int index = 0;
 
         while (current != null) {
@@ -116,43 +80,6 @@ public class MallaController extends DataAccessObject<Malla> {
         return -1;
     }
 
-    public int buscar(String criterioBusqueda, Comparator<Malla> comparador, String criterio) {
-        Nodo<Malla> current = (Nodo<Malla>) lista.getHead();
-
-        int index = 0;
-
-        while (current != null) {
-            Malla malla = current.getData();
-
-            if ("duracion".equalsIgnoreCase(criterio) && malla.getDuracion().equals(criterioBusqueda)) {
-                return index;
-            } else if ("descripcion".equalsIgnoreCase(criterio) && malla.getDescripcion().equals(criterioBusqueda)) {
-                return index;
-            } else if ("nombreSilabo".equalsIgnoreCase(criterio) && malla.getNombreSilabo().equals(criterioBusqueda)) {
-                return index;
-            }
-
-            current = current.getNext();
-            index++;
-        }
-
-        System.out.println("No se encontró ninguna malla con el criterio proporcionado.");
-        return -1;
-    }
-
-    public Integer getIndex() {
-        Iterator<Malla> iterator = lista.iterator();
-        int index = 0;
-
-        while (iterator.hasNext()) {
-            if (iterator.next() == malla) {
-                return index;
-            }
-            index++;
-        }
-
-        return -1;
-    }
 
     public void quicksort(ListaEnlazada<Malla> lista, Comparator<Malla> comparador, boolean ascendente) throws VacioExceptions {
         quicksortRecursivo(lista, 0, lista.getSize() - 1, comparador, ascendente);

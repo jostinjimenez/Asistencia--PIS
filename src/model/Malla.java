@@ -5,42 +5,22 @@ import java.util.Objects;
 public class Malla {
 
     private Integer id;
-    private String duracion;
     private String descripcion;
-    private String nombreSilabo; // Nombre del archivo PDF
-    private byte[] silabo; // Este atributo representa el archivo PDF
+    private String codigo;
+    private Integer nro_asignaturas;
+    private Integer total_horas;
+
+    private Integer carrera_id;
 
     public Malla() {
-    }
-
-    public Malla(Integer id, String duracion, String descripcion) {
-        this.id = id;
-        this.duracion = duracion;
-        this.descripcion = descripcion;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Malla(Integer id, String duracion, String descripcion, String nombreSilabo, byte[] silabo) {
-        this.id = id;
-        this.duracion = duracion;
-        this.descripcion = descripcion;
-        this.nombreSilabo = nombreSilabo;
-        this.silabo = silabo;
-    }
-
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
     }
 
     public String getDescripcion() {
@@ -51,20 +31,36 @@ public class Malla {
         this.descripcion = descripcion;
     }
 
-    public byte[] getSilabo() {
-        return silabo;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setSilabo(byte[] silabo) {
-        this.silabo = silabo;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public String getNombreSilabo() {
-        return nombreSilabo;
+    public Integer getNro_asignaturas() {
+        return nro_asignaturas;
     }
 
-    public void setNombreSilabo(String nombreSilabo) {
-        this.nombreSilabo = nombreSilabo;
+    public void setNro_asignaturas(Integer nro_asignaturas) {
+        this.nro_asignaturas = nro_asignaturas;
+    }
+
+    public Integer getTotal_horas() {
+        return total_horas;
+    }
+
+    public void setTotal_horas(Integer total_horas) {
+        this.total_horas = total_horas;
+    }
+
+    public Integer getCarrera_id() {
+        return carrera_id;
+    }
+
+    public void setCarrera_id(Integer carrera_id) {
+        this.carrera_id = carrera_id;
     }
 
     @Override
@@ -72,27 +68,4 @@ public class Malla {
         return descripcion;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Asignatura that = (Asignatura) obj;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public boolean isValid() {
-        // Verificar que los campos necesarios no sean null o vacíos
-        return duracion != null && !duracion.isEmpty()
-                && descripcion != null && !descripcion.isEmpty()
-                && nombreSilabo != null && !nombreSilabo.isEmpty();
-    }
 }

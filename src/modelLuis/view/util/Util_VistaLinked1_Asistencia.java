@@ -6,9 +6,7 @@ import model.Cursa;
 import model.Horario;
 import model.Matricula;
 import modelLuis.controller.ControllerAsignatura;
-import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
-import modelLuis.controller.ControllerMatricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -52,8 +50,8 @@ public class Util_VistaLinked1_Asistencia {
         ControllerAsignatura ac = new ControllerAsignatura();
         cbxmarca.removeAllItems();
         try {
-            for (int i = 0; i < ac.getLista().getSize(); i++) {
-                cbxmarca.addItem(ac.getLista().get(i));
+            for (int i = 0; i < ac.getAsignaturas().getSize(); i++) {
+                cbxmarca.addItem(ac.getAsignaturas().get(i));
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();

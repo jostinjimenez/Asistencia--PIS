@@ -5,13 +5,14 @@ import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import model.Horario;
 import modelLuis.controller.ControllerAsignatura;
+import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 public class ModelTableHorarioEs extends AbstractTableModel {
 
     private ListaEnlazada<Horario> horarios;
-    private ControllerAsignatura a = new ControllerAsignatura();
+    private AsignaturaController a = new AsignaturaController();
 
     @Override
     public int getRowCount() {

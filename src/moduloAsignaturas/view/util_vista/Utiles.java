@@ -1,5 +1,8 @@
-package modulo_1.inicio_sesion.view.util;
+package moduloAsignaturas.view.util_vista;
 
+import Modelo.ControllerCarrera.ControllerCarrera;
+import model.Carrera;
+import model.Cuenta;
 import model.PeriodoAcademico;
 import model.Rol;
 import modulo_1.inicio_sesion.controller.CuentaController;
@@ -8,135 +11,32 @@ import modulo_1.periodo_academico.controller.PeriodoAcController;
 import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
-
-import model.Cuenta;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class Utiles {
 
-    public static void cargaRol(JComboBox cbxRol) {
-        RolController rc = new RolController();
-        cbxRol.removeAllItems();
-
-        cbxRol.addItem(new Rol(0, "Todos", "Todos los roles"));
+    public static void cargarCarrera(JComboBox cbxCarrera) {
+        ControllerCarrera rc = new ControllerCarrera();
+        cbxCarrera.removeAllItems();
 
         try {
-            for (int i = 0; i < rc.getRoles().getSize(); i++) {
-                cbxRol.addItem(rc.getRoles().get(i));
-            }
-        } catch (VacioExceptions e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void cargarPeriodo(JComboBox cbxPeriodo) {
-        PeriodoAcController rc = new PeriodoAcController();
-        cbxPeriodo.removeAllItems();
-
-        try {
-            if (rc.getPeriodoAcademicos().getSize() > 0) {
-                for (int i = 0; i < rc.getPeriodoAcademicos().getSize(); i++) {
-                    cbxPeriodo.addItem(rc.getPeriodoAcademicos().get(i));
+            if (rc.getLista().getSize() > 0) {
+                for (int i = 0; i < rc.getLista().getSize(); i++) {
+                    cbxCarrera.addItem(rc.getLista().get(i));
                 }
             } else {
-                cbxPeriodo.addItem("No hay periodos academicos");
+                cbxCarrera.addItem("No hay carreras");
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();
         }
     }
 
-    public static PeriodoAcademico getComboPeriodo(JComboBox cbx) {
-        return (PeriodoAcademico) cbx.getSelectedItem();
+    public static Carrera getComboCarrera(JComboBox cbx) {
+        return (Carrera) cbx.getSelectedItem();
     }
 
-    public static Rol getComboRol(JComboBox cbx) {
-        return (Rol) cbx.getSelectedItem();
-    }
-
-    public static boolean validarDni(String cedula) {
-        if (cedula.length() != 10) {
-            return false;
-        }
-
-        for (int i = 0; i < cedula.length(); i++) {
-            if (!Character.isDigit(cedula.charAt(i))) {
-                return false;
-            }
-        }
-
-        int suma = 0;
-        for (int i = 0; i < 9; i++) {
-            int digito = Character.getNumericValue(cedula.charAt(i));
-            if (i % 2 == 0) {
-                digito *= 2;
-                if (digito > 9) {
-                    digito -= 9;
-                }
-            }
-            suma += digito;
-        }
-
-        int modulo = suma % 10;
-        int digitoVerificador = (modulo == 0) ? 0 : 10 - modulo;
-
-        return digitoVerificador == Character.getNumericValue(cedula.charAt(9));
-    }
-
-    private static CuentaController cc;
-    private static Cuenta cuentaUsu;
-
-    public static Cuenta getCuentaUsu() {
-        if (cuentaUsu == null)
-            cuentaUsu = new Cuenta();
-        return cuentaUsu;
-    }
-
-    public static void setCuentaUsu(Cuenta cuentaUsu) {
-        Utiles.cuentaUsu = cuentaUsu;
-    }
-
-    public static CuentaController getCc() {
-        if (cc == null)
-            cc = new CuentaController();
-        return cc;
-    }
-
-    public static void setCc(CuentaController cc) {
-        Utiles.cc = cc;
-    }
-
-    public void GenerarCorreoInstitucional(String nombre, String apellido) {
-        String correo = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
-    }
-
-    PeriodoAcController pac = new PeriodoAcController();
-
-    public PeriodoAcController getPac() {
-        return pac;
-    }
-
-    public void setPac(PeriodoAcController pac) {
-        this.pac = pac;
-    }
-
-    public static void copiarArchivo(File origen, File destino) throws Exception {
-        Files.copy(origen.toPath(),
-                (destino).toPath(),
-                StandardCopyOption.REPLACE_EXISTING);
-    }
-
-    public static String extension(String fileName) {
-        String extension = "";
-
-        int i = fileName.lastIndexOf('.');
-        if (i > 0) {
-            extension = fileName.substring(i + 1);
-        }
-        return extension;
-    }
 }
 

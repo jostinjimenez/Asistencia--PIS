@@ -35,9 +35,9 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
             case 1:
                 return (asignatura != null) ? asignatura.getNombre() : "";
             case 2:
-                return (asignatura != null) ? asignatura.getCodigo() : "";
+                return (asignatura != null) ? asignatura.getCodigo_materia() : "";
             case 3:
-                return (asignatura != null) ? asignatura.getHorasTotales() : "";
+                return (asignatura != null) ? asignatura.getHoras_Totales() : "";
             default:
                 return null;
         }
@@ -83,7 +83,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
 
         Comparator<Asignatura> comparador = (campo.equals("nombre"))
                 ? Comparator.comparing(Asignatura::getNombre)
-                : Comparator.comparing(Asignatura::getCodigo);
+                : Comparator.comparing(Asignatura::getCodigo_materia);
 
         if (tipoOrden.equals("descendente")) {
             comparador = comparador.reversed();
@@ -99,7 +99,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
             case "nombre":
                 return Comparator.comparing(Asignatura::getNombre);
             case "codigo":
-                return Comparator.comparing(Asignatura::getCodigo);
+                return Comparator.comparing(Asignatura::getCodigo_materia);
             // Puedes agregar más casos según tus necesidades
             default:
                 return null;

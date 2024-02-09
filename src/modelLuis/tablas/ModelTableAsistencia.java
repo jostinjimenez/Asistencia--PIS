@@ -1,6 +1,8 @@
 package modelLuis.tablas;
 
 import javax.swing.table.AbstractTableModel;
+
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import model.Asistencia;
 import model.Estudiante;
 import model.Matricula;
@@ -13,7 +15,7 @@ import tda_listas.exceptions.VacioExceptions;
 public class ModelTableAsistencia extends AbstractTableModel {
 
     private ListaEnlazada<Matricula> matriculas;
-    private ControllerEstudiante c = new ControllerEstudiante();
+    private EstudianteController c = new EstudianteController();
     private ControllerAsistencia a = new ControllerAsistencia();
     private ListaEnlazada<Asistencia> Asistencias;
     private String norma = "";

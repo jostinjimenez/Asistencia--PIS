@@ -1,43 +1,52 @@
 package moduloAsignaturas.view.tablas;
 
+import model.Cuenta;
 import moduloAsignaturas.controller.MallaController;
-import java.util.Comparator;
+
 import javax.swing.table.AbstractTableModel;
 import model.Malla;
+import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 public class ModeloTablaMallas extends AbstractTableModel {
 
-    private MallaController mallaController;
-
+    private ListaEnlazada<Malla> mallas;
     @Override
-    public int getColumnCount() {
-        return 4; // Se ha eliminado la columna correspondiente al atributo 'silabo'
+    public int getRowCount() {
+        return mallas.getSize();
     }
 
     @Override
-    public int getRowCount() {
-        return (mallaController != null && mallaController.getLista() != null) ? mallaController.getLista().getSize() : 0;
+    public int getColumnCount() {
+        return 4;
+    }
+
+    public ListaEnlazada<Malla> getMallas() {
+        return mallas;
+    }
+
+    public void setMallas(ListaEnlazada<Malla> mallas) {
+        this.mallas = mallas;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        Malla malla;
+        Malla malla = null;
         try {
-            malla = mallaController.getLista().get(row);
+            malla = mallas.get(row);
         } catch (VacioExceptions e) {
             throw new RuntimeException(e);
         }
 
         switch (col) {
             case 0:
-                return (malla != null) ? malla.getId() : "";
+                return (malla != null) ? malla.getCodigo() : "";
             case 1:
                 return (malla != null) ? malla.getDescripcion() : "";
             case 2:
-                return (malla != null) ? malla.getDuracion() : "";
+                return (malla != null) ? malla.getNro_asignaturas() : "";
             case 3:
-                return (malla != null) ? malla.getNombreSilabo() : ""; // Atributo 'nombreSilabo' en lugar de 'silabo'
+                return (malla != null) ? malla.getTotal_horas() : ""; // Atributo 'nombreSilabo' en lugar de 'silabo'
             default:
                 return null;
         }
@@ -47,58 +56,13 @@ public class ModeloTablaMallas extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "ID";
+                return "Código";
             case 1:
                 return "Descripción";
             case 2:
-                return "Duración";
+                return "Nro. Asignaturas";
             case 3:
-                return "Nombre del Silabo";
-            default:
-                return null;
-        }
-    }
-
-    public MallaController getMallaController() {
-        return mallaController;
-    }
-
-    public void setMallaController(MallaController mallaController) {
-        this.mallaController = mallaController;
-    }
-
-    public int buscar(String criterioBusqueda, Comparator<Malla> comparador, String criterio) {
-        int resultado = mallaController.buscar(criterioBusqueda, comparador, criterio);
-        return resultado;
-    }
-
-    public boolean esCampoValido(String campo) {
-        // Método para verificar si el campo de búsqueda es válido (duracion o nombreSilabo)
-        boolean esValido = campo.equalsIgnoreCase("duracion") || campo.equalsIgnoreCase("nombreSilabo");
-        return esValido;
-    }
-
-    public void ordenar(String campo, String tipoOrden) {
-        System.out.println("Antes de ordenar: " + mallaController.getLista().print());
-
-        Comparator<Malla> comparador = obtenerComparador(campo);
-
-        if (tipoOrden.equals("descendente")) {
-            comparador = comparador.reversed();
-        }
-
-        System.out.println("Después de ordenar: " + mallaController.getLista().print());
-
-        fireTableDataChanged();
-    }
-
-    private Comparator<Malla> obtenerComparador(String campoOrden) {
-        switch (campoOrden) {
-            case "duracion":
-                return Comparator.comparing(Malla::getDuracion);
-            case "nombreSilabo":
-                return Comparator.comparing(Malla::getNombreSilabo);
-            // Puedes agregar más casos según tus necesidades
+                return "Horas totales";
             default:
                 return null;
         }

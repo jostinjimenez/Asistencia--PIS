@@ -1,6 +1,8 @@
 package modelLuis.tablas;
 
 import javax.swing.table.AbstractTableModel;
+
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import model.Estudiante;
 import model.Matricula;
 import modelLuis.controller.ControllerEstudiante;
@@ -10,7 +12,7 @@ import tda_listas.exceptions.VacioExceptions;
 public class ModelTableMatriculas extends AbstractTableModel {
 
     private ListaEnlazada<Matricula> matriculas;
-    private ControllerEstudiante aa = new ControllerEstudiante();
+    private EstudianteController aa = new EstudianteController();
 
     @Override
     public int getRowCount() {
