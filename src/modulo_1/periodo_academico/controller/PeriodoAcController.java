@@ -1,8 +1,7 @@
 package modulo_1.periodo_academico.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.PeriodoAcademico;
-import model.Persona;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -53,53 +52,17 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
     }
 
     // Metodos
-    public Boolean save() {
-        this.periodoAc.setId(generarID());
-        return save(periodoAc);
+    public Integer save() throws Exception {
+        return super.save(this.periodoAc);
     }
 
     public Boolean update(Integer index) {
-        return update(periodoAc, index);
-    }
-
-    public Boolean delete(Integer idPeriodoAc) {
-        for (int i = 0; i < periodoAcademicos.getSize(); i++) {
-            PeriodoAcademico pa = null;
-            try {
-                pa = periodoAcademicos.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (pa.getId().equals(idPeriodoAc)) {
-                try {
-                    pa.setEstado(false);
-                    this.xStream.toXML(periodoAcademicos, new FileOutputStream(URL));
-                    return true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void cerrarPeriodoAc(Integer idPeriodoAc) {
-        for (int i = 0; i < periodoAcademicos.getSize(); i++) {
-            PeriodoAcademico pa = null;
-            try {
-                pa = periodoAcademicos.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (pa.getId().equals(idPeriodoAc)) {
-                try {
-                    pa.setEstado(false);
-                    this.xStream.toXML(periodoAcademicos, new FileOutputStream(URL));
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+        try {
+            update(this.periodoAc);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -181,112 +144,5 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
     }
 
 
-//    public ListaEnlazada<PeriodoAcademico> buscarEstado(ListaEnlazada<PeriodoAcademico> lista, Boolean estado) throws Exception {
-//        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "estado");
-//        PeriodoAcademico[] p = lo.toArray();
-//        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-//
-//        int left = 0;
-//        int right = lista.getSize() - 1;
-//
-//        while (left <= right) {
-//            int mid = left + (right - left) / 2;
-//
-//            if (p[mid].getEstado().booleanValue() == estado.booleanValue()) {
-//                result.add(p[mid]);
-//
-//                int temp = mid - 1;
-//                while (temp >= left && p[temp].getEstado().booleanValue() == estado.booleanValue()) {
-//                    result.add(p[temp]);
-//                    temp--;
-//                }
-//
-//                temp = mid + 1;
-//                while (temp <= right && p[temp].getEstado().booleanValue() == estado.booleanValue()) {
-//                    result.add(p[temp]);
-//                    temp++;
-//                }
-//                return result;
-//            }
-//            if (p[mid].getEstado().booleanValue() < estado.booleanValue()) {
-//                left = mid + 1;
-//            } else {
-//                right = mid - 1;
-//            }
-//        }
-//        return result;
-//    }
-
-    public ListaEnlazada<PeriodoAcademico> buscarFechaInicio(ListaEnlazada<PeriodoAcademico> lista, String fechaInicio) throws Exception {
-        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "fechaInicio");
-        PeriodoAcademico[] p = lo.toArray();
-        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getFechaInicio().equals(fechaInicio)) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getFechaInicio().equals(fechaInicio)) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getFechaInicio().equals(fechaInicio)) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getFechaInicio().compareTo(fechaInicio) < 0) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return result;
-    }
-
-    public ListaEnlazada<PeriodoAcademico> buscarFechaFin(ListaEnlazada<PeriodoAcademico> lista, String fechaFin) throws Exception {
-        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "fechaFin");
-        PeriodoAcademico[] p = lo.toArray();
-        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-
-        int left = 0;
-        int right = lista.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-            if (p[mid].getFechaFin().equals(fechaFin)) {
-                result.add(p[mid]);
-
-                int temp = mid - 1;
-                while (temp >= left && p[temp].getFechaFin().equals(fechaFin)) {
-                    result.add(p[temp]);
-                    temp--;
-                }
-
-                temp = mid + 1;
-                while (temp <= right && p[temp].getFechaFin().equals(fechaFin)) {
-                    result.add(p[temp]);
-                    temp++;
-                }
-                return result;
-            }
-            if (p[mid].getFechaFin().compareTo(fechaFin) < 0) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return result;
-    }
 }
 

@@ -17,15 +17,15 @@ import java.text.SimpleDateFormat;
  * @author LENOVO
  */
 public class ModeloTablaDocente extends AbstractTableModel {
-    private ListaEnlazada<Docente> docente = new ListaEnlazada<>();
+    private ListaEnlazada<Docente> docentes = new ListaEnlazada<>();
 
 
-    public ListaEnlazada<Docente> getDocente() {
-        return docente;
+    public ListaEnlazada<Docente> getDocentes() {
+        return docentes;
     }
 
-    public void setDocente(ListaEnlazada<Docente> docente) {
-        this.docente = docente;
+    public void setDocentes(ListaEnlazada<Docente> docentes) {
+        this.docentes = docentes;
     }
 
     public EventListenerList getListenerList() {
@@ -39,8 +39,8 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        if (docente != null) {
-            return docente.getSize();
+        if (docentes != null) {
+            return docentes.getSize();
         } else {
             return 0;
         }
@@ -58,7 +58,7 @@ public class ModeloTablaDocente extends AbstractTableModel {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
 
         try {
-            doc = docente.get(row);
+            doc = docentes.get(row);
             ce.setDocente(doc);
             String fechaFormateada = sdf.format(ce.getDocente().getFecha_nacimiento());
 
@@ -70,7 +70,7 @@ public class ModeloTablaDocente extends AbstractTableModel {
 //                case 4 -> (doc != null) ? doc.getDni() : " ";
 //                case 5 -> (doc != null) ? doc.getTelefono() : " ";
                 case 0 -> (doc != null) ? doc.getCodigo_empleado() : " ";
-                case 1 -> (doc != null) ? doc.getAnios_experiencia() : " ";
+                case 1 -> (doc != null) ? doc.getExperiencia() : " ";
                 case 2 -> (doc != null) ? doc.getGrado_academico() : " ";
                 default -> null;
             };

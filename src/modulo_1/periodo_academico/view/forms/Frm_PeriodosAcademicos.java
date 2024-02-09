@@ -29,50 +29,12 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         });
 
         btnEliminar.addActionListener(e -> eliminarRegistro());
-
-        txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                buscar();
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                buscar();
-            }
-
-            public void insertUpdate(DocumentEvent e) {
-               buscar();
-            }
-        });
     }
 
     ModeloTablaPeriodoAc mtpa = new ModeloTablaPeriodoAc();
     PeriodoAcController pc = new PeriodoAcController();
 
     // Metodos
-    private void buscar() {
-        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-        String texto = txtBuscar.getText();
-
-        try {
-            if (texto.isEmpty()) {
-                mtpa.setPeriodoAcademicos(pc.getPeriodoAcademicos());
-            } else {
-                if (criterio.equalsIgnoreCase("fechaFin")) {
-                    mtpa.setPeriodoAcademicos(pc.buscarFechaFin(pc.list_All(), texto));
-                } else if (criterio.equalsIgnoreCase("fechaInicio")) {
-                    mtpa.setPeriodoAcademicos(pc.buscarFechaInicio(pc.list_All(), texto));
-                } else if (criterio.equalsIgnoreCase("id")) {
-                    Integer id = Integer.parseInt(texto);
-                    mtpa.setPeriodoAcademicos(pc.buscarId(pc.list_All(), id));
-                }
-            }
-            mtpa.fireTableDataChanged();
-            jTable1.setModel(mtpa);
-            jTable1.updateUI();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     public void eliminarRegistro() {
         int selectedRow = jTable1.getSelectedRow();

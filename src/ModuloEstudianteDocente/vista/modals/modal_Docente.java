@@ -1,7 +1,7 @@
 package ModuloEstudianteDocente.vista.modals;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
-import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
+import ModuloEstudianteDocente.controlador.DocenteController;
+import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -11,78 +11,70 @@ import javax.swing.JTable;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
 
-public class modal_Estudiante extends javax.swing.JDialog {
+public class modal_Docente extends javax.swing.JDialog {
 
-    public modal_Estudiante(java.awt.Frame parent, boolean modal) {
+    public modal_Docente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         setupListeners();
-
-        cbxTituloBach.addItem("Si");
-        cbxTituloBach.addItem("No");
 
         btnGuardar.addActionListener(e -> {
             guardar();
         });
     }
 
-    public modal_Estudiante(java.awt.Frame parent, boolean modal, ModeloTablaEstudiante modeloTablaEstudiante, JTable tablaEstudiantes) {
+    public modal_Docente(java.awt.Frame parent, boolean modal, ModeloTablaDocente modeloTablaDocente, JTable tablaEstudiantes) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         setupListeners();
-        cargarVista(modeloTablaEstudiante, tablaEstudiantes);
+        //cargarVista(modeloTablaDocente, tablaEstudiantes);
 
         btnGuardar.addActionListener(e -> {
-            actualizar(tablaEstudiantes, modeloTablaEstudiante);
+            actualizar(tablaEstudiantes, modeloTablaDocente);
         });
-
-        cbxTituloBach.addItem("Si");
-        cbxTituloBach.addItem("No");
     }
 
     // Variables
-    private EstudianteController ec = new EstudianteController();
+    private DocenteController dc = new DocenteController();
     private PersonaController pc = new PersonaController();
     private CuentaController cc = new CuentaController();
     private Integer fila = -1;
 
     // Metodos
-    public void cargarVista(ModeloTablaEstudiante mte, JTable jTable1) {
-        ec.setIndex(jTable1.getSelectedRow());
-        if (ec.getIndex() < 0) {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                //isEditing = true;
-                fila = ec.getIndex();
-                ec.setEstudiante(mte.getEstudiantes().get(fila));
-                pc.setPersona(mte.getPersonas().get(fila));
-                txtNombres.setText(pc.getPersona().getNombre());
-                txtApellidos.setText(pc.getPersona().getApellido());
-                txtFechaNacim.setDate(pc.getPersona().getFecha_nacimiento());
-                txtCorreo.setText(pc.getPersona().getCorreo_personal());
-                txtCedula.setText(pc.getPersona().getDni());
-                txtTelefono.setText(pc.getPersona().getTelefono());
-
-                txtEtnia.setText(ec.getEstudiante().getEtnia());
-                String seleccion = ec.getEstudiante().getTitulo_bachiller() ? "Si" : "No";
-                cbxTituloBach.setSelectedItem(seleccion);
-                txtCalle.setText(ec.getEstudiante().getCalle_direccion());
-                txtNacionalidad.setText(ec.getEstudiante().getNacionalidad());
-                txtCanton.setText(ec.getEstudiante().getCanton());
-                txtProvincia.setText(ec.getEstudiante().getProvincia());
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println(e.getMessage());
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    public void cargarVista(ModeloTablaDocente mte, JTable jTable1) {
+//        dc.setIndex(jTable1.getSelectedRow());
+//        if (dc.getIndex() < 0) {
+//            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            try {
+//                //isEditing = true;
+//                fila = dc.getIndex();
+//                dc.setDocente(mte.getDocentes().get(fila));
+//                pc.setPersona(mte.get().get(fila));
+//                txtNombres.setText(pc.getPersona().getNombre());
+//                txtApellidos.setText(pc.getPersona().getApellido());
+//                txtFechaNacim.setDate(pc.getPersona().getFecha_nacimiento());
+//                txtCorreo.setText(pc.getPersona().getCorreo_personal());
+//                txtCedula.setText(pc.getPersona().getDni());
+//                txtTelefono.setText(pc.getPersona().getTelefono());
+//
+//                txtCodigoEmpleado.setText(dc.getEstudiante().getEtnia());
+//                String seleccion = dc.getEstudiante().getTitulo_bachiller() ? "Si" : "No";
+//                cbxTituloBach.setSelectedItem(seleccion);
+//                txtExperiencia.setText(dc.getEstudiante().getCalle_direccion());
+//                txtNacionalidad.setText(dc.getEstudiante().getNacionalidad());
+//
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//                System.out.println(e.getMessage());
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
     private Boolean validar() {
         return !txtApellidos.getText().trim().isEmpty()
@@ -90,8 +82,8 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 && !txtCorreo.getText().trim().isEmpty()
                 && !txtCedula.getText().trim().isEmpty()
                 && !txtTelefono.getText().trim().isEmpty()
-                && !txtEtnia.getText().trim().isEmpty()
-                && !txtCalle.getText().trim().isEmpty()
+                && !txtCodigoEmpleado.getText().trim().isEmpty()
+                && !txtExperiencia.getText().trim().isEmpty()
                 && !txtNombres.getText().trim().isEmpty();
 
     }
@@ -107,40 +99,34 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 pc.getPersona().setCorreo_personal(txtCorreo.getText());
                 pc.getPersona().setDni(txtCedula.getText());
                 pc.getPersona().setTelefono(txtTelefono.getText());
-                pc.getPersona().setRol_id(2);
+                pc.getPersona().setRol_id(3);
                 pc.getPersona().setFoto("user.png");
 
                 // Guardar la persona y obtener el ID generado
                 Integer idGenerado = pc.save();
 
                 if (idGenerado != null) {
-                    // Configurar el estudiante con el ID de la persona
-                    ec.getEstudiante().setId(idGenerado);
-                    String seleccion = cbxTituloBach.getSelectedItem().toString();
-                    Boolean tituloBachiller = seleccion.equals("Si");
-                    ec.getEstudiante().setTitulo_bachiller(tituloBachiller);
-                    ec.getEstudiante().setCanton(txtCanton.getText());
-                    ec.getEstudiante().setProvincia(txtProvincia.getText());
-                    ec.getEstudiante().setCalle_direccion(txtCalle.getText());
-                    ec.getEstudiante().setNacionalidad(txtNacionalidad.getText());
-                    ec.getEstudiante().setEtnia(txtEtnia.getText());
+                    // Configurar el docente con el ID de la persona
+                    dc.getDocente().setId(idGenerado);
+                    dc.getDocente().setExperiencia(Integer.valueOf(txtExperiencia.getText()));
+                    dc.getDocente().setGrado_academico(txtGradoAcademico.getText());
+                    dc.getDocente().setCodigo_empleado(txtCodigoEmpleado.getText());
+                    System.out.println("Antes de llegar al save");
 
-                    // Guardar el estudiante
-                    if (ec.save()) {
+                    // Guardar el docente
+                    if (dc.save()) {
+                        System.out.println("Docente guardado correctamente");
                         // Configurar y guardar la cuenta
                         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
                         cc.getCuenta().setClave(txtCedula.getText());
                         cc.getCuenta().setPersona_id(idGenerado);
                         cc.save();
+                        JOptionPane.showMessageDialog(null, "Docente guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
                     }
-                    JOptionPane.showMessageDialog(null, "Estudiante guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al guardar la persona", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al guardar el estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al guardar el docente", "Error", JOptionPane.ERROR_MESSAGE);
                 throw new RuntimeException(e);
             }
         } else {
@@ -154,48 +140,46 @@ public class modal_Estudiante extends javax.swing.JDialog {
         return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
 
-    private void actualizar(JTable tblEstudiante, ModeloTablaEstudiante modeloEstudiante) {
-        int fila = tblEstudiante.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Seleccione una fila",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                this.fila = fila;
-                ec.setEstudiante(modeloEstudiante.getEstudiantes().get(fila));
-                pc.setPersona(modeloEstudiante.getPersonas().get(fila));
-                pc.getPersona().setNombre(txtNombres.getText());
-                pc.getPersona().setApellido(txtApellidos.getText());
-                pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
-                pc.getPersona().setCorreo_personal(txtCorreo.getText());
-                pc.getPersona().setDni(txtCedula.getText());
-                pc.getPersona().setTelefono(txtTelefono.getText());
-                pc.getPersona().setRol_id(2);
-                pc.getPersona().setFoto("user.png");
-
-                if (pc.update()){
-                    ec.getEstudiante().setEtnia(txtEtnia.getText());
-                    String seleccion = cbxTituloBach.getSelectedItem().toString();
-                    Boolean tituloBachiller = seleccion.equals("Si");
-                    ec.getEstudiante().setTitulo_bachiller(tituloBachiller);
-                    ec.getEstudiante().setCanton(txtCanton.getText());
-                    ec.getEstudiante().setProvincia(txtProvincia.getText());
-                    ec.getEstudiante().setCalle_direccion(txtCalle.getText());
-                    ec.getEstudiante().setNacionalidad(txtNacionalidad.getText());
-                    if (ec.update()){
-                        JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,
-                        "Error al cargar los datos",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
+    private void actualizar(JTable tblEstudiante, ModeloTablaDocente modeloTablaDocente) {
+//        int fila = tblEstudiante.getSelectedRow();
+//        if (fila < 0) {
+//            JOptionPane.showMessageDialog(null,
+//                    "Seleccione una fila",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            try {
+//                this.fila = fila;
+//                dc.set(modeloTablaDocente.getEstudiantes().get(fila));
+//                pc.setPersona(modeloTablaDocente.getPersonas().get(fila));
+//                pc.getPersona().setNombre(txtNombres.getText());
+//                pc.getPersona().setApellido(txtApellidos.getText());
+//                pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
+//                pc.getPersona().setCorreo_personal(txtCorreo.getText());
+//                pc.getPersona().setDni(txtCedula.getText());
+//                pc.getPersona().setTelefono(txtTelefono.getText());
+//                pc.getPersona().setRol_id(2);
+//                pc.getPersona().setFoto("user.png");
+//
+//                if (pc.update()){
+//                    dc.getEstudiante().setEtnia(txtCodigoEmpleado.getText());
+//                    String seleccion = cbxTituloBach.getSelectedItem().toString();
+//                    Boolean tituloBachiller = seleccion.equals("Si");
+//                    dc.getEstudiante().setTitulo_bachiller(tituloBachiller);
+//                    dc.getEstudiante().setCalle_direccion(txtExperiencia.getText());
+//                    dc.getEstudiante().setNacionalidad(txtGradoAcademico.getText());
+//                    if (dc.update()){
+//                        JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+//                        this.dispose();
+//                    }
+//                }
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null,
+//                        "Error al cargar los datos",
+//                        "Error",
+//                        JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
     }
 
     private void setupListeners() {
@@ -230,26 +214,20 @@ public class modal_Estudiante extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         Jlabel = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         Jlabelll = new javax.swing.JLabel();
         txtNombres = new javax.swing.JTextField();
         txtApellidos = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtFechaNacim = new com.toedter.calendar.JDateChooser();
-        cbxTituloBach = new javax.swing.JComboBox<>();
         txtCorreo = new javax.swing.JTextField();
-        txtCalle = new javax.swing.JTextField();
-        txtEtnia = new javax.swing.JTextField();
+        txtExperiencia = new javax.swing.JTextField();
+        txtCodigoEmpleado = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Jlabelll1 = new javax.swing.JLabel();
-        txtNacionalidad = new javax.swing.JTextField();
-        Jlabelll2 = new javax.swing.JLabel();
-        txtCanton = new javax.swing.JTextField();
-        Jlabelll3 = new javax.swing.JLabel();
-        txtProvincia = new javax.swing.JTextField();
+        txtGradoAcademico = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -285,18 +263,13 @@ public class modal_Estudiante extends javax.swing.JDialog {
 
         Jlabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         Jlabel.setForeground(new java.awt.Color(255, 255, 255));
-        Jlabel.setText("Etnia:");
+        Jlabel.setText("Codigo docente:");
         jPanel1.add(Jlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Titulo de bachiller: ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, -1, -1));
 
         Jlabelll.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         Jlabelll.setForeground(new java.awt.Color(255, 255, 255));
-        Jlabelll.setText("Calle:");
-        jPanel1.add(Jlabelll, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, -1, -1));
+        Jlabelll.setText("Experiencia:");
+        jPanel1.add(Jlabelll, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, -1, -1));
 
         txtNombres.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNombres.setForeground(new java.awt.Color(0, 0, 0));
@@ -329,26 +302,17 @@ public class modal_Estudiante extends javax.swing.JDialog {
         txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 230, 30));
 
-        cbxTituloBach.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxTituloBach.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTituloBach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxTituloBachActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cbxTituloBach, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 230, -1));
-
         txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 231, -1));
 
-        txtCalle.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCalle.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, 230, -1));
+        txtExperiencia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtExperiencia.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txtExperiencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 230, -1));
 
-        txtEtnia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtEtnia.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtEtnia, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 231, -1));
+        txtCodigoEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCodigoEmpleado.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txtCodigoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 231, -1));
 
         btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
         btnGuardar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -358,12 +322,12 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 400, 110, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 370, 110, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel1.setText("Agregar Estudiante");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, -1, -1));
+        jLabel1.setText("Agregar Docente");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -372,30 +336,12 @@ public class modal_Estudiante extends javax.swing.JDialog {
 
         Jlabelll1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         Jlabelll1.setForeground(new java.awt.Color(255, 255, 255));
-        Jlabelll1.setText("Nacionalidad");
-        jPanel1.add(Jlabelll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 290, -1, -1));
+        Jlabelll1.setText("Grado Academico:");
+        jPanel1.add(Jlabelll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, -1, -1));
 
-        txtNacionalidad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNacionalidad.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 280, 230, -1));
-
-        Jlabelll2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        Jlabelll2.setForeground(new java.awt.Color(255, 255, 255));
-        Jlabelll2.setText("Cantón:");
-        jPanel1.add(Jlabelll2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, -1));
-
-        txtCanton.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCanton.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtCanton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 230, -1));
-
-        Jlabelll3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        Jlabelll3.setForeground(new java.awt.Color(255, 255, 255));
-        Jlabelll3.setText("Provincia:");
-        jPanel1.add(Jlabelll3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, -1, -1));
-
-        txtProvincia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtProvincia.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 230, -1));
+        txtGradoAcademico.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtGradoAcademico.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txtGradoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, 230, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 470));
 
@@ -406,12 +352,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombresActionPerformed
 
-    private void cbxTituloBachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTituloBachActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxTituloBachActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
@@ -432,20 +373,21 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modal_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modal_Docente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modal_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modal_Docente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modal_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modal_Docente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modal_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modal_Docente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                modal_Estudiante dialog = new modal_Estudiante(new javax.swing.JFrame(), true);
+                modal_Docente dialog = new modal_Docente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -461,29 +403,23 @@ public class modal_Estudiante extends javax.swing.JDialog {
     private javax.swing.JLabel Jlabel;
     private javax.swing.JLabel Jlabelll;
     private javax.swing.JLabel Jlabelll1;
-    private javax.swing.JLabel Jlabelll2;
-    private javax.swing.JLabel Jlabelll3;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cbxTituloBach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtCalle;
-    private javax.swing.JTextField txtCanton;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtCodigoEmpleado;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtEtnia;
+    private javax.swing.JTextField txtExperiencia;
     private com.toedter.calendar.JDateChooser txtFechaNacim;
-    private javax.swing.JTextField txtNacionalidad;
+    private javax.swing.JTextField txtGradoAcademico;
     private javax.swing.JTextField txtNombres;
-    private javax.swing.JTextField txtProvincia;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

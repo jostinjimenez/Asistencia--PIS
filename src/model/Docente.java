@@ -1,27 +1,25 @@
 package model;
 
-import java.util.Date;
-
 public class Docente extends Persona {
-    private Integer anios_experiencia;
+    private Integer experiencia;
     private String codigo_empleado;
     private String grado_academico;
 
     public Docente() {
     }
 
-    public Docente(Integer anios_experiencia, String codigo_empleado, String grado_academico) {
-        this.anios_experiencia = anios_experiencia;
+    public Docente(Integer experiencia, String codigo_empleado, String grado_academico) {
+        this.experiencia = experiencia;
         this.codigo_empleado = codigo_empleado;
         this.grado_academico = grado_academico;
     }
 
-    public Integer getAnios_experiencia() {
-        return anios_experiencia;
+    public Integer getExperiencia() {
+        return experiencia;
     }
 
-    public void setAnios_experiencia(Integer anios_experiencia) {
-        this.anios_experiencia = anios_experiencia;
+    public void setExperiencia(Integer experiencia) {
+        this.experiencia = experiencia;
     }
 
     public String getCodigo_empleado() {

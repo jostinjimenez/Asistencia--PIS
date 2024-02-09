@@ -5,6 +5,8 @@
 package ModuloEstudianteDocente.vista.tablas;
 
 import ModuloEstudianteDocente.controlador.EstudianteController;
+import model.Persona;
+import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 
 import javax.swing.event.EventListenerList;
@@ -19,15 +21,23 @@ import java.text.SimpleDateFormat;
  */
 public class ModeloTablaEstudiante extends AbstractTableModel {
 
-    private ListaEnlazada<Estudiante> estudiante = new ListaEnlazada<>();
+    private ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
+    private ListaEnlazada<Persona> personas = new ListaEnlazada<>();
 
-
-    public ListaEnlazada<Estudiante> getEstudiante() {
-        return estudiante;
+    public ListaEnlazada<Persona> getPersonas() {
+        return personas;
     }
 
-    public void setEstudiante(ListaEnlazada<Estudiante> estudiante) {
-        this.estudiante = estudiante;
+    public void setPersonas(ListaEnlazada<Persona> personas) {
+        this.personas = personas;
+    }
+
+    public ListaEnlazada<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(ListaEnlazada<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
     }
 
     public EventListenerList getListenerList() {
@@ -41,8 +51,8 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        if (estudiante != null) {
-            return estudiante.getSize();
+        if (estudiantes != null) {
+            return estudiantes.getSize();
         } else {
             return 0;
         }
@@ -50,26 +60,25 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
         Estudiante est = null;
-        EstudianteController ce = new EstudianteController();
+        Persona per = null;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
 
-        //TODO: Mostrar todos los datos del estudiante
         try {
-            est = estudiante.get(row);
-            ce.setEstudiante(est);
+            est = estudiantes.get(row);
+            per = personas.get(est.getId());
             return switch (col) {
-                case 0-> (est != null) ? est.getNacionalidad() : " ";
-                case 1 -> (est != null) ? est.getProvincia() : " ";
-                case 2 -> (est != null) ? est.getCanton() : " ";
-                case 3 -> (est != null) ? est.getEtnia() : " ";
-//                case 4 -> (est != null) ? est.getTelefono() : " ";
-//                case 5 -> (est != null) ? est.getEtnia() : " ";
+                case 0 -> per.getNombre() + " " + per.getApellido();
+                case 1 -> per.getDni();
+                case 2 -> per.getTelefono();
+                case 3 -> est.getNacionalidad();
+                case 4 -> est.getProvincia();
+                case 5 -> est.getCanton();
                 default -> null;
             };
         } catch (Exception e) {
@@ -81,15 +90,13 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         return switch (col) {
-            case 0 -> "Nacionalidad";
-            case 1 -> "Provincia";
-            case 2 -> "Canton";
-            case 3 -> "Etnia";
-//            case 4 -> "Telefono";
-//            case 5 -> "Etnia";
+            case 0 -> "Estudiante";
+            case 1 -> "DNI";
+            case 2 -> "Telefono";
+            case 3 -> "Nacionalidad";
+            case 4 -> "Provincia";
+            case 5 -> "Canton";
             default -> null;
         };
     }
-
-
 }

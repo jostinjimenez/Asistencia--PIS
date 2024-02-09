@@ -187,7 +187,7 @@ public class DataAccessObject<T> implements TransferObject<T> {
     private void fijarDatos(Field f, ResultSet rs, T data, String atributo) {
         try {
             Method m = null;
-            System.out.println("Procesando atributo: " + atributo); // Agrega esta línea
+            //System.out.println("Procesando atributo: " + atributo); // Agrega esta línea
 
             if (f.getType().getSimpleName().equalsIgnoreCase("String")) {
                 m = clazz.getMethod("set" + atributo, String.class);

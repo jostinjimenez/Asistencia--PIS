@@ -11,8 +11,12 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.controller.PersonaController;
+
+import java.sql.*;
 
 /**
  *
@@ -21,6 +25,7 @@ import modulo_1.inicio_sesion.controller.CuentaController;
 public class FrmEstudiante extends javax.swing.JFrame {
 
     private EstudianteController estudianteControlador = new EstudianteController();
+    private PersonaController pc = new PersonaController();
     private ModeloTablaEstudiante modeloEstudiante = new ModeloTablaEstudiante();
     private CuentaController cc;
     private Integer fila = -1;
@@ -41,18 +46,32 @@ public class FrmEstudiante extends javax.swing.JFrame {
     public FrmEstudiante(CuentaController cc) {
         super();
         initComponents();
-
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
         cargarTabla();
         this.cc = cc;
     }
 
     public void cargarTabla() {
-        modeloEstudiante.setEstudiante(estudianteControlador.list_All());
-        tblEstudiante.setModel(modeloEstudiante);
-        tblEstudiante.updateUI();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM ESTUDIANTE JOIN PERSONA ON ESTUDIANTE.ID = PERSONA.ID";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                DefaultTableModel model = new DefaultTableModel(new String[]{"Nombres", "Apellidos", "DNI", "Telefono", "Email"}, 0);
+                while (resultSet.next()) {
+                    String firstName = resultSet.getString("NOMBRE");
+                    String lastName = resultSet.getString("APELLIDO");
+                    String dni = resultSet.getString("DNI");
+                    String telefono = resultSet.getString("TELEFONO");
+                    String email = resultSet.getString("CORREO_PERSONAL");
+                    model.addRow(new Object[]{firstName, lastName, dni, telefono, email});
+                }
+                tblEstudiante.setModel(model);
+                tblEstudiante.updateUI();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
     }
 
 

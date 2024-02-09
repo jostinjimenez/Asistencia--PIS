@@ -38,8 +38,8 @@ public class ModeloTablaPeriodoAc extends AbstractTableModel {
         }
         return switch (columnIndex) {
             case 0 -> (pa != null) ? pa.getId() : "";
-            case 1 -> (pa != null) ? pa.getFechaInicio() : "";
-            case 2 -> (pa != null) ? pa.getFechaFin() : "";
+            case 1 -> (pa != null) ? pa.getFecha_Inicio() : "";
+            case 2 -> (pa != null) ? pa.getFecha_fin() : "";
             case 3 -> (pa != null) ? pa.getEstado() : "";
             default -> null;
         };
