@@ -1,8 +1,8 @@
 package modelLuis.view;
 
-import plantilla.forms.*;
+import ModuloMatricula.Controller.ControllerMatricula;
 import com.formdev.flatlaf.FlatDarkLaf;
-import java.lang.System.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Asignatura;
@@ -10,17 +10,14 @@ import model.Asistencia;
 import model.Cursa;
 import model.Estudiante;
 import model.Matricula;
-import model.Persona;
 import model.catalogo.TipoFalta;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerAsistencia;
 import modelLuis.controller.ControllerCursa;
-import modelLuis.controller.ControllerMatricula;
 import modelLuis.controller.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
 import modelLuis.tablas.ModelTableAsistencia2;
 import modelLuis.view.util.Util_VistaLinked1_Asistencia;
-import modulo_1.inicio_sesion.controller.CuentaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -61,8 +58,8 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         ListaEnlazada<Matricula> listMatr = new ListaEnlazada<>();
         listaCursa = cc.busquedaBinaria(cc.list_All(), id.toString(), "id_docente", "quicksort", 0);
         for (Cursa cursa : listaCursa) {
-            Matricula matricula = cm.busquedaBinaria2(cm.list_All(), cursa.getIdMatricula().toString(), "id");
-            Asignatura asig = ca.busquedaBinaria2(ca.list_All(), cursa.getIdAsignatura().toString(), "id", 0);
+            Matricula matricula = cm.busquedaBinaria2(cm.list_All(), cursa.getMatricula_id().toString(), "id");
+            Asignatura asig = ca.busquedaBinaria2(ca.list_All(), cursa.getAsignatura_id().toString(), "id", 0);
             listaAsig.add(asig);
             listMatr.add(matricula);
         }
@@ -177,7 +174,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         ListaEnlazada<Matricula> lista1 = c.busquedaBinaria(c.list_All(), nciclo, "ciclo", "quicksort", 0);
         for (Cursa cursa : listCur) {
             for (Matricula matricula : lista1) {
-                if (cursa.getIdMatricula().equals(matricula.getId())) {
+                if (cursa.getMatricula_id().equals(matricula.getId())) {
                     result.add(matricula);
                     mat.add(cursa);
                     break;

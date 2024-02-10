@@ -72,9 +72,7 @@ public class NuevaClave extends javax.swing.JDialog {
                 && !txtNuevaClave2.getText().trim().isEmpty()
                 && !txtClaveAn.getText().trim().isEmpty();
     }
-    
-    
-    
+
     public void validarCuenta() {
         if (validar()) {
             try {

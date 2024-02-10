@@ -5,7 +5,6 @@ import javax.swing.table.AbstractTableModel;
 import ModuloEstudianteDocente.controlador.EstudianteController;
 import model.Estudiante;
 import model.Matricula;
-import modelLuis.controller.ControllerEstudiante;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -29,24 +28,22 @@ public class ModelTableMatriculas extends AbstractTableModel {
         Matricula matricula = null;
         try {
             matricula = matriculas.get(row);
-            matricula.getId();
         } catch (VacioExceptions e) {
             throw new RuntimeException(e);
         }
         switch (col) {
             case 0:
-                return (matricula != null) ? matricula.getId() : "";
+                return (matricula != null) ? matricula.getEstado_matricula().getNombre() : "";
             case 1:
-                return (matricula != null) ? matricula.getCarrera() : "";
-            case 2:
                 return (matricula != null) ? matricula.getFechaMatricula() : "";
-            case 3:
+            case 2:
                 return (matricula != null) ? matricula.getCiclo() : "";
-            case 4:
+            case 3:
                 try {
                 Estudiante estudiante = aa.busquedaBinaria2(aa.list_All(), matricula.getEstudiante_id().toString(), "id", 0);
-                return (estudiante != null) ? estudiante.getNombre() + " " + estudiante.getApellido() : "";
-            } catch (Exception e) {
+                return (estudiante != null) ? estudiante.getNacionalidad() : "";
+                // TODO: Mostrar el nombre del estudiante mediante un join con la tabla estudiante y persona
+            } catch (Exception ignored) {
             }
             default:
                 return null;
@@ -54,20 +51,13 @@ public class ModelTableMatriculas extends AbstractTableModel {
     }
 
     public String getColumnName(int column) {
-        switch (column) {
-            case 0:
-                return "ID";
-            case 1:
-                return "Carrera";
-            case 2:
-                return "Fecha Matriculacion";
-            case 3:
-                return "Ciclo";
-            case 4:
-                return "Nombre";
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 1 -> "Estado Matricula";
+            case 2 -> "Fecha Matriculacion";
+            case 3 -> "Ciclo";
+            case 4 -> "Nombre";
+            default -> null;
+        };
     }
 
     /**

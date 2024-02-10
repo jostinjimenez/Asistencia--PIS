@@ -1,9 +1,8 @@
 package modelLuis.view;
 
+import ModuloMatricula.Controller.ControllerMatricula;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 import model.Asignatura;
 import model.Cursa;
@@ -12,7 +11,6 @@ import model.Matricula;
 import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
-import modelLuis.controller.ControllerMatricula;
 import modelLuis.tablas.ModelTableAsistenciaEstudiante;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -62,10 +60,10 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         String ident = id_Matricula.toString();
         cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), ident, "id_matricula", "quicksort", 0);
         for (Cursa cursa : cursas) {
-            String iden = cursa.getIdAsignatura().toString();
+            String iden = cursa.getAsignatura_id().toString();
             Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id", 0);
             System.out.println(asi.getId());
-            if (Objects.equals(cursa.getIdAsignatura(), asi.getId())) {
+            if (Objects.equals(cursa.getAsignatura_id(), asi.getId())) {
                 listaAsis.add(asi);
             }
         }

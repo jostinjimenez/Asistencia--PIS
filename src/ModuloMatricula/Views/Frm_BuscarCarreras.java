@@ -45,7 +45,6 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
         txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        menu_Admin1 = new plantilla.components.Menu_Admin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -53,7 +52,7 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
         bg_panel.setBackground(new java.awt.Color(21, 21, 21));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,7 +73,7 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 880, 270));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 480, 220));
 
         buttonGroup1.add(rbutton1);
         rbutton1.setText("Nombre");
@@ -83,7 +82,7 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
                 rbutton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(rbutton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
+        roundPanel1.add(rbutton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
 
         buttonGroup1.add(rbutton2);
         rbutton2.setText("Codigo");
@@ -92,7 +91,7 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
                 rbutton2ActionPerformed(evt);
             }
         });
-        roundPanel1.add(rbutton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+        roundPanel1.add(rbutton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,12 +103,12 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
                 txtBusquedaKeyReleased(evt);
             }
         });
-        roundPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 350, -1));
+        roundPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 350, -1));
 
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
         jLabel2.setText("Busqueda de Carrera:");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,24 +116,23 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 170, -1));
+        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 170, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1040, 630));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 410));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        if (evt.getClickCount() == 1) {
-            try {
-                Carrera p = m.getCarrera(tabla.getSelectedRow());
-                Frm_Maatricula.cargarCarreras(p);
-            } catch (Exception e) {
-            }
-        }
+//        if (evt.getClickCount() == 1) {
+//            try {
+//                Carrera p = m.getCarrera(tabla.getSelectedRow());
+//                Frm_Maatricula.cargarCarreras(p);
+//            } catch (Exception e) {
+//            }
+//        }
     }//GEN-LAST:event_tablaMouseClicked
 
     private void rbutton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbutton1ActionPerformed
@@ -201,7 +199,6 @@ public class Frm_BuscarCarreras extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private plantilla.components.Menu_Admin menu_Admin1;
     private javax.swing.JRadioButton rbutton1;
     private javax.swing.JRadioButton rbutton2;
     private plantilla.swing.RoundPanel roundPanel1;

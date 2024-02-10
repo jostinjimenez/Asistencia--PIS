@@ -3,17 +3,15 @@ package ModuloMatricula.Views.UtilVista;
 import javax.swing.JComboBox;
 
 import ModuloEstudianteDocente.controlador.DocenteController;
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import model.Asignatura;
 import model.Cursa;
 import model.Docente;
 import model.Estudiante;
 import model.Horario;
 import model.Matricula;
-import model.PeriodoAcademico;
 import modelLuis.controller.ControllerAsignatura;
-import modelLuis.controller.ControllerEstudiante;
 import modelLuis.controller.ControllerHorario;
-import modulo_1.periodo_academico.controller.PeriodoAcController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -143,11 +141,15 @@ public class Util_VistaLinked1_Asistencia {
     }
 
     public static void cargaEstudiante(JComboBox cbxmarca) throws VacioExceptions {
-        ControllerEstudiante ac = new ControllerEstudiante();
+        EstudianteController ac = new EstudianteController();
         cbxmarca.removeAllItems();
         try {
-            for (int i = 0; i < ac.getLista().getSize(); i++) {
-                cbxmarca.addItem(ac.getLista().get(i));
+            if (ac.getEstudiantes().getSize() > 0) {
+                for (int i = 0; i < ac.getEstudiantes().getSize(); i++) {
+                    cbxmarca.addItem(ac.getEstudiantes().get(i));
+                }
+            } else {
+                cbxmarca.addItem("No hay estudiantes");
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();
@@ -158,28 +160,17 @@ public class Util_VistaLinked1_Asistencia {
         return (Estudiante) cbx.getSelectedItem();
     }
 
-    public static void cargaPeriodoAcademico(JComboBox cbxmarca) throws VacioExceptions {
-        PeriodoAcController ac = new PeriodoAcController();
-        cbxmarca.removeAllItems();
-        try {
-            for (int i = 0; i < ac.getPeriodoAcademicos().getSize(); i++) {
-                cbxmarca.addItem(ac.getPeriodoAcademicos().get(i));
-            }
-        } catch (VacioExceptions e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static PeriodoAcademico getComboPeriodo(JComboBox cbx) {
-        return (PeriodoAcademico) cbx.getSelectedItem();
-    }
 
     public static void cargaDocente(JComboBox cbxmarca) throws VacioExceptions {
         DocenteController ac = new DocenteController();
         cbxmarca.removeAllItems();
         try {
-            for (int i = 0; i < ac.getDocentes().getSize(); i++) {
-                cbxmarca.addItem(ac.getDocentes().get(i));
+            if (ac.getDocentes().getSize() > 0) {
+                for (int i = 0; i < ac.getDocentes().getSize(); i++) {
+                    cbxmarca.addItem(ac.getDocentes().get(i));
+                }
+            } else {
+                cbxmarca.addItem("No hay docentes");
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package model;
 
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+
 public class Docente extends Persona {
     private Integer experiencia;
     private String codigo_empleado;
@@ -40,6 +42,8 @@ public class Docente extends Persona {
 
     @Override
     public String toString() {
-        return super.toString();
+        Persona persona = getPersonaStatic(getId());
+        assert persona != null;
+        return persona.getNombre() + " " + persona.getApellido() + " - " + persona.getDni();
     }
 }

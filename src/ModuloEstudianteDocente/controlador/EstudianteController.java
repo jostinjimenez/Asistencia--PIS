@@ -7,6 +7,7 @@ import DataBase.DataAccessObject;
 import java.lang.reflect.Field;
 
 import model.Estudiante;
+import model.Persona;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -66,6 +67,39 @@ public class EstudianteController extends DataAccessObject<Estudiante> {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Persona getPersonaEstudiante(Integer idPersona) {
+        PersonaController personaController = new PersonaController();
+        ListaEnlazada<Persona> personas = personaController.getPersonas();
+        try {
+            personas = personaController.ordenarQS(personas, 0, "id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int left = 0;
+        int right = personas.getSize() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            Persona midPersona = null;
+            try {
+                midPersona = personas.get(mid);
+            } catch (VacioExceptions e) {
+                e.printStackTrace();
+            }
+
+            if (midPersona.getId().equals(idPersona)) {
+                return midPersona;
+            }
+            if (midPersona.getId() < idPersona) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return null;
     }
 
     public ListaEnlazada<Estudiante> quicksort(ListaEnlazada<Estudiante> lista, Integer type, String field) throws VacioExceptions {

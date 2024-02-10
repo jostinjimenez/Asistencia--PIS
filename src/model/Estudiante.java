@@ -1,7 +1,11 @@
 package model;
 
 import java.util.Date;
+
+import ModuloEstudianteDocente.controlador.EstudianteController;
 import tda_listas.ListaEnlazada;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 public class Estudiante extends Persona {
 
@@ -66,7 +70,9 @@ public class Estudiante extends Persona {
 
     @Override
     public String toString() {
-        return super.toString();
+        Persona persona = getPersonaStatic(getId());
+        assert persona != null;
+        return persona.getNombre() + " " + persona.getApellido() + " - " + persona.getDni();
     }
 
     public Boolean comparar(Estudiante estudiante, String field, Integer type) {

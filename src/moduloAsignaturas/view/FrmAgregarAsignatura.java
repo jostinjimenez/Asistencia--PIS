@@ -13,6 +13,8 @@ import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import model.Asignatura;
 import tda_listas.exceptions.VacioExceptions;
 
+import static moduloAsignaturas.view.util_vista.Utiles.getComboMalla;
+
 public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
     private AsignaturaController ac = new AsignaturaController();
@@ -55,6 +57,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
                 ac.getAsignatura().setNombre(txtNombreAsignatura.getText());
                 ac.getAsignatura().setCodigo_materia(Integer.valueOf(txtCodigoAsigntura.getText()));
                 ac.getAsignatura().setHoras_Totales(Integer.valueOf(txtHorasTotales.getText()));
+                ac.getAsignatura().setMalla_id(getComboMalla(cbxMalla).getId());
 
                 if (ac.save() > 0) {
                     limpiar();
@@ -404,7 +407,9 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         cbxMalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         roundPanel1.add(cbxMalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 250, -1));
 
-        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
+
+        header2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));

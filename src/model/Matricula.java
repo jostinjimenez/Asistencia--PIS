@@ -1,33 +1,31 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 
 public class Matricula {
 
     private Integer id;
-    private String fechaMatricula;
+    private EstadoMatricula estado_matricula;
+    private Date fechaMatricula;
     private Integer ciclo;
-    private String carrera;
 
-    private EstadoMatricula estado;
     private Integer estudiante_id;
     private Integer periodoacademico_id;
-    private ListaEnlazada<Integer> id_cursas;
+    private Integer carrera_id;
 
     public Matricula() {
     }
 
-    public Matricula(Integer id, String fechaMatricula, Integer ciclo, String carrera, EstadoMatricula estado, Integer estudiante_id, Integer periodoacademico_id, ListaEnlazada<Integer> id_cursas) {
-        this.id = id;
-        this.fechaMatricula = fechaMatricula;
-        this.ciclo = ciclo;
-        this.carrera = carrera;
-        this.estado = estado;
-        this.estudiante_id = estudiante_id;
-        this.periodoacademico_id = periodoacademico_id;
-        this.id_cursas = id_cursas;
+    public Integer getCarrera_id() {
+        return carrera_id;
+    }
+
+    public void setCarrera_id(Integer carrera_id) {
+        this.carrera_id = carrera_id;
     }
 
     public Integer getEstudiante_id() {
@@ -46,20 +44,12 @@ public class Matricula {
         this.periodoacademico_id = periodoacademico_id;
     }
 
-    public ListaEnlazada<Integer> getId_cursas() {
-        return id_cursas;
+    public EstadoMatricula getEstado_matricula() {
+        return estado_matricula;
     }
 
-    public void setId_cursas(ListaEnlazada<Integer> id_cursas) {
-        this.id_cursas = id_cursas;
-    }
-
-    public EstadoMatricula getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoMatricula estado) {
-        this.estado = estado;
+    public void setEstado_matricula(EstadoMatricula estado_matricula) {
+        this.estado_matricula = estado_matricula;
     }
 
     public Integer getId() {
@@ -70,11 +60,11 @@ public class Matricula {
         this.id = id;
     }
 
-    public String getFechaMatricula() {
+    public Date getFechaMatricula() {
         return fechaMatricula;
     }
 
-    public void setFechaMatricula(String fechaMatricula) {
+    public void setFechaMatricula(Date fechaMatricula) {
         this.fechaMatricula = fechaMatricula;
     }
 
@@ -86,17 +76,9 @@ public class Matricula {
         this.ciclo = ciclo;
     }
 
-    public String getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(String carrera) {
-        this.carrera = carrera;
-    }
-
     @Override
     public String toString() {
-        return ciclo + "-" + carrera;
+        return ciclo.toString();
     }
 
     public Boolean comparar(Matricula c, String field, Integer type) {
@@ -145,11 +127,6 @@ public class Matricula {
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
-    }
-    public String generarFecha() {
-        LocalDate fechaHoy = LocalDate.now();
-       String fecha = fechaHoy.toString();
-        return fecha;
     }
 
 }

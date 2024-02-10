@@ -4,7 +4,7 @@
  */
 package modelLuis.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Cursa;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -34,8 +34,18 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         this.cursa = cursa;
     }
 
-    public Boolean saved() {
-        return save(cursa);
+    public Integer save() throws Exception {
+        return super.save(this.cursa);
+    }
+
+    public Boolean update() {
+        try {
+            update(this.cursa);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public ListaEnlazada<Cursa> getLista() {
@@ -44,10 +54,6 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         }
         return lista;
 
-    }
-
-    public Boolean update1(Integer i) {
-        return update(cursa, i);
     }
 
     /**
@@ -168,9 +174,9 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
             case "paralelo":
                 return cursa.getParalelo().equalsIgnoreCase(text);
             case "id_matricula":
-                return Integer.toString(cursa.getIdMatricula()).equalsIgnoreCase(text);
+                return Integer.toString(cursa.getMatricula_id()).equalsIgnoreCase(text);
             case "id_docente":
-                return Integer.toString(cursa.getIdDocente()).equalsIgnoreCase(text);
+                return Integer.toString(cursa.getDocente_id()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
@@ -182,10 +188,5 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         return listaOrdenada;
     }
 
-    public static void main(String[] args) {
-        ControllerCursa c = new ControllerCursa();
-        Cursa cursa = new Cursa(2, "A", 2, 2, 1, 2);
-        c.save(cursa);
-    }
 
 }

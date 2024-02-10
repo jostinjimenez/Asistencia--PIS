@@ -19,17 +19,8 @@ public class Frm_Prueba extends javax.swing.JFrame {
 
         bg_panel = new javax.swing.JPanel();
         roundPanel1 = new plantilla.swing.RoundPanel();
-        roundPanel2 = new plantilla.swing.RoundPanel();
-        jLabel2 = new javax.swing.JLabel();
-        roundPanel7 = new plantilla.swing.RoundPanel();
-        roundPanel3 = new plantilla.swing.RoundPanel();
-        roundPanel4 = new plantilla.swing.RoundPanel();
-        jLabel3 = new javax.swing.JLabel();
-        roundPanel5 = new plantilla.swing.RoundPanel();
-        jLabel4 = new javax.swing.JLabel();
-        roundPanel6 = new plantilla.swing.RoundPanel();
-        jLabel5 = new javax.swing.JLabel();
-        roundPanel9 = new plantilla.swing.RoundPanel();
+        menu_Admin1 = new plantilla.components.Menu_Admin();
+        header1 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -39,36 +30,13 @@ public class Frm_Prueba extends javax.swing.JFrame {
 
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 1020, 550));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 1000, 610));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 220, -1));
 
-        roundPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        roundPanel2.add(jLabel2);
-        roundPanel2.add(roundPanel7);
+        header1.setBackground(new java.awt.Color(255, 255, 255));
+        bg_panel.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 1000, -1));
 
-        roundPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        roundPanel2.add(roundPanel3);
-
-        bg_panel.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 1020, 60));
-
-        roundPanel4.setBackground(new java.awt.Color(255, 102, 102));
-        roundPanel4.add(jLabel3);
-
-        roundPanel5.setBackground(new java.awt.Color(255, 102, 102));
-        roundPanel5.add(jLabel4);
-
-        roundPanel4.add(roundPanel5);
-
-        roundPanel6.setBackground(new java.awt.Color(255, 102, 102));
-        roundPanel6.add(jLabel5);
-
-        roundPanel4.add(roundPanel6);
-
-        bg_panel.add(roundPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 60));
-
-        roundPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        bg_panel.add(roundPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 220, 550));
-
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -95,18 +63,9 @@ public class Frm_Prueba extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private plantilla.components.Header header1;
+    private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
-    private plantilla.swing.RoundPanel roundPanel2;
-    private plantilla.swing.RoundPanel roundPanel3;
-    private plantilla.swing.RoundPanel roundPanel4;
-    private plantilla.swing.RoundPanel roundPanel5;
-    private plantilla.swing.RoundPanel roundPanel6;
-    private plantilla.swing.RoundPanel roundPanel7;
-    private plantilla.swing.RoundPanel roundPanel9;
     // End of variables declaration//GEN-END:variables
 
 }
