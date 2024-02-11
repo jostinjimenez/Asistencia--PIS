@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -8,7 +7,7 @@ public class Matricula {
 
     private Integer id;
     private String estado_matricula;
-    private Date fechaMatricula;
+    private Date fechamatricula;
     private Integer ciclo;
 
     private Integer estudiante_id;
@@ -58,12 +57,12 @@ public class Matricula {
         this.id = id;
     }
 
-    public Date getFechaMatricula() {
-        return fechaMatricula;
+    public Date getFechamatricula() {
+        return fechamatricula;
     }
 
-    public void setFechaMatricula(Date fechaMatricula) {
-        this.fechaMatricula = fechaMatricula;
+    public void setFechamatricula(Date fechamatricula) {
+        this.fechamatricula = fechamatricula;
     }
 
     public Integer getCiclo() {

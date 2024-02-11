@@ -1,25 +1,23 @@
 package ModuloMatricula.Views;
 
-import ModuloMatricula.Controller.ControllerMatricula;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import modelLuis.tablas.ModelTableMatriculas;
+import ModuloMatricula.tablas.ModeloTablaCursas;
+import modelLuis.controller.ControllerCursa;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import java.util.Objects;
 
-import static modulo_1.inicio_sesion.view.util.Utiles.cargarPeriodo;
-import static modulo_1.inicio_sesion.view.util.Utiles.getComboPeriodo;
+import static modulo_1.inicio_sesion.view.util.Utiles.*;
 
-public class Frm_Maatricula extends javax.swing.JFrame {
+public class Frm_Cursas extends javax.swing.JFrame {
 
-    ControllerMatricula a = new ControllerMatricula();
-    ModelTableMatriculas matriculas = new ModelTableMatriculas();
+    ControllerCursa cc = new ControllerCursa();
+    ModeloTablaCursas mtc = new ModeloTablaCursas();
 
-    public Frm_Maatricula() {
+    public Frm_Cursas() {
         initComponents();
         limpiar();
         cargarTabla();
@@ -29,11 +27,11 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     }
 
     public void cargarTabla() {
-        matriculas.setMatriculas(a.list_All());
-        tbl1.setModel(matriculas);
+        mtc.setCursas(cc.list_All());
+        tbl1.setModel(mtc);
         tbl1.updateUI();
 
-        TableRowSorter<ModelTableMatriculas> trs = new TableRowSorter<>(matriculas);
+        TableRowSorter<ModeloTablaCursas> trs = new TableRowSorter<>(mtc);
         tbl1.setRowSorter(trs);
         tbl1.getTableHeader().setReorderingAllowed(false);
         tbl1.getTableHeader().setResizingAllowed(false);
@@ -49,26 +47,26 @@ public class Frm_Maatricula extends javax.swing.JFrame {
 
         cargarTabla();
         try {
-            cargarPeriodo(cbxPeriodoAcademico);
+            cargarAsignaturas(cbxAsignaturas);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        txtFecha.setDate(null);
+
     }
 
     public Boolean validar() {
-        return !txtFecha.getDate().toString().isEmpty() && !txtIdCarrera.getText().trim().isEmpty() && !txtIdEstudiante.getText().trim().isEmpty();
+        return !txtParalelo.getText().trim().isEmpty() && !txtIdMatricula.getText().trim().isEmpty() && !txtIdDocente.getText().trim().isEmpty();
     }
     
 
     private void cargarVista() {
-        a.setIndex(tbl1.getSelectedRow());
-        if (a.getIndex() < 0) {
+        cc.setIndex(tbl1.getSelectedRow());
+        if (cc.getIndex() < 0) {
             JOptionPane.showMessageDialog(null, "No se puede guardar correctamente");
         } else {
             try {
-                a.setAsistencia(matriculas.getMatriculas().get(a.getIndex()));
-                txtFecha.setDate(a.getMatricula().getFechamatricula());
+                cc.setCursa(mtc.getCursas().get(cc.getIndex()));
+                txtParalelo.setText(cc.getCursa().getParalelo());
             } catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
@@ -78,7 +76,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
 
     private void modificarMatricula() {
         try {
-            if (a.update()) {
+            if (cc.update()) {
                 JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
@@ -91,15 +89,13 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     public void guardar() {
         if (validar()) {
             try {
-                a.getMatricula().setCiclo(Integer.valueOf(Objects.requireNonNull(cbxCiclo.getSelectedItem()).toString()));
-                a.getMatricula().setEstado_matricula((cbxEstado.getSelectedItem()).toString());
-                a.getMatricula().setFechamatricula(txtFecha.getDate());
-                a.getMatricula().setPeriodoacademico_id(getComboPeriodo(cbxPeriodoAcademico).getId());
+                cc.getCursa().setParalelo(txtParalelo.getText());
+                cc.getCursa().setAsignatura_id(getComboAsignatura(cbxAsignaturas).getId());
 
-                a.getMatricula().setEstudiante_id(Integer.parseInt(txtIdEstudiante.getText()));
-                a.getMatricula().setCarrera_id(Integer.parseInt(txtIdCarrera.getText()));
+                cc.getCursa().setDocente_id(Integer.parseInt(txtIdDocente.getText()));
+                cc.getCursa().setMatricula_id(Integer.parseInt(txtIdMatricula.getText()));
 
-                if (a.save() > 0) {
+                if (cc.save() > 0) {
                     limpiar();
                     JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -120,28 +116,24 @@ public class Frm_Maatricula extends javax.swing.JFrame {
 
         bg_panel = new javax.swing.JPanel();
         roundPanel1 = new plantilla.swing.RoundPanel();
-        jLabel1 = new javax.swing.JLabel();
-        cbxCiclo = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cbxPeriodoAcademico = new javax.swing.JComboBox<>();
-        cbxEstado = new javax.swing.JComboBox<>();
+        cbxAsignaturas = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
-        txtFecha = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
-        txtCarrera = new javax.swing.JTextField();
-        txtEstudiante = new javax.swing.JTextField();
-        btnCargarCarrera = new javax.swing.JButton();
-        btnCargarEstudiante = new javax.swing.JButton();
-        txtIdEstudiante = new javax.swing.JTextField();
-        txtIdCarrera = new javax.swing.JTextField();
+        txtMatricula = new javax.swing.JTextField();
+        txtDocente = new javax.swing.JTextField();
+        btnCargarMatricula = new javax.swing.JButton();
+        btnCargarDocente = new javax.swing.JButton();
+        txtIdDocente = new javax.swing.JTextField();
+        txtIdMatricula = new javax.swing.JTextField();
+        txtParalelo = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -153,47 +145,29 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Fecha:");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
-        cbxCiclo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
-        roundPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 150, -1));
-
-        jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Ciclo:");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
-
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Carrera:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, -1, -1));
+        jLabel3.setText("Matricula:");
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Estado Matricula:");
-        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, -1));
+        jLabel4.setText("Paralelo:");
+        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Estudiante:");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, -1, -1));
+        jLabel5.setText("Docente:");
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Periodo  Academico:");
-        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
+        jLabel6.setText("Asignaturas:");
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, -1, -1));
 
-        cbxPeriodoAcademico.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxPeriodoAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxPeriodoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 220, -1));
-
-        cbxEstado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MATRICULADO", "APROBADO", "RETIRADO" }));
-        roundPanel1.add(cbxEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 210, -1));
+        cbxAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxAsignaturas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel1.add(cbxAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 220, -1));
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +175,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 130, -1));
+        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 130, -1));
 
         jButton4.setText("Modificar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +198,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tbl1);
 
-        roundPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 910, 230));
+        roundPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 910, 250));
 
         jButton6.setText("Listar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -233,42 +207,42 @@ public class Frm_Maatricula extends javax.swing.JFrame {
             }
         });
         roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 560, 130, -1));
-        roundPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 150, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Periodo  Academico:");
-        roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
+        roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
 
-        txtCarrera.setEditable(false);
-        roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 230, -1));
+        txtMatricula.setEditable(false);
+        roundPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 230, -1));
 
-        txtEstudiante.setEditable(false);
-        roundPanel1.add(txtEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 230, -1));
+        txtDocente.setEditable(false);
+        roundPanel1.add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 230, -1));
 
-        btnCargarCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
-        btnCargarCarrera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCargarCarrera.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
+        btnCargarMatricula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargarMatricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarCarreraActionPerformed(evt);
+                btnCargarMatriculaActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 140, -1, -1));
+        roundPanel1.add(btnCargarMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, -1, -1));
 
-        btnCargarEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
-        btnCargarEstudiante.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCargarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
+        btnCargarDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargarDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarEstudianteActionPerformed(evt);
+                btnCargarDocenteActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 80, -1, -1));
+        roundPanel1.add(btnCargarDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, -1, -1));
 
-        txtIdEstudiante.setEditable(false);
-        roundPanel1.add(txtIdEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 50, -1));
+        txtIdDocente.setEditable(false);
+        roundPanel1.add(txtIdDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 50, -1));
 
-        txtIdCarrera.setEditable(false);
-        roundPanel1.add(txtIdCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 150, 50, -1));
+        txtIdMatricula.setEditable(false);
+        roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 50, -1));
+        roundPanel1.add(txtParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 220, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
@@ -280,7 +254,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,15 +264,15 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCargarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarEstudianteActionPerformed
-        buscar_Estudiante mc = new buscar_Estudiante(this, true);
+    private void btnCargarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDocenteActionPerformed
+        buscar_Docente mc = new buscar_Docente(this, true);
         mc.setVisible(true);
-    }//GEN-LAST:event_btnCargarEstudianteActionPerformed
+    }//GEN-LAST:event_btnCargarDocenteActionPerformed
 
-    private void btnCargarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCarreraActionPerformed
-        buscar_Carrera mc = new buscar_Carrera(this, true);
+    private void btnCargarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarMatriculaActionPerformed
+        buscar_Matriculas mc = new buscar_Matriculas(this, true);
         mc.setVisible(true);
-    }//GEN-LAST:event_btnCargarCarreraActionPerformed
+    }//GEN-LAST:event_btnCargarMatriculaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         cargarVista();
@@ -327,23 +301,19 @@ public class Frm_Maatricula extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Frm_Maatricula().setVisible(true);
+            new Frm_Cursas().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private javax.swing.JButton btnCargarCarrera;
-    private javax.swing.JButton btnCargarEstudiante;
-    private javax.swing.JComboBox<String> cbxCiclo;
-    private javax.swing.JComboBox<String> cbxEstado;
-    private javax.swing.JComboBox<String> cbxPeriodoAcademico;
+    private javax.swing.JButton btnCargarDocente;
+    private javax.swing.JButton btnCargarMatricula;
+    private javax.swing.JComboBox<String> cbxAsignaturas;
     private plantilla.components.Header header2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -353,11 +323,11 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tbl1;
-    protected javax.swing.JTextField txtCarrera;
-    protected javax.swing.JTextField txtEstudiante;
-    private com.toedter.calendar.JDateChooser txtFecha;
-    protected javax.swing.JTextField txtIdCarrera;
-    protected javax.swing.JTextField txtIdEstudiante;
+    protected javax.swing.JTextField txtDocente;
+    protected javax.swing.JTextField txtIdDocente;
+    protected javax.swing.JTextField txtIdMatricula;
+    protected javax.swing.JTextField txtMatricula;
+    protected javax.swing.JTextField txtParalelo;
     // End of variables declaration//GEN-END:variables
 
 }

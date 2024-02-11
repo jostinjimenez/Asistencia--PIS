@@ -14,10 +14,10 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
 
     private Asignatura asignatura = new Asignatura();
     private ListaEnlazada<Asignatura> asignaturas;
-    private static Integer lastUsedId = 0;
 
     public AsignaturaController() {
         super(Asignatura.class);
+        asignaturas = new ListaEnlazada<>();
     }
 
     public ListaEnlazada<Asignatura> getAsignaturas() {
@@ -91,20 +91,6 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         }
 
         System.out.println("No se encontró ninguna asignatura con el criterio proporcionado.");
-        return -1;
-    }
-
-    public Integer getIndex() {
-        Iterator<Asignatura> iterator = asignaturas.iterator();
-        int index = 0;
-
-        while (iterator.hasNext()) {
-            if (iterator.next() == asignatura) {
-                return index;
-            }
-            index++;
-        }
-
         return -1;
     }
 

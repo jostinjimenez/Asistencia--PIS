@@ -186,9 +186,12 @@ public class DataAccessObject<T> implements TransferObject<T> {
 
     private void fijarDatos(Field f, ResultSet rs, T data, String atributo) {
         try {
+            if (f.getName().startsWith("$")) {
+                // Ignora los campos internos generados automáticamente por el compilador de Java
+                return;
+            }
             Method m = null;
             //System.out.println("Procesando atributo: " + atributo); // Agrega esta línea
-
             if (f.getType().getSimpleName().equalsIgnoreCase("String")) {
                 m = clazz.getMethod("set" + atributo, String.class);
                 m.invoke(data, rs.getString(atributo));
@@ -219,7 +222,7 @@ public class DataAccessObject<T> implements TransferObject<T> {
                 m.invoke(data, Enum.valueOf((Class<Enum>) f.getType(), rs.getString(atributo)));
             }
         } catch (Exception e) {
-            System.out.println("chiqui error " + e);
+            throw new RuntimeException(e);
         }
     }
 

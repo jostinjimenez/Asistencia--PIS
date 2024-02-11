@@ -23,14 +23,14 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         super(Cursa.class);
     }
 
-    public Cursa getAsistencia() {
+    public Cursa getCursa() {
         if (cursa == null) {
             cursa = new Cursa();
         }
         return cursa;
     }
 
-    public void setAsistencia(Cursa cursa) {
+    public void setCursa(Cursa cursa) {
         this.cursa = cursa;
     }
 

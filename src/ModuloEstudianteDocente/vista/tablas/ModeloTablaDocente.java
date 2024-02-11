@@ -9,9 +9,14 @@ import javax.swing.table.AbstractTableModel;
 
 import ModuloEstudianteDocente.controlador.DocenteController;
 import model.Docente;
+import model.Estudiante;
+import model.Persona;
 import tda_listas.ListaEnlazada;
+import tda_listas.exceptions.VacioExceptions;
 
 import java.text.SimpleDateFormat;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 /**
  * @author LENOVO
@@ -48,50 +53,43 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 9;
+        return 5;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        Docente doc = null;
-        DocenteController ce = new DocenteController();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-
+        Docente doce = null;
+        Persona per = null;
         try {
-            doc = docentes.get(row);
-            ce.setDocente(doc);
-            String fechaFormateada = sdf.format(ce.getDocente().getFecha_nacimiento());
-
+            doce = docentes.get(row);
+            per = getPersonaStatic(doce.getId());
             return switch (col) {
-//                case 0 -> (doc != null) ? doc.getId(): " ";
-//                case 1 -> (doc != null) ? doc.getNombre() : " ";
-//                case 2 -> (doc != null) ? fechaFormateada: " ";
-//                case 3 -> (doc != null) ? doc.getCorreo_personal() : " ";
-//                case 4 -> (doc != null) ? doc.getDni() : " ";
-//                case 5 -> (doc != null) ? doc.getTelefono() : " ";
-                case 0 -> (doc != null) ? doc.getCodigo_empleado() : " ";
-                case 1 -> (doc != null) ? doc.getExperiencia() : " ";
-                case 2 -> (doc != null) ? doc.getGrado_academico() : " ";
+                case 0 -> doce.getCodigo_empleado();
+                case 1 -> (per != null) ? per.getNombre() + " " + per.getApellido(): " ";
+                case 2 -> (per != null) ? per.getDni() : " ";
+                case 3 -> (per != null) ? per.getCorreo_personal() : " ";
+                case 4 -> doce.getExperiencia();
                 default -> null;
             };
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
     @Override
     public String getColumnName(int col) {
         return switch (col) {
-//            case 0 -> "ID";
-//            case 1 -> "Nombre";
-//            case 2 -> "Fecha Nacimiento";
-//            case 3 -> "Correo";
-//            case 4 -> "DNI";
-//            case 5 -> "Telefono";
-            case 0 -> "Codigo";
-            case 1 -> "Años Experiencia";
-            case 2 -> "Grado Academico";
+            case 0 -> "Codigo Empleado";
+            case 1 -> "Nombre";
+            case 2 -> "DNI";
+            case 3 -> "Correo";
+            case 4 -> "Experiencia";
             default -> null;
         };
+    }
+
+    public Docente getDocente(int fila) throws VacioExceptions {
+        return docentes.get(fila);
     }
 }

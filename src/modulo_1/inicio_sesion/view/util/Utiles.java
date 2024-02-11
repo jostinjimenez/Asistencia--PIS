@@ -1,7 +1,7 @@
 package modulo_1.inicio_sesion.view.util;
 
-import model.PeriodoAcademico;
-import model.Rol;
+import model.*;
+import moduloAsignaturas.controller.AsignaturaController;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.RolController;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
@@ -9,15 +9,34 @@ import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
 
-import model.Cuenta;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import model.Carrera;
+
 import modulo_carrera.controller.CarreraController;
 
 public class Utiles {
+
+    public static void cargarAsignaturas(JComboBox cbxPeriodo) {
+        AsignaturaController rc = new AsignaturaController();
+        cbxPeriodo.removeAllItems();
+
+        try {
+            if (rc.getAsignaturas().getSize() > 0) {
+                for (int i = 0; i < rc.getAsignaturas().getSize(); i++) {
+                    cbxPeriodo.addItem(rc.getAsignaturas().get(i));
+                }
+            } else {
+                cbxPeriodo.addItem("No hay asignaturas");
+            }
+        } catch (VacioExceptions e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Asignatura getComboAsignatura(JComboBox cbx) {
+        return (Asignatura) cbx.getSelectedItem();
+    }
 
     public static void cargaRol(JComboBox cbxRol) {
         RolController rc = new RolController();
