@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
@@ -66,29 +67,29 @@ public class buscar_Matriculas extends javax.swing.JDialog {
     }
 
     private void buscar() {
-//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-//        String texto = txtBusqueda.getText();
-//
-//        try {
-//            if (texto.isEmpty()) {
-//                mtc.setMatriculas(rc.getLista());
-//            } else {
-//                if (criterio.equalsIgnoreCase("nombre")) {
-//                    mtc.setMatriculas(rc.busquedaBinaria(rc.list_All(), texto, "nombre"));
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBusqueda.getText();
+
+        try {
+            if (texto.isEmpty()) {
+                mtc.setMatriculas(rc.getLista());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    mtc.setMatriculas(rc.buscarPorEstudiante(texto));
 //                } else if (criterio.equalsIgnoreCase("codigo")) {
 //                    Carrera c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");
 //                    if (c != null) {
 //                        mtc.setLista(new ListaEnlazada<>());
 //                        mtc.getLista().add(c);
 //                    }
-//                }
-//            }
-//            mtc.fireTableDataChanged();
-//            tabla.setModel(mtc);
-//            tabla.updateUI();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+                }
+            }
+            mtc.fireTableDataChanged();
+            tabla.setModel(mtc);
+            tabla.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -166,7 +167,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 520, 10));
 
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Codigo" }));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "DNI" }));
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 160, -1));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 430));

@@ -2,12 +2,14 @@ package ModuloMatricula.Views;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import ModuloMatricula.tablas.ModeloTablaCursas;
 import modelLuis.controller.ControllerCursa;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
+import java.sql.*;
 import java.util.Objects;
 
 import static modulo_1.inicio_sesion.view.util.Utiles.*;
@@ -42,6 +44,28 @@ public class Frm_Cursas extends javax.swing.JFrame {
             tbl1.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
     }
+
+//    public void cargarTabla() {
+//        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+//            String sql = "SELECT * FROM CURSA JOIN PERSONA ON ESTUDIANTE.ID = PERSONA.ID";
+//            try (PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
+//
+//                DefaultTableModel model = new DefaultTableModel(new String[]{"Nombres", "Apellidos", "DNI", "Telefono", "Email"}, 0);
+//                while (resultSet.next()) {
+//                    String firstName = resultSet.getString("NOMBRE");
+//                    String lastName = resultSet.getString("APELLIDO");
+//                    String dni = resultSet.getString("DNI");
+//                    String telefono = resultSet.getString("TELEFONO");
+//                    String email = resultSet.getString("CORREO_PERSONAL");
+//                    model.addRow(new Object[]{firstName, lastName, dni, telefono, email});
+//                }
+//                tblEstudiante.setModel(model);
+//                tblEstudiante.updateUI();
+//            }
+//        } catch (SQLException e) {
+//            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
+//        }
+//    }
 
     private void limpiar() {
 

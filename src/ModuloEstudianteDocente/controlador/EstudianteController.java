@@ -6,10 +6,8 @@ import DataBase.DataAccessObject;
 
 import java.lang.reflect.Field;
 
-import model.Carrera;
 import model.Estudiante;
 import model.Persona;
-import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

@@ -5,8 +5,9 @@ import model.Matricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
+import java.sql.*;
+
 /**
- *
  * @author Usuario
  */
 public class ControllerMatricula extends DataAccessObject<Matricula> {
@@ -181,6 +182,32 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         ListaEnlazada<Matricula> listaOrdenada = new ListaEnlazada<>();
         listaOrdenada = quicksort(lista, 0, campo);
         return listaOrdenada;
+    }
+
+    public ListaEnlazada<Matricula> buscarPorEstudiante(String dniONombre) {
+        ListaEnlazada<Matricula> matriculas = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM MATRICULA JOIN ESTUDIANTE ON MATRICULA.ESTUDIANTE_ID = ESTUDIANTE.ID JOIN AXLMD.PERSONA P on P.ID = ESTUDIANTE.ID WHERE P.DNI = ? OR P.NOMBRE = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                preparedStatement.setString(2, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Matricula matricula = new Matricula();
+                        matricula.setId(resultSet.getInt("ID"));
+                        matricula.setCiclo(resultSet.getInt("CICLO"));
+                        matricula.setEstudiante_id(resultSet.getInt("ESTUDIANTE_ID"));
+                        matricula.setPeriodoacademico_id(resultSet.getInt("PERIODOACADEMICO_ID"));
+                        matricula.setFechamatricula(resultSet.getDate("FECHA"));
+                        matricula.setEstado_matricula(resultSet.getString("ESTADO"));
+                        matriculas.add(matricula);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return matriculas;
     }
 
 }

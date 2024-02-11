@@ -111,10 +111,10 @@ public class modal_Estudiante extends javax.swing.JDialog {
 
                 // Guardar la persona y obtener el ID generado
                 Integer idGenerado = pc.save();
+                System.out.println("ID GENERADO: " + idGenerado);
 
                 if (idGenerado != null) {
                     // Configurar el estudiante con el ID de la persona
-                    ec.getEstudiante().setId(idGenerado);
                     String seleccion = cbxTituloBach.getSelectedItem().toString();
                     Boolean tituloBachiller = seleccion.equals("Si");
                     ec.getEstudiante().setTitulo_bachiller(tituloBachiller);
@@ -123,6 +123,9 @@ public class modal_Estudiante extends javax.swing.JDialog {
                     ec.getEstudiante().setCalle_direccion(txtCalle.getText());
                     ec.getEstudiante().setNacionalidad(txtNacionalidad.getText());
                     ec.getEstudiante().setEtnia(txtEtnia.getText());
+                    ec.getEstudiante().setId(idGenerado);
+                    System.out.println("ID ESTUDIANTE: " + ec.getEstudiante().getId());
+
 
                     // Guardar el estudiante
                     if (ec.save()) {
