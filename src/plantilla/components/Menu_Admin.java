@@ -21,6 +21,7 @@ import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
 import modulo_1.periodo_academico.view.forms.Frm_PeriodosAcademicos;
+import modulo_carrera.view.forms.Frm_Carrera;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
@@ -45,11 +46,11 @@ public class Menu_Admin extends javax.swing.JPanel {
     public void initMenu() {
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/menu.png"))), "Menu Principal", 0);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/user.png"))), "Usuarios", 1);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/roles.png"))), "Asignaturas", 2);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/estudiante.png"))), "Estudiantes", 3);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/docente.png"))), "Docentes", 4);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/matricula.png"))), "Matriculas", 5);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/asignatura.png"))), "Asignaturas", 6);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/estudiante.png"))), "Estudiantes", 2);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/docente.png"))), "Docentes", 3);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/matricula.png"))), "Matriculas", 4);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/roles.png"))), "Asignaturas", 5);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Carreras", 6);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Periodos Academicos", 7);
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/periodo.png"))), "Horarios", 8);
         addEmpty();
@@ -137,6 +138,20 @@ public class Menu_Admin extends javax.swing.JPanel {
                 currentWindow.dispose();
 
                 FrmAgregarAsignatura frm = new FrmAgregarAsignatura();
+                frm.setVisible(true);
+            });
+            case "Carreras" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_Carrera frm = new Frm_Carrera();
+                frm.setVisible(true);
+            });
+            case "Mallas Academicas" -> menu.addActionListener(e -> {
+                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Admin.this);
+                currentWindow.dispose();
+
+                Frm_MallaAcademica frm = new Frm_MallaAcademica();
                 frm.setVisible(true);
             });
         }

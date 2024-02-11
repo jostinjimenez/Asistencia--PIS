@@ -1,24 +1,14 @@
 package modulo_carrera.view.forms;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import model.Rol;
-import modulo_1.inicio_sesion.controller.PersonaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
-import modulo_1.inicio_sesion.view.util.Utiles;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
 import java.util.Objects;
-
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
-import plantilla.AccionesCellRenderer;
-
-import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
+import modulo_carrera.controller.CarreraController;
+import modulo_carrera.view.tablas.ModeloTablaCarrera;
 
 /**
  * Esta clase representa el formulario de usuarios.
@@ -35,8 +25,7 @@ public class Frm_Carrera extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         cargarTabla();
-        cargaRol(cbxRol);
-        cbxRol.setVisible(false);
+
         jTable1.getSelectionModel().addListSelectionListener(e -> {
             btnEditar.setEnabled(true);
             btnEliminar.setEnabled(true);
@@ -61,38 +50,9 @@ public class Frm_Carrera extends javax.swing.JFrame {
 //        });
     }
 
-    ModeloTablaCuenta mtp = new ModeloTablaCuenta();
-    CuentaController pc = new CuentaController();
-    //ModeloTablaCuenta mtc = new ModeloTablaCuenta();
+    ModeloTablaCarrera mtc = new ModeloTablaCarrera();
+    CarreraController carrC = new CarreraController();
 
-    /**
-     * Este método se encarga de buscar personas por rol.
-     */
-//    private void buscarRol() {
-//        
-//        
-//        
-//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-//        try {
-//            if (criterio.equalsIgnoreCase("rol")) {
-//                Rol rolSeleccionado = Utiles.getComboRol(cbxRol);
-//                if (rolSeleccionado.getNombre().equals("Todos")) {
-//                    mtp.setPersonas(pc.getPersonas());
-//                } else {
-//                    mtp.setPersonas(pc.buscarRol(pc.getPersonas(), "idRol", rolSeleccionado));
-//                }
-//                mtp.fireTableDataChanged();
-//                jTable1.setModel(mtp);
-//                jTable1.updateUI();
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-
-    /**
-     * Este método se encarga de buscar personas por diferentes criterios.
-     */
 //    private void buscar() {
 //        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
 //        String texto = txtBuscar.getText();
@@ -120,9 +80,7 @@ public class Frm_Carrera extends javax.swing.JFrame {
 //        }
 //    }
 
-    /**
-     * Este método se encarga de eliminar un registro de la tabla.
-     */
+
 //    public void eliminarRegistro() {
 //        int selectedRow = jTable1.getSelectedRow();
 //        if (selectedRow >= 0) {
@@ -148,12 +106,12 @@ public class Frm_Carrera extends javax.swing.JFrame {
      * Este método se encarga de cargar la tabla con los datos de las personas.
      */
     public void cargarTabla() {
-        mtp.setCuentas(pc.list_All());
-        jTable1.setModel(mtp);
+        mtc.setLista(carrC.list_All());
+        jTable1.setModel(mtc);
         jTable1.updateUI();
-        mtp.fireTableDataChanged();
+        mtc.fireTableDataChanged();
 
-        TableRowSorter<ModeloTablaCuenta> trs = new TableRowSorter<>(mtp);
+        TableRowSorter<ModeloTablaCarrera> trs = new TableRowSorter<>(mtc);
         jTable1.setRowSorter(trs);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
         jTable1.getTableHeader().setReorderingAllowed(false);
@@ -163,8 +121,8 @@ public class Frm_Carrera extends javax.swing.JFrame {
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
-
     }
+
 
 
     @SuppressWarnings("unchecked")
@@ -286,7 +244,7 @@ public class Frm_Carrera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        Modal_Carrera nu = new Modal_Carrera(this, true, mtp, jTable1);
+        Modal_Carrera nu = new Modal_Carrera(this, true, mtc, jTable1);
         nu.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 

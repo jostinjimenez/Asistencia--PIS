@@ -1,55 +1,115 @@
 package ModuloMatricula.Views;
 
 import DataBase.Connection;
-import Modelo.ControllerCarrera.ControllerCarrera;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
-public class modal_Carrera extends javax.swing.JDialog {
+import ModuloEstudianteDocente.controlador.EstudianteController;
+import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
+import model.Carrera;
+import model.Estudiante;
+import model.Persona;
+import modulo_carrera.controller.CarreraController;
+import modulo_carrera.view.tablas.ModeloTablaCarrera;
+import tda_listas.ListaEnlazada;
+import tda_listas.exceptions.VacioExceptions;
 
-    Connection con = new Connection();
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
-    public modal_Carrera(java.awt.Frame parent, boolean modal) {
+public class buscar_Estudiante extends javax.swing.JDialog {
+
+    EstudianteController rc = new EstudianteController();
+    ModeloTablaEstudiante mtc = new ModeloTablaEstudiante();
+
+    public buscar_Estudiante(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setTitle("Busqueda de Carreras");
+        this.setTitle("Busqueda de Estudiantes");
+        mostrarTabla();
 
-        botones.add(btnCodigo);
-        botones.add(btnNombre);
-
-        btnBuscar.addActionListener(e -> mostrarTabla());
-        
+        tabla.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                try {
+                    if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                        Estudiante estudiante = mtc.getEstudiante(row);
+                        Persona persona = getPersonaStatic(estudiante.getId());
+                        if (persona != null) {
+                            ((Frm_Maatricula) getParent()).txtEstudiante.setText(persona.getNombre() + " " + persona.getApellido());
+                            ((Frm_Maatricula) getParent()).txtIdEstudiante.setText(String.valueOf(persona.getId()));
+                        }
+                        dispose();
+                    }
+                } catch (VacioExceptions e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public void mostrarTabla() {
-        //TODO: Agregar el atributo codigo carrera a la tabla Carrera en la base de datos
-        try (java.sql.Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
-            String sql = "SELECT * FROM CARRERA WHERE NOMBRE LIKE '%" + txtBusqueda.getText() + "%' OR CODIGO LIKE '%" + txtBusqueda.getText() + "%' ORDER BY NOMBRE";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
+        mtc.setEstudiantes(rc.list_All());
+        tabla.setModel(mtc);
+        tabla.updateUI();
 
-                DefaultTableModel model = new DefaultTableModel(new String[]{"Codigo", "Nombre", "Modalidad"}, 0);
-                while (resultSet.next()) {
-                    String codigo = resultSet.getString("CODIGO");
-                    String nombre = resultSet.getString("NOMBRE");
-                    String modalidad = resultSet.getString("MODALIDAD");
-                    model.addRow(new Object[]{codigo, nombre, modalidad});
-                }
-                tabla.setModel(model);
-                tabla.updateUI();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
+        mtc.fireTableDataChanged();
+
+        TableRowSorter<ModeloTablaEstudiante> trs = new TableRowSorter<>(mtc);
+        tabla.setRowSorter(trs);
+        tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.getTableHeader().setResizingAllowed(false);
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tabla.getColumnCount(); i++) {
+            tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
     }
 
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBusqueda.getText();
+
+        //TODO: Buscar en la base de datos con el criterio seleccionado
+        try {
+            if (texto.isEmpty()) {
+                mtc.setEstudiantes(rc.getEstudiantes());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    mtc.setEstudiantes(rc.busquedaBinaria(rc.list_All(), texto, "nombre"));
+                } else if (criterio.equalsIgnoreCase("apellido")) {
+                    mtc.setEstudiantes(rc.busquedaBinaria(rc.list_All(), texto, "apellido"));
+                } else if (criterio.equalsIgnoreCase("dni")) {
+                    Estudiante c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");
+                    if (c != null) {
+                        mtc.setEstudiantes(new ListaEnlazada<>());
+                        mtc.getEstudiantes().add(c);
+                    }
+                }
+            }
+            mtc.fireTableDataChanged();
+            tabla.setModel(mtc);
+            tabla.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -60,12 +120,11 @@ public class modal_Carrera extends javax.swing.JDialog {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        btnNombre = new javax.swing.JRadioButton();
-        btnCodigo = new javax.swing.JRadioButton();
         txtBusqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        cbxCriterio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -74,6 +133,8 @@ public class modal_Carrera extends javax.swing.JDialog {
 
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setAutoscrolls(true);
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,22 +156,6 @@ public class modal_Carrera extends javax.swing.JDialog {
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 480, 230));
 
-        btnNombre.setText("Nombre");
-        btnNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNombreActionPerformed(evt);
-            }
-        });
-        roundPanel1.add(btnNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
-
-        btnCodigo.setText("Codigo");
-        btnCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCodigoActionPerformed(evt);
-            }
-        });
-        roundPanel1.add(btnCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBusquedaActionPerformed(evt);
@@ -128,7 +173,7 @@ public class modal_Carrera extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel2.setText("Busqueda de Carrera:");
+        jLabel2.setText("Busqueda de Estudiantes:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         btnBuscar.setText("Buscar");
@@ -142,6 +187,9 @@ public class modal_Carrera extends javax.swing.JDialog {
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 520, 10));
+
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", "DNI" }));
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 160, -1));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 430));
 
@@ -163,51 +211,23 @@ public class modal_Carrera extends javax.swing.JDialog {
 
     }//GEN-LAST:event_tablaMouseClicked
 
-    private void btnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNombreActionPerformed
-
-    }//GEN-LAST:event_btnNombreActionPerformed
-
-    private void btnCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCodigoActionPerformed
-
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
         if (txtBusqueda.getText().isEmpty()) {
             mostrarTabla();
-        } else {
-            if (btnNombre.isSelected()) {
-                try {
-                    ControllerCarrera rc = new ControllerCarrera();
-                    tabla.setModel(rc.busquedaBinaria(rc.getLista(), txtBusqueda.getText(), "NOMBRE", "quicksort", 1).toTable());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (btnCodigo.isSelected()) {
-                try {
-                    ControllerCarrera rc = new ControllerCarrera();
-                    tabla.setModel(rc.busquedaBinaria(rc.getLista(), txtBusqueda.getText(), "CODIGO", "quicksort", 1).toTable());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        // TODO: llamar al mostrar tabla
-        if (txtBusqueda.getText().equals("")) {
-            mostrarTabla();
         }
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+        buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
-            mostrarTabla();
+            buscar();
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
 
@@ -228,20 +248,23 @@ public class modal_Carrera extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modal_Carrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscar_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modal_Carrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscar_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modal_Carrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscar_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modal_Carrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscar_Estudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                modal_Carrera dialog = new modal_Carrera(new javax.swing.JFrame(), true);
+                buscar_Estudiante dialog = new buscar_Estudiante(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -256,8 +279,7 @@ public class modal_Carrera extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup botones;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JRadioButton btnCodigo;
-    private javax.swing.JRadioButton btnNombre;
+    private javax.swing.JComboBox<String> cbxCriterio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

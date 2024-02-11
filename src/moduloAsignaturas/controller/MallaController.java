@@ -16,6 +16,8 @@ public class MallaController extends DataAccessObject<Malla> {
 
     public MallaController() {
         super(Malla.class);
+        this.mallas = new ListaEnlazada<>();
+
     }
 
     public ListaEnlazada<Malla> getMallas() {
@@ -63,7 +65,6 @@ public class MallaController extends DataAccessObject<Malla> {
         }
     }
 
-
     public int busquedaLineal(Malla elemento, Comparator<Malla> comparador) {
         Nodo<Malla> current = mallas.getHead();
         int index = 0;
@@ -79,7 +80,6 @@ public class MallaController extends DataAccessObject<Malla> {
 
         return -1;
     }
-
 
     public void quicksort(ListaEnlazada<Malla> lista, Comparator<Malla> comparador, boolean ascendente) throws VacioExceptions {
         quicksortRecursivo(lista, 0, lista.getSize() - 1, comparador, ascendente);

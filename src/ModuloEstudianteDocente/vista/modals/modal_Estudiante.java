@@ -60,7 +60,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 //isEditing = true;
                 fila = ec.getIndex();
                 ec.setEstudiante(mte.getEstudiantes().get(fila));
-                pc.setPersona(mte.getPersonas().get(fila));
                 txtNombres.setText(pc.getPersona().getNombre());
                 txtApellidos.setText(pc.getPersona().getApellido());
                 txtFechaNacim.setDate(pc.getPersona().getFecha_nacimiento());
@@ -165,7 +164,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
             try {
                 this.fila = fila;
                 ec.setEstudiante(modeloEstudiante.getEstudiantes().get(fila));
-                pc.setPersona(modeloEstudiante.getPersonas().get(fila));
                 pc.getPersona().setNombre(txtNombres.getText());
                 pc.getPersona().setApellido(txtApellidos.getText());
                 pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());

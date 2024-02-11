@@ -8,18 +8,10 @@ public class Asignatura {
     private Integer id;
     private String nombre;
     private Integer horas_Totales;
-    private Integer codigo_materia;
+    private String codigo_materia;
     private Boolean silabo;
 
     private Integer malla_id;
-
-
-    public Asignatura(Integer nuevoId, String nombre, Integer codigo_materia, Integer horas_Totales) {
-        this.id = nuevoId;
-        this.nombre = nombre;
-        this.codigo_materia = codigo_materia;
-        this.horas_Totales = horas_Totales;
-    }
 
     // Constructor
     public Asignatura() {
@@ -57,11 +49,11 @@ public class Asignatura {
         this.nombre = nombre;
     }
 
-    public Integer getCodigo_materia() {
+    public String getCodigo_materia() {
         return codigo_materia;
     }
 
-    public void setCodigo_materia(Integer codigo_materia) {
+    public void setCodigo_materia(String codigo_materia) {
         this.codigo_materia = codigo_materia;
     }
 
@@ -95,12 +87,6 @@ public class Asignatura {
         return Objects.hash(id);
     }
 
-    public boolean isValid() {
-        // Verificar que los campos necesarios no sean null o vacíos
-        return nombre != null && !nombre.isEmpty()
-                  && codigo_materia != null && codigo_materia > 0
-                  && horas_Totales != null && horas_Totales > 0;
-    }
 
     public Boolean comparar(Asignatura as, String field, Integer type) {
 

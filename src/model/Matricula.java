@@ -3,13 +3,11 @@ package model;
 import java.time.LocalDate;
 import java.util.Date;
 
-import model.catalogo.EstadoMatricula;
-import tda_listas.ListaEnlazada;
 
 public class Matricula {
 
     private Integer id;
-    private EstadoMatricula estado_matricula;
+    private String estado_matricula;
     private Date fechaMatricula;
     private Integer ciclo;
 
@@ -44,11 +42,11 @@ public class Matricula {
         this.periodoacademico_id = periodoacademico_id;
     }
 
-    public EstadoMatricula getEstado_matricula() {
+    public String getEstado_matricula() {
         return estado_matricula;
     }
 
-    public void setEstado_matricula(EstadoMatricula estado_matricula) {
+    public void setEstado_matricula(String estado_matricula) {
         this.estado_matricula = estado_matricula;
     }
 

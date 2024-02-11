@@ -67,26 +67,6 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
     }
 
-    public static void main(String[] args) {
-        PersonaController pc = new PersonaController();
-
-        pc.getPersona().setNombre("Jostin");
-        pc.getPersona().setApellido("Jimenez");
-        pc.getPersona().setDni("1150696977");
-        pc.getPersona().setFecha_nacimiento(new Date());
-        pc.getPersona().setRol_id(1);
-        pc.getPersona().setTelefono("0999170229");
-        pc.getPersona().setCorreo_personal("sdfghg");
-        pc.getPersona().setActivo(true);
-
-        try {
-            System.out.println("Save: " + pc.save());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
         Persona[] personas = lista.toArray();

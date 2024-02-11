@@ -42,16 +42,6 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         this.asignatura = asignatura;
     }
 
-    public boolean validar() {
-        // Verificar que la Asignatura no es null
-        if (asignatura == null) {
-            return false;
-        }
-
-        // Verificar que los campos de la Asignatura no son null o vacíos
-        return asignatura.isValid();
-    }
-
     public Integer save() throws Exception {
         return super.save(this.asignatura);
     }

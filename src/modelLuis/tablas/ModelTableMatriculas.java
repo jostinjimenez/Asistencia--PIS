@@ -20,7 +20,7 @@ public class ModelTableMatriculas extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -33,14 +33,14 @@ public class ModelTableMatriculas extends AbstractTableModel {
         }
         switch (col) {
             case 0:
-                return (matricula != null) ? matricula.getEstado_matricula().getNombre() : "";
+                return (matricula != null) ? matricula.getEstado_matricula(): "";
             case 1:
                 return (matricula != null) ? matricula.getFechaMatricula() : "";
             case 2:
                 return (matricula != null) ? matricula.getCiclo() : "";
             case 3:
                 try {
-                Estudiante estudiante = aa.busquedaBinaria2(aa.list_All(), matricula.getEstudiante_id().toString(), "id", 0);
+                Estudiante estudiante = aa.busquedaBinaria2(aa.list_All(), matricula.getEstudiante_id().toString(), "id");
                 return (estudiante != null) ? estudiante.getNacionalidad() : "";
                 // TODO: Mostrar el nombre del estudiante mediante un join con la tabla estudiante y persona
             } catch (Exception ignored) {
@@ -52,10 +52,10 @@ public class ModelTableMatriculas extends AbstractTableModel {
 
     public String getColumnName(int column) {
         return switch (column) {
-            case 1 -> "Estado Matricula";
-            case 2 -> "Fecha Matriculacion";
-            case 3 -> "Ciclo";
-            case 4 -> "Nombre";
+            case 0 -> "Estado Matricula";
+            case 1 -> "Fecha Matriculacion";
+            case 2 -> "Ciclo";
+            case 3 -> "Nombre";
             default -> null;
         };
     }

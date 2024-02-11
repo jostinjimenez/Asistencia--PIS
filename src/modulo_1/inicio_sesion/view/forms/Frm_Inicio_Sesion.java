@@ -3,6 +3,7 @@ package modulo_1.inicio_sesion.view.forms;
 import javax.swing.*;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import model.Cuenta;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
@@ -48,7 +49,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         } else {
             Cuenta cuenta = cc.validarCuenta(usuario, claveCifrada);
             cc.setCuenta(cuenta);
-            if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
+            //if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
                 Utiles.setCc(cc);
                 Utiles.setCuentaUsu(cuenta);
                 if (cuenta != null) {
@@ -70,7 +71,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                         }
                     }
                 }
-            }
+            //}
         }
     }
 
@@ -188,7 +189,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }

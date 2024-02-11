@@ -1,5 +1,6 @@
 package moduloAsignaturas.view;
 
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import moduloAsignaturas.controller.AsignaturaController;
 
 import java.util.Comparator;
@@ -13,6 +14,7 @@ import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import model.Asignatura;
 import tda_listas.exceptions.VacioExceptions;
 
+import static moduloAsignaturas.view.util_vista.Utiles.cargarMalla;
 import static moduloAsignaturas.view.util_vista.Utiles.getComboMalla;
 
 public class FrmAgregarAsignatura extends javax.swing.JFrame {
@@ -33,7 +35,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         mta = new ModeloTablaAsignaturas();
         mta.setAsignaturaController(ac);
 
-        cargarTabla();
+        limpiar();
     }
 
     public void cargarTabla() {
@@ -55,9 +57,10 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
             try {
                 // Configurar los datos en el controlador
                 ac.getAsignatura().setNombre(txtNombreAsignatura.getText());
-                ac.getAsignatura().setCodigo_materia(Integer.valueOf(txtCodigoAsigntura.getText()));
+                ac.getAsignatura().setCodigo_materia(txtCodigoAsigntura.getText());
                 ac.getAsignatura().setHoras_Totales(Integer.valueOf(txtHorasTotales.getText()));
                 ac.getAsignatura().setMalla_id(getComboMalla(cbxMalla).getId());
+                ac.getAsignatura().setSilabo(true);
 
                 if (ac.save() > 0) {
                     limpiar();
@@ -132,6 +135,8 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         txtNombreAsignatura.setText("");
         txtCodigoAsigntura.setText("");
         txtHorasTotales.setText("");
+        cargarTabla();
+        cargarMalla(cbxMalla);
     }
 
     public void modificar() {
@@ -148,11 +153,10 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
                 // Convertir a los tipos de datos apropiados
                 Integer horasTotales = Integer.parseInt(horasTotalesStr);
-                Integer codigo = Integer.parseInt(codigoStr);
 
                 // Configurar los datos en el controlador
                 ac.getAsignatura().setNombre(nombre);
-                ac.getAsignatura().setCodigo_materia(codigo);
+                ac.getAsignatura().setCodigo_materia(codigoStr);
                 ac.getAsignatura().setHoras_Totales(horasTotales);
 
                 // Actualizar la información en la lista y en la tabla
@@ -272,11 +276,11 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(21, 21, 21));
+        jPanel1.setBackground(new java.awt.Color(225, 233, 243));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setForeground(new java.awt.Color(0, 0, 0));
@@ -317,7 +321,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(ComboBoxOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 130, -1));
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 240, 175, -1));
 
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,42 +369,42 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Malla Academica:");
         roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Horas totales:");
         roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
 
         txtCodigoAsigntura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCodigoAsigntura.setForeground(new java.awt.Color(255, 255, 255));
+        txtCodigoAsigntura.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtCodigoAsigntura, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 100, 250, -1));
 
         txtHorasTotales.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtHorasTotales.setForeground(new java.awt.Color(255, 255, 255));
+        txtHorasTotales.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtHorasTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 250, -1));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Agregar Asignaturas");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 510, 10));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre de la Asignatura:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
 
         txtNombreAsignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNombreAsignatura.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombreAsignatura.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtNombreAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 250, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Codigo de la Asignatura:");
         roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
 
@@ -454,7 +458,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }

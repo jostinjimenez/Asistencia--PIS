@@ -2,18 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo.ControllerCarrera.Tabla;
+package modulo_carrera.view.tablas;
 
-import Modelo.ControllerCarrera.ControllerCarrera;
-
+import model.Carrera;
+import modulo_carrera.controller.CarreraController;
 import tda_listas.ListaEnlazada;
+import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
-
 import java.text.SimpleDateFormat;
-import model.Carrera;
-import tda_listas.exceptions.VacioExceptions;
 
 /**
  * @author santiago
@@ -47,7 +45,7 @@ public class ModeloTablaCarrera extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         Carrera carr = null;
-        ControllerCarrera cc = new ControllerCarrera();
+        CarreraController cc = new CarreraController();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
 
         //TODO: Mostrar todos los datos del estudiante

@@ -6,6 +6,7 @@ import DataBase.DataAccessObject;
 
 import java.lang.reflect.Field;
 
+import model.Carrera;
 import model.Estudiante;
 import model.Persona;
 import modulo_1.inicio_sesion.controller.PersonaController;
@@ -69,78 +70,48 @@ public class EstudianteController extends DataAccessObject<Estudiante> {
         }
     }
 
-    public Persona getPersonaEstudiante(Integer idPersona) {
-        PersonaController personaController = new PersonaController();
-        ListaEnlazada<Persona> personas = personaController.getPersonas();
-        try {
-            personas = personaController.ordenarQS(personas, 0, "id");
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ListaEnlazada<Estudiante> ordenarQS(ListaEnlazada<Estudiante> lista, Integer type, String field) throws Exception {
+        Estudiante[] estudiantess = lista.toArray();
+        Field faux = getField(Persona.class, field);
+        if (faux != null) {
+            quickSort(estudiantess, 0, estudiantess.length - 1, type, field);
+        } else {
+            throw new Exception("El atributo no existe");
         }
-
-        int left = 0;
-        int right = personas.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            Persona midPersona = null;
-            try {
-                midPersona = personas.get(mid);
-            } catch (VacioExceptions e) {
-                e.printStackTrace();
-            }
-
-            if (midPersona.getId().equals(idPersona)) {
-                return midPersona;
-            }
-            if (midPersona.getId() < idPersona) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return null;
+        return lista.toList(estudiantess);
     }
 
-    public ListaEnlazada<Estudiante> quicksort(ListaEnlazada<Estudiante> lista, Integer type, String field) throws VacioExceptions {
+    private void quickSort(Estudiante[] p, int primero, int ultimo, Integer type, String field) throws Exception {
+        if (primero < ultimo) {
+            int pi = partition(p, primero, ultimo, type, field);
 
-        Estudiante[] m = lista.toArray();
-        quicksort(m, 0, m.length - 1, type, field);
-        lista.toList(m);
-        return lista;
-    }
-
-    private void quicksort(Estudiante[] m, int low, int high, Integer type, String field) {
-        if (low < high) {
-            int pivotIndex = partition(m, low, high, type, field);
-            quicksort(m, low, pivotIndex - 1, type, field);
-            quicksort(m, pivotIndex + 1, high, type, field);
+            quickSort(p, primero, pi - 1, type, field);
+            quickSort(p, pi + 1, ultimo, type, field);
         }
     }
 
-    private int partition(Estudiante[] array, int low, int high, Integer type, String field) {
-        Estudiante pivote = array[high];
-        int i = low - 1;
+    private int partition(Estudiante[] p, int primero, int ultimo, Integer type, String field) throws Exception {
+        Estudiante pivot = p[ultimo];
+        int i = (primero - 1);
 
-        for (int j = low; j < high; j++) {
-            if (array[j].comparar(pivote, field, type)) {
+        for (int j = primero; j < ultimo; j++) {
+            if (p[j].compareTo(pivot, field, type)) {
                 i++;
-                swap(array, i, j);
+                Estudiante temp = p[i];
+                p[i] = p[j];
+                p[j] = temp;
             }
         }
 
-        swap(array, i + 1, high);
+        Estudiante aux = p[i + 1];
+        p[i + 1] = p[ultimo];
+        p[ultimo] = aux;
+
         return i + 1;
     }
 
-    private void swap(Estudiante[] array, int i, int j) {
-        Estudiante temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    public ListaEnlazada<Estudiante> busquedaBinaria(ListaEnlazada<Estudiante> lista, String text, String campo, Integer type) throws VacioExceptions {
-        ListaEnlazada<Estudiante> listaOrdenada = ordenarLista(lista, campo);
+    public ListaEnlazada<Estudiante> busquedaBinaria(ListaEnlazada<Estudiante> lista, String text, String campo) throws Exception {
+        ListaEnlazada<Estudiante> listaOrdenada = ordenarQS(lista, 0, campo);
 
         ListaEnlazada<Estudiante> marc = new ListaEnlazada<>();
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
@@ -181,22 +152,8 @@ public class EstudianteController extends DataAccessObject<Estudiante> {
         return -1;
     }
 
-    private boolean getForm(Estudiante matricula, String text, String campo) {
-        switch (campo.toLowerCase()) {
-            case "id":
-                return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
-            default:
-                throw new IllegalArgumentException("Campo de comparación no válido");
-        }
-    }
-
-    private ListaEnlazada<Estudiante> ordenarLista(ListaEnlazada<Estudiante> lista, String campo) throws VacioExceptions {
-        ListaEnlazada<Estudiante> listaOrdenada = quicksort(lista, 0, campo);
-        return listaOrdenada;
-    }
-
-    public Estudiante busquedaBinaria2(ListaEnlazada<Estudiante> lista, String text, String campo, Integer type) throws VacioExceptions {
-        ListaEnlazada<Estudiante> listaOrdenada = ordenarLista(lista, campo);
+    public Estudiante busquedaBinaria2(ListaEnlazada<Estudiante> lista, String text, String campo) throws Exception {
+        ListaEnlazada<Estudiante> listaOrdenada = ordenarQS(lista,0, campo);
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
 
         if (index != -1) {
@@ -205,5 +162,15 @@ public class EstudianteController extends DataAccessObject<Estudiante> {
             System.out.println("Elemento no encontrado");
             return null;
         }
+    }
+
+    private boolean getForm(Estudiante est, String text, String campo) {
+        return switch (campo.toLowerCase()) {
+            case "id" -> Integer.toString(est.getId()).equalsIgnoreCase(text);
+            case "nombre" -> est.getNombre().equalsIgnoreCase(text);
+            case "apellido" -> est.getApellido().equalsIgnoreCase(text);
+            case "dni" -> est.getDni().equalsIgnoreCase(text);
+            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+        };
     }
 }

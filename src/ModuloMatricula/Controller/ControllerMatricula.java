@@ -2,7 +2,6 @@ package ModuloMatricula.Controller;
 
 import DataBase.DataAccessObject;
 import model.Matricula;
-import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

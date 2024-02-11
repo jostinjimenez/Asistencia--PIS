@@ -14,6 +14,8 @@ import model.Cuenta;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import model.Carrera;
+import modulo_carrera.controller.CarreraController;
 
 public class Utiles {
 
@@ -53,6 +55,27 @@ public class Utiles {
         return (PeriodoAcademico) cbx.getSelectedItem();
     }
 
+    public static void cargarCarrera(JComboBox cbxPeriodo) {
+        CarreraController rc = new CarreraController();
+        cbxPeriodo.removeAllItems();
+
+        try {
+            if (rc.getCarreras().getSize() > 0) {
+                for (int i = 0; i < rc.getCarreras().getSize(); i++) {
+                    cbxPeriodo.addItem(rc.getCarreras().get(i));
+                }
+            } else {
+                cbxPeriodo.addItem("No hay carreras");
+            }
+        } catch (VacioExceptions e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Carrera getComboCarrera(JComboBox cbx) {
+        return (Carrera) cbx.getSelectedItem();
+    }
+
     public static Rol getComboRol(JComboBox cbx) {
         return (Rol) cbx.getSelectedItem();
     }
@@ -90,8 +113,9 @@ public class Utiles {
     private static Cuenta cuentaUsu;
 
     public static Cuenta getCuentaUsu() {
-        if (cuentaUsu == null)
+        if (cuentaUsu == null) {
             cuentaUsu = new Cuenta();
+        }
         return cuentaUsu;
     }
 
@@ -100,8 +124,9 @@ public class Utiles {
     }
 
     public static CuentaController getCc() {
-        if (cc == null)
+        if (cc == null) {
             cc = new CuentaController();
+        }
         return cc;
     }
 
@@ -139,4 +164,3 @@ public class Utiles {
         return extension;
     }
 }
-
