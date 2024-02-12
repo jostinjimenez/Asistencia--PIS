@@ -187,7 +187,7 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
     public ListaEnlazada<Matricula> buscarPorEstudiante(String dniONombre) {
         ListaEnlazada<Matricula> matriculas = new ListaEnlazada<>();
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
-            String sql = "SELECT * FROM MATRICULA JOIN ESTUDIANTE ON MATRICULA.ESTUDIANTE_ID = ESTUDIANTE.ID JOIN AXLMD.PERSONA P on P.ID = ESTUDIANTE.ID WHERE P.DNI = ? OR P.NOMBRE = ?";
+            String sql = "SELECT * FROM MATRICULA JOIN ESTUDIANTE ON MATRICULA.ESTUDIANTE_ID = ESTUDIANTE.ID JOIN AXLMD.PERSONA P on P.ID = ESTUDIANTE.ID WHERE P.NOMBRE = ? OR P.DNI = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, dniONombre);
                 preparedStatement.setString(2, dniONombre);
@@ -198,15 +198,16 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
                         matricula.setCiclo(resultSet.getInt("CICLO"));
                         matricula.setEstudiante_id(resultSet.getInt("ESTUDIANTE_ID"));
                         matricula.setPeriodoacademico_id(resultSet.getInt("PERIODOACADEMICO_ID"));
-                        matricula.setFechamatricula(resultSet.getDate("FECHA"));
-                        matricula.setEstado_matricula(resultSet.getString("ESTADO"));
+                        matricula.setFechamatricula(resultSet.getDate("FECHAMATRICULA"));
+                        matricula.setEstado_matricula(resultSet.getString("ESTADO_MATRICULA"));
                         matriculas.add(matricula);
                     }
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
         }
+        System.out.println(matriculas.print());
         return matriculas;
     }
 

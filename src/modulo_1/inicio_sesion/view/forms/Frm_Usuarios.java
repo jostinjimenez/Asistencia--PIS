@@ -4,6 +4,7 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import model.Rol;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import modulo_1.inicio_sesion.view.util.Utiles;
 
 import javax.swing.*;
@@ -155,8 +156,10 @@ public class Frm_Usuarios extends javax.swing.JFrame {
 
         TableRowSorter<ModeloTablaCuenta> trs = new TableRowSorter<>(mtp);
         jTable1.setRowSorter(trs);
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getTableHeader().setResizingAllowed(false);
+        jTable1.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        //jTable1.setRowHeight(30); // Ajusta este valor según tus necesidades
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -189,10 +192,9 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bg_panel.setBackground(new java.awt.Color(21, 21, 21));
+        bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 30)); // NOI18N
@@ -201,13 +203,13 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Buscar");
         roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 100, 60, 20));
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 1, 1));
         roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 130, 240, 20));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -222,6 +224,7 @@ public class Frm_Usuarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1000, 320));
@@ -273,8 +276,10 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         });
         roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 160, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
+
+        header2.setBackground(new java.awt.Color(246, 246, 246));
         bg_panel.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));

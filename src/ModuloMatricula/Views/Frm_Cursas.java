@@ -8,6 +8,8 @@ import javax.swing.table.TableRowSorter;
 import ModuloMatricula.tablas.ModeloTablaCursas;
 import modelLuis.controller.ControllerCursa;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 
 import java.sql.*;
 import java.util.Objects;
@@ -37,6 +39,8 @@ public class Frm_Cursas extends javax.swing.JFrame {
         tbl1.setRowSorter(trs);
         tbl1.getTableHeader().setReorderingAllowed(false);
         tbl1.getTableHeader().setResizingAllowed(false);
+        tbl1.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tbl1.setRowHeight(30); // Ajusta este valor según tus necesidades
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -79,7 +83,8 @@ public class Frm_Cursas extends javax.swing.JFrame {
     }
 
     public Boolean validar() {
-        return !txtParalelo.getText().trim().isEmpty() && !txtIdMatricula.getText().trim().isEmpty() && !txtIdDocente.getText().trim().isEmpty();
+        return !txtIdMatricula.getText().trim().isEmpty()
+                && !txtIdDocente.getText().trim().isEmpty();
     }
     
 
@@ -90,7 +95,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         } else {
             try {
                 cc.setCursa(mtc.getCursas().get(cc.getIndex()));
-                txtParalelo.setText(cc.getCursa().getParalelo());
+                cbxParalelo.setSelectedItem(cc.getCursa().getParalelo());
             } catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
@@ -113,7 +118,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
     public void guardar() {
         if (validar()) {
             try {
-                cc.getCursa().setParalelo(txtParalelo.getText());
+                cc.getCursa().setParalelo(Objects.requireNonNull(cbxParalelo.getSelectedItem()).toString());
                 cc.getCursa().setAsignatura_id(getComboAsignatura(cbxAsignaturas).getId());
 
                 cc.getCursa().setDocente_id(Integer.parseInt(txtIdDocente.getText()));
@@ -157,7 +162,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         btnCargarDocente = new javax.swing.JButton();
         txtIdDocente = new javax.swing.JTextField();
         txtIdMatricula = new javax.swing.JTextField();
-        txtParalelo = new javax.swing.JTextField();
+        cbxParalelo = new javax.swing.JComboBox<>();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -238,9 +243,11 @@ public class Frm_Cursas extends javax.swing.JFrame {
         roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
 
         txtMatricula.setEditable(false);
+        txtMatricula.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         roundPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 230, -1));
 
         txtDocente.setEditable(false);
+        txtDocente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         roundPanel1.add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 230, -1));
 
         btnCargarMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
@@ -266,7 +273,9 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
         txtIdMatricula.setEditable(false);
         roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 50, -1));
-        roundPanel1.add(txtParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 220, -1));
+
+        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
+        roundPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 220, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
@@ -334,6 +343,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
     private javax.swing.JButton btnCargarDocente;
     private javax.swing.JButton btnCargarMatricula;
     private javax.swing.JComboBox<String> cbxAsignaturas;
+    private javax.swing.JComboBox<String> cbxParalelo;
     private plantilla.components.Header header2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
@@ -351,7 +361,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
     protected javax.swing.JTextField txtIdDocente;
     protected javax.swing.JTextField txtIdMatricula;
     protected javax.swing.JTextField txtMatricula;
-    protected javax.swing.JTextField txtParalelo;
     // End of variables declaration//GEN-END:variables
 
 }

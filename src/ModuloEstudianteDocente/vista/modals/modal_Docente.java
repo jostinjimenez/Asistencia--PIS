@@ -230,46 +230,44 @@ public class modal_Docente extends javax.swing.JDialog {
         txtGradoAcademico = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setText("Nombres: ");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Fecha de nacimiento:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Correo Personal:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Cedula: ");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setText("Telefono:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, -1, -1));
 
         Jlabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        Jlabel.setForeground(new java.awt.Color(255, 255, 255));
+        Jlabel.setForeground(new java.awt.Color(51, 51, 51));
         Jlabel.setText("Codigo docente:");
-        jPanel1.add(Jlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
+        jPanel1.add(Jlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
         Jlabelll.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        Jlabelll.setForeground(new java.awt.Color(255, 255, 255));
+        Jlabelll.setForeground(new java.awt.Color(51, 51, 51));
         Jlabelll.setText("Experiencia:");
-        jPanel1.add(Jlabelll, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, -1, -1));
+        jPanel1.add(Jlabelll, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, -1, -1));
 
         txtNombres.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNombres.setForeground(new java.awt.Color(0, 0, 0));
@@ -279,7 +277,7 @@ public class modal_Docente extends javax.swing.JDialog {
                 txtNombresActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 230, -1));
+        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 230, -1));
 
         txtApellidos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtApellidos.setForeground(new java.awt.Color(0, 0, 0));
@@ -288,31 +286,31 @@ public class modal_Docente extends javax.swing.JDialog {
                 txtApellidosActionPerformed(evt);
             }
         });
-        jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 120, 230, -1));
+        jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 230, -1));
 
         txtCedula.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCedula.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 231, -1));
+        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 231, -1));
 
         txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 160, 231, -1));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 231, -1));
 
         txtFechaNacim.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 230, 30));
+        jPanel1.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 230, 30));
 
         txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 231, -1));
+        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 231, -1));
 
         txtExperiencia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtExperiencia.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtExperiencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 230, -1));
+        jPanel1.add(txtExperiencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, 230, -1));
 
         txtCodigoEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCodigoEmpleado.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtCodigoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 231, -1));
+        jPanel1.add(txtCodigoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 231, -1));
 
         btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
         btnGuardar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -322,28 +320,37 @@ public class modal_Docente extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 370, 110, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 350, 110, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 102));
         jLabel1.setText("Agregar Docente");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Apellidos:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, -1, -1));
 
         Jlabelll1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        Jlabelll1.setForeground(new java.awt.Color(255, 255, 255));
+        Jlabelll1.setForeground(new java.awt.Color(51, 51, 51));
         Jlabelll1.setText("Grado Academico:");
-        jPanel1.add(Jlabelll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, -1, -1));
+        jPanel1.add(Jlabelll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 220, -1, -1));
 
         txtGradoAcademico.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtGradoAcademico.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtGradoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, 230, -1));
+        jPanel1.add(txtGradoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 210, 230, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 470));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

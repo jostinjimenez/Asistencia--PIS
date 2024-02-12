@@ -3,6 +3,7 @@ package model;
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 public class Docente extends Persona {
+    private Integer id;
     private Integer experiencia;
     private String codigo_empleado;
     private String grado_academico;
@@ -14,6 +15,16 @@ public class Docente extends Persona {
         this.experiencia = experiencia;
         this.codigo_empleado = codigo_empleado;
         this.grado_academico = grado_academico;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getExperiencia() {

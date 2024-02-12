@@ -8,7 +8,7 @@ import tda_listas.ListaEnlazada;
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 public class Estudiante extends Persona {
-
+    private Integer id;
     private String etnia;
     private Boolean titulo_bachiller;
     private String nacionalidad;
@@ -18,6 +18,16 @@ public class Estudiante extends Persona {
 
 
     public Estudiante() {
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNacionalidad() {

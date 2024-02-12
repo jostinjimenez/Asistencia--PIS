@@ -74,7 +74,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
             if (texto.isEmpty()) {
                 mtc.setMatriculas(rc.getLista());
             } else {
-                if (criterio.equalsIgnoreCase("nombre")) {
+                if (criterio.equalsIgnoreCase("nombre") || criterio.equalsIgnoreCase("dni")) {
                     mtc.setMatriculas(rc.buscarPorEstudiante(texto));
 //                } else if (criterio.equalsIgnoreCase("codigo")) {
 //                    Carrera c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");

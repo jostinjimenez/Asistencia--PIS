@@ -117,11 +117,10 @@ public class FrmEstudiante extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(225, 233, 243));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
 
-        roundPanel5.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblEstudiante.setModel(new javax.swing.table.DefaultTableModel(
@@ -183,7 +182,9 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jLabel3.setText("Buscar");
         roundPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 180, 60, 20));
 
-        jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 1040, 630));
+        jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1040, 620));
+
+        header2.setBackground(new java.awt.Color(246, 246, 246));
         jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -4, 1290, 700));

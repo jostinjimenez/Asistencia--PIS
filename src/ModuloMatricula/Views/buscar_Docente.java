@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
@@ -72,32 +73,29 @@ public class buscar_Docente extends javax.swing.JDialog {
     }
 
     private void buscar() {
-//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-//        String texto = txtBusqueda.getText();
-//
-//        //TODO: Buscar en la base de datos con el criterio seleccionado
-//        try {
-//            if (texto.isEmpty()) {
-//                mtc.setEstudiantes(rc.getEstudiantes());
-//            } else {
-//                if (criterio.equalsIgnoreCase("nombre")) {
-//                    mtc.setEstudiantes(rc.busquedaBinaria(rc.list_All(), texto, "nombre"));
-//                } else if (criterio.equalsIgnoreCase("apellido")) {
-//                    mtc.setEstudiantes(rc.busquedaBinaria(rc.list_All(), texto, "apellido"));
-//                } else if (criterio.equalsIgnoreCase("dni")) {
-//                    Estudiante c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBusqueda.getText();
+
+        try {
+            if (texto.isEmpty()) {
+                mtd.setDocentes(rc.getDocentes());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre") || criterio.equalsIgnoreCase("dni") || criterio.equalsIgnoreCase("apellido")) {
+                    mtd.setDocentes(rc.buscarPorNombre(texto));
+//                } else if (criterio.equalsIgnoreCase("codigo")) {
+//                    Carrera c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");
 //                    if (c != null) {
-//                        mtc.setEstudiantes(new ListaEnlazada<>());
-//                        mtc.getEstudiantes().add(c);
+//                        mtc.setLista(new ListaEnlazada<>());
+//                        mtc.getLista().add(c);
 //                    }
-//                }
-//            }
-//            mtc.fireTableDataChanged();
-//            tabla.setModel(mtc);
-//            tabla.updateUI();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+                }
+            }
+            mtd.fireTableDataChanged();
+            tabla.setModel(mtd);
+            tabla.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -126,15 +124,15 @@ public class buscar_Docente extends javax.swing.JDialog {
         jScrollPane1.setAutoscrolls(true);
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -154,6 +152,7 @@ public class buscar_Docente extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyPressed(evt);
             }
+
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyReleased(evt);
             }
@@ -177,7 +176,7 @@ public class buscar_Docente extends javax.swing.JDialog {
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 520, 10));
 
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", "DNI" }));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Nombre", "Apellido", "DNI"}));
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 160, -1));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 430));
@@ -185,12 +184,12 @@ public class buscar_Docente extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

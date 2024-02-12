@@ -186,10 +186,10 @@ public class DataAccessObject<T> implements TransferObject<T> {
 
     private void fijarDatos(Field f, ResultSet rs, T data, String atributo) {
         try {
-//            if (f.getName().startsWith("$")) {
-//                // Ignora los campos internos generados automáticamente por el compilador de Java
-//                return;
-//            }
+            if (f.getName().startsWith("$")) {
+                // Ignora los campos internos generados automáticamente por el compilador de Java
+                return;
+            }
             Method m = null;
             //System.out.println("Procesando atributo: " + atributo); // Agrega esta línea
             if (f.getType().getSimpleName().equalsIgnoreCase("String")) {
