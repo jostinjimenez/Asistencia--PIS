@@ -40,13 +40,12 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         initComponents();
         try {
             cargarCombos();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e + "Errros");
         }
         limpiar();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);  
+        this.setResizable(false);
     }
 
     private void cargarCombos() throws VacioExceptions {
@@ -75,8 +74,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
             Util_VistaLinked1_Asistencia.cargaHorario(cbxHorario);
             Util_VistaLinked1_Asistencia.cargaAsig(cbxAsig);
             Util_VistaLinked1_Asistencia.cargaParalelos(cbxParalelos);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -97,7 +95,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
     public Boolean validar() {
         return !txtFecha.getText().trim().isEmpty()
-                  && !txtNombre.getText().trim().isEmpty();
+                && !txtNombre.getText().trim().isEmpty();
     }
 
     public void modificar() {
@@ -107,8 +105,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         ca.setIndex(fila);
         if (ca.update1(ca.getIndex())) {
             JOptionPane.showMessageDialog(null, "Se ha modificado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -125,17 +122,14 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                     if (ca.saved()) {
                         list.add(ca.getAsistencia());
                         JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println(e + "Error");
             }
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
@@ -150,17 +144,14 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                 if (ct.saved()) {
                     limpiar();
                     JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println(e + "Errooor");
             }
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
         }
     }
@@ -196,8 +187,6 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cbxCiclos = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        buttonMenu2 = new com.raven.swing.ButtonMenu();
-        buttonMenu4 = new com.raven.swing.ButtonMenu();
         cbxAsig = new javax.swing.JComboBox<>();
         cbxParalelos = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -207,21 +196,22 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cbxHorario = new javax.swing.JComboBox<>();
-        buttonMenu5 = new com.raven.swing.ButtonMenu();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAsis = new javax.swing.JTable();
-        buttonMenu1 = new com.raven.swing.ButtonMenu();
-        buttonMenu3 = new com.raven.swing.ButtonMenu();
+        btnModificar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnGuardarTem = new javax.swing.JButton();
+        btnActualizarTab = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
         menu_Docente1 = new plantilla.components.Menu_Docente();
+        headerUser1 = new plantilla.components.HeaderUser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bg_panel.setBackground(new java.awt.Color(21, 21, 21));
+        bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -240,22 +230,6 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         jLabel2.setText("Ciclo:");
         roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 6, -1, -1));
 
-        buttonMenu2.setText("Buscar Lista");
-        buttonMenu2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMenu2ActionPerformed(evt);
-            }
-        });
-        roundPanel2.add(buttonMenu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 120, 136, -1));
-
-        buttonMenu4.setText("           Asistencia");
-        buttonMenu4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMenu4ActionPerformed(evt);
-            }
-        });
-        roundPanel2.add(buttonMenu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 120, 150, -1));
-
         cbxAsig.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         roundPanel2.add(cbxAsig, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 28, 136, -1));
 
@@ -265,20 +239,13 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         jLabel6.setText("Asignaturas:");
         roundPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 66, -1, -1));
 
-        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, 160));
+        roundPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, 130));
 
         jLabel3.setText("Tema de la clase:");
 
         jLabel4.setText("Fecha de la clase:");
 
         cbxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        buttonMenu5.setText("      Guardar Tematica");
-        buttonMenu5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMenu5ActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Horario:");
 
@@ -300,9 +267,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel3Layout.createSequentialGroup()
-                        .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(buttonMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33))))
         );
         roundPanel3Layout.setVerticalGroup(
@@ -320,16 +285,13 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24)
-                .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(roundPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        roundPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 460, 140));
+        roundPanel1.add(roundPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 460, 130));
 
         tblAsis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -346,27 +308,62 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 910, 320));
 
-        buttonMenu1.setBackground(new java.awt.Color(102, 102, 102));
-        buttonMenu1.setText("       Modificar Tabla");
-        buttonMenu1.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMenu1ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        roundPanel1.add(buttonMenu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 160, -1));
+        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 160, 130, 30));
 
-        buttonMenu3.setText("        Actualizar Tabla");
-        buttonMenu3.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMenu3ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
-        roundPanel1.add(buttonMenu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 160, -1));
+        roundPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 130, 30));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 1000, 620));
-        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 250, 620));
+        btnGuardarTem.setText("Guardar Tematica");
+        btnGuardarTem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarTemActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnGuardarTem, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 130, 30));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        btnActualizarTab.setText("Actualizar Tabla");
+        btnActualizarTab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarTabActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnActualizarTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 130, 30));
+
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 130, 30));
+
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
+        bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
+
+        headerUser1.setBackground(new java.awt.Color(246, 246, 246));
+        bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, 50));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -382,8 +379,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private void buttonMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu2ActionPerformed
         try {
             listar();
-        }
-        catch (VacioExceptions ex) {
+        } catch (VacioExceptions ex) {
 
         }
     }//GEN-LAST:event_buttonMenu2ActionPerformed
@@ -391,8 +387,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     private void buttonMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu3ActionPerformed
         try {
             actualizarTabla();
-        }
-        catch (VacioExceptions ex) {
+        } catch (VacioExceptions ex) {
 
         }
     }//GEN-LAST:event_buttonMenu3ActionPerformed
@@ -406,16 +401,43 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
     }//GEN-LAST:event_buttonMenu5ActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnGuardarTemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTemActionPerformed
+        guardarTematica();
+    }//GEN-LAST:event_btnGuardarTemActionPerformed
+
+    private void btnActualizarTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTabActionPerformed
+        try {
+            actualizarTabla();
+        } catch (VacioExceptions ex) {
+
+        }
+    }//GEN-LAST:event_btnActualizarTabActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        try {
+            listar();
+        } catch (VacioExceptions ex) {
+
+        }
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        modificar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
         //</editor-fold>
@@ -428,15 +450,16 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private com.raven.swing.ButtonMenu buttonMenu1;
-    private com.raven.swing.ButtonMenu buttonMenu2;
-    private com.raven.swing.ButtonMenu buttonMenu3;
-    private com.raven.swing.ButtonMenu buttonMenu4;
-    private com.raven.swing.ButtonMenu buttonMenu5;
+    private javax.swing.JButton btnActualizarTab;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarTem;
+    private javax.swing.JButton btnListar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cbxAsig;
     private javax.swing.JComboBox<String> cbxCiclos;
     private javax.swing.JComboBox<String> cbxHorario;
     private javax.swing.JComboBox<String> cbxParalelos;
+    private plantilla.components.HeaderUser headerUser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

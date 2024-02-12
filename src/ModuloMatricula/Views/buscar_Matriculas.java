@@ -12,6 +12,7 @@ import javax.swing.table.TableRowSorter;
 import ModuloMatricula.Controller.ControllerMatricula;
 import model.Matricula;
 import modelLuis.tablas.ModelTableMatriculas;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
 
 public class buscar_Matriculas extends javax.swing.JDialog {
@@ -52,12 +53,15 @@ public class buscar_Matriculas extends javax.swing.JDialog {
         mtc.setMatriculas(rc.list_All());
         tabla.setModel(mtc);
         tabla.updateUI();
-
         mtc.fireTableDataChanged();
 
         TableRowSorter<ModelTableMatriculas> trs = new TableRowSorter<>(mtc);
         tabla.setRowSorter(trs);
         tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.getTableHeader().setResizingAllowed(false);
+        tabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tabla.setRowHeight(30); // Ajusta este valor según tus necesidades
+
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);

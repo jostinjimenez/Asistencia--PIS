@@ -1,17 +1,19 @@
 package moduloAsignaturas.view;
 
+import ModuloMatricula.tablas.ModeloTablaCursas;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import moduloAsignaturas.controller.AsignaturaController;
 
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import model.Asignatura;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
 
 import static moduloAsignaturas.view.util_vista.Utiles.cargarMalla;
@@ -44,6 +46,19 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         mta.fireTableDataChanged();
         tablaAsignaturas.updateUI();
         tablaAsignaturas.repaint();  // Agrega esta línea
+
+        TableRowSorter<ModeloTablaAsignaturas> trs = new TableRowSorter<>(mta);
+        tablaAsignaturas.setRowSorter(trs);
+        tablaAsignaturas.getTableHeader().setReorderingAllowed(false);
+        tablaAsignaturas.getTableHeader().setResizingAllowed(false);
+        tablaAsignaturas.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tablaAsignaturas.setRowHeight(30); // Ajusta este valor según tus necesidades
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tablaAsignaturas.getColumnCount(); i++) {
+            tablaAsignaturas.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
     }
 
     public Boolean validar() {
@@ -285,6 +300,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
         jScrollPane1.setForeground(new java.awt.Color(0, 0, 0));
 
+        tablaAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tablaAsignaturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

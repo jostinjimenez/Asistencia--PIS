@@ -1,7 +1,7 @@
 package plantilla.components;
 
 import ModuloMatricula.Views.Frm_Cursas;
-import com.raven.swing.ButtonMenu;
+import plantilla.swing.ButtonMenu;
 
 import java.awt.*;
 import java.util.Objects;
@@ -18,7 +18,6 @@ import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
 import moduloAsignaturas.view.*;
 
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
 import modulo_1.periodo_academico.view.forms.Frm_PeriodosAcademicos;
@@ -81,9 +80,10 @@ public class Menu_Admin extends javax.swing.JPanel {
         menu.setText("  " + text);
         menu.setFont(new Font("Roboto", Font.PLAIN, 12));
         menu.setForeground(new Color(0,0,0));
+
         switch (text) {
             case "Cerrar Sesión" -> menu.addActionListener(e -> {
-                int dialogResult = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+                int dialogResult = JOptionPane.showConfirmDialog(null, "¿Cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     cerrarSesion();
                 }

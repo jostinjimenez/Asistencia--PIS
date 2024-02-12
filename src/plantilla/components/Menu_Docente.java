@@ -1,6 +1,6 @@
 package plantilla.components;
 
-import com.raven.swing.ButtonMenu;
+import plantilla.swing.ButtonMenu;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -39,24 +39,13 @@ public class Menu_Docente extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(sb);
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
-
-        Persona persona = cc.getPersona(cuentaUsu.getPersona_id());
-        if (persona != null) {
-            txtUsername.setText(persona.toString());
-            imageAvatar1.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
-        }
-        else {
-            txtUsername.setText("Username");
-            imageAvatar1.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
-        }
     }
-    Persona persona = cc.getPersona(cc.getCuenta().getPersona_id());
 
     public void initMenu() {
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/menu.png"))), "Menu Principal", 0);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/user.png"))), "Registro de Asistencia", 1);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/roles.png"))), "Horario Academico", 2);
-        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/estudiante.png"))), "Reportes de Asistencia", 3);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/asistencia.png"))), "Registro de Asistencia", 1);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/horario.png"))), "Horario Academico", 2);
+        addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/informes.png"))), "Reportes de Asistencia", 3);
         addEmpty();
         addMenu(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/menu/salir.png"))), "Cerrar Sesión", 8);
     }
@@ -70,6 +59,7 @@ public class Menu_Docente extends javax.swing.JPanel {
         menu.setIcon(icon);
         menu.setText("  " + text);
         menu.setFont(new Font("Roboto", Font.PLAIN, 12));
+        menu.setForeground(new Color(0,0,0));
 
         switch (text) {
             case "Cerrar Sesión" ->
@@ -83,7 +73,7 @@ public class Menu_Docente extends javax.swing.JPanel {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
                 currentWindow.dispose();
 
-                Frm_Main_Docente frm = new Frm_Main_Docente(cc);
+                Frm_Main_Docente frm = new Frm_Main_Docente();
                 frm.setVisible(true);
             });
             case "Registro de Asistencia" -> menu.addActionListener(e -> {
@@ -130,67 +120,27 @@ public class Menu_Docente extends javax.swing.JPanel {
     private void initComponents() {
 
         roundPanel1 = new plantilla.swing.RoundPanel();
-        imageAvatar1 = new com.raven.swing.ImageAvatar();
-        jLabel2 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JLabel();
         roundPanel2 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelMenu = new javax.swing.JPanel();
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        setBackground(new java.awt.Color(225, 233, 243));
 
-        imageAvatar1.setForeground(new java.awt.Color(231, 231, 231));
-        imageAvatar1.setBorderSize(2);
-        imageAvatar1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                imageAvatar1MouseClicked(evt);
-            }
-        });
-
-        jLabel2.setForeground(new java.awt.Color(203, 203, 203));
-        jLabel2.setText("Docente");
-
-        txtUsername.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        txtUsername.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsername.setText("jLabel1");
+        roundPanel1.setBackground(new java.awt.Color(255, 102, 102));
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel2))
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtUsername)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(txtUsername)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+            .addGap(0, 72, Short.MAX_VALUE)
         );
-
-        roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        panelMenu.setBackground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
@@ -200,7 +150,7 @@ public class Menu_Docente extends javax.swing.JPanel {
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(panelMenu);
@@ -216,7 +166,7 @@ public class Menu_Docente extends javax.swing.JPanel {
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -233,23 +183,15 @@ public class Menu_Docente extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void imageAvatar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageAvatar1MouseClicked
-        Perfil_Modal pm = new Perfil_Modal(null, true, cc);
-        pm.setVisible(true);
-    }//GEN-LAST:event_imageAvatar1MouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.swing.ImageAvatar imageAvatar1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelMenu;
     private plantilla.swing.RoundPanel roundPanel1;
     private plantilla.swing.RoundPanel roundPanel2;
-    private javax.swing.JLabel txtUsername;
     // End of variables declaration//GEN-END:variables
 }

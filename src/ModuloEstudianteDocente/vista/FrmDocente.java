@@ -9,12 +9,15 @@ import ModuloEstudianteDocente.vista.modals.modal_Docente;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 
 import java.sql.*;
 
@@ -62,6 +65,18 @@ public class FrmDocente extends javax.swing.JFrame {
                 }
                 tblDocente.setModel(model);
                 tblDocente.updateUI();
+                TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+                tblDocente.setRowSorter(trs);
+                tblDocente.getTableHeader().setReorderingAllowed(false);
+                tblDocente.getTableHeader().setResizingAllowed(false);
+                tblDocente.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+                tblDocente.setRowHeight(30); // Ajusta este valor según tus necesidades
+
+                DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
+                for (int i = 0; i < tblDocente.getColumnCount(); i++) {
+                    tblDocente.getColumnModel().getColumn(i).setCellRenderer(tcr);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error al ejecutar la consulta: " + e.getMessage());
@@ -99,6 +114,7 @@ public class FrmDocente extends javax.swing.JFrame {
 
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tblDocente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tblDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

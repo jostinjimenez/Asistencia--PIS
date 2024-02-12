@@ -8,6 +8,7 @@ import javax.swing.table.TableRowSorter;
 
 import modelLuis.tablas.ModelTableMatriculas;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 
 import java.util.Objects;
 
@@ -37,6 +38,9 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         tbl1.setRowSorter(trs);
         tbl1.getTableHeader().setReorderingAllowed(false);
         tbl1.getTableHeader().setResizingAllowed(false);
+        tbl1.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tbl1.setRowHeight(30); // Ajusta este valor según tus necesidades
+
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -211,6 +215,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 130, -1));
 
+        tbl1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tbl1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
 import java.util.Objects;
+
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import modulo_carrera.controller.CarreraController;
 import modulo_carrera.view.tablas.ModeloTablaCarrera;
 
@@ -115,6 +117,8 @@ public class Frm_Carrera extends javax.swing.JFrame {
         jTable1.setRowSorter(trs);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        jTable1.setRowHeight(30); // Ajusta este valor según tus necesidades
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);

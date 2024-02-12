@@ -2,6 +2,7 @@ package modulo_1.periodo_academico.view.forms;
 
 import model.PeriodoAcademico;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
 import modulo_1.periodo_academico.view.tablas.ModeloTablaPeriodoAc;
 import tda_listas.ListaEnlazada;
@@ -66,6 +67,9 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         TableRowSorter<ModeloTablaPeriodoAc> trs = new TableRowSorter<>(mtpa);
         jTable1.setRowSorter(trs);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getTableHeader().setResizingAllowed(false);
+        jTable1.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        jTable1.setRowHeight(30); // Ajusta este valor según tus necesidades
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);

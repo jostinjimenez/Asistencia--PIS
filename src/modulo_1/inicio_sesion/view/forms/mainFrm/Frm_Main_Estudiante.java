@@ -1,13 +1,20 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import java.io.File;
-import modulo_1.inicio_sesion.controller.CuentaController;
 import javax.swing.*;
+import modulo_1.inicio_sesion.controller.CuentaController;
 
 
 public class Frm_Main_Estudiante extends javax.swing.JFrame {
 
+
+    public Frm_Main_Estudiante() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+    }
+    
+    
     CuentaController cc;
 
     public Frm_Main_Estudiante(CuentaController cc) {

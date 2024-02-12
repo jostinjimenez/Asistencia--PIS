@@ -9,12 +9,14 @@ import ModuloEstudianteDocente.vista.modals.modal_Estudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 
 import java.sql.*;
 
@@ -68,6 +70,19 @@ public class FrmEstudiante extends javax.swing.JFrame {
                 }
                 tblEstudiante.setModel(model);
                 tblEstudiante.updateUI();
+
+                TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+                tblEstudiante.setRowSorter(trs);
+                tblEstudiante.getTableHeader().setReorderingAllowed(false);
+                tblEstudiante.getTableHeader().setResizingAllowed(false);
+                tblEstudiante.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+                tblEstudiante.setRowHeight(30); // Ajusta este valor según tus necesidades
+
+                DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
+                for (int i = 0; i < tblEstudiante.getColumnCount(); i++) {
+                    tblEstudiante.getColumnModel().getColumn(i).setCellRenderer(tcr);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error al ejecutar la consulta: " + e.getMessage());
@@ -123,6 +138,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tblEstudiante.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tblEstudiante.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

@@ -21,6 +21,7 @@ import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import model.Carrera;
 import model.Estudiante;
 import model.Persona;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import modulo_carrera.controller.CarreraController;
 import modulo_carrera.view.tablas.ModeloTablaCarrera;
 import tda_listas.ListaEnlazada;
@@ -74,6 +75,9 @@ public class buscar_Estudiante extends javax.swing.JDialog {
         tabla.setRowSorter(trs);
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.getTableHeader().setResizingAllowed(false);
+        tabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tabla.setRowHeight(30); // Ajusta este valor según tus necesidades
+
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -136,6 +140,7 @@ public class buscar_Estudiante extends javax.swing.JDialog {
 
         jScrollPane1.setAutoscrolls(true);
 
+        tabla.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

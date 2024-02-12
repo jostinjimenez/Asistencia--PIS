@@ -14,6 +14,7 @@ import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import model.Docente;
 import model.Persona;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
@@ -64,6 +65,9 @@ public class buscar_Docente extends javax.swing.JDialog {
         tabla.setRowSorter(trs);
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.getTableHeader().setResizingAllowed(false);
+        tabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tabla.setRowHeight(30); // Ajusta este valor según tus necesidades
+
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);

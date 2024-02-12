@@ -214,6 +214,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 130, -1));
 
+        tbl1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tbl1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

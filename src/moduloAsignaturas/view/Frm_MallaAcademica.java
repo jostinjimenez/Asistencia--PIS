@@ -1,13 +1,17 @@
 package moduloAsignaturas.view;
 
+import ModuloMatricula.tablas.ModeloTablaCursas;
 import moduloAsignaturas.controller.MallaController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 import model.Malla;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
 import moduloAsignaturas.view.tablas.ModeloTablaMallas;
 
@@ -35,6 +39,19 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         modeloTablaMallas.setMallas(mallaController.list_All());
         tablaMallas.setModel(modeloTablaMallas);
         tablaMallas.updateUI();
+
+        TableRowSorter<ModeloTablaMallas> trs = new TableRowSorter<>(modeloTablaMallas);
+        tablaMallas.setRowSorter(trs);
+        tablaMallas.getTableHeader().setReorderingAllowed(false);
+        tablaMallas.getTableHeader().setResizingAllowed(false);
+        tablaMallas.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tablaMallas.setRowHeight(30); // Ajusta este valor según tus necesidades
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tablaMallas.getColumnCount(); i++) {
+            tablaMallas.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
     }
 
     public Boolean validar() {
@@ -316,6 +333,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
         });
         roundPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 200, -1, 30));
 
+        tablaMallas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tablaMallas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
