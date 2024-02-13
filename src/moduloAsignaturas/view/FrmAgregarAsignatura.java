@@ -4,6 +4,8 @@ import ModuloMatricula.tablas.ModeloTablaCursas;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import moduloAsignaturas.controller.AsignaturaController;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +33,8 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Agregar Asignaturas");
+        setupListeners();
+
 
         ac = new AsignaturaController();
         mta = new ModeloTablaAsignaturas();
@@ -251,6 +254,18 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 //        } else {
 //            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
 //        }
+    }
+
+    private void setupListeners() {
+        txtCodigoAsigntura.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtCodigoAsigntura.getText().length() >= 5) {
+                    e.consume();
+                }
+            }
+        });
     }
 
     /**

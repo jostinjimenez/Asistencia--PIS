@@ -3,6 +3,7 @@ package plantilla.components;
 import plantilla.swing.ButtonMenu;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Window;
 import java.util.Objects;
 import javax.swing.Icon;
@@ -55,6 +56,8 @@ public class Menu_Estudiante extends javax.swing.JPanel {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
         menu.setText("  " + text);
+        menu.setFont(new Font("Roboto", Font.PLAIN, 12));
+        menu.setForeground(new Color(0,0,0));
         switch (text) {
             case "Cerrar Sesión" ->
                 menu.addActionListener(e -> {

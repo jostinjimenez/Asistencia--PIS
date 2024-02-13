@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
@@ -126,7 +128,6 @@ public class Frm_Carrera extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
     }
-
 
 
     @SuppressWarnings("unchecked")

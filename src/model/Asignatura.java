@@ -104,12 +104,12 @@ public class Asignatura {
         }
     }
 
-    public int comparar(Asignatura estudiante, String text, String campo) {
-        switch (campo.toLowerCase()) {
-            case "id":
-                return Integer.compare(Integer.parseInt(text), estudiante.getId());
-            default:
-                throw new IllegalArgumentException("Campo de comparación no válido");
-        }
+    public int comparar(Asignatura asignatura, String text, String campo) {
+        return switch (campo.toLowerCase()) {
+            case "id" -> Integer.compare(Integer.parseInt(text), asignatura.getId());
+            case "nombre" -> asignatura.getNombre().compareToIgnoreCase(text);
+            case "codigo_materia" -> asignatura.getCodigo_materia().compareToIgnoreCase(text);
+            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+        };
     }
 }

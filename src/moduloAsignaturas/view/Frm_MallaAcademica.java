@@ -3,6 +3,8 @@ package moduloAsignaturas.view;
 import ModuloMatricula.tablas.ModeloTablaCursas;
 import moduloAsignaturas.controller.MallaController;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -26,6 +28,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
 
     public Frm_MallaAcademica() {
         initComponents();
+        setupListeners();
         limpiar();
 
         setLocationRelativeTo(null);
@@ -211,6 +214,18 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
+
+    private void setupListeners() {
+        txtCodigo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtCodigo.getText().length() >= 30) {
+                    e.consume();
+                }
+            }
+        });
+    }
 
 
     /**

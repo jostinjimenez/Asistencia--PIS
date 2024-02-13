@@ -5,6 +5,8 @@ import javax.swing.*;
 import modulo_carrera.controller.CarreraController;
 import modulo_carrera.view.tablas.ModeloTablaCarrera;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class Modal_Carrera extends javax.swing.JDialog {
@@ -14,6 +16,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        setupListeners();
 
         carrerC.setIndex(-1);
 
@@ -107,6 +110,18 @@ public class Modal_Carrera extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void setupListeners() {
+        txtCodigo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtCodigo.getText().length() >= 10) {
+                    e.consume();
+                }
+            }
+        });
     }
     
     @SuppressWarnings("unchecked")

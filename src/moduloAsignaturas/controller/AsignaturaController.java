@@ -74,28 +74,6 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return -1;
     }
 
-    public int buscar(String criterioBusqueda, Comparator<Asignatura> comparador, String criterio) {
-        Nodo<Asignatura> current = (Nodo<Asignatura>) asignaturas.getHead();
-
-        int index = 0;
-
-        while (current != null) {
-            Asignatura asignatura = current.getData();
-
-            if ("nombre".equalsIgnoreCase(criterio) && asignatura.getNombre().equals(criterioBusqueda)) {
-                return index;
-            } else if ("codigo".equalsIgnoreCase(criterio) && asignatura.getCodigo_materia().equals(criterioBusqueda)) {
-                return index;
-            }
-
-            current = current.getNext();
-            index++;
-        }
-
-        System.out.println("No se encontró ninguna asignatura con el criterio proporcionado.");
-        return -1;
-    }
-
     public ListaEnlazada<Asignatura> quicksort(ListaEnlazada<Asignatura> lista, Integer type, String field) throws VacioExceptions {
 
         Asignatura[] m = lista.toArray();
@@ -159,13 +137,13 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return -1;
     }
 
-    private boolean getForm(Asignatura matricula, String text, String campo) {
-        switch (campo.toLowerCase()) {
-            case "id":
-                return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
-            default:
-                throw new IllegalArgumentException("Campo de comparación no válido");
-        }
+    private boolean getForm(Asignatura asignatura, String text, String campo) {
+        return switch (campo.toLowerCase()) {
+            case "id" -> Integer.toString(asignatura.getId()).equalsIgnoreCase(text);
+            case "nombre" -> asignatura.getNombre().toLowerCase().contains(text);
+            case "codigo_materia" -> asignatura.getCodigo_materia().toLowerCase().contains(text);
+            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+        };
     }
 
     private ListaEnlazada<Asignatura> ordenarLista(ListaEnlazada<Asignatura> lista, String campo) throws VacioExceptions {
@@ -173,7 +151,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return listaOrdenada;
     }
 
-    public Asignatura busquedaBinaria2(ListaEnlazada<Asignatura> lista, String text, String campo, Integer type) throws VacioExceptions {
+    public Asignatura busquedaBinaria2(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
         ListaEnlazada<Asignatura> listaOrdenada = ordenarLista(lista, campo);
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
 
@@ -183,6 +161,24 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
             System.out.println("Elemento no encontrado");
             return null;
         }
+    }
+
+    public ListaEnlazada<Asignatura> busquedaBinaria(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
+        ListaEnlazada<Asignatura> listaOrdenada = ordenarLista(lista, campo);
+
+        ListaEnlazada<Asignatura> marc = new ListaEnlazada<>();
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+        if (index != -1) {
+            while (index < listaOrdenada.getSize() && getForm(listaOrdenada.get(index), text, campo)) {
+                marc.add(listaOrdenada.get(index));
+                index++;
+            }
+
+        } else {
+            System.out.println("Elemento no encontrado");
+        }
+
+        return marc;
     }
 
     public ListaEnlazada<Asignatura> buscarAsignaturasPorMatricula(Integer id) {

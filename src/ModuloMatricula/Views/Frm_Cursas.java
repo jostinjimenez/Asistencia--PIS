@@ -91,8 +91,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         if (validar()) {
             try {
                 cc.getCursa().setParalelo(Objects.requireNonNull(cbxParalelo.getSelectedItem()).toString());
-                //cc.getCursa().setAsignatura_id(getComboAsignatura(cbxAsignaturas).getId());
-
+                cc.getCursa().setAsignatura_id(Integer.parseInt(txtIdAsignatura.getText()));
                 cc.getCursa().setDocente_id(Integer.parseInt(txtIdDocente.getText()));
                 cc.getCursa().setMatricula_id(Integer.parseInt(txtIdMatricula.getText()));
 

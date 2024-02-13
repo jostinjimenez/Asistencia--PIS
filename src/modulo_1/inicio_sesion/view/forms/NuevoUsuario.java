@@ -9,6 +9,8 @@ import javax.swing.*;
 
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 
 public class NuevoUsuario extends javax.swing.JDialog {
@@ -135,6 +137,28 @@ public class NuevoUsuario extends javax.swing.JDialog {
         String nombre = txtNombre.getText().contains(" ") ? txtNombre.getText().substring(0, txtNombre.getText().indexOf(" ")) : txtNombre.getText();
         String apellido = txtApellido.getText().contains(" ") ? txtApellido.getText().substring(0, txtApellido.getText().indexOf(" ")) : txtApellido.getText();
         return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
+    }
+
+    private void setupListeners() {
+        txtDni.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtDni.getText().length() >= 10) {
+                    e.consume();
+                }
+            }
+        });
+
+        txtTelefono.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtTelefono.getText().length() >= 10) {
+                    e.consume();
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")

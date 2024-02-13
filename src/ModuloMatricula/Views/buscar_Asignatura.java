@@ -1,15 +1,13 @@
 package ModuloMatricula.Views;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.util.Objects;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableRowSorter;
 
 import model.*;
 import moduloAsignaturas.controller.AsignaturaController;
@@ -45,8 +43,8 @@ public class buscar_Asignatura extends javax.swing.JDialog {
                     if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                         Asignatura asignatura = mtc.getAsignatura(row);
                         if (asignatura != null) {
-//                            ((Frm_Maatricula) getParent()).txtCarrera.setText(asignatura.getNombre());
-//                            ((Frm_Maatricula) getParent()).txtIdCarrera.setText(String.valueOf(asignatura.getId()));
+                            ((Frm_Cursas) getParent()).txtAsignaturas.setText(asignatura.getNombre());
+                            ((Frm_Cursas) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
                         }
                         dispose();
                     }
@@ -58,23 +56,21 @@ public class buscar_Asignatura extends javax.swing.JDialog {
     }
 
     public void mostrarTabla() {
-
-        System.out.println("id matricula -----:: " + id);
         ListaEnlazada<Asignatura> asigMatriculas = rc.buscarAsignaturasPorMatricula(id);
-
         mtc.setAsignaturas(asigMatriculas);
         tabla.setModel(mtc);
         tabla.updateUI();
-
         mtc.fireTableDataChanged();
+
 
         TableRowSorter<ModeloTablaAsignaturas> trs = new TableRowSorter<>(mtc);
         tabla.setRowSorter(trs);
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.getTableHeader().setResizingAllowed(false);
         tabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
-        tabla.setRowHeight(30); // Ajusta este valor según tus necesidades
-
+        tabla.setRowHeight(30);
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < tabla.getColumnCount(); i++) {
@@ -83,30 +79,31 @@ public class buscar_Asignatura extends javax.swing.JDialog {
     }
 
     private void buscar() {
-//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-//        String texto = txtBusqueda.getText();
-//
-//        try {
-//            if (texto.isEmpty()) {
-//                mtc.setLista(rc.getCarreras());
-//            } else {
-//                if (criterio.equalsIgnoreCase("nombre")) {
-//                    mtc.setLista(rc.busquedaBinaria(rc.list_All(), texto, "nombre"));
-//                } else if (criterio.equalsIgnoreCase("codigo")) {
-//                    Carrera c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");
-//                    if (c != null) {
-//                        mtc.setLista(new ListaEnlazada<>());
-//                        mtc.getLista().add(c);
-//                    }
-//                }
-//            }
-//            mtc.fireTableDataChanged();
-//            tabla.setModel(mtc);
-//            tabla.updateUI();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBusqueda.getText();
+
+        try {
+            if (texto.isEmpty()) {
+                mtc.setAsignaturas(rc.getAsignaturas());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    mtc.setAsignaturas(rc.busquedaBinaria(rc.list_All(), texto, "nombre"));
+                } else if (criterio.equalsIgnoreCase("codigo")) {
+                    Asignatura c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo_materia");
+                    if (c != null) {
+                        mtc.setAsignaturas(new ListaEnlazada<>());
+                        mtc.getAsignaturas().add(c);
+                    }
+                }
+            }
+            mtc.fireTableDataChanged();
+            tabla.setModel(mtc);
+            tabla.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
