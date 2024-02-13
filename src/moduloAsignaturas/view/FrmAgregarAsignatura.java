@@ -35,13 +35,12 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
         ac = new AsignaturaController();
         mta = new ModeloTablaAsignaturas();
-        mta.setAsignaturaController(ac);
 
         limpiar();
     }
 
     public void cargarTabla() {
-        mta.getAsignaturaController().setAsignaturas(mta.getAsignaturaController().list_All());
+        mta.setAsignaturas(ac.list_All());
         tablaAsignaturas.setModel(mta);
         mta.fireTableDataChanged();
         tablaAsignaturas.updateUI();
@@ -210,48 +209,48 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     }
 
     private void buscar() throws VacioExceptions {
-        // Obtener el criterio ingresado en el campo de búsqueda
-        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
-
-        // Obtener el criterio de búsqueda seleccionado en el combobox
-        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
-
-        // Verificar si se ingresó un criterio válido
-        if (!criterio.isEmpty()) {
-            // Seleccionar el comparador adecuado según el criterio de búsqueda
-            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
-                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
-                    : Comparator.comparing(Asignatura::getCodigo_materia);  // Comparar directamente sin convertir a minúsculas
-
-            // Realizar la búsqueda en el modelo de la tabla
-            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
-
-            // Verificar si se encontró la asignatura
-            if (indice >= 0) {
-                // Seleccionar la fila encontrada
-                tablaAsignaturas.setRowSelectionInterval(indice, indice);
-                // Cargar los datos seleccionados en los campos de texto
-                cargarDatosSeleccionados();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        // Obtener el criterio ingresado en el campo de búsqueda
+//        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
+//
+//        // Obtener el criterio de búsqueda seleccionado en el combobox
+//        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
+//
+//        // Verificar si se ingresó un criterio válido
+//        if (!criterio.isEmpty()) {
+//            // Seleccionar el comparador adecuado según el criterio de búsqueda
+//            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
+//                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
+//                    : Comparator.comparing(Asignatura::getCodigo_materia);  // Comparar directamente sin convertir a minúsculas
+//
+//            // Realizar la búsqueda en el modelo de la tabla
+//            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
+//
+//            // Verificar si se encontró la asignatura
+//            if (indice >= 0) {
+//                // Seleccionar la fila encontrada
+//                tablaAsignaturas.setRowSelectionInterval(indice, indice);
+//                // Cargar los datos seleccionados en los campos de texto
+//                cargarDatosSeleccionados();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     private void ordenar() throws VacioExceptions {
-        // Obtener el campo de orden del ComboBox
-        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
-        // Obtener el tipo de orden del ComboBox
-        String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
-
-        if (!campoOrden.isEmpty() && mta.esCampoValido(campoOrden)) {
-            // Llama al método ordenar con el campo de orden y tipo de orden
-            mta.ordenar(campoOrden, tipoOrden);
-        } else {
-            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        // Obtener el campo de orden del ComboBox
+//        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+//        // Obtener el tipo de orden del ComboBox
+//        String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
+//
+//        if (!campoOrden.isEmpty() && mta.esCampoValido(campoOrden)) {
+//            // Llama al método ordenar con el campo de orden y tipo de orden
+//            mta.ordenar(campoOrden, tipoOrden);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     /**

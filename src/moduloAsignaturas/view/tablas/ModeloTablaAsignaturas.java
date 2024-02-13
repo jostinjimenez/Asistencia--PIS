@@ -1,108 +1,80 @@
 package moduloAsignaturas.view.tablas;
 
-import moduloAsignaturas.controller.AsignaturaController;
-import java.util.Comparator;
+import model.*;
+
 import javax.swing.table.AbstractTableModel;
-import model.Asignatura;
+
+import moduloAsignaturas.controller.MallaController;
+import modulo_carrera.controller.CarreraController;
+import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 public class ModeloTablaAsignaturas extends AbstractTableModel {
 
-    private AsignaturaController asignaturaController;
-
-    @Override
-    public int getColumnCount() {
-        return 4;
-    }
+    private ListaEnlazada<Asignatura> asignaturas;
+    private MallaController cc = new MallaController();
 
     @Override
     public int getRowCount() {
-        return (asignaturaController != null && asignaturaController.getAsignaturas() != null) ? asignaturaController.getAsignaturas().getSize() : 0;
+        return getAsignaturas().getSize();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 5;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
         Asignatura asignatura;
+        Malla malla;
         try {
-            asignatura = asignaturaController.getAsignaturas().get(row);
-        } catch (VacioExceptions e) {
+            asignatura = asignaturas.get(row);
+            malla = cc.busquedaBinaria2(cc.list_All(), asignatura.getMalla_id().toString(), "id");
+            return switch (col) {
+                case 0 -> (asignatura != null) ? asignatura.getId() : "";
+                case 1 -> (asignatura != null) ? asignatura.getNombre() : "";
+                case 2 -> (asignatura != null) ? asignatura.getCodigo_materia() : "";
+                case 3 -> (asignatura != null) ? asignatura.getHoras_Totales() : "";
+                case 4 -> (malla != null) ? malla.getDescripcion() : "";
+                default -> null;
+            };
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-
-        switch (col) {
-            case 0:
-                return (asignatura != null) ? asignatura.getId() : "";
-            case 1:
-                return (asignatura != null) ? asignatura.getNombre() : "";
-            case 2:
-                return (asignatura != null) ? asignatura.getCodigo_materia() : "";
-            case 3:
-                return (asignatura != null) ? asignatura.getHoras_Totales() : "";
-            default:
-                return null;
         }
     }
 
     @Override
     public String getColumnName(int column) {
-        switch (column) {
-            case 0:
-                return "ID";
-            case 1:
-                return "Nombre";
-            case 2:
-                return "Código";
-            case 3:
-                return "Horas Totales";
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> "ID";
+            case 1 -> "Nombre";
+            case 2 -> "Código";
+            case 3 -> "Horas Totales";
+            case 4 -> "Malla";
+            default -> null;
+        };
     }
 
-    public AsignaturaController getAsignaturaController() {
-        return asignaturaController;
+    /**
+     * @return the matriculas
+     */
+    public ListaEnlazada<Asignatura> getAsignaturas() {
+        return asignaturas;
     }
 
-    public void setAsignaturaController(AsignaturaController asignaturaController) {
-        this.asignaturaController = asignaturaController;
+    /**
+     * @param asignaturas the matriculas to set
+     */
+    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
-    public int buscar(String criterioBusqueda, Comparator<Asignatura> comparador, String criterio) {
-        int resultado = asignaturaController.buscar(criterioBusqueda, comparador, criterio);
-        return resultado;
-    }
 
-    public boolean esCampoValido(String campo) {
-        // Método para verificar si el campo de búsqueda es válido (nombre o código)
-        boolean esValido = campo.equalsIgnoreCase("nombre") || campo.equalsIgnoreCase("codigo");
-        return esValido;
-    }
-
-    public void ordenar(String campo, String tipoOrden) {
-        System.out.println("Antes de ordenar: " + asignaturaController.getAsignaturas().print());
-
-        Comparator<Asignatura> comparador = (campo.equals("nombre"))
-                ? Comparator.comparing(Asignatura::getNombre)
-                : Comparator.comparing(Asignatura::getCodigo_materia);
-
-        if (tipoOrden.equals("descendente")) {
-            comparador = comparador.reversed();
-        }
-
-        System.out.println("Después de ordenar: " + asignaturaController.getAsignaturas().print());
-
-        fireTableDataChanged();
-    }
-
-    private Comparator<Asignatura> obtenerComparador(String campoOrden) {
-        switch (campoOrden) {
-            case "nombre":
-                return Comparator.comparing(Asignatura::getNombre);
-            case "codigo":
-                return Comparator.comparing(Asignatura::getCodigo_materia);
-            // Puedes agregar más casos según tus necesidades
-            default:
-                return null;
-        }
+    public Asignatura getMatricula(int fila) throws VacioExceptions {
+        return asignaturas.get(fila);
     }
 }
+

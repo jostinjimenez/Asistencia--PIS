@@ -142,12 +142,12 @@ public class Perfil_Modal extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         panelInfomacion = new plantilla.swing.RoundPanel();
-        fotoUsuario = new com.raven.swing.ImageAvatar();
         jSeparator1 = new javax.swing.JSeparator();
         labelCorreo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         btnActualizarFoto = new javax.swing.JButton();
         txtFoto = new javax.swing.JTextField();
+        fotoUsuario = new plantilla.swing.ImageAvatar();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -166,7 +166,6 @@ public class Perfil_Modal extends javax.swing.JDialog {
 
         panelInfomacion.setBackground(new java.awt.Color(225, 233, 243));
         panelInfomacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelInfomacion.add(fotoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 220, 160));
 
         jSeparator1.setBackground(new java.awt.Color(90, 90, 90));
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
@@ -198,6 +197,7 @@ public class Perfil_Modal extends javax.swing.JDialog {
         txtFoto.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtFoto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         panelInfomacion.add(txtFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 60, -1));
+        panelInfomacion.add(fotoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 190, 160));
 
         jPanel1.add(panelInfomacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 360, 350));
 
@@ -335,7 +335,7 @@ public class Perfil_Modal extends javax.swing.JDialog {
     private javax.swing.JButton btnActualizarFoto;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private com.raven.swing.ImageAvatar fotoUsuario;
+    private plantilla.swing.ImageAvatar fotoUsuario;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

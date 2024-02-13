@@ -17,9 +17,11 @@ import modulo_carrera.controller.CarreraController;
 
 public class Utiles {
 
-    public static void cargarAsignaturas(JComboBox cbxPeriodo) {
+    public static void cargarAsignaturas(JComboBox cbxPeriodo, Matricula matricula) {
         AsignaturaController rc = new AsignaturaController();
         cbxPeriodo.removeAllItems();
+
+
 
         try {
             if (rc.getAsignaturas().getSize() > 0) {

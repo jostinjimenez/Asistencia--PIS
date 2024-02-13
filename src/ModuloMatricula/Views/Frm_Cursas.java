@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import ModuloMatricula.tablas.ModeloTablaCursas;
+import model.Matricula;
 import modelLuis.controller.ControllerCursa;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
@@ -20,11 +21,11 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
     ControllerCursa cc = new ControllerCursa();
     ModeloTablaCursas mtc = new ModeloTablaCursas();
+    Matricula matricula = new Matricula();
 
     public Frm_Cursas() {
         initComponents();
         limpiar();
-        cargarTabla();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
@@ -49,33 +50,11 @@ public class Frm_Cursas extends javax.swing.JFrame {
         }
     }
 
-//    public void cargarTabla() {
-//        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
-//            String sql = "SELECT * FROM CURSA JOIN PERSONA ON ESTUDIANTE.ID = PERSONA.ID";
-//            try (PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
-//
-//                DefaultTableModel model = new DefaultTableModel(new String[]{"Nombres", "Apellidos", "DNI", "Telefono", "Email"}, 0);
-//                while (resultSet.next()) {
-//                    String firstName = resultSet.getString("NOMBRE");
-//                    String lastName = resultSet.getString("APELLIDO");
-//                    String dni = resultSet.getString("DNI");
-//                    String telefono = resultSet.getString("TELEFONO");
-//                    String email = resultSet.getString("CORREO_PERSONAL");
-//                    model.addRow(new Object[]{firstName, lastName, dni, telefono, email});
-//                }
-//                tblEstudiante.setModel(model);
-//                tblEstudiante.updateUI();
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
-//        }
-//    }
 
     private void limpiar() {
-
         cargarTabla();
         try {
-            cargarAsignaturas(cbxAsignaturas);
+            cargarAsignaturas(cbxAsignaturas, matricula);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,6 +118,14 @@ public class Frm_Cursas extends javax.swing.JFrame {
         }
     }
 
+    public Matricula getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Matricula matricula) {
+        this.matricula = matricula;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -155,7 +142,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         txtMatricula = new javax.swing.JTextField();
         txtDocente = new javax.swing.JTextField();
         btnCargarMatricula = new javax.swing.JButton();
@@ -177,7 +163,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Matricula:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -187,7 +173,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Docente:");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -238,18 +224,13 @@ public class Frm_Cursas extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 560, 130, -1));
 
-        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Periodo  Academico:");
-        roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
-
         txtMatricula.setEditable(false);
         txtMatricula.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        roundPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 230, -1));
+        roundPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 230, -1));
 
         txtDocente.setEditable(false);
         txtDocente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        roundPanel1.add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 230, -1));
+        roundPanel1.add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 230, -1));
 
         btnCargarMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
         btnCargarMatricula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -258,7 +239,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
                 btnCargarMatriculaActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, -1, -1));
+        roundPanel1.add(btnCargarMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, -1, -1));
 
         btnCargarDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
         btnCargarDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -267,13 +248,13 @@ public class Frm_Cursas extends javax.swing.JFrame {
                 btnCargarDocenteActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, -1, -1));
+        roundPanel1.add(btnCargarDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, -1, -1));
 
         txtIdDocente.setEditable(false);
-        roundPanel1.add(txtIdDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 50, -1));
+        roundPanel1.add(txtIdDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 50, -1));
 
         txtIdMatricula.setEditable(false);
-        roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 50, -1));
+        roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 50, -1));
 
         cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
         roundPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 220, -1));
@@ -353,7 +334,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;

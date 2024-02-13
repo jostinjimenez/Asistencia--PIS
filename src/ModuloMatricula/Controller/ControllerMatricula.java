@@ -200,6 +200,7 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
                         matricula.setPeriodoacademico_id(resultSet.getInt("PERIODOACADEMICO_ID"));
                         matricula.setFechamatricula(resultSet.getDate("FECHAMATRICULA"));
                         matricula.setEstado_matricula(resultSet.getString("ESTADO_MATRICULA"));
+                        matricula.setCarrera_id(resultSet.getInt("CARRERA_ID"));
                         matriculas.add(matricula);
                     }
                 }
@@ -207,7 +208,6 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         } catch (SQLException e) {
             throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
         }
-        System.out.println(matriculas.print());
         return matriculas;
     }
 

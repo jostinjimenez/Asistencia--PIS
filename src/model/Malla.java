@@ -68,4 +68,52 @@ public class Malla {
         return descripcion;
     }
 
+    public Boolean compareTo(Malla c, String field, Integer type) {
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("descripcion")) {
+                    return getDescripcion().compareTo(c.getDescripcion()) > 0;
+                } else if (field.equalsIgnoreCase("codigo")) {
+                    return getCodigo().compareTo(c.getCodigo()) > 0;
+                } else if (field.equalsIgnoreCase("nro_asignaturas")) {
+                    return getNro_asignaturas() > c.getNro_asignaturas();
+                } else if (field.equalsIgnoreCase("total_horas")) {
+                    return getTotal_horas() > c.getTotal_horas();
+                } else {
+                    return false;
+                }
+            case 0:
+                if (field.equalsIgnoreCase("descripcion")) {
+                    return getDescripcion().compareTo(c.getDescripcion()) < 0;
+                } else if (field.equalsIgnoreCase("codigo")) {
+                    return getCodigo().compareTo(c.getCodigo()) < 0;
+                } else if (field.equalsIgnoreCase("nro_asignaturas")) {
+                    return getNro_asignaturas() < c.getNro_asignaturas();
+                } else if (field.equalsIgnoreCase("total_horas")) {
+                    return getTotal_horas() < c.getTotal_horas();
+                } else {
+                    return false;
+                }
+
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Malla malla, String text, String campo) {
+        try {
+            return switch (campo.toLowerCase()) {
+                case "descripcion" -> text.compareTo(malla.getDescripcion().toLowerCase());
+                case "codigo" -> text.compareTo(malla.getCodigo().toLowerCase());
+                case "nro_asignaturas" -> Integer.compare(Integer.parseInt(text), malla.getNro_asignaturas());
+                case "total_horas" -> Integer.compare(Integer.parseInt(text), malla.getTotal_horas());
+                case "id" -> Integer.compare(Integer.parseInt(text), malla.getId());
+                default -> throw new IllegalArgumentException("Campo de comparación no válido");
+            };
+        } catch (Exception e) {
+            System.out.println("errorr" + e);
+        }
+        return 0;
+    }
+
 }

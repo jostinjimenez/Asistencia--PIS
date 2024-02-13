@@ -39,6 +39,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
                         if (matricula != null) {
                             ((Frm_Cursas) getParent()).txtMatricula.setText(matricula.getEstado_matricula());
                             ((Frm_Cursas) getParent()).txtIdMatricula.setText(String.valueOf(matricula.getId()));
+                            ((Frm_Cursas) getParent()).setMatricula(matricula);
                         }
                         dispose();
                     }

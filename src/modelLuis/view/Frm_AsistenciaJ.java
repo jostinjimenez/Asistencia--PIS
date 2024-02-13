@@ -372,35 +372,6 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cbxCiclosItemStateChanged
 
-    private void buttonMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu1ActionPerformed
-        modificar();
-    }//GEN-LAST:event_buttonMenu1ActionPerformed
-
-    private void buttonMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu2ActionPerformed
-        try {
-            listar();
-        } catch (VacioExceptions ex) {
-
-        }
-    }//GEN-LAST:event_buttonMenu2ActionPerformed
-
-    private void buttonMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu3ActionPerformed
-        try {
-            actualizarTabla();
-        } catch (VacioExceptions ex) {
-
-        }
-    }//GEN-LAST:event_buttonMenu3ActionPerformed
-
-    private void buttonMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu4ActionPerformed
-        guardar();
-    }//GEN-LAST:event_buttonMenu4ActionPerformed
-
-    private void buttonMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMenu5ActionPerformed
-        guardarTematica();
-
-    }//GEN-LAST:event_buttonMenu5ActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed

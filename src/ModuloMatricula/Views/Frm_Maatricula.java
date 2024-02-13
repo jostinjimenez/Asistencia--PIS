@@ -246,9 +246,11 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
 
         txtCarrera.setEditable(false);
+        txtCarrera.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 230, -1));
 
         txtEstudiante.setEditable(false);
+        txtEstudiante.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         roundPanel1.add(txtEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 230, -1));
 
         btnCargarCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
