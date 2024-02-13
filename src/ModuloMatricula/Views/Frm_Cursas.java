@@ -21,14 +21,13 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
     ControllerCursa cc = new ControllerCursa();
     ModeloTablaCursas mtc = new ModeloTablaCursas();
-    Matricula matricula = new Matricula();
 
     public Frm_Cursas() {
         initComponents();
         limpiar();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
+        btnCargarAsignatura.setEnabled(false);
     }
 
     public void cargarTabla() {
@@ -53,19 +52,13 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
     private void limpiar() {
         cargarTabla();
-        try {
-            cargarAsignaturas(cbxAsignaturas, matricula);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     public Boolean validar() {
         return !txtIdMatricula.getText().trim().isEmpty()
                 && !txtIdDocente.getText().trim().isEmpty();
     }
-    
+
 
     private void cargarVista() {
         cc.setIndex(tbl1.getSelectedRow());
@@ -98,7 +91,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
         if (validar()) {
             try {
                 cc.getCursa().setParalelo(Objects.requireNonNull(cbxParalelo.getSelectedItem()).toString());
-                cc.getCursa().setAsignatura_id(getComboAsignatura(cbxAsignaturas).getId());
+                //cc.getCursa().setAsignatura_id(getComboAsignatura(cbxAsignaturas).getId());
 
                 cc.getCursa().setDocente_id(Integer.parseInt(txtIdDocente.getText()));
                 cc.getCursa().setMatricula_id(Integer.parseInt(txtIdMatricula.getText()));
@@ -118,13 +111,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
         }
     }
 
-    public Matricula getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(Matricula matricula) {
-        this.matricula = matricula;
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -136,7 +122,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cbxAsignaturas = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -149,6 +134,9 @@ public class Frm_Cursas extends javax.swing.JFrame {
         txtIdDocente = new javax.swing.JTextField();
         txtIdMatricula = new javax.swing.JTextField();
         cbxParalelo = new javax.swing.JComboBox<>();
+        txtAsignaturas = new javax.swing.JTextField();
+        txtIdAsignatura = new javax.swing.JTextField();
+        btnCargarAsignatura = new javax.swing.JButton();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -180,10 +168,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
         jLabel6.setText("Asignaturas:");
         roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, -1, -1));
 
-        cbxAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxAsignaturas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 220, -1));
-
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,15 +186,15 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
         tbl1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tbl1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane2.setViewportView(tbl1);
 
@@ -256,8 +240,24 @@ public class Frm_Cursas extends javax.swing.JFrame {
         txtIdMatricula.setEditable(false);
         roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 50, -1));
 
-        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
+        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"A", "B", "C", "D"}));
         roundPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 220, -1));
+
+        txtAsignaturas.setEditable(false);
+        txtAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 230, -1));
+
+        txtIdAsignatura.setEditable(false);
+        roundPanel1.add(txtIdAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 60, 50, -1));
+
+        btnCargarAsignatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
+        btnCargarAsignatura.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargarAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarAsignaturaActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnCargarAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 50, -1, -1));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
@@ -268,12 +268,12 @@ public class Frm_Cursas extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -287,6 +287,9 @@ public class Frm_Cursas extends javax.swing.JFrame {
     private void btnCargarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarMatriculaActionPerformed
         buscar_Matriculas mc = new buscar_Matriculas(this, true);
         mc.setVisible(true);
+        if (txtIdMatricula.getText() != null && !txtIdMatricula.getText().isEmpty()) {
+            btnCargarAsignatura.setEnabled(true); // Habilita el botón después de seleccionar una matrícula
+        }
     }//GEN-LAST:event_btnCargarMatriculaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -300,6 +303,15 @@ public class Frm_Cursas extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCargarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarAsignaturaActionPerformed
+        if (txtIdMatricula.getText() != null && !txtIdMatricula.getText().isEmpty()){
+            buscar_Asignatura mc = new buscar_Asignatura(this, true, Integer.parseInt(txtIdMatricula.getText()));
+            mc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una matricula");
+        }
+    }//GEN-LAST:event_btnCargarAsignaturaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -322,9 +334,9 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
+    private javax.swing.JButton btnCargarAsignatura;
     private javax.swing.JButton btnCargarDocente;
     private javax.swing.JButton btnCargarMatricula;
-    private javax.swing.JComboBox<String> cbxAsignaturas;
     private javax.swing.JComboBox<String> cbxParalelo;
     private plantilla.components.Header header2;
     private javax.swing.JButton jButton1;
@@ -338,7 +350,9 @@ public class Frm_Cursas extends javax.swing.JFrame {
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tbl1;
+    protected javax.swing.JTextField txtAsignaturas;
     protected javax.swing.JTextField txtDocente;
+    protected javax.swing.JTextField txtIdAsignatura;
     protected javax.swing.JTextField txtIdDocente;
     protected javax.swing.JTextField txtIdMatricula;
     protected javax.swing.JTextField txtMatricula;

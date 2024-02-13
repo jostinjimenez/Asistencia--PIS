@@ -21,8 +21,7 @@ public class Utiles {
         AsignaturaController rc = new AsignaturaController();
         cbxPeriodo.removeAllItems();
 
-
-
+        rc.setAsignaturas(rc.buscarAsignaturasPorMatricula(matricula.getId()));
         try {
             if (rc.getAsignaturas().getSize() > 0) {
                 for (int i = 0; i < rc.getAsignaturas().getSize(); i++) {

@@ -73,7 +73,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
     }
 
 
-    public Asignatura getMatricula(int fila) throws VacioExceptions {
+    public Asignatura getAsignatura(int fila) throws VacioExceptions {
         return asignaturas.get(fila);
     }
 }

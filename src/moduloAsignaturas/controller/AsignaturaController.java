@@ -185,30 +185,27 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         }
     }
 
-    public ListaEnlazada<Matricula> buscarPorEstudiante(String dniONombre) {
-        ListaEnlazada<Matricula> matriculas = new ListaEnlazada<>();
+    public ListaEnlazada<Asignatura> buscarAsignaturasPorMatricula(Integer id) {
+        ListaEnlazada<Asignatura> asignaturass = new ListaEnlazada<>();
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
-            String sql = "SELECT * FROM MATRICULA JOIN ESTUDIANTE ON MATRICULA.ESTUDIANTE_ID = ESTUDIANTE.ID JOIN AXLMD.PERSONA P on P.ID = ESTUDIANTE.ID WHERE P.NOMBRE = ? OR P.DNI = ?";
+            String sql = "SELECT A.ID, A.NOMBRE, A.CODIGO_MATERIA, A.HORAS_TOTALES, A.MALLA_ID FROM MATRICULA M JOIN CARRERA C ON M.CARRERA_ID = C.ID JOIN MALLA MA ON C.ID = MA.CARRERA_ID JOIN ASIGNATURA A ON MA.ID = A.MALLA_ID WHERE M.ID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, dniONombre);
-                preparedStatement.setString(2, dniONombre);
+                preparedStatement.setInt(1, id);  // Aquí está la corrección
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        Matricula matricula = new Matricula();
-                        matricula.setId(resultSet.getInt("ID"));
-                        matricula.setCiclo(resultSet.getInt("CICLO"));
-                        matricula.setEstudiante_id(resultSet.getInt("ESTUDIANTE_ID"));
-                        matricula.setPeriodoacademico_id(resultSet.getInt("PERIODOACADEMICO_ID"));
-                        matricula.setFechamatricula(resultSet.getDate("FECHAMATRICULA"));
-                        matricula.setEstado_matricula(resultSet.getString("ESTADO_MATRICULA"));
-                        matricula.setCarrera_id(resultSet.getInt("CARRERA_ID"));
-                        matriculas.add(matricula);
+                        Asignatura asignatura1 = new Asignatura();
+                        asignatura1.setId(resultSet.getInt("ID"));
+                        asignatura1.setNombre(resultSet.getString("NOMBRE"));
+                        asignatura1.setCodigo_materia(resultSet.getString("CODIGO_MATERIA"));
+                        asignatura1.setHoras_Totales(resultSet.getInt("HORAS_TOTALES"));
+                        asignatura1.setMalla_id(resultSet.getInt("MALLA_ID"));
+                        asignaturass.add(asignatura1);
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
         }
-        return matriculas;
+        return asignaturass;
     }
 }

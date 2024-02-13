@@ -1,31 +1,39 @@
 package ModuloMatricula.Views;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.*;
 import java.util.Objects;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import ModuloMatricula.Controller.ControllerMatricula;
-import model.Matricula;
-import modelLuis.tablas.ModelTableMatriculas;
+import model.*;
+import moduloAsignaturas.controller.AsignaturaController;
+import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
+import modulo_carrera.controller.CarreraController;
+import modulo_carrera.view.tablas.ModeloTablaCarrera;
+import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-public class buscar_Matriculas extends javax.swing.JDialog {
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
-    ControllerMatricula rc = new ControllerMatricula();
-    ModelTableMatriculas mtc = new ModelTableMatriculas();
+public class buscar_Asignatura extends javax.swing.JDialog {
 
-    public buscar_Matriculas(java.awt.Frame parent, boolean modal) {
+    AsignaturaController rc = new AsignaturaController();
+    ModeloTablaAsignaturas mtc = new ModeloTablaAsignaturas();
+    Integer id;
+
+    public buscar_Asignatura(java.awt.Frame parent, boolean modal, Integer id) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setTitle("Busqueda de Matriculas");
+        this.id = id;
         mostrarTabla();
 
         tabla.addMouseListener(new MouseAdapter() {
@@ -35,11 +43,10 @@ public class buscar_Matriculas extends javax.swing.JDialog {
                 int row = table.rowAtPoint(point);
                 try {
                     if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-                        Matricula matricula = mtc.getMatricula(row);
-                        if (matricula != null) {
-                            ((Frm_Cursas) getParent()).txtMatricula.setText(matricula.getEstado_matricula());
-                            ((Frm_Cursas) getParent()).txtIdMatricula.setText(String.valueOf(matricula.getId()));
-
+                        Asignatura asignatura = mtc.getAsignatura(row);
+                        if (asignatura != null) {
+//                            ((Frm_Maatricula) getParent()).txtCarrera.setText(asignatura.getNombre());
+//                            ((Frm_Maatricula) getParent()).txtIdCarrera.setText(String.valueOf(asignatura.getId()));
                         }
                         dispose();
                     }
@@ -51,18 +58,22 @@ public class buscar_Matriculas extends javax.swing.JDialog {
     }
 
     public void mostrarTabla() {
-        mtc.setMatriculas(rc.list_All());
+
+        System.out.println("id matricula -----:: " + id);
+        ListaEnlazada<Asignatura> asigMatriculas = rc.buscarAsignaturasPorMatricula(id);
+
+        mtc.setAsignaturas(asigMatriculas);
         tabla.setModel(mtc);
         tabla.updateUI();
+
         mtc.fireTableDataChanged();
 
-        TableRowSorter<ModelTableMatriculas> trs = new TableRowSorter<>(mtc);
+        TableRowSorter<ModeloTablaAsignaturas> trs = new TableRowSorter<>(mtc);
         tabla.setRowSorter(trs);
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.getTableHeader().setResizingAllowed(false);
         tabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
         tabla.setRowHeight(30); // Ajusta este valor según tus necesidades
-
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -72,29 +83,29 @@ public class buscar_Matriculas extends javax.swing.JDialog {
     }
 
     private void buscar() {
-        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-        String texto = txtBusqueda.getText();
-
-        try {
-            if (texto.isEmpty()) {
-                mtc.setMatriculas(rc.getLista());
-            } else {
-                if (criterio.equalsIgnoreCase("nombre") || criterio.equalsIgnoreCase("dni")) {
-                    mtc.setMatriculas(rc.buscarPorEstudiante(texto));
+//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+//        String texto = txtBusqueda.getText();
+//
+//        try {
+//            if (texto.isEmpty()) {
+//                mtc.setLista(rc.getCarreras());
+//            } else {
+//                if (criterio.equalsIgnoreCase("nombre")) {
+//                    mtc.setLista(rc.busquedaBinaria(rc.list_All(), texto, "nombre"));
 //                } else if (criterio.equalsIgnoreCase("codigo")) {
 //                    Carrera c = rc.busquedaBinaria2(rc.list_All(), texto, "codigo");
 //                    if (c != null) {
 //                        mtc.setLista(new ListaEnlazada<>());
 //                        mtc.getLista().add(c);
 //                    }
-                }
-            }
-            mtc.fireTableDataChanged();
-            tabla.setModel(mtc);
-            tabla.updateUI();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//                }
+//            }
+//            mtc.fireTableDataChanged();
+//            tabla.setModel(mtc);
+//            tabla.updateUI();
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     @SuppressWarnings("unchecked")
@@ -120,16 +131,17 @@ public class buscar_Matriculas extends javax.swing.JDialog {
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tabla.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -149,6 +161,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyPressed(evt);
             }
+
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyReleased(evt);
             }
@@ -157,7 +170,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel2.setText("Busqueda de Matriculas:");
+        jLabel2.setText("Busqueda de Carrera:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         btnBuscar.setText("Buscar");
@@ -172,7 +185,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 520, 10));
 
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "DNI" }));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Nombre", "Codigo"}));
         roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 160, -1));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 430));
@@ -180,12 +193,12 @@ public class buscar_Matriculas extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -215,50 +228,6 @@ public class buscar_Matriculas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(buscar_Matriculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(buscar_Matriculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(buscar_Matriculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(buscar_Matriculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                buscar_Matriculas dialog = new buscar_Matriculas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup botones;
