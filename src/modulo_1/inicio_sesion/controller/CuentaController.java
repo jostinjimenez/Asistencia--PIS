@@ -7,6 +7,7 @@ import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
+import java.sql.*;
 
 public class CuentaController extends DataAccessObject<Cuenta> {
 
@@ -92,37 +93,65 @@ public class CuentaController extends DataAccessObject<Cuenta> {
     }
 
     // Buscar persona por id
+//    public Persona getPersona(Integer idPersona) {
+//        PersonaController personaController = new PersonaController();
+//        ListaEnlazada<Persona> personas = personaController.getPersonas();
+//        try {
+//            personas = personaController.ordenarQS(personas, 0, "id");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        int left = 0;
+//        int right = personas.getSize() - 1;
+//
+//        while (left <= right) {
+//            int mid = left + (right - left) / 2;
+//            Persona midPersona = null;
+//            try {
+//                midPersona = personas.get(mid);
+//            } catch (VacioExceptions e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (midPersona.getId().equals(idPersona)) {
+//                return midPersona;
+//            }
+//            if (midPersona.getId() < idPersona) {
+//                left = mid + 1;
+//            } else {
+//                right = mid - 1;
+//            }
+//        }
+//        return null;
+//    }
+
     public Persona getPersona(Integer idPersona) {
-        PersonaController personaController = new PersonaController();
-        ListaEnlazada<Persona> personas = personaController.getPersonas();
-        try {
-            personas = personaController.ordenarQS(personas, 0, "id");
-        } catch (Exception e) {
-            e.printStackTrace();
+        Persona persona = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA WHERE ID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, idPersona);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        persona = new Persona();
+                        persona.setId(resultSet.getInt("ID"));
+                        persona.setNombre(resultSet.getString("NOMBRE"));
+                        persona.setApellido(resultSet.getString("APELLIDO"));
+                        persona.setDni(resultSet.getString("DNI"));
+                        persona.setCorreo_personal(resultSet.getString("CORREO_PERSONAL"));
+                        persona.setTelefono(resultSet.getString("TELEFONO"));
+                        persona.setFecha_nacimiento(resultSet.getDate("FECHA_NACIMIENTO"));
+                        persona.setActivo(resultSet.getBoolean("ACTIVO"));
+                        persona.setRol_id(resultSet.getInt("ROL_ID"));
+                        persona.setFoto(resultSet.getString("FOTO"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
         }
-
-        int left = 0;
-        int right = personas.getSize() - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            Persona midPersona = null;
-            try {
-                midPersona = personas.get(mid);
-            } catch (VacioExceptions e) {
-                e.printStackTrace();
-            }
-
-            if (midPersona.getId().equals(idPersona)) {
-                return midPersona;
-            }
-            if (midPersona.getId() < idPersona) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return null;
+        return persona;
     }
 
     public Cuenta validarCuenta(String usuario, Persona persona) {

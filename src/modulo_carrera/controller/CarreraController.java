@@ -172,16 +172,6 @@ public class CarreraController extends DataAccessObject<Carrera> {
         };
     }
 
-    public void main(String[] args) {
-        CarreraController cc = new CarreraController();
-        try {
-            //Carrera c = busquedaBinaria2(cc.getCarreras(), "DDCA", "codigo");
-            //System.out.println(c.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
 
 

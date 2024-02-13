@@ -57,7 +57,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
         jLabel2.setText("Area Personal");
         roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        bg_panel.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 1040, 610));
+        bg_panel.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 

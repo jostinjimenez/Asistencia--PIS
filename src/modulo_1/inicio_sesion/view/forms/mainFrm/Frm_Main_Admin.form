@@ -66,7 +66,7 @@
         <Container class="plantilla.swing.RoundPanel" name="roundPanel2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="230" y="80" width="1040" height="610"/>
+              <AbsoluteConstraints x="230" y="70" width="1040" height="620"/>
             </Constraint>
           </Constraints>
 
