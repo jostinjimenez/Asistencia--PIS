@@ -20,6 +20,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        setupListeners();
 
         pc.setIndex(-1);
         cc.setIndex(-1);
@@ -34,6 +35,7 @@ public class NuevoUsuario extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        setupListeners();
 
         btnGuardar.addActionListener(e -> guardar());
         btnCancelar.addActionListener(e -> this.dispose());
