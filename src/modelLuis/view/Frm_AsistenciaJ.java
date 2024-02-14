@@ -5,6 +5,8 @@ import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import model.Asignatura;
 import model.Asistencia;
 import model.Cursa;
@@ -407,7 +409,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
