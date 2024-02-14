@@ -3,14 +3,10 @@ package modulo_1.inicio_sesion.view.forms;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import model.Cuenta;
 import model.Rol;
-import modulo_1.inicio_sesion.controller.PersonaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaPersona;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import modulo_1.inicio_sesion.view.util.Utiles;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
@@ -19,7 +15,6 @@ import java.util.Objects;
 
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
-import plantilla.AccionesCellRenderer;
 import tda_listas.ListaEnlazada;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.ajustarColumnas;
@@ -207,14 +202,14 @@ public class Frm_Usuarios extends javax.swing.JFrame {
         roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 200, 30));
 
         btnEliminar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
         btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 570, 100, 30));
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 60, 50));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", "DNI", "Rol" }));

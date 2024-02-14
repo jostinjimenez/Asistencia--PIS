@@ -33,15 +33,15 @@ public class modal_Estudiante extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        cbxTituloBach.addItem("Si");
+        cbxTituloBach.addItem("No");
         setupListeners();
         cargarVista(modeloTablaEstudiante, tablaEstudiantes);
 
         btnGuardar.addActionListener(e -> {
-            actualizar(tablaEstudiantes, modeloTablaEstudiante);
+            actualizar();
         });
 
-        cbxTituloBach.addItem("Si");
-        cbxTituloBach.addItem("No");
     }
 
     // Variables
@@ -60,7 +60,8 @@ public class modal_Estudiante extends javax.swing.JDialog {
             try {
                 //isEditing = true;
                 fila = ec.getIndex();
-                ec.setEstudiante(mte.getEstudiantes().get(fila));
+                ec.setEstudiante(mte.getEstudiante(fila));
+                pc.setPersona(mte.getPersona(fila));
                 txtNombres.setText(pc.getPersona().getNombre());
                 txtApellidos.setText(pc.getPersona().getApellido());
                 txtFechaNacim.setDate(pc.getPersona().getFecha_nacimiento());
@@ -84,6 +85,49 @@ public class modal_Estudiante extends javax.swing.JDialog {
         }
     }
 
+    private void actualizar() {
+        if (fila >= 0) {
+            if (validar()) {
+                try {
+                    pc.getPersona().setNombre(txtNombres.getText());
+                    pc.getPersona().setApellido(txtApellidos.getText());
+                    pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
+                    pc.getPersona().setCorreo_personal(txtCorreo.getText());
+                    pc.getPersona().setDni(txtCedula.getText());
+                    pc.getPersona().setTelefono(txtTelefono.getText());
+                    pc.getPersona().setRol_id(2);
+                    pc.getPersona().setFoto("user.png");
+
+                    if (pc.update()) {
+                        String seleccion = cbxTituloBach.getSelectedItem().toString();
+                        Boolean tituloBachiller = seleccion.equals("Si");
+                        ec.getEstudiante().setTitulo_bachiller(tituloBachiller);
+                        ec.getEstudiante().setCanton(txtCanton.getText());
+                        ec.getEstudiante().setProvincia(txtProvincia.getText());
+                        ec.getEstudiante().setCalle_direccion(txtCalle.getText());
+                        ec.getEstudiante().setNacionalidad(txtNacionalidad.getText());
+                        ec.getEstudiante().setEtnia(txtEtnia.getText());
+                        ec.getEstudiante().setId(pc.getPersona().getId());
+
+                        if (ec.update()) {
+                            JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al actualizar la persona", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error al actualizar el estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+                    throw new RuntimeException(e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private Boolean validar() {
         return !txtApellidos.getText().trim().isEmpty()
                 && !txtFechaNacim.getDate().toString().isEmpty()
@@ -100,7 +144,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
         if (validar()) {
             try {
                 // Crear y configurar la persona
-                PersonaController pc = new PersonaController();
                 pc.getPersona().setNombre(txtNombres.getText());
                 pc.getPersona().setApellido(txtApellidos.getText());
                 pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
@@ -110,12 +153,10 @@ public class modal_Estudiante extends javax.swing.JDialog {
                 pc.getPersona().setRol_id(2);
                 pc.getPersona().setFoto("user.png");
 
-                // Guardar la persona y obtener el ID generado
                 Integer idGenerado = pc.save();
                 System.out.println("ID GENERADO: " + idGenerado);
 
                 if (idGenerado != null) {
-                    // Configurar el estudiante con el ID de la persona
                     String seleccion = cbxTituloBach.getSelectedItem().toString();
                     Boolean tituloBachiller = seleccion.equals("Si");
                     ec.getEstudiante().setTitulo_bachiller(tituloBachiller);
@@ -127,10 +168,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
                     ec.getEstudiante().setId(idGenerado);
                     System.out.println("ID ESTUDIANTE: " + ec.getEstudiante().getId());
 
-
-                    // Guardar el estudiante
                     if (ec.save()) {
-                        // Configurar y guardar la cuenta
                         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
                         cc.getCuenta().setClave(txtCedula.getText());
                         cc.getCuenta().setPersona_id(idGenerado);
@@ -138,7 +176,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
                     }
                     JOptionPane.showMessageDialog(null, "Estudiante guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al guardar la persona", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -157,48 +194,6 @@ public class modal_Estudiante extends javax.swing.JDialog {
         return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
 
-    private void actualizar(JTable tblEstudiante, ModeloTablaEstudiante modeloEstudiante) {
-        int fila = tblEstudiante.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Seleccione una fila",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                this.fila = fila;
-                ec.setEstudiante(modeloEstudiante.getEstudiantes().get(fila));
-                pc.getPersona().setNombre(txtNombres.getText());
-                pc.getPersona().setApellido(txtApellidos.getText());
-                pc.getPersona().setFecha_nacimiento(txtFechaNacim.getDate());
-                pc.getPersona().setCorreo_personal(txtCorreo.getText());
-                pc.getPersona().setDni(txtCedula.getText());
-                pc.getPersona().setTelefono(txtTelefono.getText());
-                pc.getPersona().setRol_id(2);
-                pc.getPersona().setFoto("user.png");
-
-                if (pc.update()){
-                    ec.getEstudiante().setEtnia(txtEtnia.getText());
-                    String seleccion = cbxTituloBach.getSelectedItem().toString();
-                    Boolean tituloBachiller = seleccion.equals("Si");
-                    ec.getEstudiante().setTitulo_bachiller(tituloBachiller);
-                    ec.getEstudiante().setCanton(txtCanton.getText());
-                    ec.getEstudiante().setProvincia(txtProvincia.getText());
-                    ec.getEstudiante().setCalle_direccion(txtCalle.getText());
-                    ec.getEstudiante().setNacionalidad(txtNacionalidad.getText());
-                    if (ec.update()){
-                        JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,
-                        "Error al cargar los datos",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
 
     private void setupListeners() {
         txtCedula.addKeyListener(new KeyAdapter() {

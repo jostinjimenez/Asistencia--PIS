@@ -83,4 +83,10 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
     public Estudiante getEstudiante(int fila) throws VacioExceptions {
         return estudiantes.get(fila);
     }
+
+    public Persona getPersona(int fila) throws VacioExceptions {
+        return personas.get(estudiantes.get(fila).getId());
+    }
+
+
 }

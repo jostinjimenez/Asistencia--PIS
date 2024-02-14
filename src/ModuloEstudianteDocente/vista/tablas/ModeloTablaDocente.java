@@ -3,17 +3,25 @@ package ModuloEstudianteDocente.vista.tablas;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
+import model.Cuenta;
 import model.Docente;
+import model.Estudiante;
 import model.Persona;
+import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 public class ModeloTablaDocente extends AbstractTableModel {
     private ListaEnlazada<Docente> docentes = new ListaEnlazada<>();
+    private Map<Integer, Persona> personas;
+
 
 
     public ListaEnlazada<Docente> getDocentes() {
@@ -22,14 +30,15 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     public void setDocentes(ListaEnlazada<Docente> docentes) {
         this.docentes = docentes;
-    }
-
-    public EventListenerList getListenerList() {
-        return listenerList;
-    }
-
-    public void setListenerList(EventListenerList listenerList) {
-        this.listenerList = listenerList;
+        this.personas = new HashMap<>();
+        for (Docente docente : docentes) {
+            try {
+                Persona p = getPersonaStatic(docente.getId());
+                this.personas.put(docente.getId(), p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
@@ -45,11 +54,9 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        Docente doce = null;
-        PersonaController pc = new PersonaController();
         try {
-            doce = docentes.get(row);
-            Persona per = pc.find(doce.getId());
+            Docente doce = docentes.get(row);
+            Persona per = this.personas.get(doce.getId());
             return switch (col) {
                 case 0 -> doce.getCodigo_empleado();
                 case 1 -> (per != null) ? per.getNombre(): " ";
