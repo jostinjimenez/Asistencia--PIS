@@ -1,26 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ModuloEstudianteDocente.vista.tablas;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
-import ModuloEstudianteDocente.controlador.DocenteController;
 import model.Docente;
-import model.Estudiante;
 import model.Persona;
+import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-import java.text.SimpleDateFormat;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
-/**
- * @author LENOVO
- */
 public class ModeloTablaDocente extends AbstractTableModel {
     private ListaEnlazada<Docente> docentes = new ListaEnlazada<>();
 
@@ -44,31 +35,28 @@ public class ModeloTablaDocente extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        if (docentes != null) {
-            return docentes.getSize();
-        } else {
-            return 0;
-        }
+        return docentes.getSize();
     }
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
         Docente doce = null;
-        Persona per = null;
+        PersonaController pc = new PersonaController();
         try {
             doce = docentes.get(row);
-            per = getPersonaStatic(doce.getId());
+            Persona per = pc.find(doce.getId());
             return switch (col) {
                 case 0 -> doce.getCodigo_empleado();
-                case 1 -> (per != null) ? per.getNombre() + " " + per.getApellido(): " ";
-                case 2 -> (per != null) ? per.getDni() : " ";
-                case 3 -> (per != null) ? per.getCorreo_personal() : " ";
-                case 4 -> doce.getExperiencia();
+                case 1 -> (per != null) ? per.getNombre(): " ";
+                case 2 -> (per != null) ? per.getApellido(): " ";
+                case 3 -> (per != null) ? per.getDni() : " ";
+                case 4 -> (per != null) ? per.getCorreo_personal() : " ";
+                case 5 -> doce.getExperiencia();
                 default -> null;
             };
         } catch (Exception e) {
@@ -82,9 +70,10 @@ public class ModeloTablaDocente extends AbstractTableModel {
         return switch (col) {
             case 0 -> "Codigo Empleado";
             case 1 -> "Nombre";
-            case 2 -> "DNI";
-            case 3 -> "Correo";
-            case 4 -> "Experiencia";
+            case 2 -> "Apellido";
+            case 3 -> "DNI";
+            case 4 -> "Correo";
+            case 5 -> "Experiencia";
             default -> null;
         };
     }

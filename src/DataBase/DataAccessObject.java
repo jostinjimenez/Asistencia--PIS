@@ -179,7 +179,7 @@ public class DataAccessObject<T> implements TransferObject<T> {
             }
 
         } catch (Exception e) {
-            System.out.println("error " + e);
+            //throw new RuntimeException(e);
         }
         return data;
     }

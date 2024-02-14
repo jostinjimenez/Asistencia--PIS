@@ -220,4 +220,94 @@ public class CuentaController extends DataAccessObject<Cuenta> {
         return null;
     }
 
+    public ListaEnlazada<Cuenta> buscarCuentasPorNombre(String texto) {
+        ListaEnlazada<Cuenta> cuentass = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT C.ID, C.CORREO_INSTITUCIONAL, C.CLAVE, C.PERSONA_ID FROM CUENTA C JOIN PERSONA P ON C.PERSONA_ID = P.ID WHERE P.NOMBRE = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, texto);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Cuenta cuentaa = new Cuenta();
+                        cuentaa.setId(resultSet.getInt("ID"));
+                        cuentaa.setCorreo_institucional(resultSet.getString("CORREO_INSTITUCIONAL"));
+                        cuentaa.setClave(resultSet.getString("CLAVE"));
+                        cuentaa.setPersona_id(resultSet.getInt("PERSONA_ID"));
+                        cuentass.add(cuentaa);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return cuentass;
+    }
+
+    public ListaEnlazada<Cuenta> buscarCuentasPorApellido(String texto) {
+        ListaEnlazada<Cuenta> cuentass = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT C.ID, C.CORREO_INSTITUCIONAL, C.CLAVE, C.PERSONA_ID FROM CUENTA C JOIN PERSONA P ON C.PERSONA_ID = P.ID WHERE P.APELLIDO = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, texto);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Cuenta cuentaa = new Cuenta();
+                        cuentaa.setId(resultSet.getInt("ID"));
+                        cuentaa.setCorreo_institucional(resultSet.getString("CORREO_INSTITUCIONAL"));
+                        cuentaa.setClave(resultSet.getString("CLAVE"));
+                        cuentaa.setPersona_id(resultSet.getInt("PERSONA_ID"));
+                        cuentass.add(cuentaa);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return cuentass;
+    }
+
+    public Cuenta buscarCuentaPorDni(String texto) {
+        Cuenta cuentaa = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT C.ID, C.CORREO_INSTITUCIONAL, C.CLAVE, C.PERSONA_ID FROM CUENTA C JOIN PERSONA P ON C.PERSONA_ID = P.ID WHERE P.DNI = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, texto);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        cuentaa = new Cuenta();
+                        cuentaa.setId(resultSet.getInt("ID"));
+                        cuentaa.setCorreo_institucional(resultSet.getString("CORREO_INSTITUCIONAL"));
+                        cuentaa.setClave(resultSet.getString("CLAVE"));
+                        cuentaa.setPersona_id(resultSet.getInt("PERSONA_ID"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return cuentaa;
+    }
+
+    public ListaEnlazada<Cuenta> buscarCuentasPorRol(Integer texto) {
+        ListaEnlazada<Cuenta> cuentass = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT C.ID, C.CORREO_INSTITUCIONAL, C.CLAVE, C.PERSONA_ID FROM CUENTA C JOIN PERSONA P ON C.PERSONA_ID = P.ID WHERE P.ROL_ID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, texto);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Cuenta cuentaa = new Cuenta();
+                        cuentaa.setId(resultSet.getInt("ID"));
+                        cuentaa.setCorreo_institucional(resultSet.getString("CORREO_INSTITUCIONAL"));
+                        cuentaa.setClave(resultSet.getString("CLAVE"));
+                        cuentaa.setPersona_id(resultSet.getInt("PERSONA_ID"));
+                        cuentass.add(cuentaa);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return cuentass;
+    }
 }

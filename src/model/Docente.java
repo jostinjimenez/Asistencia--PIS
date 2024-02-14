@@ -11,12 +11,6 @@ public class Docente extends Persona {
     public Docente() {
     }
 
-    public Docente(Integer experiencia, String codigo_empleado, String grado_academico) {
-        this.experiencia = experiencia;
-        this.codigo_empleado = codigo_empleado;
-        this.grado_academico = grado_academico;
-    }
-
     @Override
     public Integer getId() {
         return id;

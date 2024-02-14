@@ -1,31 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ModuloEstudianteDocente.vista.tablas;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
-import model.Carrera;
 import model.Persona;
-import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 
-import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
 import model.Estudiante;
 import tda_listas.exceptions.VacioExceptions;
 
-import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
-/**
- * @author santiago
- */
 public class ModeloTablaEstudiante extends AbstractTableModel {
 
     private ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
+    private Map<Integer, Persona> personas;
 
     public ListaEnlazada<Estudiante> getEstudiantes() {
         return estudiantes;
@@ -33,16 +24,16 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
 
     public void setEstudiantes(ListaEnlazada<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
+        this.personas = new HashMap<>();
+        for (Estudiante estudiante : estudiantes) {
+            try {
+                Persona p = getPersonaStatic(estudiante.getId());
+                this.personas.put(estudiante.getId(), p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-
-    public EventListenerList getListenerList() {
-        return listenerList;
-    }
-
-    public void setListenerList(EventListenerList listenerList) {
-        this.listenerList = listenerList;
-    }
-
 
     @Override
     public int getRowCount() {
@@ -60,13 +51,11 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        Estudiante est = null;
-        Persona per = null;
         try {
-            est = estudiantes.get(row);
-            per = getPersonaStatic(est.getId());
+            Estudiante est = estudiantes.get(row);
+            Persona per = this.personas.get(est.getId());
             return switch (col) {
-                case 0 -> (per != null) ? per.getNombre() + " " + per.getApellido(): " ";
+                case 0 -> (per != null) ? per.getNombre() + " " + per.getApellido() : " ";
                 case 1 -> (per != null) ? per.getDni() : " ";
                 case 2 -> est.getCanton();
                 case 3 -> est.getProvincia();

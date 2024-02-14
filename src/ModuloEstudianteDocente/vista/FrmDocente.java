@@ -8,18 +8,26 @@ import ModuloEstudianteDocente.controlador.DocenteController;
 import ModuloEstudianteDocente.vista.modals.modal_Docente;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import model.Cuenta;
+import model.Docente;
 import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
+import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
+import tda_listas.ListaEnlazada;
 
 import java.sql.*;
+import java.util.Objects;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.ajustarColumnas;
 
 /**
  * @author LENOVO
@@ -49,37 +57,54 @@ public class FrmDocente extends javax.swing.JFrame {
         this.cc = cc;
     }
 
-    public void cargarTabla() {
-        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
-            String sql = "SELECT * FROM DOCENTE JOIN PERSONA ON DOCENTE.ID = PERSONA.ID";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBuscar.getText();
 
-                DefaultTableModel model = new DefaultTableModel(new String[]{"Nombres", "Apellidos", "DNI", "Telefono", "Email"}, 0);
-                while (resultSet.next()) {
-                    String firstName = resultSet.getString("NOMBRE");
-                    String lastName = resultSet.getString("APELLIDO");
-                    String dni = resultSet.getString("DNI");
-                    String telefono = resultSet.getString("TELEFONO");
-                    String email = resultSet.getString("CORREO_PERSONAL");
-                    model.addRow(new Object[]{firstName, lastName, dni, telefono, email});
-                }
-                tblDocente.setModel(model);
-                tblDocente.updateUI();
-                TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
-                tblDocente.setRowSorter(trs);
-                tblDocente.getTableHeader().setReorderingAllowed(false);
-                tblDocente.getTableHeader().setResizingAllowed(false);
-                tblDocente.getTableHeader().setDefaultRenderer(new HeaderRenderer());
-                tblDocente.setRowHeight(30); // Ajusta este valor según tus necesidades
-
-                DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-                tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                for (int i = 0; i < tblDocente.getColumnCount(); i++) {
-                    tblDocente.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        try {
+            if (texto.isEmpty()) {
+                modeloDocente.setDocentes(dc.list_All());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    modeloDocente.setDocentes(dc.buscarPorNombre(texto));
+                } else if (criterio.equalsIgnoreCase("apellido")) {
+                    modeloDocente.setDocentes(dc.buscarPorApellido(texto));
+                } else if (criterio.equalsIgnoreCase("dni")) {
+                    Docente docente = dc.buscarPorDni(texto);
+                    if (docente != null) {
+                        ListaEnlazada<Docente> docentes = new ListaEnlazada<>();
+                        docentes.add(docente);
+                        modeloDocente.setDocentes(docentes);
+                    } else {
+                        modeloDocente.setDocentes(new ListaEnlazada<>());
+                    }
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
+            modeloDocente.fireTableDataChanged();
+            tblDocente.setModel(modeloDocente);
+            tblDocente.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    public void cargarTabla() {
+        modeloDocente.setDocentes(dc.list_All());
+        tblDocente.setModel(modeloDocente);
+        tblDocente.updateUI();
+        ajustarColumnas(tblDocente);
+
+
+        tblDocente.getTableHeader().setReorderingAllowed(false);
+        tblDocente.getTableHeader().setResizingAllowed(false);
+        tblDocente.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tblDocente.setRowHeight(30);
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tblDocente.getColumnCount(); i++) {
+            tblDocente.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
     }
 
@@ -102,6 +127,7 @@ public class FrmDocente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        cbxCriterio = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
@@ -128,7 +154,7 @@ public class FrmDocente extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDocente);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 950, 230));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 980, 290));
 
         btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
         btnEliminar.setText("Eliminar");
@@ -137,7 +163,7 @@ public class FrmDocente extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 540, 123, 38));
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 560, 123, 38));
 
         btnModificar.setBackground(new java.awt.Color(204, 204, 204));
         btnModificar.setText("Modificar");
@@ -146,12 +172,12 @@ public class FrmDocente extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 540, 123, 43));
+        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 560, 123, 43));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
         jLabel2.setText("Docentes");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnNuevo.setText("Agregar Docente");
@@ -160,23 +186,39 @@ public class FrmDocente extends javax.swing.JFrame {
                 btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 180, 30));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 180, 30));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Buscar");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 180, 60, 20));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 100, 60, 20));
+
+        cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", "DNI" }));
+        cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCriterioItemStateChanged(evt);
+            }
+        });
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 130, 160, -1));
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 210, 240, 20));
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 280, -1));
 
-        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
-        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
+        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
         header2.setBackground(new java.awt.Color(246, 246, 246));
-        jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, -1));
+        jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
@@ -195,6 +237,22 @@ public class FrmDocente extends javax.swing.JFrame {
         modal_Docente nu = new modal_Docente(this, true);
         nu.setVisible(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void cbxCriterioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCriterioItemStateChanged
+
+    }//GEN-LAST:event_cbxCriterioItemStateChanged
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            buscar();
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if (txtBuscar.getText().isEmpty()) {
+            cargarTabla();
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
     /**
      * @param args the command line arguments
@@ -217,6 +275,7 @@ public class FrmDocente extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cbxCriterio;
     private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -1,6 +1,7 @@
 package ModuloEstudianteDocente.controlador;
 
 import DataBase.DataAccessObject;
+import model.Cuenta;
 import model.Docente;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
@@ -112,11 +113,9 @@ public class DocenteController extends DataAccessObject<Docente> {
     public ListaEnlazada<Docente> buscarPorNombre(String dniONombre) {
         ListaEnlazada<Docente> docentess = new ListaEnlazada<>();
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
-            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.DNI = ? OR PERSONA.NOMBRE = ? OR PERSONA.APELLIDO = ?";
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.NOMBRE = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, dniONombre);
-                preparedStatement.setString(2, dniONombre);
-                preparedStatement.setString(3, dniONombre);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         Docente Docente = new Docente();
@@ -131,7 +130,51 @@ public class DocenteController extends DataAccessObject<Docente> {
         } catch (SQLException e) {
             throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
         }
-        System.out.println(docentess.print());
         return docentess;
+    }
+
+    public ListaEnlazada<Docente> buscarPorApellido(String dniONombre) {
+        ListaEnlazada<Docente> docentess = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.APELLIDO = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Docente docentee = new Docente();
+                        docentee.setId(resultSet.getInt("ID"));
+                        docentee.setCodigo_empleado(resultSet.getString("CODIGO_EMPLEADO"));
+                        docentee.setGrado_academico(resultSet.getString("GRADO_ACADEMICO"));
+                        docentee.setExperiencia(resultSet.getInt("EXPERIENCIA"));
+                        docentess.add(docentee);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentess;
+    }
+
+    public Docente buscarPorDni(String dniONombre) {
+        Docente docentee = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.DNI = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        docentee = new Docente();
+                        docentee.setId(resultSet.getInt("ID"));
+                        docentee.setCodigo_empleado(resultSet.getString("CODIGO_EMPLEADO"));
+                        docentee.setGrado_academico(resultSet.getString("GRADO_ACADEMICO"));
+                        docentee.setExperiencia(resultSet.getInt("EXPERIENCIA"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentee;
     }
 }

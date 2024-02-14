@@ -5,16 +5,17 @@ import model.*;
 import javax.swing.table.AbstractTableModel;
 
 import moduloAsignaturas.controller.MallaController;
-import modulo_carrera.controller.CarreraController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModeloTablaAsignaturas extends AbstractTableModel {
 
     private ListaEnlazada<Asignatura> asignaturas;
     private MallaController cc = new MallaController();
+    private Map<Integer, Malla> mallas;
 
     @Override
     public int getRowCount() {
@@ -26,13 +27,26 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
         return 5;
     }
 
+    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
+        this.mallas = new HashMap<>();
+        for (Asignatura asignatura : asignaturas) {
+            try {
+                Malla m = cc.busquedaBinaria2(cc.list_All(), asignatura.getMalla_id().toString(), "id");
+                this.mallas.put(asignatura.getMalla_id(), m);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @Override
     public Object getValueAt(int row, int col) {
         Asignatura asignatura;
         Malla malla;
         try {
             asignatura = asignaturas.get(row);
-            malla = cc.busquedaBinaria2(cc.list_All(), asignatura.getMalla_id().toString(), "id");
+            malla = this.mallas.get(asignatura.getMalla_id());
             return switch (col) {
                 case 0 -> (asignatura != null) ? asignatura.getId() : "";
                 case 1 -> (asignatura != null) ? asignatura.getNombre() : "";
@@ -58,23 +72,11 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
         };
     }
 
-    /**
-     * @return the matriculas
-     */
     public ListaEnlazada<Asignatura> getAsignaturas() {
         return asignaturas;
     }
-
-    /**
-     * @param asignaturas the matriculas to set
-     */
-    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
-        this.asignaturas = asignaturas;
-    }
-
 
     public Asignatura getAsignatura(int fila) throws VacioExceptions {
         return asignaturas.get(fila);
     }
 }
-
