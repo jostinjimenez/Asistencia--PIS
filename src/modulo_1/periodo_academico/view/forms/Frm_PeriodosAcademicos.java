@@ -2,6 +2,7 @@ package modulo_1.periodo_academico.view.forms;
 
 import model.PeriodoAcademico;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import modulo_1.periodo_academico.controller.PeriodoAcController;
 import modulo_1.periodo_academico.view.tablas.ModeloTablaPeriodoAc;
 import tda_listas.ListaEnlazada;
@@ -29,91 +30,19 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         });
 
         btnEliminar.addActionListener(e -> eliminarRegistro());
-
-        txtCriterio.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                actualizarTabla();
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                actualizarTabla();
-            }
-
-            public void insertUpdate(DocumentEvent e) {
-                actualizarTabla();
-            }
-        });
     }
 
     ModeloTablaPeriodoAc mtpa = new ModeloTablaPeriodoAc();
     PeriodoAcController pc = new PeriodoAcController();
 
     // Metodos
-    public void actualizarTabla() {
-        String criterio = txtCriterio.getText();
-        if (criterio.isEmpty()) {
-            cargarTabla();
-            return;
-        }
-
-        try {
-            ListaEnlazada<PeriodoAcademico> resultados = new ListaEnlazada<>();
-            String criterioSeleccionado = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-            switch (criterioSeleccionado) {
-                case "id":
-                    if (!criterio.matches("\\d+")) {
-                        cargarTabla();
-                        return;
-                    }
-                    Integer id = Integer.valueOf(criterio);
-                    PeriodoAcademico paId = pc.buscarId(pc.getPeriodoAcademicos(), id);
-                    if (paId != null) {
-                        resultados.add(paId);
-                    }
-                    break;
-                case "anio":
-                    if (!criterio.matches("\\d+")) {
-                        cargarTabla();
-                        return;
-                    }
-                    Integer anio = Integer.valueOf(criterio);
-                    resultados = pc.buscarAnio(pc.getPeriodoAcademicos(), anio);
-                    System.out.println(resultados.print());
-                    break;
-                case "fechaInicio":
-                    resultados = pc.buscarFechaInicio(pc.getPeriodoAcademicos(), criterio);
-                    System.out.println(resultados.print());
-                    break;
-                case "fechaFin":
-                    resultados = pc.buscarFechaFin(pc.getPeriodoAcademicos(), criterio);
-                    System.out.println(resultados.print());
-                    break;
-                default:
-                    cargarTabla();
-                    return;
-            }
-
-            if (resultados.isEmpty()) {
-                PeriodoAcademico noResult = new PeriodoAcademico();
-                noResult.setId(-1);
-                noResult.setFechaFin("No se encontraron resultados para la búsqueda");
-                resultados.add(noResult);
-            }
-            mtpa.setPeriodoAcademicos(resultados);
-            mtpa.fireTableDataChanged();
-            jTable1.setModel(mtpa);
-            jTable1.updateUI();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void eliminarRegistro() {
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow >= 0) {
             try {
-                int idPersona = (int) jTable1.getValueAt(selectedRow, 0);
-                if (pc.delete(idPersona)) {
+                int idPA = (int) jTable1.getValueAt(selectedRow, 0);
+                if (pc.delete(idPA)) {
                     JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
                     cargarTabla();
                 } else {
@@ -131,7 +60,6 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
 
     public void cargarTabla() {
         mtpa.setPeriodoAcademicos(pc.list_All());
-        mtpa.setPeriodoAcademicos(pc.getPeriodoAcademicos());
         mtpa.fireTableDataChanged();
         jTable1.setModel(mtpa);
         jTable1.updateUI();
@@ -139,6 +67,9 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         TableRowSorter<ModeloTablaPeriodoAc> trs = new TableRowSorter<>(mtpa);
         jTable1.setRowSorter(trs);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getTableHeader().setResizingAllowed(false);
+        jTable1.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        jTable1.setRowHeight(30); // Ajusta este valor según tus necesidades
 
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -157,23 +88,22 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtCriterio = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         cbxCriterio = new javax.swing.JComboBox<>();
-        cbxAscDesc = new javax.swing.JComboBox<>();
         menu_Admin1 = new plantilla.components.Menu_Admin();
+        header1 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bg_panel.setBackground(new java.awt.Color(21, 21, 21));
+        bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -187,25 +117,25 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         jLabel3.setText("Buscar");
         roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 70, 60, 20));
 
-        txtCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCriterio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(txtCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 240, 20));
+        txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 240, 20));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 1000, 360));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 970, 300));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnNuevo.setText("Agregar periodo Academico");
@@ -237,22 +167,21 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Id", "Anio", "Fecha Inicio", "Fecha Fin"}));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Anio", "Fecha Inicio", "Fecha Fin" }));
         cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxCriterioItemStateChanged(evt);
             }
         });
-        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 160, -1));
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 160, -1));
 
-        cbxAscDesc.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxAscDesc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
-        roundPanel1.add(cbxAscDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(856, 150, 160, -1));
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
+        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, -1));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, 620));
-        bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 620));
+        header1.setBackground(new java.awt.Color(246, 246, 246));
+        bg_panel.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
-        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 640));
+        getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -296,15 +225,15 @@ public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JComboBox<String> cbxAscDesc;
     private javax.swing.JComboBox<String> cbxCriterio;
+    private plantilla.components.Header header1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
-    private javax.swing.JTextField txtCriterio;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
 }

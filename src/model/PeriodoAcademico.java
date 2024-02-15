@@ -2,37 +2,25 @@ package model;
 
 import tda_listas.ListaEnlazada;
 
+import java.util.Date;
+
 public class PeriodoAcademico {
     // Atributos
     private Integer id;
-    private Integer anio;
-    private String fechaInicio;
-    private String fechaFin;
+    private Date fecha_Inicio;
+    private Date fecha_fin;
     private Boolean estado;
-
-    private ListaEnlazada<Integer> id_matriculas;
 
 
     // Constructor
     public PeriodoAcademico() {
     }
 
-    public PeriodoAcademico(Integer id, Integer anio, String fechaInicio, String fechaFin, Boolean estado, ListaEnlazada<Integer> id_matriculas) {
+    public PeriodoAcademico(Integer id, Date fecha_Inicio, Date fecha_fin, Boolean estado) {
         this.id = id;
-        this.anio = anio;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.fecha_Inicio = fecha_Inicio;
+        this.fecha_fin = fecha_fin;
         this.estado = estado;
-        this.id_matriculas = id_matriculas;
-    }
-
-    public ListaEnlazada<Integer> getId_matriculas() {
-        if (id_matriculas == null) id_matriculas = new ListaEnlazada<>();
-        return id_matriculas;
-    }
-
-    public void setId_matriculas(ListaEnlazada<Integer> id_matriculas) {
-        this.id_matriculas = id_matriculas;
     }
 
     public Integer getId() {
@@ -43,28 +31,20 @@ public class PeriodoAcademico {
         this.id = id;
     }
 
-    public Integer getAnio() {
-        return anio;
+    public Date getFecha_Inicio() {
+        return fecha_Inicio;
     }
 
-    public void setAnio(Integer anio) {
-        this.anio = anio;
+    public void setFecha_Inicio(Date fecha_Inicio) {
+        this.fecha_Inicio = fecha_Inicio;
     }
 
-    public String getFechaInicio() {
-        return fechaInicio;
+    public Date getFecha_fin() {
+        return fecha_fin;
     }
 
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public String getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(String fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setFecha_fin(Date fecha_fin) {
+        this.fecha_fin = fecha_fin;
     }
 
     public Boolean getEstado() {
@@ -77,7 +57,7 @@ public class PeriodoAcademico {
 
     @Override
     public String toString() {
-        return "id " + id  + "fechaInicio " + fechaInicio + ", fechaFin " + fechaFin + anio;
+        return fecha_Inicio + " - " + fecha_fin;
     }
 
     public Boolean compareTo(PeriodoAcademico pa, String field, Integer type) {
@@ -85,25 +65,20 @@ public class PeriodoAcademico {
             case 1:
                 if (field.equalsIgnoreCase("id")) {
                     return this.getId() > (pa.getId());
-                } else if (field.equalsIgnoreCase("anio")) {
-                    return this.getAnio() > (pa.getAnio());
                 } else if (field.equalsIgnoreCase("fechaInicio")) {
-                    return this.getFechaInicio().toLowerCase().compareTo(pa.getFechaInicio().toLowerCase()) > 0;
+                    return this.getFecha_Inicio().compareTo(pa.getFecha_Inicio()) > 0;
                 } else if (field.equalsIgnoreCase("fechaFin")) {
-                    return this.getFechaFin().toLowerCase().compareTo(pa.getFechaFin().toLowerCase()) > 0;
+                    return this.getFecha_fin().compareTo(pa.getFecha_fin()) > 0;
                 }
 
             case 0:
                 if (field.equalsIgnoreCase("id")) {
                     return this.getId() < (pa.getId());
-                } else if (field.equalsIgnoreCase("anio")) {
-                    return this.getAnio() < (pa.getAnio());
                 } else if (field.equalsIgnoreCase("fechaInicio")) {
-                    return this.getFechaInicio().toLowerCase().compareTo(pa.getFechaInicio().toLowerCase()) < 0;
+                    return this.getFecha_Inicio().compareTo(pa.getFecha_Inicio()) < 0;
                 } else if (field.equalsIgnoreCase("fechaFin")) {
-                    return this.getFechaFin().toLowerCase().compareTo(pa.getFechaFin().toLowerCase()) < 0;
+                    return this.getFecha_fin().compareTo(pa.getFecha_fin()) < 0;
                 }
-
             default:
                 return false;
         }

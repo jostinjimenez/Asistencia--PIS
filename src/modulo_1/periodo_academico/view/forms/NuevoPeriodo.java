@@ -43,9 +43,8 @@ public class NuevoPeriodo extends javax.swing.JDialog {
             try {
                 isEditing = true;
                 pac.setPeriodoAc(mtp.getPeriodoAcademicos().get(pac.getIndex()));
-                txtAnio.setText(String.valueOf(pac.getPeriodoAc().getAnio()));
-                txtFechaInicio.setText(pac.getPeriodoAc().getFechaInicio());
-                txtFechaFin.setText(pac.getPeriodoAc().getFechaFin());
+                txtFechaInicio.setDate(pac.getPeriodoAc().getFecha_Inicio());
+                txtFechaFin.setDate(pac.getPeriodoAc().getFecha_fin());
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -56,7 +55,8 @@ public class NuevoPeriodo extends javax.swing.JDialog {
     }
 
     public Boolean validar() {
-        return !txtAnio.getText().trim().isEmpty() && !txtFechaInicio.getText().trim().isEmpty() && !txtFechaFin.getText().trim().isEmpty();
+        return !txtFechaInicio.getDate().toString().trim().isEmpty()
+                && !txtFechaFin.getDate().toString().trim().isEmpty();
     }
 
     public void guardar() {
@@ -79,10 +79,9 @@ public class NuevoPeriodo extends javax.swing.JDialog {
     }
 
     private void setPersonaData() {
-        pac.getPeriodoAc().setAnio(Integer.valueOf(txtAnio.getText().trim()));
-        pac.getPeriodoAc().setFechaInicio(txtFechaInicio.getText().trim());
-        pac.getPeriodoAc().setFechaFin(txtFechaFin.getText().trim());
-        pac.getPeriodoAc().setEstado(false);
+        pac.getPeriodoAc().setFecha_Inicio(txtFechaInicio.getDate());
+        pac.getPeriodoAc().setFecha_fin(txtFechaFin.getDate());
+        pac.getPeriodoAc().setEstado(true);
     }
 
     private void updatePersona() {
@@ -95,12 +94,16 @@ public class NuevoPeriodo extends javax.swing.JDialog {
     }
 
     private void savePersona() {
-        if (pac.save()) {
-            JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-            ((Frm_PeriodosAcademicos) this.getParent()).cargarTabla(); // Agrega esta línea
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (pac.save() > 0) {
+                JOptionPane.showMessageDialog(null, "Se guardó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                ((Frm_PeriodosAcademicos) this.getParent()).cargarTabla(); // Agrega esta línea
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -112,17 +115,14 @@ public class NuevoPeriodo extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtAnio = new javax.swing.JTextField();
-        txtFechaInicio = new javax.swing.JTextField();
-        txtFechaFin = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        txtFechaInicio = new com.toedter.calendar.JDateChooser();
+        txtFechaFin = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setBackground(new java.awt.Color(255, 102, 102));
@@ -133,24 +133,12 @@ public class NuevoPeriodo extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 110, 30));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 110, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(51, 153, 255));
         jLabel1.setText("Datos Periodo Academico");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 290, -1));
-
-        txtAnio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtAnio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 270, 30));
-
-        txtFechaInicio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtFechaInicio.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 270, 30));
-
-        txtFechaFin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtFechaFin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jPanel1.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 270, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 290, -1));
 
         btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -160,30 +148,32 @@ public class NuevoPeriodo extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, 110, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 110, 30));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Fecha Fin:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 80, 20));
-
-        jLabel4.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel4.setText("Año:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 60, 20));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 80, 20));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("Fecha Inicio:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 90, 20));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 90, 20));
+        jPanel1.add(txtFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 270, 30));
+        jPanel1.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 270, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(0, 8, Short.MAX_VALUE)));
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -240,11 +230,9 @@ public class NuevoPeriodo extends javax.swing.JDialog {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtAnio;
-    private javax.swing.JTextField txtFechaFin;
-    private javax.swing.JTextField txtFechaInicio;
+    private com.toedter.calendar.JDateChooser txtFechaFin;
+    private com.toedter.calendar.JDateChooser txtFechaInicio;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,28 +14,17 @@
                 "data": {
                     "@class": "model.Cursa",
                     "id": 2,
-                    "paralelo": "B",
+                    "paralelo": "A",
                     "idMatricula": 2,
-                    "idAsignatura": 1,
+                    "idAsignatura": 2,
                     "idPeriodoAcademico": 1,
-                    "idDocente": 1
-                },
-                "next": {
-                    "data": {
-                        "@class": "model.Cursa",
-                        "id": 3,
-                        "paralelo": "B",
-                        "idMatricula": 3,
-                        "idAsignatura": 1,
-                        "idPeriodoAcademico": 1,
-                        "idDocente": 1
-                    }
+                    "idDocente": 2
                 }
             }
         },
         "last": {
-            "@reference": "..\/head\/next\/next"
+            "@reference": "..\/head\/next"
         },
-        "size": 3
+        "size": 2
     }
 }

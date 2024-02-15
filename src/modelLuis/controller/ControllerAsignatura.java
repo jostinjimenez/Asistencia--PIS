@@ -17,7 +17,7 @@ import tda_listas.exceptions.VacioExceptions;
 public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     private Asignatura asignatura = new Asignatura();
-    private ListaEnlazada<Asignatura> lista = new ListaEnlazada<>();
+    private ListaEnlazada<Asignatura> asignaturas = new ListaEnlazada<>();
     private Integer index = -1;
 
     public ControllerAsignatura() {
@@ -39,11 +39,11 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
         return save(asignatura);
     }
 
-    public ListaEnlazada<Asignatura> getLista() {
-        if (lista.isEmpty()) {
-            lista = list_All();
+    public ListaEnlazada<Asignatura> getAsignaturas() {
+        if (asignaturas.isEmpty()) {
+            asignaturas = list_All();
         }
-        return lista;
+        return asignaturas;
 
     }
 
@@ -52,10 +52,10 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
     }
 
     /**
-     * @param lista the lista to set
+     * @param asignaturas the lista to set
      */
-    public void setLista(ListaEnlazada<Asignatura> lista) {
-        this.lista = lista;
+    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     /**
@@ -74,14 +74,6 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     public int generatedId() {
         return generarID();
-    }
-
-    public static void main(String[] args) {
-        ListaEnlazada<Integer> ids = new ListaEnlazada();
-        ids.add(2);
-        Asignatura asig = new Asignatura(2, "Base Datos", 6226212, 22312, ids);
-        ControllerAsignatura c = new ControllerAsignatura();
-        System.out.println(c.save(asig));
     }
 
     public ListaEnlazada<Asignatura> quicksort(ListaEnlazada<Asignatura> lista, Integer type, String field) throws VacioExceptions {
@@ -138,7 +130,7 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
                     izquierda--;
                 }
                 return indice;
-            } else if (resultado > 0) {
+            } else if (resultado < 0) {
                 sup = indice - 1;
             } else {
                 infe = indice + 1;
@@ -159,7 +151,6 @@ public class ControllerAsignatura extends DataAccessObject<Asignatura> {
 
     private ListaEnlazada<Asignatura> ordenarLista(ListaEnlazada<Asignatura> lista, String campo) throws VacioExceptions {
         ListaEnlazada<Asignatura> listaOrdenada = quicksort(lista, 0, campo);
-        System.out.println(listaOrdenada.print());
         return listaOrdenada;
     }
 

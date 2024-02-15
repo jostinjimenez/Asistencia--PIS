@@ -71,4 +71,43 @@ public class Horario {
         return dia + ": " + horaInicio + "-" + horaInicio;
     }
 
+    public Boolean comparar(Horario c, String field, Integer type) {
+
+        switch (type) {
+            case 1:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() > (c.getId());
+                } else if (field.equalsIgnoreCase("id_asignatura")) {
+                    return getIdAsignatura() > (c.getIdAsignatura());
+                }
+
+            case 0:
+                if (field.equalsIgnoreCase("id")) {
+                    return getId() < (c.getId());
+                } else if (field.equalsIgnoreCase("id_asignatura")) {
+                    return getIdAsignatura() < (c.getIdAsignatura());
+                }
+            default:
+                return false;
+        }
+    }
+
+    public int comparar(Horario horario, String text, String campo) {
+        switch (campo.toLowerCase()) {
+
+            case "id":
+                try {
+                return Integer.compare(Integer.parseInt(text), horario.getId());
+            } catch (Exception e) {
+            }
+            case "id_asignatura":
+               try {
+                return Integer.compare(Integer.parseInt(text), horario.getIdAsignatura());
+            } catch (Exception e) {
+            }
+
+            default:
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        }
+    }
 }

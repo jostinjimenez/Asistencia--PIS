@@ -4,7 +4,7 @@
  */
 package modelLuis.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Cursa;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -23,19 +23,29 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         super(Cursa.class);
     }
 
-    public Cursa getAsistencia() {
+    public Cursa getCursa() {
         if (cursa == null) {
             cursa = new Cursa();
         }
         return cursa;
     }
 
-    public void setAsistencia(Cursa cursa) {
+    public void setCursa(Cursa cursa) {
         this.cursa = cursa;
     }
 
-    public Boolean saved() {
-        return save(cursa);
+    public Integer save() throws Exception {
+        return super.save(this.cursa);
+    }
+
+    public Boolean update() {
+        try {
+            update(this.cursa);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public ListaEnlazada<Cursa> getLista() {
@@ -44,10 +54,6 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         }
         return lista;
 
-    }
-
-    public Boolean update1(Integer i) {
-        return update(cursa, i);
     }
 
     /**
@@ -108,6 +114,18 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         array[j] = temp;
     }
 
+    public Cursa busquedaBinaria2(ListaEnlazada<Cursa> lista, String text, String campo, Integer type) throws VacioExceptions {
+        ListaEnlazada<Cursa> listaOrdenada = ordenarLista(lista, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
+    }
+
     public ListaEnlazada<Cursa> busquedaBinaria(ListaEnlazada<Cursa> lista, String text, String campo, String tipo, Integer type) throws VacioExceptions {
         ListaEnlazada<Cursa> listaOrdenada = ordenarLista(lista, campo);
 
@@ -155,9 +173,14 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         switch (campo.toLowerCase()) {
             case "paralelo":
                 return cursa.getParalelo().equalsIgnoreCase(text);
+            case "id_matricula":
+                return Integer.toString(cursa.getMatricula_id()).equalsIgnoreCase(text);
+            case "id_docente":
+                return Integer.toString(cursa.getDocente_id()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
+
     }
 
     private ListaEnlazada<Cursa> ordenarLista(ListaEnlazada<Cursa> lista, String campo) throws VacioExceptions {
@@ -165,11 +188,5 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         return listaOrdenada;
     }
 
-    public static void main(String[] args) {
-        Cursa cursa = new Cursa(3, "B", 3, 1, 1, 1);
-        ControllerCursa c = new ControllerCursa();
-        System.out.println(c.save(cursa));
-
-    }
 
 }

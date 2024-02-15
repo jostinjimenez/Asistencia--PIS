@@ -1,6 +1,6 @@
 package modulo_1.periodo_academico.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.PeriodoAcademico;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -52,35 +52,18 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
     }
 
     // Metodos
-    public Boolean save() {
-        this.periodoAc.setId(generarID());
-        return save(periodoAc);
+    public Integer save() throws Exception {
+        return super.save(this.periodoAc);
     }
 
     public Boolean update(Integer index) {
-        return update(periodoAc, index);
-    }
-
-    public Boolean delete(Integer idPeriodoAc) {
-        for (int i = 0; i < periodoAcademicos.getSize(); i++) {
-            PeriodoAcademico pa = null;
-            try {
-                pa = periodoAcademicos.get(i);
-            } catch (VacioExceptions e) {
-                throw new RuntimeException(e);
-            }
-            if (pa.getId().equals(idPeriodoAc)) {
-                try {
-                    pa.setEstado(false);
-                    this.xStream.toXML(periodoAcademicos, new FileOutputStream(URL));
-                    return true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-            }
+        try {
+            update(this.periodoAc);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     // Ordenar por QuickSort
@@ -124,75 +107,42 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
         return i + 1;
     }
 
-    public PeriodoAcademico buscarId(ListaEnlazada<PeriodoAcademico> lista, Integer id) throws Exception {
-        ListaEnlazada<PeriodoAcademico> lo = ordenarQS(lista, 0, "id");
+    public ListaEnlazada<PeriodoAcademico> buscarId(ListaEnlazada<PeriodoAcademico> lista, Integer id) throws Exception {
+        ListaEnlazada<PeriodoAcademico> lo = this.ordenarQS(lista, 0, "id");
+        PeriodoAcademico[] p = lo.toArray();
+        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
 
         int left = 0;
-        int right = lo.getSize() - 1;
+        int right = lista.getSize() - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            PeriodoAcademico midPeriodo = lo.get(mid);
 
-            if (midPeriodo.getId().equals(id)) {
-                return midPeriodo;
+            if (p[mid].getId().intValue() == id.intValue()) {
+                result.add(p[mid]);
+
+                int temp = mid - 1;
+                while (temp >= left && p[temp].getId().intValue() == id.intValue()) {
+                    result.add(p[temp]);
+                    temp--;
+                }
+
+                temp = mid + 1;
+                while (temp <= right && p[temp].getId().intValue() == id.intValue()) {
+                    result.add(p[temp]);
+                    temp++;
+                }
+                return result;
             }
-
-            if (midPeriodo.getId() < id) {
+            if (p[mid].getId().intValue() < id.intValue()) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-        return null;
-    }
-
-    public ListaEnlazada<PeriodoAcademico> buscarAnio(ListaEnlazada<PeriodoAcademico> lista, Integer anio) throws Exception {
-        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-        for (int i = 0; i < lista.getSize(); i++) {
-            PeriodoAcademico pa = lista.get(i);
-            if (pa.getAnio().equals(anio)) {
-                result.add(pa);
-            }
-        }
-        return result;
-    }
-
-    public ListaEnlazada<PeriodoAcademico> buscarFechaInicio(ListaEnlazada<PeriodoAcademico> lista, String fechaInicio) throws Exception {
-        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-        for (int i = 0; i < lista.getSize(); i++) {
-            PeriodoAcademico pa = lista.get(i);
-            if (pa.getFechaInicio().equals(fechaInicio)) {
-                result.add(pa);
-            }
-        }
-        return result;
-    }
-
-    public ListaEnlazada<PeriodoAcademico> buscarFechaFin(ListaEnlazada<PeriodoAcademico> lista, String fechaFin) throws Exception {
-        ListaEnlazada<PeriodoAcademico> result = new ListaEnlazada<>();
-        for (int i = 0; i < lista.getSize(); i++) {
-            PeriodoAcademico pa = lista.get(i);
-            if (pa.getFechaFin().equals(fechaFin)) {
-                result.add(pa);
-            }
-        }
         return result;
     }
 
 
-    public static void main(String[] args) {
-        PeriodoAcController pc = new PeriodoAcController();
-
-        System.out.println("Ordenamiento por QuickSort");
-        System.out.println("--------------------------------");
-        try {
-
-            System.out.println(pc.buscarAnio(pc.getPeriodoAcademicos(), 2024).print());
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
 

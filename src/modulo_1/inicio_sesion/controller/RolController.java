@@ -1,8 +1,11 @@
 package modulo_1.inicio_sesion.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Rol;
 import tda_listas.ListaEnlazada;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class RolController extends DataAccessObject<Rol> {
     // Atributos
@@ -45,27 +48,36 @@ public class RolController extends DataAccessObject<Rol> {
     }
 
     // Metodos
-    public Boolean save() {
-        this.rol.setId(generarID());
-        return save(rol);
+    public Integer save() throws Exception {
+        return super.save(this.rol);
     }
 
-    public Boolean update(Integer index) {
-        return update(rol, index);
+    public Boolean update() {
+        try {
+            update(this.rol);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
+    public static void main(String[] args) {
+        RolController rc = new RolController();
 
-//    public static void main(String[] args) {
-//        RolController rc = new RolController();
-//        rc.getRol().setId(1);
-//        rc.getRol().setNombre("Administrador");
-//        rc.save();
-//        rc.getRol().setId(2);
-//        rc.getRol().setNombre("Estudiante");
-//        rc.save();
-//        rc.getRol().setId(3);
-//        rc.getRol().setNombre("Docente");
-//        rc.save();
-//    }
+        // Prueba de update
+//        rc.setRol(rc.find(5));
+//        rc.getRol().setNombre("Prueba");
+//        rc.update();
+
+        // Prueba de delete
+        if (rc.delete(5)) {
+            System.out.println("Eliminado");
+        } else {
+            System.out.println("No eliminado");
+        }
+
+
+    }
 }
 
