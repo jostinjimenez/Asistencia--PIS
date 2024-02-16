@@ -24,7 +24,12 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/tablas/ModelTableHorarioEs.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
+        <group/>
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Perfil_Modal.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
+=======
             <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/buscar_Estudiante.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Controller/ControllerMatricula.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Cursas.java</file>
@@ -99,6 +104,7 @@
             <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/plantilla/components/Menu_Admin.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Maatricula.java</file>
+>>>>>>> master
         </group>
     </open-files>
 </project-private>

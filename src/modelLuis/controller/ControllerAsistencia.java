@@ -66,7 +66,7 @@ public class ControllerAsistencia extends DataAccessObject<Asistencia> {
     }
     
      public Integer saved() throws Exception {
-        return super.save(this.asistencia);
+        return super.save(this.asistencia, "SQC_TEMATICA");
     }
 
     public Boolean update() {

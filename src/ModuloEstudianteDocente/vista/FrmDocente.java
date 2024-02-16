@@ -122,13 +122,13 @@ public class FrmDocente extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocente = new javax.swing.JTable();
-        btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         cbxCriterio = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
+        btnEliminar = new javax.swing.JButton();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -154,30 +154,20 @@ public class FrmDocente extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDocente);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 980, 290));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 980, 310));
 
-        btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 560, 123, 38));
-
-        btnModificar.setBackground(new java.awt.Color(204, 204, 204));
-        btnModificar.setText("Modificar");
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 560, 123, 43));
+        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 560, 50, 43));
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
         jLabel2.setText("Docentes");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnNuevo.setText("Agregar Docente");
@@ -214,6 +204,15 @@ public class FrmDocente extends javax.swing.JFrame {
         });
         roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 280, -1));
 
+        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 560, -1, -1));
+
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
@@ -228,10 +227,6 @@ public class FrmDocente extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         modal_Docente nu = new modal_Docente(this, true);
@@ -253,6 +248,10 @@ public class FrmDocente extends javax.swing.JFrame {
             cargarTabla();
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

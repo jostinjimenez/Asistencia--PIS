@@ -110,8 +110,8 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pc.getPersona().setFoto("user.png");
 
         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
-        String claveCifrada = cc.cifrar(txtDni.getText(), 10);
-        cc.getCuenta().setClave(claveCifrada);
+        //String claveCifrada = cc.cifrar(txtDni.getText(), 10);
+        cc.getCuenta().setClave(txtDni.getText());
         cc.getCuenta().setPersona_id(pc.save());
 
         if (cc.save() > 0) {

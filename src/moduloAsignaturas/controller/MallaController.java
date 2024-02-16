@@ -57,7 +57,7 @@ public class MallaController extends DataAccessObject<Malla> {
     }
 
     public Integer save() throws Exception {
-        return super.save(this.malla);
+        return super.save(this.malla, "SQC_MALLA");
     }
 
     public Boolean update() {

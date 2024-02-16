@@ -52,7 +52,7 @@ public class CuentaController extends DataAccessObject<Cuenta> {
 
     // Metodos
     public Integer save() throws Exception {
-        return super.save(this.cuenta);
+        return super.save(this.cuenta, "SQC_CUENTA");
     }
 
     public Boolean update() {

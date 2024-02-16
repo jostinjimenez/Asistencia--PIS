@@ -40,7 +40,7 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
     }
 
     public Integer save() throws Exception {
-        return super.save(this.matricula);
+        return super.save(this.matricula, "SQC_MATRICULA");
     }
 
     public Boolean update() {

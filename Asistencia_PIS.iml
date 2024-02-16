@@ -109,15 +109,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/lib/TimingFramework-0.55_1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/src/lib/xstream/activation-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -328,6 +319,15 @@
       <library>
         <CLASSES>
           <root url="jar://D:/JDBC/ojdbc11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/lib/swing-time-picker.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

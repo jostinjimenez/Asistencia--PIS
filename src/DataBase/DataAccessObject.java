@@ -46,26 +46,26 @@ public class DataAccessObject<T> implements TransferObject<T> {
      * @throws Exception Cuando no se puede guardar en la base de datos
      */
     @Override
-    public Integer save(T obj) throws Exception {
-        String query = queryInsert(obj);
-        Integer idGenerado = -1;
+public Integer save(T obj, String sequenceName) throws Exception {
+    String query = queryInsert(obj);
+    Integer idGenerado = -1;
 
-        try (PreparedStatement statement = connection.getConnection().prepareStatement(query)) {
-            statement.executeUpdate();
+    try (PreparedStatement statement = connection.getConnection().prepareStatement(query)) {
+        statement.executeUpdate();
 
-            // Recupera el valor de la secuencia después de la inserción
-            try (Statement seqStatement = connection.getConnection().createStatement()) {
-                ResultSet resultSet = seqStatement.executeQuery("SELECT INCREMENTO.CURRVAL FROM dual");
-                if (resultSet.next()) {
-                    idGenerado = resultSet.getInt(1);
-                }
+        // Recupera el valor de la secuencia después de la inserción
+        try (Statement seqStatement = connection.getConnection().createStatement()) {
+            ResultSet resultSet = seqStatement.executeQuery("SELECT " + sequenceName + ".CURRVAL FROM dual");
+            if (resultSet.next()) {
+                idGenerado = resultSet.getInt(1);
             }
-        } finally {
-            connection.getConnection().close();
-            connection.setConnection(null);
         }
-        return idGenerado;
+    } finally {
+        connection.getConnection().close();
+        connection.setConnection(null);
     }
+    return idGenerado;
+}
 
     /**
      * Metodo que permite guardar

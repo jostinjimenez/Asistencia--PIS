@@ -75,7 +75,7 @@ public class ModeloTablaDocente extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         return switch (col) {
-            case 0 -> "Codigo Empleado";
+            case 0 -> "Codigo";
             case 1 -> "Nombre";
             case 2 -> "Apellido";
             case 3 -> "DNI";

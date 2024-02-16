@@ -35,7 +35,7 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
     }
 
     public Integer save() throws Exception {
-        return super.save(this.cursa);
+        return super.save(this.cursa, "SQC_CURSA");
     }
 
     public Boolean update() {

@@ -54,7 +54,7 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     // Metodos
     public Integer save() throws Exception {
-        return super.save(this.persona);
+        return super.save(this.persona, "SQC_PERSONA");
     }
 
     public Boolean update() {
