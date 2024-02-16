@@ -17,7 +17,7 @@ public interface TransferObject<T> {
      * @param obj Objeto del modelo
      * @return El id generado producto del guardado
      */
-    public Integer save(T obj) throws Exception;
+    public Integer save(T obj, String sequenceName) throws Exception;
     /**
      * Permite modificar los datos en un repositorio de datos
      * @param obj Objeto a modificar     

@@ -45,7 +45,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
     }
 
     public Integer save() throws Exception {
-        return super.save(this.asignatura);
+        return super.save(this.asignatura, "SQC_ASIGNATURA");
     }
 
     public Boolean update() {

@@ -53,7 +53,7 @@ public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {
 
     // Metodos
     public Integer save() throws Exception {
-        return super.save(this.periodoAc);
+        return super.save(this.periodoAc, "SQC_PERIODO");
     }
 
     public Boolean update(Integer index) {

@@ -368,58 +368,57 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         comboBoxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Codigo" }));
         roundPanel1.add(comboBoxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 120, -1));
 
-        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar-el-archivo.png"))); // NOI18N
+        btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+        roundPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
 
         btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error.png"))); // NOI18N
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 570, -1, -1));
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 560, -1, -1));
 
         btnModificar.setForeground(new java.awt.Color(0, 0, 0));
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
-        btnModificar.setText("Modificar");
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, -1, -1));
+        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 560, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Malla Academica:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, -1, -1));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Horas totales:");
-        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
+        roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         txtCodigoAsigntura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCodigoAsigntura.setForeground(new java.awt.Color(0, 0, 0));
-        roundPanel1.add(txtCodigoAsigntura, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 100, 250, -1));
+        roundPanel1.add(txtCodigoAsigntura, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 110, 250, -1));
 
         txtHorasTotales.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtHorasTotales.setForeground(new java.awt.Color(0, 0, 0));
-        roundPanel1.add(txtHorasTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 250, -1));
+        roundPanel1.add(txtHorasTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 250, -1));
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 102, 102));
         jLabel5.setText("Agregar Asignaturas");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 510, 10));
@@ -427,19 +426,20 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre de la Asignatura:");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         txtNombreAsignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNombreAsignatura.setForeground(new java.awt.Color(0, 0, 0));
-        roundPanel1.add(txtNombreAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 250, -1));
+        roundPanel1.add(txtNombreAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 250, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Codigo de la Asignatura:");
-        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, -1, -1));
 
+        cbxMalla.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxMalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxMalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 250, -1));
+        roundPanel1.add(cbxMalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, 250, -1));
 
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
 

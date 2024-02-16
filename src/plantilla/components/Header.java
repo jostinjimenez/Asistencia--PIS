@@ -28,22 +28,33 @@ public class Header extends javax.swing.JPanel {
         setBackground(new Color(51, 51, 51));
         cargarPeriodo(jComboBox1);
         
-        //labelFoto.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/icons8-más-1-semana-32.png"))));
+        cargarFoto();
 
+        fotoUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Perfil_Modal perfil = new Perfil_Modal(null, true, cuentaUsu);
+                perfil.setLocationRelativeTo(null);
+                perfil.setVisible(true);
+            }
+        });
+
+    }
+
+    public void cargarFoto(){
         try {
             Persona persona = cc.getPersona(cuentaUsu.getPersona_id());
             if (persona != null) {
                 txtUsername.setText(persona.toString());
-                fotoUsuario.setIcon(new ImageIcon("/multimedia/" + persona.getFoto()));
-
+                if (persona.getFoto() != null) {
+                    fotoUsuario.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
+                } else {
+                    fotoUsuario.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
+                }
             } else {
-                txtUsername.setText("Username");
-                fotoUsuario.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/plantilla/img/user.png"))));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     @SuppressWarnings("unchecked")

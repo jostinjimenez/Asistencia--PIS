@@ -1,6 +1,7 @@
 package ModuloEstudianteDocente.vista.modals;
 
 import ModuloEstudianteDocente.controlador.EstudianteController;
+import ModuloEstudianteDocente.vista.FrmEstudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 
 import java.awt.event.KeyAdapter;
@@ -175,6 +176,7 @@ public class modal_Estudiante extends javax.swing.JDialog {
                         cc.save();
                     }
                     JOptionPane.showMessageDialog(null, "Estudiante guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                    ((FrmEstudiante) getParent()).cargarTabla();
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al guardar la persona", "Error", JOptionPane.ERROR_MESSAGE);

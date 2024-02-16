@@ -54,7 +54,7 @@ public class CarreraController extends DataAccessObject<Carrera> {
 
     // Metodos
     public Integer save() throws Exception {
-        return super.save(this.carrera);
+        return super.save(this.carrera, "SQC_CARRERA");
     }
 
     public Boolean update() {

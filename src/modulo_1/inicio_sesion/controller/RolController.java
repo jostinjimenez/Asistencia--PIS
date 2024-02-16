@@ -49,7 +49,7 @@ public class RolController extends DataAccessObject<Rol> {
 
     // Metodos
     public Integer save() throws Exception {
-        return super.save(this.rol);
+        return super.save(this.rol, "SQC_ROL");
     }
 
     public Boolean update() {

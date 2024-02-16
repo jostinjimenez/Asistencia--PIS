@@ -2,6 +2,7 @@ package modulo_1.inicio_sesion.view.forms.mainFrm;
 
 import ModuloEstudianteDocente.controlador.EstudianteController;
 import ModuloEstudianteDocente.controlador.DocenteController;
+import model.Cuenta;
 import model.Docente;
 import model.Estudiante;
 import model.Persona;
@@ -9,26 +10,28 @@ import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.UUID;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 import static modulo_1.inicio_sesion.view.util.Utiles.*;
 
 public class Perfil_Modal extends javax.swing.JDialog {
 
     File foto = null;
-    CuentaController cc;
+    Cuenta cuenta;
+    Persona persona;
 
-    public Perfil_Modal(java.awt.Frame parent, boolean modal, CuentaController cc) {
+    public Perfil_Modal(java.awt.Frame parent, boolean modal, Cuenta cuentausu) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.cc = cc;
-
+        this.cuenta = cuentausu;
+        txtFoto.setVisible(false);
+        persona = getPersonaStatic(cuenta.getPersona_id());
         cargarDatos();
     }
 
@@ -41,9 +44,10 @@ public class Perfil_Modal extends javax.swing.JDialog {
     }
 
     private void cargarDatos() {
-        labelCorreo.setText(cc.getCuenta().getCorreo_institucional());
+        labelCorreo.setText(cuenta.getCorreo_institucional());
         txtFoto.setVisible(false);
-        fotoUsuario.setIcon(new ImageIcon("multimedia/" + cc.getPersona(cc.getCuenta().getPersona_id()).getFoto()));
+        fotoUsuario.setIcon(new ImageIcon("multimedia/" + persona.getFoto()));
+
     }
 
     private void filechooserFoto() {
@@ -89,46 +93,15 @@ public class Perfil_Modal extends javax.swing.JDialog {
     }
 
     private void updateFoto(String newFileName) {
-        try {
-            EstudianteController ce = new EstudianteController();
-            PersonaController pc = new PersonaController();
-            DocenteController dc = new DocenteController();
+        CuentaController cc = getCc();
+        PersonaController pc = new PersonaController();
 
-            Persona p = cc.getPersona(cc.getCuenta().getPersona_id());
-
-            pc.setPersona(p);
-            pc.getPersona().setFoto(newFileName);
-
-            if (pc.update()) {
-                System.out.println("Perfil " + p.getRol_id() + " actualizado");
-
-                switch (p.getRol_id()) {
-                    case 2:
-                        Estudiante estudiante = (Estudiante) p;
-                        estudiante.setFoto(newFileName);
-                        ce.setEstudiante(estudiante);
-                        if (ce.update()) {
-                            System.out.println("Foto del estudiante actualizada");
-                        } else {
-                            mostrarError("No se pudo actualizar la foto del estudiante");
-                        }
-                        break;
-                    case 3:
-                        Docente docente = (Docente) p;
-                        docente.setFoto(newFileName);
-                        dc.setDocente(docente);
-                        if (dc.update()) {
-                            System.out.println("Foto del docente actualizada");
-                        } else {
-                            mostrarError("No se pudo actualizar la foto del docente");
-                        }
-                        break;
-                }
-            } else {
-                mostrarError("No se pudo actualizar la foto");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        pc.setPersona(persona);
+        pc.getPersona().setFoto(newFileName);
+        if (pc.update()) {
+            JOptionPane.showMessageDialog(null, "Foto actualizada", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar la foto", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -150,15 +123,13 @@ public class Perfil_Modal extends javax.swing.JDialog {
         fotoUsuario = new plantilla.swing.ImageAvatar();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtClave = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -205,21 +176,15 @@ public class Perfil_Modal extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setText("Contraseña:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, -1, -1));
 
         jLabel9.setBackground(new java.awt.Color(51, 51, 51));
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Correo personal:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, -1, -1));
 
-        jLabel10.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel10.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel10.setText("Telefono:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, -1, -1));
-
-        btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
+        btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -227,9 +192,9 @@ public class Perfil_Modal extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 420, 110, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 450, 110, 30));
 
-        btnCancelar.setBackground(new java.awt.Color(255, 102, 102));
+        btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +202,7 @@ public class Perfil_Modal extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, 110, 30));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 450, 110, 30));
 
         jLabel2.setBackground(new java.awt.Color(51, 51, 51));
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -245,23 +210,20 @@ public class Perfil_Modal extends javax.swing.JDialog {
         jLabel2.setText("Información personal");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 240, -1));
+        txtClave.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jPanel1.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 270, 240, -1));
 
         jLabel11.setBackground(new java.awt.Color(51, 51, 51));
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setText("Telefono:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, -1, -1));
 
-        jTextField3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 180, 240, -1));
+        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 230, 240, -1));
 
-        jTextField4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 220, 240, -1));
-
-        jTextField5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 140, 240, -1));
+        txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 240, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -277,17 +239,17 @@ public class Perfil_Modal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        updateFoto(txtFoto.getText());
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     private void btnActualizarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarFotoActionPerformed
         filechooserFoto();
     }//GEN-LAST:event_btnActualizarFotoActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -336,7 +298,6 @@ public class Perfil_Modal extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private plantilla.swing.ImageAvatar fotoUsuario;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
@@ -344,12 +305,11 @@ public class Perfil_Modal extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel labelCorreo;
     private plantilla.swing.RoundPanel panelInfomacion;
+    private javax.swing.JTextField txtClave;
+    private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtFoto;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

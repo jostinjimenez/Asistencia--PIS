@@ -183,8 +183,8 @@ public class Menu_Estudiante extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void imageAvatar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageAvatar1MouseClicked
-        Perfil_Modal pm = new Perfil_Modal(null, true, cc);
-        pm.setVisible(true);
+//        Perfil_Modal pm = new Perfil_Modal(null, true, cc);
+//        pm.setVisible(true);
     }//GEN-LAST:event_imageAvatar1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

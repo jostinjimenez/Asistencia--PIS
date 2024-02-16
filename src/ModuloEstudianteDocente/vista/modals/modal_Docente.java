@@ -1,6 +1,8 @@
 package ModuloEstudianteDocente.vista.modals;
 
 import ModuloEstudianteDocente.controlador.DocenteController;
+import ModuloEstudianteDocente.vista.FrmDocente;
+import ModuloEstudianteDocente.vista.FrmEstudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 
 import java.awt.event.KeyAdapter;
@@ -111,17 +113,16 @@ public class modal_Docente extends javax.swing.JDialog {
                     dc.getDocente().setExperiencia(Integer.valueOf(txtExperiencia.getText()));
                     dc.getDocente().setGrado_academico(txtGradoAcademico.getText());
                     dc.getDocente().setCodigo_empleado(txtCodigoEmpleado.getText());
-                    System.out.println("Antes de llegar al save");
 
                     // Guardar el docente
                     if (dc.save()) {
-                        System.out.println("Docente guardado correctamente");
                         // Configurar y guardar la cuenta
                         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
                         cc.getCuenta().setClave(txtCedula.getText());
                         cc.getCuenta().setPersona_id(idGenerado);
                         cc.save();
                         JOptionPane.showMessageDialog(null, "Docente guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                        ((FrmDocente) getParent()).cargarTabla();
                         this.dispose();
                     }
                 }
@@ -197,6 +198,15 @@ public class modal_Docente extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isDigit(c) || txtTelefono.getText().length() >= 10) {
+                    e.consume();
+                }
+            }
+        });
+        txtCodigoEmpleado.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetterOrDigit(c) || txtCodigoEmpleado.getText().length() >= 11) {
                     e.consume();
                 }
             }
