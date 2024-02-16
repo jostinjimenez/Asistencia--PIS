@@ -2,12 +2,17 @@ package modelLuis.view;
 
 import ModuloMatricula.Views.buscar_Asignatura;
 import ModuloMatricula.Views.buscar_Carrera;
+import ModuloMatricula.tablas.ModeloTablaCursas;
 import com.formdev.flatlaf.FlatLightLaf;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
+
 import model.Horario;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.tablas.ModelTableHorario;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.ListaEnlazada;
 
 public class Frm_HorarioAdmi extends javax.swing.JFrame {
@@ -18,7 +23,6 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     public Frm_HorarioAdmi() {
         initComponents();
         limpiar();
-        String nombre = this.getClass().getName();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
@@ -37,6 +41,19 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         mt1.setHorarios(lista);
         tblM.setModel(mt1);
         tblM.updateUI();
+
+        TableRowSorter<ModelTableHorario> trs = new TableRowSorter<>(mt1);
+        tblM.setRowSorter(trs);
+        tblM.getTableHeader().setReorderingAllowed(false);
+        tblM.getTableHeader().setResizingAllowed(false);
+        tblM.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tblM.setRowHeight(30); // Ajusta este valor según tus necesidades
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tblM.getColumnCount(); i++) {
+            tblM.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
     }
 
     private void guardarHorario() {
@@ -69,7 +86,6 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         roundPanel1 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblM = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -87,6 +103,9 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtAsignaturas = new javax.swing.JTextField();
         txtIdAsignatura = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         menu_Admin2 = new plantilla.components.Menu_Admin();
         header1 = new plantilla.components.Header();
 
@@ -117,53 +136,48 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblM);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 920, 190));
-
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Administración de Horarios");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 960, 220));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Hora In:");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setText("Hora Fin:");
-        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("Dia:");
         roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, -1, -1));
 
-        jButton6.setBackground(new java.awt.Color(169, 234, 255));
         jButton6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
         jButton6.setText("Guardar Horario");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 180, -1));
+        roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 230, -1, -1));
 
         cbxDia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
         roundPanel1.add(cbxDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 230, 30));
 
-        jButton1.setText("jButton1");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reloj.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 40, 30));
+        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 40, 40));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("Carrera:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         txtCarrera.setEditable(false);
         txtCarrera.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -172,37 +186,37 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
                 txtCarreraActionPerformed(evt);
             }
         });
-        roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 230, 30));
+        roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 230, 30));
 
-        btnCargarCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
+        btnCargarCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscarCarrera.png"))); // NOI18N
         btnCargarCarrera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCargarCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarCarreraActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, 30));
+        roundPanel1.add(btnCargarCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, -1, 40));
 
         txtIdCarrera.setEditable(false);
-        roundPanel1.add(txtIdCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 50, -1));
-        roundPanel1.add(txtHoraI, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 230, 30));
-        roundPanel1.add(txtHoraF, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 230, 30));
+        roundPanel1.add(txtIdCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 50, -1));
+        roundPanel1.add(txtHoraI, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 230, 30));
+        roundPanel1.add(txtHoraF, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 230, 30));
 
-        jButton2.setText("jButton1");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reloj.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 40, 30));
+        roundPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 40, 40));
 
-        jButton3.setText("jButton3");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscarAsig.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 110, 40, 30));
+        roundPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 40, 40));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setText("Asignatura:");
@@ -219,6 +233,31 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
             }
         });
         roundPanel1.add(txtIdAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 110, 50, -1));
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel2.setText("Administracion de Horarios");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 560, 60, 50));
+
+        btnEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 60, 50));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
@@ -259,7 +298,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
             buscar_Asignatura mc = new buscar_Asignatura(this, true, Integer.parseInt(txtIdCarrera.getText()), "Frm_HorarioAdmi");
             mc.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una matricula");
+            JOptionPane.showMessageDialog(null, "Seleccione una carrera");
         }
         cargarTabla();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -267,6 +306,14 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     private void txtIdAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAsignaturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdAsignaturaActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -290,6 +337,8 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
     private javax.swing.JButton btnCargarCarrera;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cbxDia;
     private plantilla.components.Header header1;
     private javax.swing.JButton jButton1;

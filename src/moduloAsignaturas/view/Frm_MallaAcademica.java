@@ -220,7 +220,7 @@ public class Frm_MallaAcademica extends javax.swing.JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c) || txtCodigo.getText().length() >= 30) {
+                if (!Character.isAlphabetic(c) || txtCodigo.getText().length() >= 30) {
                     e.consume();
                 }
             }
