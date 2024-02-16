@@ -8,6 +8,7 @@ import ModuloEstudianteDocente.controlador.EstudianteController;
 import ModuloEstudianteDocente.vista.modals.modal_Estudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -116,10 +117,11 @@ public class FrmEstudiante extends javax.swing.JFrame {
         tblEstudiante = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        cbxCriterio = new javax.swing.JComboBox<>();
+        txtBuscar = new javax.swing.JTextField();
         header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -145,7 +147,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblEstudiante);
 
-        roundPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 980, 290));
+        roundPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 980, 320));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnNuevo.setText("Agregar Estudiante");
@@ -160,16 +162,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 102, 102));
         jLabel2.setText("Estudiantes");
         roundPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
-
-        txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel5.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 210, 240, 20));
-
-        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Buscar");
-        roundPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 180, 60, 20));
 
         btnEliminar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
@@ -190,6 +182,32 @@ public class FrmEstudiante extends javax.swing.JFrame {
             }
         });
         roundPanel5.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 60, 50));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Buscar");
+        roundPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 100, 60, 20));
+
+        cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", "DNI" }));
+        cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCriterioItemStateChanged(evt);
+            }
+        });
+        roundPanel5.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 130, 160, -1));
+
+        txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+        roundPanel5.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 280, -1));
 
         jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1040, 620));
 
@@ -215,6 +233,22 @@ public class FrmEstudiante extends javax.swing.JFrame {
         nu.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void cbxCriterioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCriterioItemStateChanged
+
+    }//GEN-LAST:event_cbxCriterioItemStateChanged
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            //buscar();
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if (txtBuscar.getText().isEmpty()) {
+            cargarTabla();
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -236,6 +270,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cbxCriterio;
     private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

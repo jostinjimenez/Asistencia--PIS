@@ -417,7 +417,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel5.setText("Agregar Asignaturas");
+        jLabel5.setText("Asignaturas");
         roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
