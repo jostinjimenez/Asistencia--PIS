@@ -40,7 +40,6 @@ public class Connection {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Conected!");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

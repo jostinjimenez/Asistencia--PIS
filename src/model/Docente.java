@@ -1,27 +1,32 @@
 package model;
 
-import java.util.Date;
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
 
 public class Docente extends Persona {
-    private Integer anios_experiencia;
+    private Integer id;
+    private Integer experiencia;
     private String codigo_empleado;
     private String grado_academico;
 
     public Docente() {
     }
 
-    public Docente(Integer anios_experiencia, String codigo_empleado, String grado_academico) {
-        this.anios_experiencia = anios_experiencia;
-        this.codigo_empleado = codigo_empleado;
-        this.grado_academico = grado_academico;
+    @Override
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getAnios_experiencia() {
-        return anios_experiencia;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setAnios_experiencia(Integer anios_experiencia) {
-        this.anios_experiencia = anios_experiencia;
+    public Integer getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Integer experiencia) {
+        this.experiencia = experiencia;
     }
 
     public String getCodigo_empleado() {
@@ -42,6 +47,8 @@ public class Docente extends Persona {
 
     @Override
     public String toString() {
-        return super.toString();
+        Persona persona = getPersonaStatic(getId());
+        assert persona != null;
+        return persona.getNombre() + " " + persona.getApellido() + " - " + persona.getDni();
     }
 }

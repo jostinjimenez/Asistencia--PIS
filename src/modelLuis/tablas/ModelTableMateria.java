@@ -32,9 +32,9 @@ public class ModelTableMateria extends AbstractTableModel {
             case 0:
                 return (asignatura != null) ? asignatura.getId() : "";
             case 1:
-                return (asignatura != null) ? asignatura.getHorasTotales() : "";
+                return (asignatura != null) ? asignatura.getHoras_Totales() : "";
             case 2:
-                return (asignatura != null) ? asignatura.getCodigo() : "";
+                return (asignatura != null) ? asignatura.getCodigo_materia() : "";
             case 3:
                 return (asignatura != null) ? asignatura.getNombre() : "";
             default:

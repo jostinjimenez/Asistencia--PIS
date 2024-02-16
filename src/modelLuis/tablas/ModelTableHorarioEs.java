@@ -5,13 +5,14 @@ import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import model.Horario;
 import modelLuis.controller.ControllerAsignatura;
+import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 public class ModelTableHorarioEs extends AbstractTableModel {
 
     private ListaEnlazada<Horario> horarios;
-    private ControllerAsignatura a = new ControllerAsignatura();
+    private AsignaturaController a = new AsignaturaController();
 
     @Override
     public int getRowCount() {
@@ -40,10 +41,10 @@ public class ModelTableHorarioEs extends AbstractTableModel {
             case 2:
                 return (horario != null) ? horario.getHoraInicio() : "";
             case 3:
-                String id = horario.getIdAsignatura().toString();
+                String id = horario.getAsignatura_id().toString();
                 Asignatura as;
                 try {
-                    as = a.busquedaBinaria2(a.list_All(), id, "id", 0);
+                    as = a.busquedaBinaria2(a.list_All(), id, "id");
                     return (as != null) ? as.getNombre() : "";
                 } catch (VacioExceptions ex) {
 

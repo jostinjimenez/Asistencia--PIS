@@ -1,13 +1,13 @@
 package ModuloMatricula.Controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
 import model.Matricula;
-import model.catalogo.EstadoMatricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
+import java.sql.*;
+
 /**
- *
  * @author Usuario
  */
 public class ControllerMatricula extends DataAccessObject<Matricula> {
@@ -31,10 +31,6 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         this.matricula = matricula;
     }
 
-    public Boolean saved() {
-        return save(matricula);
-    }
-
     public ListaEnlazada<Matricula> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
@@ -43,8 +39,18 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
 
     }
 
-    public Boolean update1(Integer i) {
-        return update(matricula, i);
+    public Integer save() throws Exception {
+        return super.save(this.matricula);
+    }
+
+    public Boolean update() {
+        try {
+            update(this.matricula);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -105,8 +111,19 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         array[j] = temp;
     }
 
+    public Matricula busquedaBinaria2(ListaEnlazada<Matricula> lista, String text, String campo) throws VacioExceptions {
+        ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
+    }
+
     public ListaEnlazada<Matricula> busquedaBinaria(ListaEnlazada<Matricula> lista, String text, String campo, String tipo, Integer type) throws VacioExceptions {
-        ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo, tipo);
+        ListaEnlazada<Matricula> listaOrdenada = ordenarLista(lista, campo);
 
         ListaEnlazada<Matricula> marc = new ListaEnlazada<>();
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
@@ -152,25 +169,46 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         switch (campo.toLowerCase()) {
             case "ciclo":
                 return Integer.toString(matricula.getCiclo()).equalsIgnoreCase(text);
+            case "id":
+                return Integer.toString(matricula.getId()).equalsIgnoreCase(text);
+            case "id_estudiante":
+                return Integer.toString(matricula.getEstudiante_id()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
     }
 
-    private ListaEnlazada<Matricula> ordenarLista(ListaEnlazada<Matricula> lista, String campo, String tipo) throws VacioExceptions {
+    private ListaEnlazada<Matricula> ordenarLista(ListaEnlazada<Matricula> lista, String campo) throws VacioExceptions {
         ListaEnlazada<Matricula> listaOrdenada = new ListaEnlazada<>();
         listaOrdenada = quicksort(lista, 0, campo);
         return listaOrdenada;
     }
 
-    public static void main(String[] args) throws VacioExceptions {
-        ListaEnlazada<Integer> ids = new ListaEnlazada();
-        ids.add(3);
-        Matricula matricula = new Matricula(3, "2023-11-01", 1, "Computacion", EstadoMatricula.MATRICULADO, 3, 1, ids);
-        ControllerMatricula c = new ControllerMatricula();
-        c.save(matricula);
-        //  System.out.println(c.busquedaBinaria(c.list_All(), "", "ciclo", "quicksort", 0));
-
+    public ListaEnlazada<Matricula> buscarPorEstudiante(String dniONombre) {
+        ListaEnlazada<Matricula> matriculas = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM MATRICULA JOIN ESTUDIANTE ON MATRICULA.ESTUDIANTE_ID = ESTUDIANTE.ID JOIN AXLMD.PERSONA P on P.ID = ESTUDIANTE.ID WHERE P.NOMBRE = ? OR P.DNI = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                preparedStatement.setString(2, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Matricula matricula = new Matricula();
+                        matricula.setId(resultSet.getInt("ID"));
+                        matricula.setCiclo(resultSet.getInt("CICLO"));
+                        matricula.setEstudiante_id(resultSet.getInt("ESTUDIANTE_ID"));
+                        matricula.setPeriodoacademico_id(resultSet.getInt("PERIODOACADEMICO_ID"));
+                        matricula.setFechamatricula(resultSet.getDate("FECHAMATRICULA"));
+                        matricula.setEstado_matricula(resultSet.getString("ESTADO_MATRICULA"));
+                        matricula.setCarrera_id(resultSet.getInt("CARRERA_ID"));
+                        matriculas.add(matricula);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return matriculas;
     }
 
 }

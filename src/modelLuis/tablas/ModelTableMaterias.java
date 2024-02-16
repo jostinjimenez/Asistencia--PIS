@@ -2,8 +2,6 @@ package modelLuis.tablas;
 
 import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
-import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
 
 public class ModelTableMaterias extends AbstractTableModel {
 
@@ -27,9 +25,9 @@ public class ModelTableMaterias extends AbstractTableModel {
             case 0:
                 return (asignatura != null) ? asignatura.getId() : "";
             case 1:
-                return (asignatura != null) ? asignatura.getHorasTotales() : "";
+                return (asignatura != null) ? asignatura.getHoras_Totales() : "";
             case 2:
-                return (asignatura != null) ? asignatura.getCodigo() : "";
+                return (asignatura != null) ? asignatura.getCodigo_materia() : "";
             case 3:
                 return (asignatura != null) ? asignatura.getNombre() : "";
             default:

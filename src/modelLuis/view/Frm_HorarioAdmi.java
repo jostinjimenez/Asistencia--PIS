@@ -1,11 +1,14 @@
 package modelLuis.view;
 
-import com.formdev.flatlaf.FlatDarkLaf;
+import ModuloMatricula.Views.buscar_Asignatura;
+import ModuloMatricula.Views.buscar_Carrera;
+import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import model.Horario;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.tablas.ModelTableHorario;
-import modelLuis.view.util.Util_VistaLinked1_Asistencia;
+import tda_listas.ListaEnlazada;
 
 public class Frm_HorarioAdmi extends javax.swing.JFrame {
 
@@ -15,21 +18,23 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     public Frm_HorarioAdmi() {
         initComponents();
         limpiar();
+        String nombre = this.getClass().getName();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
 
     private void limpiar() {
-        cargarTabla();
+//        cargarTabla();
         try {
-            Util_VistaLinked1_Asistencia.cargaMaterias(cbxAsistencia);
+//            Util_VistaLinked1_Asistencia.cargaMaterias(cbxAsistencia);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void cargarTabla() {
-        mt1.setHorarios(a.list_All());
+        ListaEnlazada<Horario>lista = a.buscarHorario(txtIdAsignatura.getText());
+        mt1.setHorarios(lista);
         tblM.setModel(mt1);
         tblM.updateUI();
     }
@@ -37,14 +42,14 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     private void guardarHorario() {
 
         try {
+            System.out.println(cbxDia.getSelectedItem().toString());
             a.getAsistencia().setDia(cbxDia.getSelectedItem().toString());
-            a.getAsistencia().setHoraFin(cbxHoraFin.getSelectedItem().toString());
-            a.getAsistencia().setHoraInicio(cbxHoraInicio.getSelectedItem().toString());
-            a.getAsistencia().setIdAsignatura(Util_VistaLinked1_Asistencia.getComboAsignatura(cbxAsistencia).getId());
-            a.getAsistencia().setId(a.generatedId());
-            if (a.saved()) {
+            a.getAsistencia().setHoraFin(txtHoraF.getText());
+            a.getAsistencia().setHoraInicio(txtHoraI.getText());
+            a.getAsistencia().setAsignatura_id(Integer.parseInt(txtIdAsignatura.getText()));
+            if (a.save()) {
                 JOptionPane.showMessageDialog(null, "Se guardó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                limpiar();
+                cargarTabla();
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -58,6 +63,8 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        timePicker1 = new com.raven.swing.TimePicker();
+        timePicker2 = new com.raven.swing.TimePicker();
         bg_panel = new javax.swing.JPanel();
         roundPanel1 = new plantilla.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -66,22 +73,35 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        cbxAsistencia = new javax.swing.JComboBox<>();
         jButton6 = new javax.swing.JButton();
         cbxDia = new javax.swing.JComboBox<>();
-        cbxHoraInicio = new javax.swing.JComboBox<>();
-        cbxHoraFin = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtCarrera = new javax.swing.JTextField();
+        btnCargarCarrera = new javax.swing.JButton();
+        txtIdCarrera = new javax.swing.JTextField();
+        txtHoraI = new javax.swing.JTextField();
+        txtHoraF = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtAsignaturas = new javax.swing.JTextField();
+        txtIdAsignatura = new javax.swing.JTextField();
         menu_Admin2 = new plantilla.components.Menu_Admin();
         header1 = new plantilla.components.Header();
+
+        timePicker1.setDisplayText(txtHoraI);
+
+        timePicker2.setDisplayText(txtHoraF);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bg_panel.setBackground(new java.awt.Color(21, 21, 21));
+        bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        roundPanel1.setForeground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblM.setModel(new javax.swing.table.DefaultTableModel(
@@ -97,32 +117,29 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblM);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 920, 230));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 920, 190));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Administración de Horarios");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Hora Inicio:");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setText("Hora In:");
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Hora final:");
-        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, -1, -1));
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setText("Hora Fin:");
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("Dia:");
-        roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
+        roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, -1, -1));
 
-        cbxAsistencia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxAsistencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roundPanel1.add(cbxAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 187, -1));
-
+        jButton6.setBackground(new java.awt.Color(169, 234, 255));
         jButton6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButton6.setText("Guardar Horario");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -130,27 +147,83 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 156, -1));
+        roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 180, -1));
 
         cbxDia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }));
-        roundPanel1.add(cbxDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 187, -1));
+        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
+        roundPanel1.add(cbxDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 230, 30));
 
-        cbxHoraInicio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxHoraInicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "07:30", "09:30", "10:30", "11:30" }));
-        roundPanel1.add(cbxHoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 211, -1));
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 40, 30));
 
-        cbxHoraFin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxHoraFin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "09:30", "10:30", "11:30", "13:30" }));
-        roundPanel1.add(cbxHoraFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 211, -1));
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel3.setText("Carrera:");
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Materia:");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 80, -1, -1));
+        txtCarrera.setEditable(false);
+        txtCarrera.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCarreraActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 230, 30));
 
-        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        btnCargarCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
+        btnCargarCarrera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarCarreraActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(btnCargarCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, 30));
+
+        txtIdCarrera.setEditable(false);
+        roundPanel1.add(txtIdCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 50, -1));
+        roundPanel1.add(txtHoraI, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 230, 30));
+        roundPanel1.add(txtHoraF, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 230, 30));
+
+        jButton2.setText("jButton1");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 40, 30));
+
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 110, 40, 30));
+
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel8.setText("Asignatura:");
+        roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 90, 20));
+
+        txtAsignaturas.setEditable(false);
+        txtAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, 230, 30));
+
+        txtIdAsignatura.setEditable(false);
+        txtIdAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdAsignaturaActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(txtIdAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 110, 50, -1));
+
+        bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
+
+        header1.setBackground(new java.awt.Color(255, 255, 255));
         bg_panel.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
         getContentPane().add(bg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
@@ -162,6 +235,39 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         guardarHorario();
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        timePicker2.showPopup(this, 620, 130);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCargarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCarreraActionPerformed
+        buscar_Carrera mc = new buscar_Carrera(this, true, "Frm_HorarioAdmi");
+        mc.setVisible(true);
+    }//GEN-LAST:event_btnCargarCarreraActionPerformed
+
+    private void txtCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarreraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCarreraActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        timePicker1.showPopup(this, 620, 130);
+        System.out.println(timePicker1.getSelectedTime());
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (txtIdCarrera.getText() != null && !txtIdCarrera.getText().isEmpty()) {
+            buscar_Asignatura mc = new buscar_Asignatura(this, true, Integer.parseInt(txtIdCarrera.getText()), "Frm_HorarioAdmi");
+            mc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una matricula");
+        }
+        cargarTabla();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtIdAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAsignaturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdAsignaturaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -169,7 +275,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
@@ -183,21 +289,31 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
-    private javax.swing.JComboBox<String> cbxAsistencia;
+    private javax.swing.JButton btnCargarCarrera;
     private javax.swing.JComboBox<String> cbxDia;
-    private javax.swing.JComboBox<String> cbxHoraFin;
-    private javax.swing.JComboBox<String> cbxHoraInicio;
     private plantilla.components.Header header1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private plantilla.components.Menu_Admin menu_Admin2;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tblM;
+    private com.raven.swing.TimePicker timePicker1;
+    private com.raven.swing.TimePicker timePicker2;
+    public javax.swing.JTextField txtAsignaturas;
+    public javax.swing.JTextField txtCarrera;
+    private javax.swing.JTextField txtHoraF;
+    private javax.swing.JTextField txtHoraI;
+    public javax.swing.JTextField txtIdAsignatura;
+    public javax.swing.JTextField txtIdCarrera;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -1,12 +1,14 @@
 package ModuloEstudianteDocente.controlador;
 
 import DataBase.DataAccessObject;
+import model.Cuenta;
 import model.Docente;
 import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.sql.*;
 
 import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
 
@@ -107,23 +109,72 @@ public class DocenteController extends DataAccessObject<Docente> {
         return i + 1;
     }
 
-    public static void main(String[] args) {
-        DocenteController dc = new DocenteController();
-        Docente d = new Docente();
 
-        d.setId(1);
-        d.setNombre("Juan");
-        d.setApellido("Perez");
-        d.setDni("1150696977");
-        d.setCorreo_personal("sdasdasd");
-        d.setTelefono("123456789");
-        d.setActivo(true);
-        d.setFoto("user.png");
-        d.setGrado_academico("Ingeniero");
-        d.setActivo(true);
-        d.setFoto("user.png");
-        dc.setDocente(d);
-
+    public ListaEnlazada<Docente> buscarPorNombre(String dniONombre) {
+        ListaEnlazada<Docente> docentess = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.NOMBRE = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Docente Docente = new Docente();
+                        Docente.setId(resultSet.getInt("ID"));
+                        Docente.setCodigo_empleado(resultSet.getString("CODIGO_EMPLEADO"));
+                        Docente.setGrado_academico(resultSet.getString("GRADO_ACADEMICO"));
+                        Docente.setExperiencia(resultSet.getInt("EXPERIENCIA"));
+                        docentess.add(Docente);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentess;
     }
 
+    public ListaEnlazada<Docente> buscarPorApellido(String dniONombre) {
+        ListaEnlazada<Docente> docentess = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.APELLIDO = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Docente docentee = new Docente();
+                        docentee.setId(resultSet.getInt("ID"));
+                        docentee.setCodigo_empleado(resultSet.getString("CODIGO_EMPLEADO"));
+                        docentee.setGrado_academico(resultSet.getString("GRADO_ACADEMICO"));
+                        docentee.setExperiencia(resultSet.getInt("EXPERIENCIA"));
+                        docentess.add(docentee);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentess;
+    }
+
+    public Docente buscarPorDni(String dniONombre) {
+        Docente docentee = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.DNI = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        docentee = new Docente();
+                        docentee.setId(resultSet.getInt("ID"));
+                        docentee.setCodigo_empleado(resultSet.getString("CODIGO_EMPLEADO"));
+                        docentee.setGrado_academico(resultSet.getString("GRADO_ACADEMICO"));
+                        docentee.setExperiencia(resultSet.getInt("EXPERIENCIA"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentee;
+    }
 }

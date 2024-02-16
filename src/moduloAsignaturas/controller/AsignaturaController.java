@@ -1,22 +1,32 @@
 package moduloAsignaturas.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
+import model.Matricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.Nodo;
 import tda_listas.exceptions.VacioExceptions;
+
+import java.sql.*;
 import java.util.Comparator;
 import java.util.Iterator;
+
 import model.Asignatura;
 
 public class AsignaturaController extends DataAccessObject<Asignatura> {
 
     private Asignatura asignatura = new Asignatura();
-    private ListaEnlazada<Asignatura> lista;
-    private static Integer lastUsedId = 0;
+    private ListaEnlazada<Asignatura> asignaturas;
 
     public AsignaturaController() {
         super(Asignatura.class);
-        lastUsedId = generarID();
+        asignaturas = new ListaEnlazada<>();
+    }
+
+    public ListaEnlazada<Asignatura> getAsignaturas() {
+        if (asignaturas.isEmpty()) {
+            asignaturas = this.list_All();
+        }
+        return asignaturas;
     }
 
     public Asignatura getAsignatura() {
@@ -26,80 +36,30 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return asignatura;
     }
 
+    public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
+    }
+
     public void setAsignatura(Asignatura asignatura) {
         this.asignatura = asignatura;
     }
 
-    public boolean validar() {
-        // Verificar que la Asignatura no es null
-        if (asignatura == null) {
+    public Integer save() throws Exception {
+        return super.save(this.asignatura);
+    }
+
+    public Boolean update() {
+        try {
+            update(this.asignatura);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-
-        // Verificar que los campos de la Asignatura no son null o vacíos
-        return asignatura.isValid();
-    }
-
-    public Boolean saved() {
-        if (validar()) {
-            try {
-                // Obtener los datos del formulario
-                String nombre = asignatura.getNombre();
-                Integer codigo = asignatura.getCodigo();
-                Integer horasTotales = asignatura.getHorasTotales();
-
-                // Incrementar el lastUsedId antes de asignarlo al nuevo ID
-                Integer id = ++lastUsedId;
-
-                // Crear una nueva instancia de Asignatura con los valores correctos
-                Asignatura asignaturaGuardar = new Asignatura();
-                asignaturaGuardar.setId(id);
-                asignaturaGuardar.setNombre(nombre);
-                asignaturaGuardar.setCodigo(codigo);
-                asignaturaGuardar.setHorasTotales(horasTotales);
-
-                // Guardar la Asignatura
-                boolean isSaved = save(asignaturaGuardar);
-                if (isSaved) {
-                    lista = getLista(); // Actualizar la lista después de guardar
-                }
-
-                return isSaved;
-            } catch (Exception e) {
-                // Manejar la excepción aquí
-                System.out.println("Error al guardar la Asignatura: " + e.getMessage());
-                return false;
-            }
-        } else {
-            System.out.println("Error: los datos de la Asignatura no son válidos");
-            return false;
-        }
-    }
-
-    public String generatedCode() throws VacioExceptions {
-        return String.format("%04d", getLastUsedIdFromDatabase());
-    }
-
-    public ListaEnlazada<Asignatura> getLista() {
-        lista = list_All(); // Actualizar la lista desde la base de datos
-        return lista;
-    }
-
-    public Boolean update(Integer i) {
-        return update(asignatura, i);
-    }
-
-    public void setLista(ListaEnlazada<Asignatura> lista) {
-        this.lista = lista;
-    }
-
-    private Integer getLastUsedIdFromDatabase() throws VacioExceptions {
-        // Obtener el último ID generado por el DataAccessObject
-        return generarID();
     }
 
     public int busquedaLineal(Asignatura elemento, Comparator<Asignatura> comparador) {
-        Nodo<Asignatura> current = lista.getHead();
+        Nodo<Asignatura> current = asignaturas.getHead();
         int index = 0;
 
         while (current != null) {
@@ -114,83 +74,161 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return -1;
     }
 
-    public int buscar(String criterioBusqueda, Comparator<Asignatura> comparador, String criterio) {
-        Nodo<Asignatura> current = (Nodo<Asignatura>) lista.getHead();
+    public ListaEnlazada<Asignatura> quicksort(ListaEnlazada<Asignatura> lista, Integer type, String field) throws VacioExceptions {
 
-        int index = 0;
-
-        while (current != null) {
-            Asignatura asignatura = current.getData();
-
-            if ("nombre".equalsIgnoreCase(criterio) && asignatura.getNombre().equals(criterioBusqueda)) {
-                return index;
-            } else if ("codigo".equalsIgnoreCase(criterio) && asignatura.getCodigo().equals(criterioBusqueda)) {
-                return index;
-            }
-
-            current = current.getNext();
-            index++;
-        }
-
-        System.out.println("No se encontró ninguna asignatura con el criterio proporcionado.");
-        return -1;
+        Asignatura[] m = lista.toArray();
+        quicksort(m, 0, m.length - 1, type, field);
+        lista.toList(m);
+        return lista;
     }
 
-    public Integer getIndex() {
-        Iterator<Asignatura> iterator = lista.iterator();
-        int index = 0;
-
-        while (iterator.hasNext()) {
-            if (iterator.next() == asignatura) {
-                return index;
-            }
-            index++;
-        }
-
-        return -1;
-    }
-
-    public void quicksort(ListaEnlazada<Asignatura> lista, Comparator<Asignatura> comparador, boolean ascendente) throws VacioExceptions {
-        quicksortRecursivo(lista, 0, lista.getSize() - 1, comparador, ascendente);
-    }
-
-    private void quicksortRecursivo(ListaEnlazada<Asignatura> lista, int low, int high, Comparator<Asignatura> comparador, boolean ascendente) throws VacioExceptions {
+    private void quicksort(Asignatura[] m, int low, int high, Integer type, String field) {
         if (low < high) {
-            int pivotIndex = particion(lista, low, high, comparador, ascendente);
-
-            // Recursivamente ordenar los elementos antes y después del pivote
-            quicksortRecursivo(lista, low, pivotIndex - 1, comparador, ascendente);
-            quicksortRecursivo(lista, pivotIndex + 1, high, comparador, ascendente);
+            int pivotIndex = partition(m, low, high, type, field);
+            quicksort(m, low, pivotIndex - 1, type, field);
+            quicksort(m, pivotIndex + 1, high, type, field);
         }
     }
 
-    private int particion(ListaEnlazada<Asignatura> lista, int low, int high, Comparator<Asignatura> comparador, boolean ascendente) throws VacioExceptions {
-        Asignatura pivot = lista.get(high);
+    private int partition(Asignatura[] array, int low, int high, Integer type, String field) {
+        Asignatura pivote = array[high];
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (compareAsignaturas(lista.get(j), pivot, comparador, ascendente) <= 0) {
+            if (array[j].comparar(pivote, field, type)) {
                 i++;
-                swap(lista, i, j);
+                swap(array, i, j);
             }
         }
 
-        swap(lista, i + 1, high);
+        swap(array, i + 1, high);
         return i + 1;
     }
 
-    private void swap(ListaEnlazada<Asignatura> lista, int i, int j) throws VacioExceptions {
-        Asignatura temp = lista.get(i);
-        lista.update(i, lista.get(j));
-        lista.update(j, temp);
+    private void swap(Asignatura[] array, int i, int j) {
+        Asignatura temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 
-    private int compareAsignaturas(Asignatura a1, Asignatura a2, Comparator<Asignatura> comparador, boolean ascendente) {
-        int resultado = comparador.compare(a1, a2);
-        return ascendente ? resultado : -resultado;
+    private int busquedaBinaria1(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
+        int infe = 0;
+        int sup = lista.getSize() - 1;
+
+        while (infe <= sup) {
+            int indice = (infe + sup) / 2;
+            Asignatura mid = lista.get(indice);
+            int resultado = mid.comparar(mid, text, campo);
+            if (resultado == 0) {
+                int izquierda = indice - 1;
+                while (izquierda >= 0 && getForm(lista.get(izquierda), text, campo)) {
+                    indice = izquierda;
+                    izquierda--;
+                }
+                return indice;
+            } else if (resultado < 0) {
+                sup = indice - 1;
+            } else {
+                infe = indice + 1;
+            }
+        }
+
+        return -1;
     }
 
-    public boolean delete(Asignatura asignaturaAEliminar) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private boolean getForm(Asignatura asignatura, String text, String campo) {
+        return switch (campo.toLowerCase()) {
+            case "id" ->
+                Integer.toString(asignatura.getId()).equalsIgnoreCase(text);
+            case "nombre" ->
+                asignatura.getNombre().toLowerCase().contains(text);
+            case "codigo_materia" ->
+                asignatura.getCodigo_materia().toLowerCase().contains(text);
+            default ->
+                throw new IllegalArgumentException("Campo de comparación no válido");
+        };
+    }
+
+    private ListaEnlazada<Asignatura> ordenarLista(ListaEnlazada<Asignatura> lista, String campo) throws VacioExceptions {
+        ListaEnlazada<Asignatura> listaOrdenada = quicksort(lista, 0, campo);
+        return listaOrdenada;
+    }
+
+    public Asignatura busquedaBinaria2(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
+        ListaEnlazada<Asignatura> listaOrdenada = ordenarLista(lista, campo);
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+
+        if (index != -1) {
+            return listaOrdenada.get(index);
+        } else {
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
+    }
+
+    public ListaEnlazada<Asignatura> busquedaBinaria(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
+        ListaEnlazada<Asignatura> listaOrdenada = ordenarLista(lista, campo);
+
+        ListaEnlazada<Asignatura> marc = new ListaEnlazada<>();
+        int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
+        if (index != -1) {
+            while (index < listaOrdenada.getSize() && getForm(listaOrdenada.get(index), text, campo)) {
+                marc.add(listaOrdenada.get(index));
+                index++;
+            }
+
+        } else {
+            System.out.println("Elemento no encontrado");
+        }
+
+        return marc;
+    }
+
+    public ListaEnlazada<Asignatura> buscarAsignaturasPorMatricula(Integer id) {
+        ListaEnlazada<Asignatura> asignaturass = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT A.ID, A.NOMBRE, A.CODIGO_MATERIA, A.HORAS_TOTALES, A.MALLA_ID FROM MATRICULA M JOIN CARRERA C ON M.CARRERA_ID = C.ID JOIN MALLA MA ON C.ID = MA.CARRERA_ID JOIN ASIGNATURA A ON MA.ID = A.MALLA_ID WHERE M.ID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);  // Aquí está la corrección
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Asignatura asignatura1 = new Asignatura();
+                        asignatura1.setId(resultSet.getInt("ID"));
+                        asignatura1.setNombre(resultSet.getString("NOMBRE"));
+                        asignatura1.setCodigo_materia(resultSet.getString("CODIGO_MATERIA"));
+                        asignatura1.setHoras_Totales(resultSet.getInt("HORAS_TOTALES"));
+                        asignatura1.setMalla_id(resultSet.getInt("MALLA_ID"));
+                        asignaturass.add(asignatura1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return asignaturass;
+    }
+
+    public ListaEnlazada<Asignatura> buscarAsignaturasPorCarrera(Integer id) {
+        ListaEnlazada<Asignatura> asignaturass = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT A.ID, A.NOMBRE, A.CODIGO_MATERIA, A.HORAS_TOTALES, A.MALLA_ID FROM CARRERA C JOIN MALLA MA ON C.ID = MA.CARRERA_ID JOIN ASIGNATURA A ON MA.ID = A.MALLA_ID WHERE C.ID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);  // Aquí está la corrección
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Asignatura asignatura1 = new Asignatura();
+                        asignatura1.setId(resultSet.getInt("ID"));
+                        asignatura1.setNombre(resultSet.getString("NOMBRE"));
+                        asignatura1.setCodigo_materia(resultSet.getString("CODIGO_MATERIA"));
+                        asignatura1.setHoras_Totales(resultSet.getInt("HORAS_TOTALES"));
+                        asignatura1.setMalla_id(resultSet.getInt("MALLA_ID"));
+                        asignaturass.add(asignatura1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return asignaturass;
     }
 }

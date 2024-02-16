@@ -1,19 +1,25 @@
 package moduloAsignaturas.view;
 
-import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatArcDarkIJTheme;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import ModuloMatricula.tablas.ModeloTablaCursas;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import moduloAsignaturas.controller.AsignaturaController;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
+
 import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import model.Asignatura;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
+
+import static moduloAsignaturas.view.util_vista.Utiles.cargarMalla;
+import static moduloAsignaturas.view.util_vista.Utiles.getComboMalla;
 
 public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
@@ -25,33 +31,36 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
      */
     public FrmAgregarAsignatura() {
         initComponents();
-
-        // Centrar la ventana
         setLocationRelativeTo(null);
-
-        // Deshabilitar la modificación del tamaño
         setResizable(false);
+        setupListeners();
 
-        // Establecer el nombre de la ventana
-        setTitle("Agregar Asignaturas");
 
-        // Inicializar el controlador y el modelo de la tabla
         ac = new AsignaturaController();
         mta = new ModeloTablaAsignaturas();
-        mta.setAsignaturaController(ac);
 
-        // Cargar contenido en la tabla al iniciar
-        cargarTabla();
+        limpiar();
     }
 
     public void cargarTabla() {
-        System.out.println("Cargando la tabla...");
-        mta.getAsignaturaController().setLista(mta.getAsignaturaController().list_All());
+        mta.setAsignaturas(ac.list_All());
         tablaAsignaturas.setModel(mta);
         mta.fireTableDataChanged();
         tablaAsignaturas.updateUI();
         tablaAsignaturas.repaint();  // Agrega esta línea
-        System.out.println("Tabla cargada exitosamente.");
+
+        TableRowSorter<ModeloTablaAsignaturas> trs = new TableRowSorter<>(mta);
+        tablaAsignaturas.setRowSorter(trs);
+        tablaAsignaturas.getTableHeader().setReorderingAllowed(false);
+        tablaAsignaturas.getTableHeader().setResizingAllowed(false);
+        tablaAsignaturas.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tablaAsignaturas.setRowHeight(30); // Ajusta este valor según tus necesidades
+
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tablaAsignaturas.getColumnCount(); i++) {
+            tablaAsignaturas.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
     }
 
     public Boolean validar() {
@@ -63,32 +72,15 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     public void guardar() {
         if (validar()) {
             try {
-                // Obtener los datos del formulario
-                String nombre = txtNombreAsignatura.getText();
-                String codigoStr = txtCodigoAsigntura.getText();
-                String horasTotalesStr = txtHorasTotales.getText();
-
-                // Convertir a los tipos de datos apropiados
-                Integer horasTotales = Integer.parseInt(horasTotalesStr);
-                Integer codigo = Integer.parseInt(codigoStr);
-
-                // Generar nuevo id
-                Integer nuevoId = Integer.parseInt(ac.generatedCode());
-
                 // Configurar los datos en el controlador
-                ac.getAsignatura().setId(nuevoId);
-                ac.getAsignatura().setNombre(nombre);  
-                ac.getAsignatura().setCodigo(codigo);  
-                ac.getAsignatura().setHorasTotales(horasTotales);
+                ac.getAsignatura().setNombre(txtNombreAsignatura.getText());
+                ac.getAsignatura().setCodigo_materia(txtCodigoAsigntura.getText());
+                ac.getAsignatura().setHoras_Totales(Integer.valueOf(txtHorasTotales.getText()));
+                ac.getAsignatura().setMalla_id(getComboMalla(cbxMalla).getId());
+                ac.getAsignatura().setSilabo(true);
 
-                // Agregamos mensajes de depuración
-                System.out.println("Datos de la Asignatura antes de guardar:");
-                System.out.println("ID: " + ac.getAsignatura().getId());
-                System.out.println("Nombre: " + ac.getAsignatura().getNombre());
-                System.out.println("Código: " + ac.getAsignatura().getCodigo());
-                System.out.println("Horas Totales: " + ac.getAsignatura().getHorasTotales());
-
-                if (ac.saved()) {
+                if (ac.save() > 0) {
+                    limpiar();
                     cargarTabla();
                     JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -103,63 +95,65 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         }
     }
 
-    private void eliminar() {
-        // Obtener el índice de la fila seleccionada
-        int filaSeleccionada = tablaAsignaturas.getSelectedRow();
-
-        // Verificar si se ha seleccionado alguna fila
-        if (filaSeleccionada >= 0) {
-            // Confirmar si realmente desea eliminar la fila
-            int confirmacion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Está seguro de que desea eliminar la asignatura seleccionada?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                try {
-                    // Obtener el objeto Asignatura correspondiente a la fila seleccionada
-                    Asignatura asignaturaAEliminar = ac.getLista().get(filaSeleccionada);
-
-                    // Eliminar el objeto Asignatura utilizando el método delete del controlador
-                    if (ac.delete(asignaturaAEliminar)) {
-                        // Actualizar la tabla
-                        cargarTabla();
-
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Se eliminó correctamente",
-                                "OK",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Error al eliminar la asignatura",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (VacioExceptions e) {
-                    // Manejar la excepción aquí
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Error al eliminar la asignatura: " + e.getMessage(),
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Seleccione una fila para eliminar",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    private void eliminar() {
+//        // Obtener el índice de la fila seleccionada
+//        int filaSeleccionada = tablaAsignaturas.getSelectedRow();
+//
+//        // Verificar si se ha seleccionado alguna fila
+//        if (filaSeleccionada >= 0) {
+//            // Confirmar si realmente desea eliminar la fila
+//            int confirmacion = JOptionPane.showConfirmDialog(
+//                    this,
+//                    "¿Está seguro de que desea eliminar la asignatura seleccionada?",
+//                    "Confirmar eliminación",
+//                    JOptionPane.YES_NO_OPTION);
+//
+//            if (confirmacion == JOptionPane.YES_OPTION) {
+//                try {
+//                    // Obtener el objeto Asignatura correspondiente a la fila seleccionada
+//                    Asignatura asignaturaAEliminar = ac.getAsignaturas().get(filaSeleccionada);
+//
+//                    // Eliminar el objeto Asignatura utilizando el método delete del controlador
+//                    if (ac.delete(asignaturaAEliminar)) {
+//                        // Actualizar la tabla
+//                        cargarTabla();
+//
+//                        JOptionPane.showMessageDialog(
+//                                null,
+//                                "Se eliminó correctamente",
+//                                "OK",
+//                                JOptionPane.INFORMATION_MESSAGE);
+//                    } else {
+//                        JOptionPane.showMessageDialog(
+//                                null,
+//                                "Error al eliminar la asignatura",
+//                                "Error",
+//                                JOptionPane.ERROR_MESSAGE);
+//                    }
+//                } catch (VacioExceptions e) {
+//                    // Manejar la excepción aquí
+//                    JOptionPane.showMessageDialog(
+//                            null,
+//                            "Error al eliminar la asignatura: " + e.getMessage(),
+//                            "Error",
+//                            JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(
+//                    null,
+//                    "Seleccione una fila para eliminar",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     public void limpiar() {
         txtNombreAsignatura.setText("");
         txtCodigoAsigntura.setText("");
         txtHorasTotales.setText("");
+        cargarTabla();
+        cargarMalla(cbxMalla);
     }
 
     public void modificar() {
@@ -176,18 +170,20 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
                 // Convertir a los tipos de datos apropiados
                 Integer horasTotales = Integer.parseInt(horasTotalesStr);
-                Integer codigo = Integer.parseInt(codigoStr);
-                
+
                 // Configurar los datos en el controlador
                 ac.getAsignatura().setNombre(nombre);
-                ac.getAsignatura().setCodigo(codigo);
-                ac.getAsignatura().setHorasTotales(horasTotales);
+                ac.getAsignatura().setCodigo_materia(codigoStr);
+                ac.getAsignatura().setHoras_Totales(horasTotales);
 
                 // Actualizar la información en la lista y en la tabla
-                ac.update(filaSeleccionada);
-                cargarTabla();
-
-                JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                if (ac.update()) {
+                    limpiar();
+                    cargarTabla();
+                    JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -216,48 +212,60 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     }
 
     private void buscar() throws VacioExceptions {
-        // Obtener el criterio ingresado en el campo de búsqueda
-        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
-
-        // Obtener el criterio de búsqueda seleccionado en el combobox
-        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
-
-        // Verificar si se ingresó un criterio válido
-        if (!criterio.isEmpty()) {
-            // Seleccionar el comparador adecuado según el criterio de búsqueda
-            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
-                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
-                    : Comparator.comparing(Asignatura::getCodigo);  // Comparar directamente sin convertir a minúsculas
-
-            // Realizar la búsqueda en el modelo de la tabla
-            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
-
-            // Verificar si se encontró la asignatura
-            if (indice >= 0) {
-                // Seleccionar la fila encontrada
-                tablaAsignaturas.setRowSelectionInterval(indice, indice);
-                // Cargar los datos seleccionados en los campos de texto
-                cargarDatosSeleccionados();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        // Obtener el criterio ingresado en el campo de búsqueda
+//        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
+//
+//        // Obtener el criterio de búsqueda seleccionado en el combobox
+//        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
+//
+//        // Verificar si se ingresó un criterio válido
+//        if (!criterio.isEmpty()) {
+//            // Seleccionar el comparador adecuado según el criterio de búsqueda
+//            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
+//                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
+//                    : Comparator.comparing(Asignatura::getCodigo_materia);  // Comparar directamente sin convertir a minúsculas
+//
+//            // Realizar la búsqueda en el modelo de la tabla
+//            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
+//
+//            // Verificar si se encontró la asignatura
+//            if (indice >= 0) {
+//                // Seleccionar la fila encontrada
+//                tablaAsignaturas.setRowSelectionInterval(indice, indice);
+//                // Cargar los datos seleccionados en los campos de texto
+//                cargarDatosSeleccionados();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     private void ordenar() throws VacioExceptions {
-        // Obtener el campo de orden del ComboBox
-        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
-        // Obtener el tipo de orden del ComboBox
-        String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
+//        // Obtener el campo de orden del ComboBox
+//        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+//        // Obtener el tipo de orden del ComboBox
+//        String tipoOrden = ComboBoxOrdenar.getSelectedItem().toString().toLowerCase();
+//
+//        if (!campoOrden.isEmpty() && mta.esCampoValido(campoOrden)) {
+//            // Llama al método ordenar con el campo de orden y tipo de orden
+//            mta.ordenar(campoOrden, tipoOrden);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+    }
 
-        if (!campoOrden.isEmpty() && mta.esCampoValido(campoOrden)) {
-            // Llama al método ordenar con el campo de orden y tipo de orden
-            mta.ordenar(campoOrden, tipoOrden);
-        } else {
-            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    private void setupListeners() {
+        txtCodigoAsigntura.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtCodigoAsigntura.getText().length() >= 5) {
+                    e.consume();
+                }
+            }
+        });
     }
 
     /**
@@ -290,20 +298,23 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         txtNombreAsignatura = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cbxMalla = new javax.swing.JComboBox<>();
         header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(21, 21, 21));
+        jPanel1.setBackground(new java.awt.Color(225, 233, 243));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setForeground(new java.awt.Color(0, 0, 0));
 
+        tablaAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tablaAsignaturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -340,7 +351,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(ComboBoxOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 130, -1));
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 240, 175, -1));
 
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
@@ -388,41 +399,51 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Codigo de la Asignatura:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Malla Academica:");
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Horas totales:");
         roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
 
         txtCodigoAsigntura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCodigoAsigntura.setForeground(new java.awt.Color(255, 255, 255));
+        txtCodigoAsigntura.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtCodigoAsigntura, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 100, 250, -1));
 
         txtHorasTotales.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtHorasTotales.setForeground(new java.awt.Color(255, 255, 255));
+        txtHorasTotales.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtHorasTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 250, -1));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Agregar Asignaturas");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 510, 10));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre de la Asignatura:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
 
         txtNombreAsignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNombreAsignatura.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombreAsignatura.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtNombreAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 250, -1));
 
-        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 1040, 630));
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Codigo de la Asignatura:");
+        roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
+
+        cbxMalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roundPanel1.add(cbxMalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 250, -1));
+
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
+
+        header2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
@@ -435,7 +456,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminar();
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -467,7 +488,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }
@@ -486,12 +507,14 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> cbxMalla;
     private javax.swing.JComboBox<String> comboBoxCriterio;
     private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

@@ -9,9 +9,13 @@ import javax.swing.table.AbstractTableModel;
 import model.Cuenta;
 import modulo_1.inicio_sesion.controller.CuentaController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ModeloTablaCuenta extends AbstractTableModel {
 
     private ListaEnlazada<Cuenta> cuentas;
+    private Map<Integer, Persona> personas;
 
     @Override
     public int getRowCount() {
@@ -29,20 +33,29 @@ public class ModeloTablaCuenta extends AbstractTableModel {
 
     public void setCuentas(ListaEnlazada<Cuenta> cuentas) {
         this.cuentas = cuentas;
+        CuentaController cc = new CuentaController();
+        this.personas = new HashMap<>();
+        for (Cuenta cuenta : cuentas) {
+            try {
+                Persona p = cc.getPersona(cuenta.getPersona_id());
+                this.personas.put(cuenta.getPersona_id(), p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Cuenta cuenta = null;
-        CuentaController cc = new CuentaController();
         try {
             cuenta = cuentas.get(rowIndex);
-            Persona p = cc.getPersona(cuenta.getPersona_id());
+            Persona p = this.personas.get(cuenta.getPersona_id());
             return switch (columnIndex) {
-                case 0 -> cuenta.getId();
-                case 1 -> cuenta.getCorreo_institucional();
-                case 2 -> p.getNombre() + " " + p.getApellido();
-                case 3 -> (p.getActivo()) ? "Activo" : "Inactivo";
+                case 0 -> cuenta.getCorreo_institucional();
+                case 1 -> p.getNombre() + " " + p.getApellido();
+                case 2 -> (p.getActivo()) ? "Activo" : "Inactivo";
+                case 3 -> p.getDni();
                 case 4 -> {
                     yield switch (p.getRol_id()) {
                         case 1 -> "Administrador";
@@ -60,11 +73,12 @@ public class ModeloTablaCuenta extends AbstractTableModel {
 
     public String getColumnName(int column) {
         return switch (column) {
-            case 0 -> "Nro";
-            case 1 -> "Correo Electronico";
-            case 2 -> "Usuario";
-            case 3 -> "Estado";
+            case 0 -> "Correo Electronico";
+            case 1 -> "Usuario";
+            case 2 -> "Estado";
+            case 3 -> "DNI";
             case 4 -> "Rol";
+
             default -> null;
         };
     }

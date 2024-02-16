@@ -1,17 +1,15 @@
 package model;
 
-import model.catalogo.TipoFalta;
-
 public class Asistencia {
     private Integer id;
     private String observacion;
-    private TipoFalta falta;
-    private Integer idTematica;
-    private Integer idHorario;
+    private String estado_asistencia;
+    private Integer tematica_id;
+    private Integer horario_id;
     
 
 
-    private Integer idCursa;
+    private Integer cursa_id;
 
     public Asistencia() {
     }
@@ -19,9 +17,9 @@ public class Asistencia {
     public Asistencia(Integer id, String observacion, Integer idTematica, Integer idHorario, Integer idCursa) {
         this.id = id;
         this.observacion = observacion;
-        this.idTematica = idTematica;
-        this.idHorario = idHorario;
-        this.idCursa = idCursa;
+        this.tematica_id = idTematica;
+        this.horario_id = idHorario;
+        this.cursa_id = idCursa;
     }
 
     public Integer getId() {
@@ -40,43 +38,36 @@ public class Asistencia {
         this.observacion = observacion;
     }
 
-    public Integer getIdTematica() {
-        return idTematica;
+    public String getEstado_asistencia() {
+        return estado_asistencia;
     }
 
-    public void setIdTematica(Integer idTematica) {
-        this.idTematica = idTematica;
+    public void setEstado_asistencia(String estado_asistencia) {
+        this.estado_asistencia = estado_asistencia;
     }
 
-    public Integer getIdHorario() {
-        return idHorario;
+    public Integer getTematica_id() {
+        return tematica_id;
     }
 
-    public void setIdHorario(Integer idHorario) {
-        this.idHorario = idHorario;
+    public void setTematica_id(Integer tematica_id) {
+        this.tematica_id = tematica_id;
     }
 
-    public Integer getIdCursa() {
-        return idCursa;
+    public Integer getHorario_id() {
+        return horario_id;
     }
 
-    public void setIdCursa(Integer idCursa) {
-        this.idCursa = idCursa;
+    public void setHorario_id(Integer horario_id) {
+        this.horario_id = horario_id;
     }
 
-    /**
-     * @return the falta
-     */
-    public TipoFalta getFalta() {
-        return falta;
+    public Integer getCursa_id() {
+        return cursa_id;
     }
 
-    /**
-     * @param falta the falta to set
-     */
-    public void setFalta(TipoFalta falta) {
-        this.falta = falta;
+    public void setCursa_id(Integer cursa_id) {
+        this.cursa_id = cursa_id;
     }
-    
 }
 

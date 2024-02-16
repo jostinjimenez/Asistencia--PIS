@@ -59,7 +59,7 @@ public class ModelTableAsistenciaEstudiante extends AbstractTableModel {
 
     private String obtenerNombreAsignatura(Horario horario) {
         try {
-            Asignatura asig = controlerAsignatura.busquedaBinaria2(getListaAsis(), horario.getIdAsignatura().toString(), "id", 0);
+            Asignatura asig = controlerAsignatura.busquedaBinaria2(getListaAsis(), horario.getAsignatura_id().toString(), "id", 0);
             return asig.getNombre();
         } catch (VacioExceptions ex) {
             System.out.println("Error al obtener asignatura: " + ex.getMessage());

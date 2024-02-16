@@ -12,13 +12,21 @@ import model.Cuenta;
 import model.Persona;
 
 public class NuevaClave extends javax.swing.JDialog {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> master
     public NuevaClave(java.awt.Frame parent, boolean modal, ModeloTablaCuenta mtp, JTable jTable1) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> master
         pc.setIndex(-1);
         cc.setIndex(-1);
 
@@ -26,6 +34,7 @@ public class NuevaClave extends javax.swing.JDialog {
         btnGuardar.addActionListener(e -> validarCuenta());
         btnCancelar.addActionListener(e -> this.dispose());
     }
+<<<<<<< HEAD
     
     public NuevaClave(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -33,6 +42,15 @@ public class NuevaClave extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
+=======
+
+    public NuevaClave(java.awt.Frame parent, boolean modal, int x, int y) {
+        super(parent, modal);
+        initComponents();
+        this.setLocation(x, y);
+        this.setResizable(false);
+
+>>>>>>> master
         btnGuardar.addActionListener(e -> validarCuenta());
         btnCancelar.addActionListener(e -> this.dispose());
     }
@@ -72,6 +90,7 @@ public class NuevaClave extends javax.swing.JDialog {
                 && !txtNuevaClave2.getText().trim().isEmpty()
                 && !txtClaveAn.getText().trim().isEmpty();
     }
+<<<<<<< HEAD
     
     
     
@@ -91,32 +110,70 @@ public class NuevaClave extends javax.swing.JDialog {
                     }    
                     }
                     
+=======
+
+    public void validarCuenta() {
+        if (validar()) {
+            try {
+                Persona persona = pc.busquedaBinaria2(pc.getPersonas(), txtDNI.getText(), "dni");
+                Cuenta cuenta = cc.validarCuenta(txtCorreoInst.getText(), persona);
+                if (cuenta == null) {
+                    JOptionPane.showMessageDialog(null, "La cuenta no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    if (verificarClaves() == true) {
+                        String claveCifrada = cc.cifrar(txtNuevaClave.getText(), 10);
+                        cc.getCuenta().setClave(claveCifrada);
+                        if (cc.update()) {
+                            JOptionPane.showMessageDialog(null, "Su clave ha sido actualizada", "Clave Actualizada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+
+>>>>>>> master
                 }
             } catch (Exception e) {
                 System.out.println("ERROR AL VALIDAR SU CUENTA " + e);
             }
         }
     }
+<<<<<<< HEAD
     
     private Boolean verificarClaves() {
         
+=======
+
+    private Boolean verificarClaves() {
+
+>>>>>>> master
         if (txtNuevaClave.getText().equalsIgnoreCase(txtNuevaClave2.getText())) {
             lblMessage.setText("Claves validadas");
             return true;
         } else {
             lblMessage.setText("Claves no son considentes");
             return false;
+<<<<<<< HEAD
             
         }
     }
     
+=======
+
+        }
+    }
+
+>>>>>>> master
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+<<<<<<< HEAD
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+=======
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+>>>>>>> master
         txtCorreoInst = new javax.swing.JTextField();
         txtDNI = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
@@ -131,11 +188,34 @@ public class NuevaClave extends javax.swing.JDialog {
         txtClaveAn = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+<<<<<<< HEAD
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setBackground(new java.awt.Color(255, 102, 102));
+=======
+        setMaximumSize(new java.awt.Dimension(740, 523));
+        setMinimumSize(new java.awt.Dimension(740, 523));
+        setPreferredSize(new java.awt.Dimension(740, 523));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMinimumSize(new java.awt.Dimension(948, 406));
+        jPanel1.setPreferredSize(new java.awt.Dimension(948, 406));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setMaximumSize(new java.awt.Dimension(740, 523));
+        jPanel2.setMinimumSize(new java.awt.Dimension(740, 523));
+        jPanel2.setPreferredSize(new java.awt.Dimension(740, 523));
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel1.setText("Modificar Contrasenia");
+
+        btnCancelar.setBackground(new java.awt.Color(51, 153, 255));
+>>>>>>> master
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +223,7 @@ public class NuevaClave extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
         jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 110, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -152,11 +233,16 @@ public class NuevaClave extends javax.swing.JDialog {
 
         txtCorreoInst.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreoInst.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+=======
+
+        txtCorreoInst.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+>>>>>>> master
         txtCorreoInst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCorreoInstActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
         jPanel1.add(txtCorreoInst, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 240, 30));
 
         txtDNI.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -164,6 +250,17 @@ public class NuevaClave extends javax.swing.JDialog {
         jPanel1.add(txtDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 240, 30));
 
         btnGuardar.setBackground(new java.awt.Color(102, 102, 255));
+=======
+
+        txtDNI.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDNIActionPerformed(evt);
+            }
+        });
+
+        btnGuardar.setBackground(new java.awt.Color(225, 233, 243));
+>>>>>>> master
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +268,7 @@ public class NuevaClave extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 110, 30));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -201,16 +299,125 @@ public class NuevaClave extends javax.swing.JDialog {
         jPanel1.add(txtNuevaClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, 240, 30));
         jPanel1.add(txtNuevaClave2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 240, 30));
         jPanel1.add(txtClaveAn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 240, 30));
+=======
+
+        jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel8.setText("Correo INST:");
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Nueva Clave:");
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setText("Nueva Clave:");
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setText("Cedula:");
+
+        jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setText("Clave Anterior:");
+
+        txtNuevaClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNuevaClaveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCorreoInst, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtClaveAn, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNuevaClave2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNuevaClave, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(109, 109, 109)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(jLabel1)))
+                .addContainerGap(185, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel5)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel6)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel2)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtCorreoInst, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(txtClaveAn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(txtNuevaClave2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(txtNuevaClave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(106, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 440));
+>>>>>>> master
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+=======
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 88, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+>>>>>>> master
         );
 
         pack();
@@ -219,6 +426,7 @@ public class NuevaClave extends javax.swing.JDialog {
     private void txtCorreoInstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoInstActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoInstActionPerformed
+<<<<<<< HEAD
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
         
@@ -226,6 +434,23 @@ public class NuevaClave extends javax.swing.JDialog {
     
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         
+=======
+
+    private void txtNuevaClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaClaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNuevaClaveActionPerformed
+
+    private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDNIActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+
+>>>>>>> master
     }
 
 //    public static void main(String args[]) {
@@ -277,6 +502,10 @@ public class NuevaClave extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+<<<<<<< HEAD
+=======
+    private javax.swing.JPanel jPanel2;
+>>>>>>> master
     private javax.swing.JLabel lblMessage;
     private javax.swing.JPasswordField txtClaveAn;
     private javax.swing.JTextField txtCorreoInst;

@@ -1,97 +1,91 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ModuloEstudianteDocente.vista.tablas;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
-import ModuloEstudianteDocente.controlador.DocenteController;
+import model.Cuenta;
 import model.Docente;
+import model.Estudiante;
+import model.Persona;
+import modulo_1.inicio_sesion.controller.CuentaController;
+import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
+import tda_listas.exceptions.VacioExceptions;
 
-import java.text.SimpleDateFormat;
 
-/**
- * @author LENOVO
- */
+import java.util.HashMap;
+import java.util.Map;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+
 public class ModeloTablaDocente extends AbstractTableModel {
-    private ListaEnlazada<Docente> docente = new ListaEnlazada<>();
+    private ListaEnlazada<Docente> docentes = new ListaEnlazada<>();
+    private Map<Integer, Persona> personas;
 
 
-    public ListaEnlazada<Docente> getDocente() {
-        return docente;
+
+    public ListaEnlazada<Docente> getDocentes() {
+        return docentes;
     }
 
-    public void setDocente(ListaEnlazada<Docente> docente) {
-        this.docente = docente;
-    }
-
-    public EventListenerList getListenerList() {
-        return listenerList;
-    }
-
-    public void setListenerList(EventListenerList listenerList) {
-        this.listenerList = listenerList;
+    public void setDocentes(ListaEnlazada<Docente> docentes) {
+        this.docentes = docentes;
+        this.personas = new HashMap<>();
+        for (Docente docente : docentes) {
+            try {
+                Persona p = getPersonaStatic(docente.getId());
+                this.personas.put(docente.getId(), p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
     @Override
     public int getRowCount() {
-        if (docente != null) {
-            return docente.getSize();
-        } else {
-            return 0;
-        }
+        return docentes.getSize();
     }
 
     @Override
     public int getColumnCount() {
-        return 9;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        Docente doc = null;
-        DocenteController ce = new DocenteController();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-
         try {
-            doc = docente.get(row);
-            ce.setDocente(doc);
-            String fechaFormateada = sdf.format(ce.getDocente().getFecha_nacimiento());
-
+            Docente doce = docentes.get(row);
+            Persona per = this.personas.get(doce.getId());
             return switch (col) {
-//                case 0 -> (doc != null) ? doc.getId(): " ";
-//                case 1 -> (doc != null) ? doc.getNombre() : " ";
-//                case 2 -> (doc != null) ? fechaFormateada: " ";
-//                case 3 -> (doc != null) ? doc.getCorreo_personal() : " ";
-//                case 4 -> (doc != null) ? doc.getDni() : " ";
-//                case 5 -> (doc != null) ? doc.getTelefono() : " ";
-                case 0 -> (doc != null) ? doc.getCodigo_empleado() : " ";
-                case 1 -> (doc != null) ? doc.getAnios_experiencia() : " ";
-                case 2 -> (doc != null) ? doc.getGrado_academico() : " ";
+                case 0 -> doce.getCodigo_empleado();
+                case 1 -> (per != null) ? per.getNombre(): " ";
+                case 2 -> (per != null) ? per.getApellido(): " ";
+                case 3 -> (per != null) ? per.getDni() : " ";
+                case 4 -> (per != null) ? per.getCorreo_personal() : " ";
+                case 5 -> doce.getExperiencia();
                 default -> null;
             };
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
     @Override
     public String getColumnName(int col) {
         return switch (col) {
-//            case 0 -> "ID";
-//            case 1 -> "Nombre";
-//            case 2 -> "Fecha Nacimiento";
-//            case 3 -> "Correo";
-//            case 4 -> "DNI";
-//            case 5 -> "Telefono";
-            case 0 -> "Codigo";
-            case 1 -> "Años Experiencia";
-            case 2 -> "Grado Academico";
+            case 0 -> "Codigo Empleado";
+            case 1 -> "Nombre";
+            case 2 -> "Apellido";
+            case 3 -> "DNI";
+            case 4 -> "Correo";
+            case 5 -> "Experiencia";
             default -> null;
         };
+    }
+
+    public Docente getDocente(int fila) throws VacioExceptions {
+        return docentes.get(fila);
     }
 }

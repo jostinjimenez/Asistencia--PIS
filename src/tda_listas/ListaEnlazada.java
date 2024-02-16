@@ -3,6 +3,8 @@ package tda_listas;
 
 import tda_listas.exceptions.VacioExceptions;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.util.Iterator;
 
 import static java.lang.reflect.Array.newInstance;
@@ -321,4 +323,13 @@ public class ListaEnlazada<E> implements Iterable<E> {
         return this;
     }
 
+    public TableModel toTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Data");
+        for (E data : this) {
+            model.addRow(new Object[]{data});
+        }
+
+        return model;
+    }
 }

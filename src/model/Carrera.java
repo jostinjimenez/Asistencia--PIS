@@ -66,8 +66,12 @@ public class Carrera {
         return nombre;
     }
 
+<<<<<<< HEAD
     public Boolean comparar(Carrera c, String field, Integer type) {
 
+=======
+    public Boolean compareTo(Carrera c, String field, Integer type) {
+>>>>>>> master
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("nombre")) {
@@ -76,8 +80,20 @@ public class Carrera {
                     return getArea_estudio().compareTo(c.getArea_estudio()) > 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     return id > (c.getId());
+<<<<<<< HEAD
                 }
 
+=======
+                } else if (field.equalsIgnoreCase("codigo")) {
+                    return getCodigo().compareTo(c.getCodigo()) > 0;
+                } else if (field.equalsIgnoreCase("modalidad")) {
+                    return getModalidad().compareTo(c.getModalidad()) > 0;
+                } else if (field.equalsIgnoreCase("titulo_otorgado")) {
+                    return getTitulo_otorgado().compareTo(c.getTitulo_otorgado()) > 0;
+                } else {
+                    return false;
+                }
+>>>>>>> master
             case 0:
                 if (field.equalsIgnoreCase("nombre")) {
                     return getNombre().compareTo(c.getNombre()) < 0;
@@ -85,6 +101,17 @@ public class Carrera {
                     return getArea_estudio().compareTo(c.getArea_estudio()) < 0;
                 } else if (field.equalsIgnoreCase("id")) {
                     return id < (c.getId());
+<<<<<<< HEAD
+=======
+                } else if (field.equalsIgnoreCase("codigo")) {
+                    return getCodigo().compareTo(c.getCodigo()) < 0;
+                } else if (field.equalsIgnoreCase("modalidad")) {
+                    return getModalidad().compareTo(c.getModalidad()) < 0;
+                } else if (field.equalsIgnoreCase("titulo_otorgado")) {
+                    return getTitulo_otorgado().compareTo(c.getTitulo_otorgado()) < 0;
+                } else {
+                    return false;
+>>>>>>> master
                 }
 
             default:

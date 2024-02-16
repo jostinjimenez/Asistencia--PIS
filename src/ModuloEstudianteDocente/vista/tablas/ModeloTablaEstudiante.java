@@ -1,48 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ModuloEstudianteDocente.vista.tablas;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
+import model.Persona;
 import tda_listas.ListaEnlazada;
 
-import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
 import model.Estudiante;
+import tda_listas.exceptions.VacioExceptions;
 
-import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * @author santiago
- */
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+
 public class ModeloTablaEstudiante extends AbstractTableModel {
 
-    private ListaEnlazada<Estudiante> estudiante = new ListaEnlazada<>();
+    private ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
+    private Map<Integer, Persona> personas;
 
-
-    public ListaEnlazada<Estudiante> getEstudiante() {
-        return estudiante;
+    public ListaEnlazada<Estudiante> getEstudiantes() {
+        return estudiantes;
     }
 
-    public void setEstudiante(ListaEnlazada<Estudiante> estudiante) {
-        this.estudiante = estudiante;
+    public void setEstudiantes(ListaEnlazada<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
+        this.personas = new HashMap<>();
+        for (Estudiante estudiante : estudiantes) {
+            try {
+                Persona p = getPersonaStatic(estudiante.getId());
+                this.personas.put(estudiante.getId(), p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-
-    public EventListenerList getListenerList() {
-        return listenerList;
-    }
-
-    public void setListenerList(EventListenerList listenerList) {
-        this.listenerList = listenerList;
-    }
-
 
     @Override
     public int getRowCount() {
-        if (estudiante != null) {
-            return estudiante.getSize();
+        if (estudiantes != null) {
+            return estudiantes.getSize();
         } else {
             return 0;
         }
@@ -50,26 +46,20 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        Estudiante est = null;
-        EstudianteController ce = new EstudianteController();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-
-        //TODO: Mostrar todos los datos del estudiante
         try {
-            est = estudiante.get(row);
-            ce.setEstudiante(est);
+            Estudiante est = estudiantes.get(row);
+            Persona per = this.personas.get(est.getId());
             return switch (col) {
-                case 0-> (est != null) ? est.getNacionalidad() : " ";
-                case 1 -> (est != null) ? est.getProvincia() : " ";
-                case 2 -> (est != null) ? est.getCanton() : " ";
-                case 3 -> (est != null) ? est.getEtnia() : " ";
-//                case 4 -> (est != null) ? est.getTelefono() : " ";
-//                case 5 -> (est != null) ? est.getEtnia() : " ";
+                case 0 -> (per != null) ? per.getNombre() + " " + per.getApellido() : " ";
+                case 1 -> (per != null) ? per.getDni() : " ";
+                case 2 -> est.getCanton();
+                case 3 -> est.getProvincia();
+                case 4 -> est.getNacionalidad();
                 default -> null;
             };
         } catch (Exception e) {
@@ -81,14 +71,21 @@ public class ModeloTablaEstudiante extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         return switch (col) {
-            case 0 -> "Nacionalidad";
-            case 1 -> "Provincia";
+            case 0 -> "Nombre";
+            case 1 -> "DNI";
             case 2 -> "Canton";
-            case 3 -> "Etnia";
-//            case 4 -> "Telefono";
-//            case 5 -> "Etnia";
+            case 3 -> "Provincia";
+            case 4 -> "Nacionalidad";
             default -> null;
         };
+    }
+
+    public Estudiante getEstudiante(int fila) throws VacioExceptions {
+        return estudiantes.get(fila);
+    }
+
+    public Persona getPersona(int fila) throws VacioExceptions {
+        return personas.get(estudiantes.get(fila).getId());
     }
 
 

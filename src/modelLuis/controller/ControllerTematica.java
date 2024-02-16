@@ -4,7 +4,12 @@
  */
 package modelLuis.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.Tematica;
 import tda_listas.ListaEnlazada;
 
@@ -33,20 +38,12 @@ public class ControllerTematica extends DataAccessObject<Tematica> {
         this.tematica = tematica;
     }
 
-    public Boolean saved() {
-        return save(tematica);
-    }
-
     public ListaEnlazada<Tematica> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
         }
         return lista;
 
-    }
-
-    public Boolean update1(Integer i) {
-        return update(tematica, i);
     }
 
     /**
@@ -69,10 +66,43 @@ public class ControllerTematica extends DataAccessObject<Tematica> {
     public void setIndex(Integer index) {
         this.index = index;
     }
-    
-     public int generatedId() {
-        return generarID();
+
+    // Metodos
+    public Boolean save() throws Exception {
+        return super.saveB(this.tematica);
     }
 
+    public Boolean update() {
+        try {
+            update(this.tematica);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Tematica buscarTematica(String texto) {
+        Tematica tematica = null;
+        System.out.println("Aqui esta el error");
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT NOMBRE, FECHA, ID "
+                    + "FROM TEMATICA "
+                    + "WHERE NOMBRE = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, texto);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        tematica = new Tematica();
+                        tematica.setId(resultSet.getInt("ID"));
+                        tematica.setNombre(resultSet.getString("NOMBRE"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage(), e);
+        }
+        return tematica;
+    }
 
 }

@@ -3,6 +3,7 @@ package modulo_1.inicio_sesion.view.forms;
 import javax.swing.*;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import model.Cuenta;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
@@ -48,6 +49,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         } else {
             Cuenta cuenta = cc.validarCuenta(usuario, claveCifrada);
             cc.setCuenta(cuenta);
+<<<<<<< HEAD
             if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
                 Utiles.setCc(cc);
                 Utiles.setCuentaUsu(cuenta);
@@ -68,9 +70,34 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                             fmd.setVisible(true);
                             this.dispose();
                         }
+=======
+//            if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
+            Utiles.setCc(cc);
+            Utiles.setCuentaUsu(cuenta);
+            if (cuenta != null) {
+                switch (cc.getPersona(cuenta.getPersona_id()).getRol_id()) {
+                    case 1 -> {
+                        Frm_Main_Admin fma = new Frm_Main_Admin(cc);
+                        fma.setVisible(true);
+                        this.dispose();
+                    }
+                    case 2 -> {
+                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
+                        fme.setVisible(true);
+                        this.dispose();
+                    }
+                    case 3 -> {
+                        Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
+                        fmd.setVisible(true);
+                        this.dispose();
+>>>>>>> master
                     }
                 }
             }
+//            } else {
+//                NuevaClave nu = new NuevaClave(this, true);
+//                nu.setVisible(true);
+//            }
         }
     }
 
@@ -95,10 +122,13 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(21, 21, 21));
+        jPanel1.setBackground(new java.awt.Color(225, 233, 243));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+<<<<<<< HEAD
         roundPanel2.setBackground(new java.awt.Color(51, 51, 51));
+=======
+>>>>>>> master
         roundPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 roundPanel2MouseClicked(evt);
@@ -107,18 +137,18 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jSeparator2.setBackground(new java.awt.Color(229, 229, 229));
-        jSeparator2.setForeground(new java.awt.Color(21, 21, 21));
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, 330, 30));
 
         jLabel3.setFont(new java.awt.Font("Dubai Light", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Iniciar Sesión");
-        roundPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 190, 30));
+        roundPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 190, 40));
 
-        txtClave.setBackground(new java.awt.Color(51, 51, 51));
+        txtClave.setBackground(new java.awt.Color(246, 246, 246));
         txtClave.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        txtClave.setForeground(new java.awt.Color(204, 204, 204));
+        txtClave.setForeground(new java.awt.Color(93, 93, 93));
         txtClave.setBorder(null);
         roundPanel2.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 330, 40));
 
@@ -127,10 +157,10 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         roundPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 40, 40));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/Imagen1.png"))); // NOI18N
-        roundPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 320, 110));
+        roundPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 320, 110));
 
         jSeparator4.setBackground(new java.awt.Color(229, 229, 229));
-        jSeparator4.setForeground(new java.awt.Color(21, 21, 21));
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 330, 30));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/icons8-usuario-32.png"))); // NOI18N
@@ -146,11 +176,15 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
         roundPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 560, 110, 30));
+=======
+        roundPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 580, 110, 30));
+>>>>>>> master
 
-        txtUsuario.setBackground(new java.awt.Color(51, 51, 51));
+        txtUsuario.setBackground(new java.awt.Color(246, 246, 246));
         txtUsuario.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        txtUsuario.setForeground(new java.awt.Color(93, 93, 93));
         txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         roundPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 330, 40));
 
@@ -161,7 +195,11 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
+<<<<<<< HEAD
         roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 570, -1, -1));
+=======
+        roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 590, -1, -1));
+>>>>>>> master
 
         jPanel1.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, -10, 500, 720));
 
@@ -178,8 +216,14 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+<<<<<<< HEAD
         NuevaClave nu = new NuevaClave(this, true);
         nu.setVisible(true);
+=======
+        NuevaClave nu = new NuevaClave(this, true, 560, 80);
+        nu.setVisible(true);
+
+>>>>>>> master
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void roundPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundPanel2MouseClicked
@@ -188,7 +232,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }

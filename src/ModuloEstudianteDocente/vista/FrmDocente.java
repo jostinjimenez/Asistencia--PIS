@@ -5,14 +5,29 @@
 package ModuloEstudianteDocente.vista;
 
 import ModuloEstudianteDocente.controlador.DocenteController;
+import ModuloEstudianteDocente.vista.modals.modal_Docente;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import java.awt.event.KeyEvent;
 
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import model.Cuenta;
+import model.Docente;
+import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
+import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
+import modulo_1.inicio_sesion.view.util.HeaderRenderer;
+import tda_listas.ListaEnlazada;
+
+import java.sql.*;
+import java.util.Objects;
+
+import static modulo_1.inicio_sesion.controller.util.Utilidades.ajustarColumnas;
 
 /**
  * @author LENOVO
@@ -42,23 +57,51 @@ public class FrmDocente extends javax.swing.JFrame {
         this.cc = cc;
     }
 
-    private void cargarTabla() {
-        modeloDocente.setDocente(dc.list_All());
-        tblDocente.setModel(modeloDocente);
-        tblDocente.updateUI();
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBuscar.getText();
+
+        try {
+            if (texto.isEmpty()) {
+                modeloDocente.setDocentes(dc.list_All());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    modeloDocente.setDocentes(dc.buscarPorNombre(texto));
+                } else if (criterio.equalsIgnoreCase("apellido")) {
+                    modeloDocente.setDocentes(dc.buscarPorApellido(texto));
+                } else if (criterio.equalsIgnoreCase("dni")) {
+                    Docente docente = dc.buscarPorDni(texto);
+                    if (docente != null) {
+                        ListaEnlazada<Docente> docentes = new ListaEnlazada<>();
+                        docentes.add(docente);
+                        modeloDocente.setDocentes(docentes);
+                    } else {
+                        modeloDocente.setDocentes(new ListaEnlazada<>());
+                    }
+                }
+            }
+            modeloDocente.fireTableDataChanged();
+            tblDocente.setModel(modeloDocente);
+            tblDocente.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private void limpiar() {
 
-        txtNombresDoc.setText(" ");
-        txtFechaNacim.setDate(null);
-        txtCorreoPersonal.setText(" ");
-        txtDNI.setText(" ");
-        txtTelefn.setText(" ");
-        txtCodigoEmp.setText(" ");
-        txtAniosExpe.setText(" ");
-        txtGradoAcademico.setText(" ");
+    public void cargarTabla() {
+        modeloDocente.setDocentes(dc.list_All());
+        tblDocente.setModel(modeloDocente);
+        tblDocente.updateUI();
+        ajustarColumnas(tblDocente);
 
+
+        tblDocente.getTableHeader().setReorderingAllowed(false);
+        tblDocente.getTableHeader().setResizingAllowed(false);
+        tblDocente.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tblDocente.setRowHeight(30);
+
+<<<<<<< HEAD
         dc.setDocente(null);
         cargarTabla();
         fila = -1;
@@ -122,45 +165,15 @@ public class FrmDocente extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tblDocente.getColumnCount(); i++) {
+            tblDocente.getColumnModel().getColumn(i).setCellRenderer(tcr);
+>>>>>>> master
         }
     }
 
-    private String generarCorreoInst() {
-        String nombre = txtNombresDoc.getText().contains(" ") ? txtNombresDoc.getText().substring(0, txtNombresDoc.getText().indexOf(" ")) : txtNombresDoc.getText();
-        String apellido = txtApellidos.getText().contains(" ") ? txtApellidos.getText().substring(0, txtApellidos.getText().indexOf(" ")) : txtApellidos.getText();
-        return nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
-    }
-
-    private void actualizar() {
-        int fila = tblDocente.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Seleccione una fila",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                this.fila = fila;
-
-                dc.setDocente(modeloDocente.getDocente().get(fila));
-                txtNombresDoc.setText(dc.getDocente().getNombre());
-                txtApellidos.setText(dc.getDocente().getApellido());
-                //txtFechaNacim.setText(docenteControlador.getDocente().getFecha_nacimiento());
-                txtCorreoPersonal.setText(dc.getDocente().getCorreo_personal());
-                txtDNI.setText(dc.getDocente().getDni());
-                txtTelefn.setText(dc.getDocente().getTelefono());
-                txtCodigoEmp.setText(dc.getDocente().getCodigo_empleado());
-                txtAniosExpe.setText(String.valueOf(dc.getDocente().getAnios_experiencia()));
-                txtGradoAcademico.setText(dc.getDocente().getGrado_academico());
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,
-                        "Error al cargar los datos",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,60 +186,41 @@ public class FrmDocente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         roundPanel1 = new plantilla.swing.RoundPanel();
-        roundPanel6 = new plantilla.swing.RoundPanel();
-        btnGuardar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocente = new javax.swing.JTable();
-        roundPanel5 = new plantilla.swing.RoundPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        Jlablsss = new javax.swing.JLabel();
-        jlabeljhgfgh = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        Jlabel111111 = new javax.swing.JLabel();
-        txtCorreoPersonal = new javax.swing.JTextField();
-        txtDNI = new javax.swing.JTextField();
-        txtTelefn = new javax.swing.JTextField();
-        txtAniosExpe = new javax.swing.JTextField();
-        txtGradoAcademico = new javax.swing.JTextField();
-        txtCodigoEmp = new javax.swing.JTextField();
-        txtNombresDoc = new javax.swing.JTextField();
-        txtFechaNacim = new com.toedter.calendar.JDateChooser();
-        jLabel7 = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtApellidos = new javax.swing.JTextField();
+        btnNuevo = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        cbxCriterio = new javax.swing.JComboBox<>();
+        txtBuscar = new javax.swing.JTextField();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(225, 233, 243));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel6.setBackground(new java.awt.Color(51, 51, 51));
-
-        btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+        tblDocente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        tblDocente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(tblDocente);
 
-        btnModificar.setBackground(new java.awt.Color(204, 204, 204));
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 980, 290));
 
         btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
         btnEliminar.setText("Eliminar");
@@ -235,168 +229,96 @@ public class FrmDocente extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
+        roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 560, 123, 38));
 
-        javax.swing.GroupLayout roundPanel6Layout = new javax.swing.GroupLayout(roundPanel6);
-        roundPanel6.setLayout(roundPanel6Layout);
-        roundPanel6Layout.setHorizontalGroup(
-                roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundPanel6Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                        .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                        .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(32, Short.MAX_VALUE))
-        );
-        roundPanel6Layout.setVerticalGroup(
-                roundPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(roundPanel6Layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(74, Short.MAX_VALUE))
-        );
-
-        roundPanel1.add(roundPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 60, 180, 260));
-
-        tblDocente.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-        ));
-        jScrollPane1.setViewportView(tblDocente);
-
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 980, 230));
-
-        roundPanel5.setBackground(new java.awt.Color(51, 51, 51));
-        roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Fecha de nacimiento:");
-        roundPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Correo:");
-        roundPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
-
-        Jlablsss.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Jlablsss.setForeground(new java.awt.Color(255, 255, 255));
-        Jlablsss.setText("Grado Academico: ");
-        roundPanel5.add(Jlablsss, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
-
-        jlabeljhgfgh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jlabeljhgfgh.setForeground(new java.awt.Color(255, 255, 255));
-        jlabeljhgfgh.setText("Años Experiencia:");
-        roundPanel5.add(jlabeljhgfgh, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cedula: ");
-        roundPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Telefono:");
-        roundPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
-
-        Jlabel111111.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Jlabel111111.setForeground(new java.awt.Color(255, 255, 255));
-        Jlabel111111.setText("Codigo Empleado:");
-        roundPanel5.add(Jlabel111111, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
-
-        txtCorreoPersonal.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtCorreoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 231, -1));
-
-        txtDNI.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 231, -1));
-
-        txtTelefn.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtTelefn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 231, -1));
-
-        txtAniosExpe.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtAniosExpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 231, -1));
-
-        txtGradoAcademico.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtGradoAcademico, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 230, -1));
-
-        txtCodigoEmp.setBackground(new java.awt.Color(204, 204, 204));
-        roundPanel5.add(txtCodigoEmp, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 231, -1));
-
-        txtNombresDoc.setBackground(new java.awt.Color(204, 204, 204));
-        txtNombresDoc.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setBackground(new java.awt.Color(204, 204, 204));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombresDocActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        roundPanel5.add(txtNombresDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 230, -1));
+        roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 560, 123, 43));
 
-        txtFechaNacim.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        txtFechaNacim.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        roundPanel5.add(txtFechaNacim, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 230, 30));
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel2.setText("Docentes");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        roundPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 480, 260));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Nombres: ");
-        roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Apellidos");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 70, -1));
-
-        txtApellidos.setBackground(new java.awt.Color(204, 204, 204));
-        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnNuevo.setText("Agregar Docente");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidosActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
-        roundPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 230, -1));
+        roundPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 180, 30));
 
-        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 1030, 630));
-        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
-        jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, -1));
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Buscar");
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 100, 60, 20));
+
+        cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", "DNI" }));
+        cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCriterioItemStateChanged(evt);
+            }
+        });
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 130, 160, -1));
+
+        txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 280, -1));
+
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
+        jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
+
+        header2.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombresDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresDocActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombresDocActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        guardar();
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        actualizar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        //eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidosActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        modal_Docente nu = new modal_Docente(this, true);
+        nu.setVisible(true);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void cbxCriterioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCriterioItemStateChanged
+
+    }//GEN-LAST:event_cbxCriterioItemStateChanged
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            buscar();
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if (txtBuscar.getText().isEmpty()) {
+            cargarTabla();
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
     /**
      * @param args the command line arguments
@@ -416,34 +338,18 @@ public class FrmDocente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Jlabel111111;
-    private javax.swing.JLabel Jlablsss;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cbxCriterio;
     private plantilla.components.Header header2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel jlabeljhgfgh;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
-    private plantilla.swing.RoundPanel roundPanel5;
-    private plantilla.swing.RoundPanel roundPanel6;
     private javax.swing.JTable tblDocente;
-    private javax.swing.JTextField txtAniosExpe;
-    private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtCodigoEmp;
-    private javax.swing.JTextField txtCorreoPersonal;
-    private javax.swing.JTextField txtDNI;
-    private com.toedter.calendar.JDateChooser txtFechaNacim;
-    private javax.swing.JTextField txtGradoAcademico;
-    private javax.swing.JTextField txtNombresDoc;
-    private javax.swing.JTextField txtTelefn;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

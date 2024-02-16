@@ -67,6 +67,7 @@ public class PersonaController extends DataAccessObject<Persona> {
         }
     }
 
+<<<<<<< HEAD
     public static void main(String[] args) {
         PersonaController pc = new PersonaController();
 
@@ -87,6 +88,8 @@ public class PersonaController extends DataAccessObject<Persona> {
 
     }
 
+=======
+>>>>>>> master
     // Ordenar por QuickSort
     public ListaEnlazada<Persona> ordenarQS(ListaEnlazada<Persona> lista, Integer type, String field) throws Exception {
         Persona[] personas = lista.toArray();
@@ -422,4 +425,36 @@ public class PersonaController extends DataAccessObject<Persona> {
 //        }
 //        return result;
 //    }
+<<<<<<< HEAD
+=======
+
+
+//    public static void main(String[] args) {
+//        PersonaController pc = new PersonaController();
+//        pc.getPersona().setNombre("admin");
+//        pc.getPersona().setApellido("admin");
+//        pc.getPersona().setDni("0000000000");
+//        pc.getPersona().setFecha_nacimiento(new Date());
+//        pc.getPersona().setRol_id(1);
+//        pc.getPersona().setTelefono("0000000000");
+//        pc.getPersona().setCorreo_personal("NA");
+//        pc.getPersona().setActivo(true);
+//        pc.getPersona().setFoto("user.png");
+//
+//        Integer id = null;
+//        try {
+//            id = pc.save();
+//            CuentaController cc = new CuentaController();
+//            cc.getCuenta().setCorreo_institucional("admin");
+//            cc.getCuenta().setClave("admin");
+//            cc.getCuenta().setPersona_id(id);
+//            if (cc.save() > 0) {
+//                System.out.println("Cuenta creada");
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
+>>>>>>> master
 }

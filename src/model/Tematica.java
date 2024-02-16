@@ -1,12 +1,12 @@
 package model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Tematica {
 
     private Integer id;
     private String nombre;
-    private String fecha;
+    private Date fecha;
 
     public Tematica() {
     }
@@ -32,26 +32,21 @@ public class Tematica {
         this.nombre = nombre;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
-    public String generarFecha() {
-        LocalDate fechaHoy = LocalDate.now();
-        fecha = fechaHoy.toString();
-        return fecha;
-    }
-
-    @Override
+    
+        @Override
     public String toString() {
         return "Tematica{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", fecha='" + fecha + '\'' +
+                ", fecha='" + getFecha() + '\'' +
                 '}';
     }
+
 }

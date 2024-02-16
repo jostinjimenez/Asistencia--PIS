@@ -1,43 +1,36 @@
 package model;
 
 import java.util.Objects;
-import tda_listas.ListaEnlazada;
 
 public class Asignatura {
 
     // Atributos
-    Integer id;
+    private Integer id;
     private String nombre;
-    private Integer horasTotales;
-    private Integer codigo;
+    private Integer horas_Totales;
+    private String codigo_materia;
+    private Boolean silabo;
 
-    private ListaEnlazada<Integer> id_cursas;
-
-    public Asignatura(Integer id, String nombre, Integer codigo, Integer horasTotales, ListaEnlazada<Integer> id_cursas) {
-        this.id = id;
-        this.nombre = nombre;
-        this.codigo = codigo;
-        this.horasTotales = horasTotales;
-        this.id_cursas = id_cursas;
-    }
-
-    public Asignatura(Integer nuevoId, String nombre, Integer codigo, Integer horasTotales) {
-        this.id = nuevoId;
-        this.nombre = nombre;
-        this.codigo = codigo;
-        this.horasTotales = horasTotales;
-    }
+    private Integer malla_id;
 
     // Constructor
     public Asignatura() {
     }
 
-    public ListaEnlazada<Integer> getId_cursas() {
-        return id_cursas;
+    public Boolean getSilabo() {
+        return silabo;
     }
 
-    public void setId_cursas(ListaEnlazada<Integer> id_cursas) {
-        this.id_cursas = id_cursas;
+    public void setSilabo(Boolean silabo) {
+        this.silabo = silabo;
+    }
+
+    public Integer getMalla_id() {
+        return malla_id;
+    }
+
+    public void setMalla_id(Integer malla_id) {
+        this.malla_id = malla_id;
     }
 
     public Integer getId() {
@@ -56,20 +49,20 @@ public class Asignatura {
         this.nombre = nombre;
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public String getCodigo_materia() {
+        return codigo_materia;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setCodigo_materia(String codigo_materia) {
+        this.codigo_materia = codigo_materia;
     }
 
-    public Integer getHorasTotales() {
-        return horasTotales;
+    public Integer getHoras_Totales() {
+        return horas_Totales;
     }
 
-    public void setHorasTotales(Integer horasTotales) {
-        this.horasTotales = horasTotales;
+    public void setHoras_Totales(Integer horas_Totales) {
+        this.horas_Totales = horas_Totales;
     }
 
     @Override
@@ -94,12 +87,6 @@ public class Asignatura {
         return Objects.hash(id);
     }
 
-    public boolean isValid() {
-        // Verificar que los campos necesarios no sean null o vacíos
-        return nombre != null && !nombre.isEmpty()
-                  && codigo != null && codigo > 0
-                  && horasTotales != null && horasTotales > 0;
-    }
 
     public Boolean comparar(Asignatura as, String field, Integer type) {
 
@@ -117,12 +104,12 @@ public class Asignatura {
         }
     }
 
-    public int comparar(Asignatura estudiante, String text, String campo) {
-        switch (campo.toLowerCase()) {
-            case "id":
-                return Integer.compare(Integer.parseInt(text), estudiante.getId());
-            default:
-                throw new IllegalArgumentException("Campo de comparación no válido");
-        }
+    public int comparar(Asignatura asignatura, String text, String campo) {
+        return switch (campo.toLowerCase()) {
+            case "id" -> Integer.compare(Integer.parseInt(text), asignatura.getId());
+            case "nombre" -> asignatura.getNombre().compareToIgnoreCase(text);
+            case "codigo_materia" -> asignatura.getCodigo_materia().compareToIgnoreCase(text);
+            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+        };
     }
 }
