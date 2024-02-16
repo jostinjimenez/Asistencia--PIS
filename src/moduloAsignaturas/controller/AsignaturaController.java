@@ -111,7 +111,6 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         array[j] = temp;
     }
 
-
     private int busquedaBinaria1(ListaEnlazada<Asignatura> lista, String text, String campo) throws VacioExceptions {
         int infe = 0;
         int sup = lista.getSize() - 1;
@@ -139,10 +138,14 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
 
     private boolean getForm(Asignatura asignatura, String text, String campo) {
         return switch (campo.toLowerCase()) {
-            case "id" -> Integer.toString(asignatura.getId()).equalsIgnoreCase(text);
-            case "nombre" -> asignatura.getNombre().toLowerCase().contains(text);
-            case "codigo_materia" -> asignatura.getCodigo_materia().toLowerCase().contains(text);
-            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+            case "id" ->
+                Integer.toString(asignatura.getId()).equalsIgnoreCase(text);
+            case "nombre" ->
+                asignatura.getNombre().toLowerCase().contains(text);
+            case "codigo_materia" ->
+                asignatura.getCodigo_materia().toLowerCase().contains(text);
+            default ->
+                throw new IllegalArgumentException("Campo de comparación no válido");
         };
     }
 
@@ -185,6 +188,30 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         ListaEnlazada<Asignatura> asignaturass = new ListaEnlazada<>();
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
             String sql = "SELECT A.ID, A.NOMBRE, A.CODIGO_MATERIA, A.HORAS_TOTALES, A.MALLA_ID FROM MATRICULA M JOIN CARRERA C ON M.CARRERA_ID = C.ID JOIN MALLA MA ON C.ID = MA.CARRERA_ID JOIN ASIGNATURA A ON MA.ID = A.MALLA_ID WHERE M.ID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);  // Aquí está la corrección
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Asignatura asignatura1 = new Asignatura();
+                        asignatura1.setId(resultSet.getInt("ID"));
+                        asignatura1.setNombre(resultSet.getString("NOMBRE"));
+                        asignatura1.setCodigo_materia(resultSet.getString("CODIGO_MATERIA"));
+                        asignatura1.setHoras_Totales(resultSet.getInt("HORAS_TOTALES"));
+                        asignatura1.setMalla_id(resultSet.getInt("MALLA_ID"));
+                        asignaturass.add(asignatura1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return asignaturass;
+    }
+
+    public ListaEnlazada<Asignatura> buscarAsignaturasPorCarrera(Integer id) {
+        ListaEnlazada<Asignatura> asignaturass = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT A.ID, A.NOMBRE, A.CODIGO_MATERIA, A.HORAS_TOTALES, A.MALLA_ID FROM CARRERA C JOIN MALLA MA ON C.ID = MA.CARRERA_ID JOIN ASIGNATURA A ON MA.ID = A.MALLA_ID WHERE C.ID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, id);  // Aquí está la corrección
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {

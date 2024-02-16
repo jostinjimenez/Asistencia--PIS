@@ -10,7 +10,6 @@ package modelLuis.controller;
  */
 import DAO.DataAccessObject;
 import model.PeriodoAcademico;
-import model.Persona;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 import java.io.FileOutputStream;

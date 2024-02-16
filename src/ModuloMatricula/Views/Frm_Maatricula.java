@@ -158,7 +158,6 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Fecha:");
         roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, -1, -1));
 
@@ -167,27 +166,22 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         roundPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 150, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Ciclo:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Carrera:");
         roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Estado Matricula:");
         roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 170, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Estudiante:");
         roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Periodo  Academico:");
         roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, -1, -1));
 
@@ -305,7 +299,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarEstudianteActionPerformed
 
     private void btnCargarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCarreraActionPerformed
-        buscar_Carrera mc = new buscar_Carrera(this, true);
+        buscar_Carrera mc = new buscar_Carrera(this, true, "Frm_Maatricula" );
         mc.setVisible(true);
     }//GEN-LAST:event_btnCargarCarreraActionPerformed
 

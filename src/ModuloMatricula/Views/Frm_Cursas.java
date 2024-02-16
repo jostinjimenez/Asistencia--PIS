@@ -305,7 +305,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
     private void btnCargarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarAsignaturaActionPerformed
         if (txtIdMatricula.getText() != null && !txtIdMatricula.getText().isEmpty()){
-            buscar_Asignatura mc = new buscar_Asignatura(this, true, Integer.parseInt(txtIdMatricula.getText()));
+            buscar_Asignatura mc = new buscar_Asignatura(this, true, Integer.parseInt(txtIdMatricula.getText()),"Frm_Cursas");
             mc.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una matricula");

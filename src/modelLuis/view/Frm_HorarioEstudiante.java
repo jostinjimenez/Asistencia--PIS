@@ -76,7 +76,7 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
             String id_asi = asig.getId().toString();
             ListaEnlazada<Horario> listaHorarios = controlHorario.busquedaBinaria(controlHorario.list_All(), id_asi, "id_asignatura", "quicksort");
             for (Horario horario : listaHorarios) {
-                if (Objects.equals(horario.getIdAsignatura(), asig.getId())) {
+                if (Objects.equals(horario.getAsignatura_id(), asig.getId())) {
                     horarios.add(horario);
                 }
             }

@@ -24,7 +24,6 @@ import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
-
 public class Menu_Docente extends javax.swing.JPanel {
 
     CuentaController cc = Utiles.getCc();
@@ -59,7 +58,7 @@ public class Menu_Docente extends javax.swing.JPanel {
         menu.setIcon(icon);
         menu.setText("  " + text);
         menu.setFont(new Font("Roboto", Font.PLAIN, 12));
-        menu.setForeground(new Color(0,0,0));
+        menu.setForeground(new Color(0, 0, 0));
 
         switch (text) {
             case "Cerrar Sesión" ->
@@ -69,27 +68,32 @@ public class Menu_Docente extends javax.swing.JPanel {
                         cerrarSesion();
                     }
                 });
-            case "Menu Principal" -> menu.addActionListener(e -> {
-                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
-                currentWindow.dispose();
+            case "Menu Principal" ->
+                menu.addActionListener(e -> {
+                    Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
+                    currentWindow.dispose();
 
-                Frm_Main_Docente frm = new Frm_Main_Docente();
-                frm.setVisible(true);
-            });
-            case "Registro de Asistencia" -> menu.addActionListener(e -> {
-                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
-                currentWindow.dispose();
+                    Frm_Main_Docente frm = new Frm_Main_Docente();
+                    frm.setVisible(true);
+                });
+            case "Registro de Asistencia" ->
+                menu.addActionListener(e -> {
+                    Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
+                    currentWindow.dispose();
 
-                Frm_AsistenciaJ frm = new Frm_AsistenciaJ();
-                frm.setVisible(true);
-            });
-            case "Horario Academico" -> menu.addActionListener(e -> {
-                Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
-                currentWindow.dispose();
+                    ///Frm_AsistenciaJ frm = new Frm_AsistenciaJ(cuentaUsu);
+                    Frm_AsistenciaJ frm = new Frm_AsistenciaJ();
 
-                Frm_DocenteHorario frm = new Frm_DocenteHorario(); // Enviar el ID del docente
-                frm.setVisible(true);
-            });
+                    frm.setVisible(true);
+                });
+            case "Horario Academico" ->
+                menu.addActionListener(e -> {
+                    Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
+                    currentWindow.dispose();
+
+                    Frm_DocenteHorario frm = new Frm_DocenteHorario(); // Enviar el ID del docente
+                    frm.setVisible(true);
+                });
         }
 
         panelMenu.add(menu);

@@ -41,7 +41,7 @@ public class ModelTableHorarioEs extends AbstractTableModel {
             case 2:
                 return (horario != null) ? horario.getHoraInicio() : "";
             case 3:
-                String id = horario.getIdAsignatura().toString();
+                String id = horario.getAsignatura_id().toString();
                 Asignatura as;
                 try {
                     as = a.busquedaBinaria2(a.list_All(), id, "id");
