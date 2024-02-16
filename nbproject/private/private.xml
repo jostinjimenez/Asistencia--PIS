@@ -25,16 +25,80 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/buscar_Estudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Controller/ControllerMatricula.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Cursas.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Tematica.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Cursa.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerTematica.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_HorarioEstudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/DataBase/DataAccessObject.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerAsistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevaClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/tablas/ModelTableAsistencia2.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_DocenteHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_AsistenciaJ.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/controlador/EstudianteController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/DataBase/Connection.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/tablas/ModelTableAsistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/RecuperarClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/util/Util_VistaLinked1_Asistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Estudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerCursa.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/moduloAsignaturas/controller/AsignaturaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Maatricula.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmEstudiante.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Admin.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloEstudianteDocente/vista/FrmDocente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/buscar_Asignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/buscar_Estudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Controller/ControllerMatricula.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_carrera/controller/CarreraController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Cursas.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Asistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Tematica.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Cursa.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevoUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerTematica.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_HorarioEstudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/DataBase/DataAccessObject.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerAsistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Horario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/NuevaClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/tablas/ModelTableAsistencia2.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_DocenteHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/buscar_Docente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_AsistenciaJ.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloEstudianteDocente/controlador/EstudianteController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Prueba.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/moduloAsignaturas/view/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Asignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/DataBase/Connection.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/tablas/ModelTableAsistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Docente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/RecuperarClave.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/buscar_Carrera.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/util/Util_VistaLinked1_Asistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/model/Estudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_carrera/view/forms/Frm_Carrera.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/PersonaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/controller/ControllerCursa.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modulo_1/inicio_sesion/controller/CuentaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/moduloAsignaturas/controller/AsignaturaController.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/plantilla/components/Menu_Admin.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Maatricula.java</file>
         </group>
     </open-files>
 </project-private>

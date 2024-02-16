@@ -4,7 +4,12 @@
  */
 package modelLuis.controller;
 
-import DAO.DataAccessObject;
+import DataBase.DataAccessObject;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.Horario;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
@@ -14,7 +19,8 @@ import tda_listas.exceptions.VacioExceptions;
  * @author Usuario
  */
 public class ControllerHorario extends DataAccessObject<Horario> {
- private Horario horario = new Horario();
+
+    private Horario horario = new Horario();
     private ListaEnlazada<Horario> lista = new ListaEnlazada<>();
     private Integer index = -1;
 
@@ -33,10 +39,6 @@ public class ControllerHorario extends DataAccessObject<Horario> {
         this.horario = horario;
     }
 
-    public Boolean saved() {
-        return save(horario);
-    }
-
     public ListaEnlazada<Horario> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
@@ -45,33 +47,30 @@ public class ControllerHorario extends DataAccessObject<Horario> {
 
     }
 
-    public Boolean update1(Integer i) {
-        return update(horario, i);
-    }
-
-    /**
-     * @param lista the lista to set
-     */
     public void setLista(ListaEnlazada<Horario> lista) {
         this.lista = lista;
     }
 
-    /**
-     * @return the index
-     */
     public Integer getIndex() {
         return index;
     }
 
-    /**
-     * @param index the index to set
-     */
     public void setIndex(Integer index) {
         this.index = index;
     }
 
-    public int generatedId() {
-        return generarID();
+    public Boolean save() throws Exception {
+        return super.saveB(this.horario);
+    }
+
+    public Boolean update() {
+        try {
+            update(this.horario);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public ListaEnlazada<Horario> quicksort(ListaEnlazada<Horario> lista, Integer type, String field) throws VacioExceptions {
@@ -168,7 +167,7 @@ public class ControllerHorario extends DataAccessObject<Horario> {
             case "id":
                 return Integer.toString(horario.getId()).equalsIgnoreCase(text);
             case "id_asignatura":
-                return Integer.toString(horario.getIdAsignatura()).equalsIgnoreCase(text);
+                return Integer.toString(horario.getAsignatura_id()).equalsIgnoreCase(text);
             default:
                 throw new IllegalArgumentException("Campo de comparación no válido");
         }
@@ -177,5 +176,32 @@ public class ControllerHorario extends DataAccessObject<Horario> {
     private ListaEnlazada<Horario> ordenarLista(ListaEnlazada<Horario> lista, String campo) throws VacioExceptions {
         ListaEnlazada<Horario> listaOrdenada = quicksort(lista, 0, campo);
         return listaOrdenada;
+    }
+
+    public ListaEnlazada buscarHorario(String texto) {
+        ListaEnlazada<Horario> lista = new ListaEnlazada<>();
+        Horario horario = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT HORAINICIO, HORAFIN, DIA, ID, ASIGNATURA_ID "
+                    + "FROM HORARIO "
+                    + "WHERE ASIGNATURA_ID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, texto);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        horario = new Horario();
+                        horario.setId(resultSet.getInt("ID"));
+                        horario.setAsignatura_id(resultSet.getInt("ASIGNATURA_ID"));
+                        horario.setHoraFin(resultSet.getString("HORAFIN"));
+                        horario.setHoraInicio(resultSet.getString("HORAINICIO"));
+                        horario.setDia(resultSet.getString("DIA"));
+                        lista.add(horario);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage(), e);
+        }
+        return lista;
     }
 }

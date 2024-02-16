@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.Objects;
 
 import model.*;
+import modelLuis.view.Frm_HorarioAdmi;
 import moduloAsignaturas.controller.AsignaturaController;
 import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
@@ -18,21 +19,23 @@ import modulo_carrera.view.tablas.ModeloTablaCarrera;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
-
 public class buscar_Asignatura extends javax.swing.JDialog {
 
     AsignaturaController rc = new AsignaturaController();
     ModeloTablaAsignaturas mtc = new ModeloTablaAsignaturas();
     Integer id;
 
-    public buscar_Asignatura(java.awt.Frame parent, boolean modal, Integer id) {
+    public buscar_Asignatura(java.awt.Frame parent, boolean modal, Integer id, String nombre) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.id = id;
-        mostrarTabla();
+        if (nombre.equals("Frm_Cursas")) {
+            mostrarTabla();
+        } else if (nombre.equals("Frm_HorarioAdmi")) {
+            mostrarTabla1();
+        }
 
         tabla.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
@@ -43,8 +46,18 @@ public class buscar_Asignatura extends javax.swing.JDialog {
                     if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                         Asignatura asignatura = mtc.getAsignatura(row);
                         if (asignatura != null) {
-                            ((Frm_Cursas) getParent()).txtAsignaturas.setText(asignatura.getNombre());
-                            ((Frm_Cursas) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
+
+                            if (nombre.equals("Frm_Cursas")) {
+                                ((Frm_Cursas) getParent()).txtAsignaturas.setText(asignatura.getNombre());
+                                ((Frm_Cursas) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
+
+                            } else if (nombre.equals("Frm_HorarioAdmi")) {
+                                ((Frm_HorarioAdmi) getParent()).txtAsignaturas.setText(asignatura.getNombre());
+                                ((Frm_HorarioAdmi) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
+
+                            }
+                            //((Frm_Cursas) getParent()).txtAsignaturas.setText(asignatura.getNombre());
+                            // ((Frm_Cursas) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
                         }
                         dispose();
                     }
@@ -62,6 +75,27 @@ public class buscar_Asignatura extends javax.swing.JDialog {
         tabla.updateUI();
         mtc.fireTableDataChanged();
 
+        TableRowSorter<ModeloTablaAsignaturas> trs = new TableRowSorter<>(mtc);
+        tabla.setRowSorter(trs);
+        tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.getTableHeader().setResizingAllowed(false);
+        tabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        tabla.setRowHeight(30);
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tabla.getColumnCount(); i++) {
+            tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
+    }
+
+    public void mostrarTabla1() {
+        ListaEnlazada<Asignatura> asigMatriculas = rc.buscarAsignaturasPorCarrera(id);
+        mtc.setAsignaturas(asigMatriculas);
+        tabla.setModel(mtc);
+        tabla.updateUI();
+        mtc.fireTableDataChanged();
 
         TableRowSorter<ModeloTablaAsignaturas> trs = new TableRowSorter<>(mtc);
         tabla.setRowSorter(trs);
@@ -103,7 +137,6 @@ public class buscar_Asignatura extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

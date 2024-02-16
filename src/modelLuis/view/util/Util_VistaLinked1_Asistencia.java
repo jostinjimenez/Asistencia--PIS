@@ -15,6 +15,7 @@ public class Util_VistaLinked1_Asistencia {
     private static ListaEnlazada<Asignatura> listaAsig = new ListaEnlazada<>();
     private static ListaEnlazada<Cursa> listaCursa = new ListaEnlazada<>();
     private static ListaEnlazada<Matricula> listaMatr = new ListaEnlazada<>();
+    private static ListaEnlazada<Horario> listaHorarios = new ListaEnlazada<>();
 
     public static void cargaParalelos(JComboBox cbxmarca) throws VacioExceptions {
         cbxmarca.removeAllItems();
@@ -23,27 +24,12 @@ public class Util_VistaLinked1_Asistencia {
                 cbxmarca.addItem(listaCursa.get(i));
             }
         } catch (VacioExceptions e) {
-            e.printStackTrace();
+            System.out.println(e + "errorr");
         }
     }
 
     public static Cursa getComboCursa(JComboBox cbx) {
         return (Cursa) cbx.getSelectedItem();
-    }
-
-    public static void cargaCiclos(JComboBox cbxmarca) throws VacioExceptions {
-        cbxmarca.removeAllItems();
-        try {
-            for (int i = 0; i < listaMatr.getSize(); i++) {
-                cbxmarca.addItem(listaMatr.get(i));
-            }
-        } catch (VacioExceptions e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Matricula getComboMatricula(JComboBox cbx) {
-        return (Matricula) cbx.getSelectedItem();
     }
 
     public static void cargaMaterias(JComboBox cbxmarca) throws VacioExceptions {
@@ -63,11 +49,10 @@ public class Util_VistaLinked1_Asistencia {
     }
 
     public static void cargaHorario(JComboBox cbxmarca) throws VacioExceptions {
-        ControllerHorario ac = new ControllerHorario();
         cbxmarca.removeAllItems();
         try {
-            for (int i = 0; i < ac.getLista().getSize(); i++) {
-                cbxmarca.addItem(ac.getLista().get(i));
+            for (int i = 0; i < listaHorarios.getSize(); i++) {
+                cbxmarca.addItem(listaHorarios.get(i));
             }
         } catch (VacioExceptions e) {
             e.printStackTrace();
@@ -134,7 +119,19 @@ public class Util_VistaLinked1_Asistencia {
     public static void setListaMatr(ListaEnlazada<Matricula> aListaMatr) {
         listaMatr = aListaMatr;
     }
-    
-    
+
+    /**
+     * @return the listaHorarios
+     */
+    public static ListaEnlazada<Horario> getListaHorarios() {
+        return listaHorarios;
+    }
+
+    /**
+     * @param aListaHorarios the listaHorarios to set
+     */
+    public static void setListaHorarios(ListaEnlazada<Horario> aListaHorarios) {
+        listaHorarios = aListaHorarios;
+    }
 
 }

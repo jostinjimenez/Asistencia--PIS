@@ -7,7 +7,7 @@ public class Horario {
     private String horaInicio;
     private String horaFin;
 
-    private Integer idAsignatura;
+    private Integer asignatura_id;
 
     public Horario() {
     }
@@ -17,7 +17,7 @@ public class Horario {
         this.dia = dia;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.idAsignatura = idAsignatura;
+        this.asignatura_id = idAsignatura;
     }
 
     public Integer getId() {
@@ -44,12 +44,12 @@ public class Horario {
         this.horaFin = horaFin;
     }
 
-    public Integer getIdAsignatura() {
-        return idAsignatura;
+    public Integer getAsignatura_id() {
+        return asignatura_id;
     }
 
-    public void setIdAsignatura(Integer idAsignatura) {
-        this.idAsignatura = idAsignatura;
+    public void setAsignatura_id(Integer idAsignatura) {
+        this.asignatura_id = idAsignatura;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Horario {
 
     @Override
     public String toString() {
-        return dia + ": " + horaInicio + "-" + horaInicio;
+        return dia + ": " + horaInicio + "-" + horaFin;
     }
 
     public Boolean comparar(Horario c, String field, Integer type) {
@@ -78,14 +78,14 @@ public class Horario {
                 if (field.equalsIgnoreCase("id")) {
                     return getId() > (c.getId());
                 } else if (field.equalsIgnoreCase("id_asignatura")) {
-                    return getIdAsignatura() > (c.getIdAsignatura());
+                    return getAsignatura_id() > (c.getAsignatura_id());
                 }
 
             case 0:
                 if (field.equalsIgnoreCase("id")) {
                     return getId() < (c.getId());
                 } else if (field.equalsIgnoreCase("id_asignatura")) {
-                    return getIdAsignatura() < (c.getIdAsignatura());
+                    return getAsignatura_id() < (c.getAsignatura_id());
                 }
             default:
                 return false;
@@ -102,7 +102,7 @@ public class Horario {
             }
             case "id_asignatura":
                try {
-                return Integer.compare(Integer.parseInt(text), horario.getIdAsignatura());
+                return Integer.compare(Integer.parseInt(text), horario.getAsignatura_id());
             } catch (Exception e) {
             }
 

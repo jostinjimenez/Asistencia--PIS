@@ -49,29 +49,32 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         } else {
             Cuenta cuenta = cc.validarCuenta(usuario, claveCifrada);
             cc.setCuenta(cuenta);
-            //if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
-                Utiles.setCc(cc);
-                Utiles.setCuentaUsu(cuenta);
-                if (cuenta != null) {
-                    switch (cc.getPersona(cuenta.getPersona_id()).getRol_id()) {
-                        case 1 -> {
-                            Frm_Main_Admin fma = new Frm_Main_Admin(cc);
-                            fma.setVisible(true);
-                            this.dispose();
-                        }
-                        case 2 -> {
-                            Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
-                            fme.setVisible(true);
-                            this.dispose();
-                        }
-                        case 3 -> {
-                            Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
-                            fmd.setVisible(true);
-                            this.dispose();
-                        }
+//            if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
+            Utiles.setCc(cc);
+            Utiles.setCuentaUsu(cuenta);
+            if (cuenta != null) {
+                switch (cc.getPersona(cuenta.getPersona_id()).getRol_id()) {
+                    case 1 -> {
+                        Frm_Main_Admin fma = new Frm_Main_Admin(cc);
+                        fma.setVisible(true);
+                        this.dispose();
+                    }
+                    case 2 -> {
+                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
+                        fme.setVisible(true);
+                        this.dispose();
+                    }
+                    case 3 -> {
+                        Frm_Main_Docente fmd = new Frm_Main_Docente(cc);
+                        fmd.setVisible(true);
+                        this.dispose();
                     }
                 }
-            //}
+            }
+//            } else {
+//                NuevaClave nu = new NuevaClave(this, true);
+//                nu.setVisible(true);
+//            }
         }
     }
 
@@ -178,8 +181,9 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        NuevaClave nu = new NuevaClave(this, true);
+        NuevaClave nu = new NuevaClave(this, true, 560, 80);
         nu.setVisible(true);
+
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void roundPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundPanel2MouseClicked
