@@ -5,8 +5,7 @@ import model.Asignatura;
 import model.Cursa;
 import model.Horario;
 import model.Matricula;
-import modelLuis.controller.ControllerAsignatura;
-import modelLuis.controller.ControllerHorario;
+import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -30,22 +29,6 @@ public class Util_VistaLinked1_Asistencia {
 
     public static Cursa getComboCursa(JComboBox cbx) {
         return (Cursa) cbx.getSelectedItem();
-    }
-
-    public static void cargaMaterias(JComboBox cbxmarca) throws VacioExceptions {
-        ControllerAsignatura ac = new ControllerAsignatura();
-        cbxmarca.removeAllItems();
-        try {
-            for (int i = 0; i < ac.getAsignaturas().getSize(); i++) {
-                cbxmarca.addItem(ac.getAsignaturas().get(i));
-            }
-        } catch (VacioExceptions e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Asignatura getComboAsignatura(JComboBox cbx) {
-        return (Asignatura) cbx.getSelectedItem();
     }
 
     public static void cargaHorario(JComboBox cbxmarca) throws VacioExceptions {

@@ -108,11 +108,12 @@ public class NuevoUsuario extends javax.swing.JDialog {
         pc.getPersona().setTelefono(txtTelefono.getText());
         pc.getPersona().setRol_id(1);
         pc.getPersona().setFoto("user.png");
+        Integer id = pc.save();
 
         cc.getCuenta().setCorreo_institucional(generarCorreoInst());
         //String claveCifrada = cc.cifrar(txtDni.getText(), 10);
         cc.getCuenta().setClave(txtDni.getText());
-        cc.getCuenta().setPersona_id(pc.save());
+        cc.getCuenta().setPersona_id(id);
 
         if (cc.save() > 0) {
             System.out.println("Se guardó correctamente el usuario y la cuenta");

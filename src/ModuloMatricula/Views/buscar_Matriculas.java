@@ -37,7 +37,7 @@ public class buscar_Matriculas extends javax.swing.JDialog {
                     if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                         Matricula matricula = mtc.getMatricula(row);
                         if (matricula != null) {
-                            ((Frm_Cursas) getParent()).txtMatricula.setText(matricula.getEstado_matricula());
+                            ((Frm_Cursas) getParent()).txtMatricula.setText(matricula.toString());
                             ((Frm_Cursas) getParent()).txtIdMatricula.setText(String.valueOf(matricula.getId()));
 
                         }

@@ -25,6 +25,8 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         limpiar();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+
+        timePicker1.getSelectedTime();
     }
 
     private void limpiar() {
@@ -47,8 +49,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         tblM.getTableHeader().setReorderingAllowed(false);
         tblM.getTableHeader().setResizingAllowed(false);
         tblM.getTableHeader().setDefaultRenderer(new HeaderRenderer());
-        tblM.setRowHeight(30); // Ajusta este valor según tus necesidades
-
+        tblM.setRowHeight(30); //tamaño de las celdas
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < tblM.getColumnCount(); i++) {
@@ -289,7 +290,6 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         timePicker1.showPopup(this, 620, 130);
-        System.out.println(timePicker1.getSelectedTime());
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

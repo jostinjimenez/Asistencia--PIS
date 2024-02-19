@@ -109,7 +109,6 @@ public class DocenteController extends DataAccessObject<Docente> {
         return i + 1;
     }
 
-
     public ListaEnlazada<Docente> buscarPorNombre(String dniONombre) {
         ListaEnlazada<Docente> docentess = new ListaEnlazada<>();
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {

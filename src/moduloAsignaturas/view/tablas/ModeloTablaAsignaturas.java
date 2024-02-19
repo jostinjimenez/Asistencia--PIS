@@ -48,11 +48,10 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
             asignatura = asignaturas.get(row);
             malla = this.mallas.get(asignatura.getMalla_id());
             return switch (col) {
-                case 0 -> (asignatura != null) ? asignatura.getId() : "";
+                case 0 -> (asignatura != null) ? asignatura.getCodigo_materia() : "";
                 case 1 -> (asignatura != null) ? asignatura.getNombre() : "";
-                case 2 -> (asignatura != null) ? asignatura.getCodigo_materia() : "";
-                case 3 -> (asignatura != null) ? asignatura.getHoras_Totales() : "";
-                case 4 -> (malla != null) ? malla.getDescripcion() : "";
+                case 2 -> (asignatura != null) ? asignatura.getHoras_Totales() : "";
+                case 3 -> (malla != null) ? malla.getDescripcion() : "";
                 default -> null;
             };
         } catch (Exception e) {
@@ -63,11 +62,10 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return switch (column) {
-            case 0 -> "ID";
+            case 0 -> "Código";
             case 1 -> "Nombre";
-            case 2 -> "Código";
-            case 3 -> "Horas Totales";
-            case 4 -> "Malla";
+            case 2 -> "Horas Totales";
+            case 3 -> "Malla";
             default -> null;
         };
     }

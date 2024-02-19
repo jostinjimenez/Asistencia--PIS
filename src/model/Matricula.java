@@ -2,6 +2,8 @@ package model;
 
 import java.util.Date;
 
+import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+
 
 public class Matricula {
 
@@ -75,8 +77,13 @@ public class Matricula {
 
     @Override
     public String toString() {
-        return ciclo.toString();
+        Persona p = getPersonaStatic(getEstudiante_id());
+        assert p != null;
+        String nombre = p.getNombre().contains(" ") ? p.getNombre().substring(0, p.getNombre().indexOf(" ")) : p.getNombre();
+        String apellido = p.getApellido().contains(" ") ? p.getApellido().substring(0, p.getApellido().indexOf(" ")) : p.getApellido();
+        return nombre+ " " + apellido + " -> " + "Ciclo: " +  getCiclo();
     }
+
 
     public Boolean comparar(Matricula c, String field, Integer type) {
 

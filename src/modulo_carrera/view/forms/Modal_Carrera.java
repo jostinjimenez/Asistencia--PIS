@@ -30,6 +30,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        setupListeners();
 
         btnGuardar.addActionListener(e -> guardar());
         btnCancelar.addActionListener(e -> this.dispose());
@@ -117,7 +118,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c) || txtCodigo.getText().length() >= 10) {
+                if (!Character.isLetterOrDigit(c) || txtCodigo.getText().length() >= 10) {
                     e.consume();
                 }
             }

@@ -88,7 +88,6 @@ public Integer save(T obj, String sequenceName) throws Exception {
         return band;
     }
 
-
     /**
      * Metodo que permite modificar un registro en la base de datos, para modificar se debe primero consultar el Objeto haciendo uso del metodo Obtener
      *

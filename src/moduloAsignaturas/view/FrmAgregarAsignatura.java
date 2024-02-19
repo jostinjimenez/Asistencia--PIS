@@ -261,7 +261,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c) || txtCodigoAsigntura.getText().length() >= 5) {
+                if (!Character.isLetterOrDigit(c) || txtCodigoAsigntura.getText().length() >= 5) {
                     e.consume();
                 }
             }

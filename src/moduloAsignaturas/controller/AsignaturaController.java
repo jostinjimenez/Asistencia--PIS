@@ -1,6 +1,7 @@
 package moduloAsignaturas.controller;
 
 import DataBase.DataAccessObject;
+import model.Docente;
 import model.Matricula;
 import tda_listas.ListaEnlazada;
 import tda_listas.Nodo;
@@ -230,5 +231,36 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
             throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
         }
         return asignaturass;
+    }
+
+    public Asignatura buscarAsignaturasPorCursa(Integer id) {
+        Asignatura asignatura1 = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+
+            String sql = """
+                    SELECT
+                        A.ID, A.NOMBRE, A.CODIGO_MATERIA, A.HORAS_TOTALES, A.MALLA_ID
+                    FROM
+                        CURSA C JOIN ASIGNATURA A ON C.ASIGNATURA_ID = A.ID
+                    WHERE
+                        C.ID = ?""";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        asignatura1 = new Asignatura();
+                        asignatura1.setId(resultSet.getInt("ID"));
+                        asignatura1.setNombre(resultSet.getString("NOMBRE"));
+                        asignatura1.setCodigo_materia(resultSet.getString("CODIGO_MATERIA"));
+                        asignatura1.setHoras_Totales(resultSet.getInt("HORAS_TOTALES"));
+                        asignatura1.setMalla_id(resultSet.getInt("MALLA_ID"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return asignatura1;
     }
 }

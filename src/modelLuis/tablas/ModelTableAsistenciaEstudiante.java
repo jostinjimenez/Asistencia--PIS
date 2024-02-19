@@ -1,12 +1,10 @@
 package modelLuis.tablas;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import model.Horario;
-import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerHorario;
+import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -14,7 +12,7 @@ public class ModelTableAsistenciaEstudiante extends AbstractTableModel {
 
     private ListaEnlazada<Horario> horarios = new ListaEnlazada<>();
     private ListaEnlazada<Asignatura> listaAsis = new ListaEnlazada<>();
-    private ControllerAsignatura controlerAsignatura = new ControllerAsignatura();
+    private AsignaturaController controlerAsignatura = new AsignaturaController();
     private ControllerHorario conHor = new ControllerHorario();
 
     @Override
@@ -59,7 +57,7 @@ public class ModelTableAsistenciaEstudiante extends AbstractTableModel {
 
     private String obtenerNombreAsignatura(Horario horario) {
         try {
-            Asignatura asig = controlerAsignatura.busquedaBinaria2(getListaAsis(), horario.getAsignatura_id().toString(), "id", 0);
+            Asignatura asig = controlerAsignatura.busquedaBinaria2(getListaAsis(), horario.getAsignatura_id().toString(), "id");
             return asig.getNombre();
         } catch (VacioExceptions ex) {
             System.out.println("Error al obtener asignatura: " + ex.getMessage());

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.awt.event.KeyEvent;
 import model.Cuenta;
 import modulo_1.inicio_sesion.controller.CuentaController;
 import modulo_1.inicio_sesion.controller.PersonaController;
@@ -123,6 +124,11 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
         txtClave.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtClave.setForeground(new java.awt.Color(93, 93, 93));
         txtClave.setBorder(null);
+        txtClave.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtClaveKeyPressed(evt);
+            }
+        });
         roundPanel2.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 330, 40));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plantilla/img/icons8-llave-32.png"))); // NOI18N
@@ -189,6 +195,12 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
     private void roundPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundPanel2MouseClicked
 
     }//GEN-LAST:event_roundPanel2MouseClicked
+
+    private void txtClaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveKeyPressed
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            iniciarSesion();
+        }
+    }//GEN-LAST:event_txtClaveKeyPressed
 
     public static void main(String args[]) {
         try {

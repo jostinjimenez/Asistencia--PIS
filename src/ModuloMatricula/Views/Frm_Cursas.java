@@ -51,6 +51,14 @@ public class Frm_Cursas extends javax.swing.JFrame {
 
 
     private void limpiar() {
+        txtIdMatricula.setText("");
+        txtMatricula.setText("");
+        txtIdDocente.setText("");
+        txtDocente.setText("");
+        txtIdAsignatura.setText("");
+        txtAsignaturas.setText("");
+        cbxParalelo.setSelectedIndex(0);
+
         cargarTabla();
     }
 
@@ -123,8 +131,6 @@ public class Frm_Cursas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbl1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         txtMatricula = new javax.swing.JTextField();
         txtDocente = new javax.swing.JTextField();
@@ -136,6 +142,8 @@ public class Frm_Cursas extends javax.swing.JFrame {
         txtAsignaturas = new javax.swing.JTextField();
         txtIdAsignatura = new javax.swing.JTextField();
         btnCargarAsignatura = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl1 = new javax.swing.JTable();
         menu_Admin1 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -148,25 +156,22 @@ public class Frm_Cursas extends javax.swing.JFrame {
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Matricula:");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Paralelo:");
         roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Docente:");
-        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+        roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Asignaturas:");
         roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, -1, -1));
 
+        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,45 +180,31 @@ public class Frm_Cursas extends javax.swing.JFrame {
         });
         roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 130, -1));
 
+        jButton4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButton4.setText("Modificar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 130, -1));
+        roundPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, 130, -1));
 
-        tbl1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        tbl1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-        ));
-        jScrollPane2.setViewportView(tbl1);
-
-        roundPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 910, 250));
-
+        jButton6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jButton6.setText("Listar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 560, 130, -1));
+        roundPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 580, 130, -1));
 
         txtMatricula.setEditable(false);
         txtMatricula.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        roundPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 230, -1));
+        roundPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 290, -1));
 
         txtDocente.setEditable(false);
         txtDocente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        roundPanel1.add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 230, -1));
+        roundPanel1.add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 290, -1));
 
         btnCargarMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
         btnCargarMatricula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -222,7 +213,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
                 btnCargarMatriculaActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, -1, -1));
+        roundPanel1.add(btnCargarMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
 
         btnCargarDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarUsu.png"))); // NOI18N
         btnCargarDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -231,15 +222,15 @@ public class Frm_Cursas extends javax.swing.JFrame {
                 btnCargarDocenteActionPerformed(evt);
             }
         });
-        roundPanel1.add(btnCargarDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, -1, -1));
+        roundPanel1.add(btnCargarDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, -1, -1));
 
         txtIdDocente.setEditable(false);
-        roundPanel1.add(txtIdDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 50, -1));
+        roundPanel1.add(txtIdDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 50, -1));
 
         txtIdMatricula.setEditable(false);
-        roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 50, -1));
+        roundPanel1.add(txtIdMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 50, -1));
 
-        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"A", "B", "C", "D"}));
+        cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
         roundPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 220, -1));
 
         txtAsignaturas.setEditable(false);
@@ -258,6 +249,22 @@ public class Frm_Cursas extends javax.swing.JFrame {
         });
         roundPanel1.add(btnCargarAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 50, -1, -1));
 
+        tbl1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        tbl1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbl1);
+
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 950, 250));
+
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
         bg_panel.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
 
@@ -267,12 +274,12 @@ public class Frm_Cursas extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -345,7 +352,7 @@ public class Frm_Cursas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private plantilla.components.Menu_Admin menu_Admin1;
     private plantilla.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tbl1;

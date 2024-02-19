@@ -8,10 +8,10 @@ import model.Asignatura;
 import model.Cursa;
 import model.Horario;
 import model.Matricula;
-import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.tablas.ModelTableAsistenciaEstudiante;
+import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -21,7 +21,7 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
 
     private ListaEnlazada<Horario> horarios = new ListaEnlazada<>();
     private ListaEnlazada<Integer> ids;
-    private ControllerAsignatura controlerAsignatura = new ControllerAsignatura();
+    private AsignaturaController controlerAsignatura = new AsignaturaController();
     private ControllerMatricula controlMatricula = new ControllerMatricula();
     private ControllerCursa controlCursa = new ControllerCursa();
     private ListaEnlazada<Cursa> cursas = new ListaEnlazada<>();
@@ -61,7 +61,7 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), ident, "id_matricula", "quicksort", 0);
         for (Cursa cursa : cursas) {
             String iden = cursa.getAsignatura_id().toString();
-            Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id", 0);
+            Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id");
             System.out.println(asi.getId());
             if (Objects.equals(cursa.getAsignatura_id(), asi.getId())) {
                 listaAsis.add(asi);

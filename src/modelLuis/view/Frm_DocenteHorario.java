@@ -6,17 +6,17 @@ import javax.swing.UIManager;
 import model.Asignatura;
 import model.Cursa;
 import model.Horario;
-import modelLuis.controller.ControllerAsignatura;
 import modelLuis.controller.ControllerCursa;
 import modelLuis.controller.ControllerHorario;
 import modelLuis.tablas.ModelTableAsistenciaDocente;
+import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 public class Frm_DocenteHorario extends javax.swing.JFrame {
 
     private ListaEnlazada<Horario> horarios = new ListaEnlazada<>();
-    private ControllerAsignatura controlerAsignatura = new ControllerAsignatura();
+    private AsignaturaController controlerAsignatura = new AsignaturaController();
     private ControllerCursa controlCursa = new ControllerCursa();
     private ListaEnlazada<Cursa> cursas = new ListaEnlazada<>();
     private ListaEnlazada<Asignatura> listaAsis = new ListaEnlazada<>();
@@ -47,7 +47,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
         cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), idd, "id_docente", "quicksort", 0);
         for (Cursa cursa : cursas) {
             String iden = cursa.getAsignatura_id().toString();
-            Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id", 0);
+            Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id");
             if (Objects.equals(cursa.getAsignatura_id(), asi.getId())) {
                 listaAsis.add(asi);
             }

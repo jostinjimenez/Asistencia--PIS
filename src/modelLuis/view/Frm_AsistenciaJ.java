@@ -22,6 +22,9 @@ import modelLuis.view.util.Util_VistaLinked1_Asistencia;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
+import static modulo_1.inicio_sesion.view.util.Utiles.cargarAsignaturas;
+import static modulo_1.inicio_sesion.view.util.Utiles.getComboAsignatura;
+
 public class Frm_AsistenciaJ extends javax.swing.JFrame {
     ModelTableAsistencia md = new ModelTableAsistencia();
     ControllerAsistencia ca = new ControllerAsistencia();
@@ -59,6 +62,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
 //    }
     private void cargarCombos() throws VacioExceptions {
         // cuenta.getPersona_id();
+        cargarAsignaturas(cbxAsignaturas);
         Integer ciclo = Integer.parseInt(cbxCiclos.getSelectedItem().toString());
         String n = "55";
         ListaEnlazada<Cursa> lista = ca.buscarCiclos(n, ciclo.toString());
@@ -72,7 +76,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
     }
 
     private void cargarTabla() {
-        String id = Util_VistaLinked1_Asistencia.getComboAsignatura(cbxAsignaturas).getId().toString();
+        String id = getComboAsignatura(cbxAsignaturas).getId().toString();
         String texto = cbxParalelos.getSelectedItem().toString();
         lista = ca.buscarParalelos(texto, id);
         for (Cursa cursa : lista) {

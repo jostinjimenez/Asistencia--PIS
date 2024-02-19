@@ -31,8 +31,59 @@ public class Perfil_Modal extends javax.swing.JDialog {
         this.setResizable(false);
         this.cuenta = cuentausu;
         txtFoto.setVisible(false);
+        txtFoto.setText(persona.getFoto());
         persona = getPersonaStatic(cuenta.getPersona_id());
         cargarDatos();
+    }
+
+    CuentaController cc = new CuentaController();
+
+    private Boolean validarClave() {
+        String clave = txtClaveActual.getText();
+        return cuenta.getClave().equals(clave);
+    }
+
+    private Boolean validarNuevasClaves() {
+        String clave1 = txtNuevaClave.getText();
+        String clave2 = txtClaveNueva2.getText();
+        return clave1.equals(clave2);
+    }
+
+    private void actualizarInformacion(String newFileName) {
+        updateClave();
+        updateFoto(newFileName);
+    }
+
+    private void updateClave() {
+        if (validarClave()) {
+            try {
+                cc.setCuenta(cuenta);
+                if (validarNuevasClaves()) {
+                    String claveNueva = txtNuevaClave.getText();
+                    cuenta.setClave(claveNueva);
+                    cc.update(cuenta);
+                    JOptionPane.showMessageDialog(null, "Clave actualizada correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Las claves no coinciden");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "La clave actual no es correcta");
+        }
+    }
+
+    private void updateFoto(String newFileName) {
+        PersonaController pc = new PersonaController();
+
+        pc.setPersona(persona);
+        pc.getPersona().setFoto(newFileName);
+        if (pc.update()) {
+            JOptionPane.showMessageDialog(null, "Foto actualizada", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar la foto", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public Perfil_Modal(java.awt.Frame parent, boolean modal) {
@@ -92,22 +143,6 @@ public class Perfil_Modal extends javax.swing.JDialog {
         }
     }
 
-    private void updateFoto(String newFileName) {
-        CuentaController cc = getCc();
-        PersonaController pc = new PersonaController();
-
-        pc.setPersona(persona);
-        pc.getPersona().setFoto(newFileName);
-        if (pc.update()) {
-            JOptionPane.showMessageDialog(null, "Foto actualizada", "Información", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar la foto", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -121,15 +156,17 @@ public class Perfil_Modal extends javax.swing.JDialog {
         btnActualizarFoto = new javax.swing.JButton();
         txtFoto = new javax.swing.JTextField();
         fotoUsuario = new plantilla.swing.ImageAvatar();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtClave = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
+        roundPanel1 = new plantilla.swing.RoundPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtClaveNueva2 = new javax.swing.JPasswordField();
+        txtClaveActual = new javax.swing.JPasswordField();
+        txtNuevaClave = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -170,19 +207,7 @@ public class Perfil_Modal extends javax.swing.JDialog {
         panelInfomacion.add(txtFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 60, -1));
         panelInfomacion.add(fotoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 190, 160));
 
-        jPanel1.add(panelInfomacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 360, 350));
-
-        jLabel8.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel8.setText("Contraseña:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, -1, -1));
-
-        jLabel9.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel9.setText("Correo personal:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, -1, -1));
+        jPanel1.add(panelInfomacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 360, 350));
 
         btnGuardar.setBackground(new java.awt.Color(204, 204, 204));
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -192,7 +217,7 @@ public class Perfil_Modal extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 450, 110, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 380, 110, 30));
 
         btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -202,38 +227,61 @@ public class Perfil_Modal extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 450, 110, 30));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 380, 110, 30));
 
         jLabel2.setBackground(new java.awt.Color(51, 51, 51));
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Información personal");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        txtClave.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(txtClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 270, 240, -1));
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel11.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel11.setText("Telefono:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, -1, -1));
+        jLabel8.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel8.setText("Repita la contraseña:");
+        roundPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
-        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 230, 240, -1));
+        jLabel10.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel10.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setText("Contraseña actual:");
+        roundPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 240, -1));
+        jLabel12.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel12.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel12.setText("Nueva contraseña:");
+        roundPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+
+        txtClaveNueva2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtClaveNueva2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 260, -1));
+
+        txtClaveActual.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtClaveActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 260, -1));
+
+        txtNuevaClave.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        roundPanel1.add(txtNuevaClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 260, -1));
+
+        jLabel3.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setText("Actualizar contraseña");
+        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 20));
+
+        jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 490, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 969, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 969, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
         );
 
         pack();
@@ -244,7 +292,7 @@ public class Perfil_Modal extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        updateFoto(txtFoto.getText());
+        actualizarInformacion(foto.getName());
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActualizarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarFotoActionPerformed
@@ -298,18 +346,20 @@ public class Perfil_Modal extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private plantilla.swing.ImageAvatar fotoUsuario;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel labelCorreo;
     private plantilla.swing.RoundPanel panelInfomacion;
-    private javax.swing.JTextField txtClave;
-    private javax.swing.JTextField txtCorreo;
+    private plantilla.swing.RoundPanel roundPanel1;
+    private javax.swing.JPasswordField txtClaveActual;
+    private javax.swing.JPasswordField txtClaveNueva2;
     private javax.swing.JTextField txtFoto;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JPasswordField txtNuevaClave;
     // End of variables declaration//GEN-END:variables
 }
