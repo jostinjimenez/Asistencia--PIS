@@ -4,7 +4,7 @@ import model.*;
 
 import javax.swing.table.AbstractTableModel;
 
-import moduloAsignaturas.controller.MallaController;
+import Controller.Administrativo.MallaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -24,7 +24,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 4;
     }
 
     public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {

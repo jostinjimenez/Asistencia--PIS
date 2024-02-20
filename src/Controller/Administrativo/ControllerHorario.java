@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package modelLuis.controller;
+package Controller.Administrativo;
 
 import DataBase.DataAccessObject;
 import java.sql.Connection;
@@ -15,8 +11,8 @@ import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 /**
- *
- * @author Usuario
+ * Controlador para la entidad Horario.
+ * Extiende de DataAccessObject para manejar operaciones de base de datos.
  */
 public class ControllerHorario extends DataAccessObject<Horario> {
 
@@ -24,10 +20,19 @@ public class ControllerHorario extends DataAccessObject<Horario> {
     private ListaEnlazada<Horario> lista = new ListaEnlazada<>();
     private Integer index = -1;
 
+    /**
+     * Constructor del controlador.
+     * Inicializa el horario y la lista de horarios.
+     */
     public ControllerHorario() {
         super(Horario.class);
     }
 
+    /**
+     * Obtiene el horario actual.
+     * Si el horario es nulo, se crea un nuevo horario.
+     * @return Horario actual.
+     */
     public Horario getAsistencia() {
         if (horario == null) {
             horario = new Horario();
@@ -35,34 +40,63 @@ public class ControllerHorario extends DataAccessObject<Horario> {
         return horario;
     }
 
+    /**
+     * Establece el horario actual.
+     * @param horario Horario actual.
+     */
     public void setAsistencia(Horario horario) {
         this.horario = horario;
     }
 
+    /**
+     * Obtiene la lista de horarios.
+     * Si la lista está vacía, se obtienen todos los horarios de la base de datos.
+     * @return Lista de horarios.
+     */
     public ListaEnlazada<Horario> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
         }
         return lista;
-
     }
 
+    /**
+     * Establece la lista de horarios.
+     * @param lista Lista de horarios.
+     */
     public void setLista(ListaEnlazada<Horario> lista) {
         this.lista = lista;
     }
 
+    /**
+     * Obtiene el índice actual.
+     * @return Índice actual.
+     */
     public Integer getIndex() {
         return index;
     }
 
+    /**
+     * Establece el índice actual.
+     * @param index Índice actual.
+     */
     public void setIndex(Integer index) {
         this.index = index;
     }
 
+    /**
+     * Guarda el horario actual en la base de datos.
+     * @return Verdadero si el horario fue guardado exitosamente, falso en caso contrario.
+     * @throws Exception Si ocurre un error al guardar el horario.
+     */
     public Boolean save() throws Exception {
         return super.saveB(this.horario);
     }
 
+    /**
+     * Actualiza el horario actual en la base de datos.
+     * @return Verdadero si la actualización fue exitosa, falso en caso contrario.
+     */
     public Boolean update() {
         try {
             update(this.horario);
@@ -73,8 +107,15 @@ public class ControllerHorario extends DataAccessObject<Horario> {
         }
     }
 
+    /**
+     * Ordena la lista de horarios utilizando el algoritmo de ordenamiento rápido (quicksort).
+     * @param lista Lista de horarios a ordenar.
+     * @param type Tipo de ordenamiento.
+     * @param field Campo por el cual se ordenará.
+     * @return Lista de horarios ordenada.
+     * @throws VacioExceptions Si la lista está vacía.
+     */
     public ListaEnlazada<Horario> quicksort(ListaEnlazada<Horario> lista, Integer type, String field) throws VacioExceptions {
-
         Horario[] m = lista.toArray();
         quicksort(m, 0, m.length - 1, type, field);
         lista.toList(m);

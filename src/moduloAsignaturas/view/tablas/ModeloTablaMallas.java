@@ -1,8 +1,5 @@
 package moduloAsignaturas.view.tablas;
 
-import model.Cuenta;
-import moduloAsignaturas.controller.MallaController;
-
 import javax.swing.table.AbstractTableModel;
 import model.Malla;
 import tda_listas.ListaEnlazada;

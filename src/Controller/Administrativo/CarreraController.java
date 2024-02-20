@@ -1,16 +1,18 @@
-package modulo_carrera.controller;
-
+package Controller.Administrativo;
 
 import DataBase.DataAccessObject;
-
 import model.*;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 import java.lang.reflect.Field;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
+import static Controller.Util.Utilidades.getField;
 
+/**
+ * Controlador para la entidad Carrera.
+ * Extiende de DataAccessObject para manejar operaciones de base de datos.
+ */
 public class CarreraController extends DataAccessObject<Carrera> {
 
     // Atributos
@@ -18,13 +20,20 @@ public class CarreraController extends DataAccessObject<Carrera> {
     private Carrera carrera = new Carrera();
     private Integer index = -1;
 
-    // Constructor
+    /**
+     * Constructor del controlador.
+     * Inicializa la lista de carreras.
+     */
     public CarreraController() {
         super(Carrera.class);
         this.carreras = new ListaEnlazada<>();
     }
 
-    // Getters y Setters
+    /**
+     * Obtiene la lista de carreras.
+     * Si la lista está vacía, se obtienen todas las carreras de la base de datos.
+     * @return Lista de carreras.
+     */
     public ListaEnlazada<Carrera> getCarreras() {
         if (carreras.isEmpty()) {
             carreras = this.list_All();
@@ -32,31 +41,60 @@ public class CarreraController extends DataAccessObject<Carrera> {
         return carreras;
     }
 
+    /**
+     * Establece la lista de carreras.
+     * @param carreras Lista de carreras.
+     */
     public void setCarreras(ListaEnlazada<Carrera> carreras) {
         this.carreras = carreras;
     }
 
+    /**
+     * Obtiene la carrera actual.
+     * Si la carrera es nula, se crea una nueva carrera.
+     * @return Carrera actual.
+     */
     public Carrera getCarrera() {
         return carrera != null ? carrera : new Carrera();
     }
 
+    /**
+     * Establece la carrera actual.
+     * @param carrera Carrera actual.
+     */
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
 
+    /**
+     * Obtiene el índice actual.
+     * @return Índice actual.
+     */
     public Integer getIndex() {
         return index;
     }
 
+    /**
+     * Establece el índice actual.
+     * @param index Índice actual.
+     */
     public void setIndex(Integer index) {
         this.index = index;
     }
 
-    // Metodos
+    /**
+     * Guarda la carrera actual en la base de datos.
+     * @return ID de la carrera guardada.
+     * @throws Exception Si ocurre un error al guardar la carrera.
+     */
     public Integer save() throws Exception {
         return super.save(this.carrera, "SQC_CARRERA");
     }
 
+    /**
+     * Actualiza la carrera actual en la base de datos.
+     * @return Verdadero si la actualización fue exitosa, falso en caso contrario.
+     */
     public Boolean update() {
         try {
             update(this.carrera);

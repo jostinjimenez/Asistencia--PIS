@@ -5,7 +5,7 @@
 package modulo_carrera.view.tablas;
 
 import model.Carrera;
-import modulo_carrera.controller.CarreraController;
+import Controller.Administrativo.CarreraController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

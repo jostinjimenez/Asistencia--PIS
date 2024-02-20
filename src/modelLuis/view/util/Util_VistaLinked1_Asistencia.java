@@ -5,7 +5,6 @@ import model.Asignatura;
 import model.Cursa;
 import model.Horario;
 import model.Matricula;
-import moduloAsignaturas.controller.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

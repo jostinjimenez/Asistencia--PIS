@@ -1,9 +1,9 @@
 package modulo_1.inicio_sesion.view.forms;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
-import ModuloEstudianteDocente.controlador.DocenteController;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
+import Controller.Academico.EstudianteController;
+import Controller.Academico.DocenteController;
+import Controller.Login.CuentaController;
+import Controller.Administrativo.PersonaController;
 
 import javax.swing.*;
 

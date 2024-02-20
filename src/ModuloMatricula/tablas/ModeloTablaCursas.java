@@ -1,8 +1,8 @@
 package ModuloMatricula.tablas;
 
-import ModuloMatricula.Controller.ControllerMatricula;
+import Controller.Academico.ControllerMatricula;
 import model.*;
-import moduloAsignaturas.controller.AsignaturaController;
+import Controller.Academico.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 public class ModeloTablaCursas extends AbstractTableModel {
 

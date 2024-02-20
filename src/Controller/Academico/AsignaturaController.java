@@ -1,4 +1,4 @@
-package moduloAsignaturas.controller;
+package Controller.Academico;
 
 import DataBase.DataAccessObject;
 import model.Docente;
@@ -13,16 +13,29 @@ import java.util.Iterator;
 
 import model.Asignatura;
 
+/**
+ * Controlador para la entidad Asignatura.
+ * Extiende de DataAccessObject para manejar operaciones de base de datos.
+ */
 public class AsignaturaController extends DataAccessObject<Asignatura> {
 
     private Asignatura asignatura = new Asignatura();
     private ListaEnlazada<Asignatura> asignaturas;
 
+    /**
+     * Constructor del controlador.
+     * Inicializa la lista de asignaturas.
+     */
     public AsignaturaController() {
         super(Asignatura.class);
         asignaturas = new ListaEnlazada<>();
     }
 
+    /**
+     * Obtiene la lista de asignaturas.
+     * Si la lista está vacía, se obtienen todas las asignaturas de la base de datos.
+     * @return Lista de asignaturas.
+     */
     public ListaEnlazada<Asignatura> getAsignaturas() {
         if (asignaturas.isEmpty()) {
             asignaturas = this.list_All();
@@ -30,6 +43,11 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return asignaturas;
     }
 
+    /**
+     * Obtiene la asignatura actual.
+     * Si la asignatura es nula, se crea una nueva asignatura.
+     * @return Asignatura actual.
+     */
     public Asignatura getAsignatura() {
         if (asignatura == null) {
             asignatura = new Asignatura();
@@ -37,18 +55,35 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
         return asignatura;
     }
 
+    /**
+     * Establece la lista de asignaturas.
+     * @param asignaturas Lista de asignaturas.
+     */
     public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
 
+    /**
+     * Establece la asignatura actual.
+     * @param asignatura Asignatura actual.
+     */
     public void setAsignatura(Asignatura asignatura) {
         this.asignatura = asignatura;
     }
 
+    /**
+     * Guarda la asignatura actual en la base de datos.
+     * @return ID de la asignatura guardada.
+     * @throws Exception Si ocurre un error al guardar la asignatura.
+     */
     public Integer save() throws Exception {
         return super.save(this.asignatura, "SQC_ASIGNATURA");
     }
 
+    /**
+     * Actualiza la asignatura actual en la base de datos.
+     * @return Verdadero si la actualización fue exitosa, falso en caso contrario.
+     */
     public Boolean update() {
         try {
             update(this.asignatura);

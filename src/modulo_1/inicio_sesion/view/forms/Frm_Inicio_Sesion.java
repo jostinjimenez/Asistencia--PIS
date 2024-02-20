@@ -2,12 +2,10 @@ package modulo_1.inicio_sesion.view.forms;
 
 import javax.swing.*;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.event.KeyEvent;
 import model.Cuenta;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;

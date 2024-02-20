@@ -1,6 +1,6 @@
 package modulo_1.periodo_academico.view.forms;
 
-import modulo_1.periodo_academico.controller.PeriodoAcController;
+import Controller.Administrativo.PeriodoAcController;
 import modulo_1.periodo_academico.view.tablas.ModeloTablaPeriodoAc;
 
 import javax.swing.*;

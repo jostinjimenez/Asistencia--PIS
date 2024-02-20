@@ -13,11 +13,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 
-import modulo_1.inicio_sesion.controller.CuentaController;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 import tda_listas.ListaEnlazada;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.ajustarColumnas;
+import static Controller.Util.Utilidades.ajustarColumnas;
 import static modulo_1.inicio_sesion.view.util.Utiles.cargaRol;
 
 /**

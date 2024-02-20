@@ -1,11 +1,8 @@
-package modulo_1.inicio_sesion.controller;
+package Controller.Administrativo;
 
 import DataBase.DataAccessObject;
 import model.Rol;
 import tda_listas.ListaEnlazada;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class RolController extends DataAccessObject<Rol> {
     // Atributos

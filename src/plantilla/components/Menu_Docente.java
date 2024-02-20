@@ -13,21 +13,21 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import model.Cuenta;
-import model.Persona;
 import modelLuis.view.Frm_AsistenciaJ;
 import modelLuis.view.Frm_DocenteHorario;
-import modulo_1.inicio_sesion.controller.CuentaController;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
+import static modulo_1.inicio_sesion.view.util.Utiles.getCuentaUsu;
+
 public class Menu_Docente extends javax.swing.JPanel {
 
     CuentaController cc = Utiles.getCc();
-    Cuenta cuentaUsu = Utiles.getCuentaUsu();
+    Cuenta cuentaUsu = new Cuenta();
 
     public Menu_Docente() {
 
@@ -38,6 +38,12 @@ public class Menu_Docente extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(sb);
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
         initMenu();
+
+        try {
+            cuentaUsu = getCuentaUsu();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void initMenu() {
@@ -81,9 +87,8 @@ public class Menu_Docente extends javax.swing.JPanel {
                     Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
                     currentWindow.dispose();
 
-                    ///Frm_AsistenciaJ frm = new Frm_AsistenciaJ(cuentaUsu);
-                    Frm_AsistenciaJ frm = new Frm_AsistenciaJ();
-
+                    Frm_AsistenciaJ frm = new Frm_AsistenciaJ(cuentaUsu);
+                    //Frm_AsistenciaJ frm = new Frm_AsistenciaJ();
                     frm.setVisible(true);
                 });
             case "Horario Academico" ->

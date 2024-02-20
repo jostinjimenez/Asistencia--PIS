@@ -6,10 +6,10 @@ import javax.swing.UIManager;
 import model.Asignatura;
 import model.Cursa;
 import model.Horario;
-import modelLuis.controller.ControllerCursa;
-import modelLuis.controller.ControllerHorario;
+import Controller.Academico.ControllerCursa;
+import Controller.Administrativo.ControllerHorario;
 import modelLuis.tablas.ModelTableAsistenciaDocente;
-import moduloAsignaturas.controller.AsignaturaController;
+import Controller.Academico.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

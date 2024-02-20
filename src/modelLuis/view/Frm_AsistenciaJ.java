@@ -14,15 +14,14 @@ import model.Cursa;
 import model.Horario;
 import model.Persona;
 import model.Tematica;
-import modelLuis.controller.ControllerAsistencia;
-import modelLuis.controller.ControllerHorario;
-import modelLuis.controller.ControllerTematica;
+import Controller.Academico.ControllerAsistencia;
+import Controller.Administrativo.ControllerHorario;
+import Controller.Academico.ControllerTematica;
 import modelLuis.tablas.ModelTableAsistencia;
 import modelLuis.view.util.Util_VistaLinked1_Asistencia;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-import static modulo_1.inicio_sesion.view.util.Utiles.cargarAsignaturas;
 import static modulo_1.inicio_sesion.view.util.Utiles.getComboAsignatura;
 
 public class Frm_AsistenciaJ extends javax.swing.JFrame {
@@ -48,24 +47,23 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         this.setResizable(false);
     }
 
-//    public Frm_AsistenciaJ(Cuenta c) {
-//        initComponents();
-//        this.cuenta = c;
-//        try {
-//            cargarCombos();
-//        } catch (Exception e) {
-//            System.out.println(e + "Errros");
-//        }
-//        limpiar();
-//        this.setLocationRelativeTo(null);
-//        this.setResizable(false);
-//    }
+    public Frm_AsistenciaJ(Cuenta c) {
+        initComponents();
+        this.cuenta = c;
+        try {
+            cargarCombos();
+        } catch (Exception e) {
+            System.out.println(e + "Errros");
+        }
+        limpiar();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+    }
     private void cargarCombos() throws VacioExceptions {
-        // cuenta.getPersona_id();
-        cargarAsignaturas(cbxAsignaturas);
-        Integer ciclo = Integer.parseInt(cbxCiclos.getSelectedItem().toString());
-        String n = "55";
-        ListaEnlazada<Cursa> lista = ca.buscarCiclos(n, ciclo.toString());
+
+        int ciclo = Integer.parseInt(cbxCiclos.getSelectedItem().toString());
+        String n = cuenta.getPersona_id().toString();
+        ListaEnlazada<Cursa> lista = ca.buscarCiclos(n, Integer.toString(ciclo));
         ListaEnlazada<Asignatura> listaAsig = new ListaEnlazada<>();
         for (Cursa cursa : lista) {
             Asignatura asignatura = ca.buscarAsig(cursa.getAsignatura_id().toString());
@@ -217,6 +215,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblAsis.setModel(new javax.swing.table.DefaultTableModel(

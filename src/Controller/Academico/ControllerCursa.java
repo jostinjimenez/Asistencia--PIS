@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package modelLuis.controller;
+package Controller.Academico;
 
 import DataBase.DataAccessObject;
 import model.Cursa;
@@ -10,8 +6,8 @@ import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 /**
- *
- * @author Usuario
+ * Controlador para la entidad Cursa.
+ * Extiende de DataAccessObject para manejar operaciones de base de datos.
  */
 public class ControllerCursa extends DataAccessObject<Cursa> {
 
@@ -19,10 +15,20 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
     private ListaEnlazada<Cursa> lista = new ListaEnlazada<>();
     private Integer index = -1;
 
+    /**
+     * Constructor del controlador.
+     * Inicializa la cursa y la lista de cursas.
+     */
     public ControllerCursa() {
         super(Cursa.class);
     }
 
+    /**
+     * Obtiene la cursa actual.
+     * Si la cursa es nula, se crea una nueva cursa.
+     *
+     * @return Cursa actual.
+     */
     public Cursa getCursa() {
         if (cursa == null) {
             cursa = new Cursa();
@@ -30,14 +36,30 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         return cursa;
     }
 
+    /**
+     * Establece la cursa actual.
+     *
+     * @param cursa Cursa actual.
+     */
     public void setCursa(Cursa cursa) {
         this.cursa = cursa;
     }
 
+    /**
+     * Guarda la cursa actual en la base de datos.
+     *
+     * @return ID de la cursa guardada.
+     * @throws Exception Si ocurre un error al guardar la cursa.
+     */
     public Integer save() throws Exception {
         return super.save(this.cursa, "SQC_CURSA");
     }
 
+    /**
+     * Actualiza la cursa actual en la base de datos.
+     *
+     * @return Verdadero si la actualización fue exitosa, falso en caso contrario.
+     */
     public Boolean update() {
         try {
             update(this.cursa);
@@ -48,37 +70,56 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         }
     }
 
+    /**
+     * Obtiene la lista de cursas.
+     * Si la lista está vacía, se obtienen todas las cursas de la base de datos.
+     *
+     * @return Lista de cursas.
+     */
     public ListaEnlazada<Cursa> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
         }
         return lista;
-
     }
 
     /**
-     * @param lista the lista to set
+     * Establece la lista de cursas.
+     *
+     * @param lista Lista de cursas.
      */
     public void setLista(ListaEnlazada<Cursa> lista) {
         this.lista = lista;
     }
 
     /**
-     * @return the index
+     * Obtiene el índice actual.
+     *
+     * @return Índice actual.
      */
     public Integer getIndex() {
         return index;
     }
 
     /**
-     * @param index the index to set
+     * Establece el índice actual.
+     *
+     * @param index Índice actual.
      */
     public void setIndex(Integer index) {
         this.index = index;
     }
 
+    /**
+     * Ordena la lista de cursas utilizando el algoritmo de ordenamiento rápido (quicksort).
+     *
+     * @param lista Lista de cursas a ordenar.
+     * @param type  Tipo de ordenamiento.
+     * @param field Campo por el cual se ordenará.
+     * @return Lista de cursas ordenada.
+     * @throws VacioExceptions Si la lista está vacía.
+     */
     public ListaEnlazada<Cursa> quicksort(ListaEnlazada<Cursa> lista, Integer type, String field) throws VacioExceptions {
-
         Cursa[] m = lista.toArray();
         quicksort(m, 0, m.length - 1, type, field);
         lista.toList(m);

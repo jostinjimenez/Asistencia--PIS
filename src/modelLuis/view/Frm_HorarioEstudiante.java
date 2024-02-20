@@ -1,6 +1,6 @@
 package modelLuis.view;
 
-import ModuloMatricula.Controller.ControllerMatricula;
+import Controller.Academico.ControllerMatricula;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.Objects;
 import javax.swing.UIManager;
@@ -8,10 +8,10 @@ import model.Asignatura;
 import model.Cursa;
 import model.Horario;
 import model.Matricula;
-import modelLuis.controller.ControllerCursa;
-import modelLuis.controller.ControllerHorario;
+import Controller.Academico.ControllerCursa;
+import Controller.Administrativo.ControllerHorario;
 import modelLuis.tablas.ModelTableAsistenciaEstudiante;
-import moduloAsignaturas.controller.AsignaturaController;
+import Controller.Academico.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

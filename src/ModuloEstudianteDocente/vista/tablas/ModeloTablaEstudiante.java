@@ -11,7 +11,7 @@ import tda_listas.exceptions.VacioExceptions;
 import java.util.HashMap;
 import java.util.Map;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 public class ModeloTablaEstudiante extends AbstractTableModel {
 

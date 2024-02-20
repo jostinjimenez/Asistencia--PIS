@@ -1,14 +1,12 @@
-package modulo_1.inicio_sesion.controller;
+package Controller.Administrativo;
 
 import DataBase.DataAccessObject;
 import model.Persona;
-import model.Rol;
 import tda_listas.ListaEnlazada;
 
 import java.lang.reflect.Field;
-import java.util.Date;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
+import static Controller.Util.Utilidades.getField;
 import tda_listas.exceptions.VacioExceptions;
 
 public class PersonaController extends DataAccessObject<Persona> {

@@ -7,7 +7,7 @@ import tda_listas.exceptions.VacioExceptions;
 import javax.swing.table.AbstractTableModel;
 
 import model.Cuenta;
-import modulo_1.inicio_sesion.controller.CuentaController;
+import Controller.Login.CuentaController;
 
 import java.util.HashMap;
 import java.util.Map;

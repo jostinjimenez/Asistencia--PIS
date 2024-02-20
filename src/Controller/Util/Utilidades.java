@@ -1,7 +1,7 @@
-package modulo_1.inicio_sesion.controller.util;
+package Controller.Util;
 
 import model.Persona;
-import modulo_1.inicio_sesion.controller.PersonaController;
+import Controller.Administrativo.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -11,7 +11,6 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.sql.*;
 
 public class Utilidades {
 

@@ -1,20 +1,14 @@
 package moduloAsignaturas.view;
 
-import ModuloMatricula.tablas.ModeloTablaCursas;
-import moduloAsignaturas.controller.MallaController;
+import Controller.Administrativo.MallaController;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import model.Malla;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
-import tda_listas.exceptions.VacioExceptions;
 import moduloAsignaturas.view.tablas.ModeloTablaMallas;
 
 import static moduloAsignaturas.view.util_vista.Utiles.cargarCarrera;

@@ -13,12 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import model.Cuenta;
-import model.Persona;
 import modelLuis.view.Frm_HorarioEstudiante;
-import modulo_1.inicio_sesion.controller.CuentaController;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
 import modulo_1.inicio_sesion.view.util.Utiles;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;

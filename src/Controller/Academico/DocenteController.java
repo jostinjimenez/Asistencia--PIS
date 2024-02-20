@@ -1,16 +1,14 @@
-package ModuloEstudianteDocente.controlador;
+package Controller.Academico;
 
 import DataBase.DataAccessObject;
-import model.Cuenta;
 import model.Docente;
-import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.*;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
+import static Controller.Util.Utilidades.getField;
 
 public class DocenteController extends DataAccessObject<Docente> {
 

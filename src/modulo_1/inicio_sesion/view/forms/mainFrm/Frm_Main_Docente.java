@@ -1,7 +1,7 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
-import modulo_1.inicio_sesion.controller.CuentaController;
+import Controller.Login.CuentaController;
 import javax.swing.*;
 
 public class Frm_Main_Docente extends javax.swing.JFrame {

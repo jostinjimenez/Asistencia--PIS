@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelLuis.controller;
+package Controller.Academico;
 
 import DataBase.DataAccessObject;
 import java.sql.Connection;
@@ -17,8 +17,8 @@ import model.Persona;
 import tda_listas.ListaEnlazada;
 
 /**
- *
- * @author Usuario
+ * Controlador para la entidad Asistencia.
+ * Extiende de DataAccessObject para manejar operaciones de base de datos.
  */
 public class ControllerAsistencia extends DataAccessObject<Asistencia> {
 
@@ -26,10 +26,19 @@ public class ControllerAsistencia extends DataAccessObject<Asistencia> {
     private ListaEnlazada<Asistencia> lista = new ListaEnlazada<>();
     private Integer index = -1;
 
+    /**
+     * Constructor del controlador.
+     * Inicializa la asistencia y la lista de asistencias.
+     */
     public ControllerAsistencia() {
         super(Asistencia.class);
     }
 
+    /**
+     * Obtiene la asistencia actual.
+     * Si la asistencia es nula, se crea una nueva asistencia.
+     * @return Asistencia actual.
+     */
     public Asistencia getAsistencia() {
         if (asistencia == null) {
             asistencia = new Asistencia();
@@ -37,38 +46,72 @@ public class ControllerAsistencia extends DataAccessObject<Asistencia> {
         return asistencia;
     }
 
+    /**
+     * Establece la asistencia actual.
+     * @param asitencia Asistencia actual.
+     */
     public void setAsistencia(Asistencia asitencia) {
         this.asistencia = asitencia;
     }
 
+    /**
+     * Obtiene la lista de asistencias.
+     * Si la lista está vacía, se obtienen todas las asistencias de la base de datos.
+     * @return Lista de asistencias.
+     */
     public ListaEnlazada<Asistencia> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
         }
         return lista;
-
     }
 
+    /**
+     * Establece la lista de asistencias.
+     * @param lista Lista de asistencias.
+     */
     public void setLista(ListaEnlazada<Asistencia> lista) {
         this.lista = lista;
     }
 
+    /**
+     * Obtiene el índice actual.
+     * @return Índice actual.
+     */
     public Integer getIndex() {
         return index;
     }
 
+    /**
+     * Establece el índice actual.
+     * @param index Índice actual.
+     */
     public void setIndex(Integer index) {
         this.index = index;
     }
 
+    /**
+     * Guarda la asistencia actual en la base de datos.
+     * @return Verdadero si la asistencia fue guardada exitosamente, falso en caso contrario.
+     * @throws Exception Si ocurre un error al guardar la asistencia.
+     */
     public Boolean save() throws Exception {
         return super.saveB(this.asistencia);
     }
-    
-     public Integer saved() throws Exception {
+
+    /**
+     * Guarda la asistencia actual en la base de datos y devuelve su ID.
+     * @return ID de la asistencia guardada.
+     * @throws Exception Si ocurre un error al guardar la asistencia.
+     */
+    public Integer saved() throws Exception {
         return super.save(this.asistencia, "SQC_ASISTENCIA");
     }
 
+    /**
+     * Actualiza la asistencia actual en la base de datos.
+     * @return Verdadero si la actualización fue exitosa, falso en caso contrario.
+     */
     public Boolean update() {
         try {
             update(this.asistencia);

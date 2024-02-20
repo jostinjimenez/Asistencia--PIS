@@ -9,7 +9,7 @@ import java.util.Objects;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import ModuloMatricula.Controller.ControllerMatricula;
+import Controller.Academico.ControllerMatricula;
 import model.Matricula;
 import modelLuis.tablas.ModelTableMatriculas;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;

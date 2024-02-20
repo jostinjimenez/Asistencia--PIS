@@ -1,21 +1,16 @@
 package modulo_1.inicio_sesion.view.forms.mainFrm;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
-import ModuloEstudianteDocente.controlador.DocenteController;
 import model.Cuenta;
-import model.Docente;
-import model.Estudiante;
 import model.Persona;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
+import Controller.Login.CuentaController;
+import Controller.Administrativo.PersonaController;
 
 import java.io.File;
-import java.util.Objects;
 import java.util.UUID;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 import static modulo_1.inicio_sesion.view.util.Utiles.*;
 
 public class Perfil_Modal extends javax.swing.JDialog {

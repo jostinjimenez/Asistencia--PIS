@@ -1,4 +1,4 @@
-package ModuloEstudianteDocente.controlador;
+package Controller.Academico;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import model.Persona;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
+import static Controller.Util.Utilidades.getField;
 
 public class EstudianteController extends DataAccessObject<Estudiante> {
     // Atributos

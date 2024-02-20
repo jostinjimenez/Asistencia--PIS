@@ -1,14 +1,12 @@
-package modulo_1.periodo_academico.controller;
+package Controller.Administrativo;
 
 import DataBase.DataAccessObject;
 import model.PeriodoAcademico;
 import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
 
-import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getField;
+import static Controller.Util.Utilidades.getField;
 
 
 public class PeriodoAcController extends DataAccessObject<PeriodoAcademico> {

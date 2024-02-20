@@ -1,6 +1,6 @@
 package ModuloMatricula.Views;
 
-import ModuloMatricula.Controller.ControllerMatricula;
+import Controller.Academico.ControllerMatricula;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

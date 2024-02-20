@@ -9,15 +9,14 @@ import java.util.Objects;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import ModuloEstudianteDocente.controlador.DocenteController;
+import Controller.Academico.DocenteController;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
-import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import model.Docente;
 import model.Persona;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 public class buscar_Docente extends javax.swing.JDialog {
 

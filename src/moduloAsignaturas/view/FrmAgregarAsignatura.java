@@ -1,12 +1,10 @@
 package moduloAsignaturas.view;
 
-import ModuloMatricula.tablas.ModeloTablaCursas;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import moduloAsignaturas.controller.AsignaturaController;
+import Controller.Academico.AsignaturaController;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -14,7 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
-import model.Asignatura;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.exceptions.VacioExceptions;
 

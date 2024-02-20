@@ -1,4 +1,4 @@
-package ModuloMatricula.Controller;
+package Controller.Academico;
 
 import DataBase.DataAccessObject;
 import model.Matricula;
@@ -8,7 +8,8 @@ import tda_listas.exceptions.VacioExceptions;
 import java.sql.*;
 
 /**
- * @author Usuario
+ * Controlador para la entidad Matricula.
+ * Extiende de DataAccessObject para manejar operaciones de base de datos.
  */
 public class ControllerMatricula extends DataAccessObject<Matricula> {
 
@@ -16,10 +17,19 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
     private ListaEnlazada<Matricula> lista = new ListaEnlazada<>();
     private Integer index = -1;
 
+    /**
+     * Constructor del controlador.
+     * Inicializa la matricula y la lista de matriculas.
+     */
     public ControllerMatricula() {
         super(Matricula.class);
     }
 
+    /**
+     * Obtiene la matricula actual.
+     * Si la matricula es nula, se crea una nueva matricula.
+     * @return Matricula actual.
+     */
     public Matricula getMatricula() {
         if (matricula == null) {
             matricula = new Matricula();
@@ -27,22 +37,39 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
         return matricula;
     }
 
+    /**
+     * Establece la matricula actual.
+     * @param matricula Matricula actual.
+     */
     public void setAsistencia(Matricula matricula) {
         this.matricula = matricula;
     }
 
+    /**
+     * Obtiene la lista de matriculas.
+     * Si la lista está vacía, se obtienen todas las matriculas de la base de datos.
+     * @return Lista de matriculas.
+     */
     public ListaEnlazada<Matricula> getLista() {
         if (lista.isEmpty()) {
             lista = list_All();
         }
         return lista;
-
     }
 
+    /**
+     * Guarda la matricula actual en la base de datos.
+     * @return ID de la matricula guardada.
+     * @throws Exception Si ocurre un error al guardar la matricula.
+     */
     public Integer save() throws Exception {
         return super.save(this.matricula, "SQC_MATRICULA");
     }
 
+    /**
+     * Actualiza la matricula actual en la base de datos.
+     * @return Verdadero si la actualización fue exitosa, falso en caso contrario.
+     */
     public Boolean update() {
         try {
             update(this.matricula);
@@ -54,28 +81,38 @@ public class ControllerMatricula extends DataAccessObject<Matricula> {
     }
 
     /**
-     * @param lista the lista to set
+     * Establece la lista de matriculas.
+     * @param lista Lista de matriculas.
      */
     public void setLista(ListaEnlazada<Matricula> lista) {
         this.lista = lista;
     }
 
     /**
-     * @return the index
+     * Obtiene el índice actual.
+     * @return Índice actual.
      */
     public Integer getIndex() {
         return index;
     }
 
     /**
-     * @param index the index to set
+     * Establece el índice actual.
+     * @param index Índice actual.
      */
     public void setIndex(Integer index) {
         this.index = index;
     }
 
+    /**
+     * Ordena la lista de matriculas utilizando el algoritmo de ordenamiento rápido (quicksort).
+     * @param lista Lista de matriculas a ordenar.
+     * @param type Tipo de ordenamiento.
+     * @param field Campo por el cual se ordenará.
+     * @return Lista de matriculas ordenada.
+     * @throws VacioExceptions Si la lista está vacía.
+     */
     public ListaEnlazada<Matricula> quicksort(ListaEnlazada<Matricula> lista, Integer type, String field) throws VacioExceptions {
-
         Matricula[] m = lista.toArray();
         quicksort(m, 0, m.length - 1, type, field);
         lista.toList(m);

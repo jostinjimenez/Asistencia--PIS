@@ -2,20 +2,14 @@ package ModuloMatricula.Views;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import ModuloMatricula.tablas.ModeloTablaCursas;
-import model.Matricula;
-import modelLuis.controller.ControllerCursa;
+import Controller.Academico.ControllerCursa;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 
-import java.sql.*;
 import java.util.Objects;
-
-import static modulo_1.inicio_sesion.view.util.Utiles.*;
 
 public class Frm_Cursas extends javax.swing.JFrame {
 

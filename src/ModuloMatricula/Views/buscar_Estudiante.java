@@ -1,33 +1,23 @@
 package ModuloMatricula.Views;
 
-import DataBase.Connection;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Objects;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
+import Controller.Academico.EstudianteController;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
-import model.Carrera;
 import model.Estudiante;
 import model.Persona;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
-import modulo_carrera.controller.CarreraController;
-import modulo_carrera.view.tablas.ModeloTablaCarrera;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 public class buscar_Estudiante extends javax.swing.JDialog {
 

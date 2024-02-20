@@ -1,14 +1,9 @@
 package ModuloEstudianteDocente.vista.tablas;
 
-import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 
-import model.Cuenta;
 import model.Docente;
-import model.Estudiante;
 import model.Persona;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -16,7 +11,7 @@ import tda_listas.exceptions.VacioExceptions;
 import java.util.HashMap;
 import java.util.Map;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 public class ModeloTablaDocente extends AbstractTableModel {
     private ListaEnlazada<Docente> docentes = new ListaEnlazada<>();

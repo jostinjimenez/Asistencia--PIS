@@ -2,7 +2,7 @@ package modulo_carrera.view.forms;
 
 import javax.swing.*;
 
-import modulo_carrera.controller.CarreraController;
+import Controller.Administrativo.CarreraController;
 import modulo_carrera.view.tablas.ModeloTablaCarrera;
 
 import java.awt.event.KeyAdapter;

@@ -8,9 +8,8 @@ import java.util.Objects;
 import javax.swing.*;
 
 import model.Cuenta;
-import model.Persona;
 import modelLuis.view.Frm_HorarioAdmi;
-import modulo_1.inicio_sesion.controller.CuentaController;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
 import ModuloEstudianteDocente.vista.*;
 import ModuloMatricula.Views.Frm_Maatricula;
@@ -19,7 +18,7 @@ import moduloAsignaturas.view.*;
 
 import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
 import modulo_1.inicio_sesion.view.util.Utiles;
-import modulo_1.periodo_academico.controller.PeriodoAcController;
+import Controller.Administrativo.PeriodoAcController;
 import modulo_1.periodo_academico.view.forms.Frm_PeriodosAcademicos;
 import modulo_carrera.view.forms.Frm_Carrera;
 import net.miginfocom.swing.MigLayout;

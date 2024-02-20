@@ -1,19 +1,14 @@
 package modulo_1.periodo_academico.view.forms;
 
-import model.PeriodoAcademico;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
-import modulo_1.periodo_academico.controller.PeriodoAcController;
+import Controller.Administrativo.PeriodoAcController;
 import modulo_1.periodo_academico.view.tablas.ModeloTablaPeriodoAc;
-import tda_listas.ListaEnlazada;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
-import java.util.Objects;
 
 public class Frm_PeriodosAcademicos extends javax.swing.JFrame {
 

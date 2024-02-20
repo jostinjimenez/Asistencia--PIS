@@ -6,12 +6,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
-import modulo_carrera.controller.CarreraController;
+import Controller.Administrativo.CarreraController;
 import modulo_carrera.view.tablas.ModeloTablaCarrera;
 
 /**

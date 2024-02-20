@@ -2,19 +2,17 @@ package modelLuis.tablas;
 
 import javax.swing.table.AbstractTableModel;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
 import model.Carrera;
-import model.Estudiante;
 import model.Matricula;
 import model.Persona;
-import modulo_carrera.controller.CarreraController;
+import Controller.Administrativo.CarreraController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 public class ModelTableMatriculas extends AbstractTableModel {
 

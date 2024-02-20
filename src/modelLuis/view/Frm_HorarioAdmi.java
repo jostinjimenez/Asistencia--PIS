@@ -2,7 +2,6 @@ package modelLuis.view;
 
 import ModuloMatricula.Views.buscar_Asignatura;
 import ModuloMatricula.Views.buscar_Carrera;
-import ModuloMatricula.tablas.ModeloTablaCursas;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import model.Horario;
-import modelLuis.controller.ControllerHorario;
+import Controller.Administrativo.ControllerHorario;
 import modelLuis.tablas.ModelTableHorario;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.ListaEnlazada;
@@ -26,7 +25,6 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
-        timePicker1.getSelectedTime();
     }
 
     private void limpiar() {
@@ -36,6 +34,8 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        txtHoraI.setText("");
+        txtHoraF.setText("");
     }
 
     public void cargarTabla() {
@@ -60,7 +60,6 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
     private void guardarHorario() {
 
         try {
-            System.out.println(cbxDia.getSelectedItem().toString());
             a.getAsistencia().setDia(cbxDia.getSelectedItem().toString());
             a.getAsistencia().setHoraFin(txtHoraF.getText());
             a.getAsistencia().setHoraInicio(txtHoraI.getText());

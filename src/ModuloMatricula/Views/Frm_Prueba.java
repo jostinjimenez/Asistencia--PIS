@@ -11,6 +11,8 @@ public class Frm_Prueba extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        
+        
     }
 
     @SuppressWarnings("unchecked")

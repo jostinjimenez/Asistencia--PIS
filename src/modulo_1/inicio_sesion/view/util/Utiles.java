@@ -1,10 +1,10 @@
 package modulo_1.inicio_sesion.view.util;
 
 import model.*;
-import moduloAsignaturas.controller.AsignaturaController;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.RolController;
-import modulo_1.periodo_academico.controller.PeriodoAcController;
+import Controller.Academico.AsignaturaController;
+import Controller.Login.CuentaController;
+import Controller.Administrativo.RolController;
+import Controller.Administrativo.PeriodoAcController;
 import tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import modulo_carrera.controller.CarreraController;
+import Controller.Administrativo.CarreraController;
 
 public class Utiles {
 
@@ -151,10 +151,6 @@ public class Utiles {
 
     public static void setCc(CuentaController cc) {
         Utiles.cc = cc;
-    }
-
-    public void GenerarCorreoInstitucional(String nombre, String apellido) {
-        String correo = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@unl.edu.ec";
     }
 
     PeriodoAcController pac = new PeriodoAcController();

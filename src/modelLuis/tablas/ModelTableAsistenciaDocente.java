@@ -3,8 +3,8 @@ package modelLuis.tablas;
 import javax.swing.table.AbstractTableModel;
 import model.Asignatura;
 import model.Horario;
-import modelLuis.controller.ControllerHorario;
-import moduloAsignaturas.controller.AsignaturaController;
+import Controller.Administrativo.ControllerHorario;
+import Controller.Academico.AsignaturaController;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

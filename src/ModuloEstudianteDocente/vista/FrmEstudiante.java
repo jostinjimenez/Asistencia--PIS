@@ -4,7 +4,7 @@
  */
 package ModuloEstudianteDocente.vista;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
+import Controller.Academico.EstudianteController;
 import ModuloEstudianteDocente.vista.modals.modal_Estudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
@@ -12,17 +12,12 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
-import modulo_carrera.view.tablas.ModeloTablaCarrera;
 
-import java.sql.*;
-
-import static modulo_1.inicio_sesion.controller.util.Utilidades.ajustarColumnas;
+import static Controller.Util.Utilidades.ajustarColumnas;
 
 /**
  *

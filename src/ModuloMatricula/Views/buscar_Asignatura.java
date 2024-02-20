@@ -6,16 +6,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.*;
 import java.util.Objects;
 
 import model.*;
 import modelLuis.view.Frm_HorarioAdmi;
-import moduloAsignaturas.controller.AsignaturaController;
+import Controller.Academico.AsignaturaController;
 import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
-import modulo_carrera.controller.CarreraController;
-import modulo_carrera.view.tablas.ModeloTablaCarrera;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 
@@ -56,8 +53,6 @@ public class buscar_Asignatura extends javax.swing.JDialog {
                                 ((Frm_HorarioAdmi) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
 
                             }
-                            //((Frm_Cursas) getParent()).txtAsignaturas.setText(asignatura.getNombre());
-                            // ((Frm_Cursas) getParent()).txtIdAsignatura.setText(String.valueOf(asignatura.getId()));
                         }
                         dispose();
                     }

@@ -4,7 +4,7 @@
  */
 package ModuloEstudianteDocente.vista;
 
-import ModuloEstudianteDocente.controlador.DocenteController;
+import Controller.Academico.DocenteController;
 import ModuloEstudianteDocente.vista.modals.modal_Docente;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaDocente;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
@@ -12,22 +12,15 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
-import model.Cuenta;
 import model.Docente;
-import moduloAsignaturas.view.tablas.ModeloTablaAsignaturas;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
-import modulo_1.inicio_sesion.view.tablas.ModeloTablaCuenta;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.util.HeaderRenderer;
 import tda_listas.ListaEnlazada;
 
-import java.sql.*;
 import java.util.Objects;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.ajustarColumnas;
+import static Controller.Util.Utilidades.ajustarColumnas;
 
 /**
  * @author LENOVO

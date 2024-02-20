@@ -5,7 +5,7 @@ import javax.swing.table.AbstractTableModel;
 import model.Asistencia;
 import model.Persona;
 
-import modelLuis.controller.ControllerAsistencia;
+import Controller.Academico.ControllerAsistencia;
 import tda_listas.ListaEnlazada;
 import tda_listas.exceptions.VacioExceptions;
 

@@ -2,7 +2,7 @@ package model;
 
 import java.util.Date;
 
-import static modulo_1.inicio_sesion.controller.util.Utilidades.getPersonaStatic;
+import static Controller.Util.Utilidades.getPersonaStatic;
 
 
 public class Matricula {

@@ -1,6 +1,6 @@
 package ModuloEstudianteDocente.vista.modals;
 
-import ModuloEstudianteDocente.controlador.EstudianteController;
+import Controller.Academico.EstudianteController;
 import ModuloEstudianteDocente.vista.FrmEstudiante;
 import ModuloEstudianteDocente.vista.tablas.ModeloTablaEstudiante;
 
@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.controller.PersonaController;
+import Controller.Login.CuentaController;
+import Controller.Administrativo.PersonaController;
 
 public class modal_Estudiante extends javax.swing.JDialog {
 

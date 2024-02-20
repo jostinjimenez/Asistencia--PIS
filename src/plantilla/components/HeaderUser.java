@@ -11,11 +11,8 @@ import java.util.Objects;
 import javax.swing.ImageIcon;
 import model.Cuenta;
 import model.Persona;
-import modulo_1.inicio_sesion.controller.CuentaController;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
+import Controller.Login.CuentaController;
 import modulo_1.inicio_sesion.view.util.Utiles;
-
-import static modulo_1.inicio_sesion.view.util.Utiles.cargarPeriodo;
 
 public class HeaderUser extends javax.swing.JPanel {
 

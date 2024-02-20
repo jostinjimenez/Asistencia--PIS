@@ -25,13 +25,18 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Password_Panel.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Perfil_Modal.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Frm_Main_Estudiante.java</file>
-        </group>
-        <group>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Perfil_Modal.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/plantilla/components/HeaderUser.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Prueba.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/mainFrm/Perfil_Modal.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modelLuis/view/Frm_HorarioAdmi.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/plantilla/components/HeaderUser.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modelLuis/view/AsistenciaPanel.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/ModuloMatricula/Views/Frm_Cursas.java</file>
+            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modelLuis/view/Frm_AsistenciaJ.java</file>
             <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/modulo_1/inicio_sesion/view/forms/Frm_Inicio_Sesion.java</file>
         </group>
     </open-files>
