@@ -1,8 +1,19 @@
 package View.Login.mainFrm;
 
+import Controller.Academico.ControllerCursa;
+import Controller.tda_listas.ListaEnlazada;
+import View.Tablas.ModelTableMatriculas;
+import View.Tablas.ModeloTablaCursas;
+import View.Tablas.ModeloTablaCursos;
+import View.Util.HeaderRenderer;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import Controller.Login.CuentaController;
+import model.Cuenta;
+import model.Cursa;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 public class Frm_Main_Docente extends javax.swing.JFrame {
 
@@ -12,13 +23,34 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
         this.setResizable(false);
     }
 
-    CuentaController cc;
+    Cuenta cuentaUsu;
+    ControllerCursa ccu = new ControllerCursa();
+    ModeloTablaCursos mtc = new ModeloTablaCursos();
 
-    public Frm_Main_Docente(CuentaController cc) {
+    public Frm_Main_Docente(Cuenta cuenta) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.cc = cc;
+        cuentaUsu = cuenta;
+        cargarTabla();
+    }
+
+    public void cargarTabla() {
+        ListaEnlazada<Cursa> listaFiltrada = ccu.buscarCursaPorDocente(cuentaUsu.getPersona_id());
+        mtc.setCursos(listaFiltrada);
+        tblTabla.setModel(mtc);
+
+        TableRowSorter<ModeloTablaCursos> trs = new TableRowSorter<>(mtc);
+        tblTabla.setRowSorter(trs);
+        tblTabla.getTableHeader().setReorderingAllowed(false);
+        tblTabla.getTableHeader().setResizingAllowed(false);
+        tblTabla.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tblTabla.getColumnCount(); i++) {
+            tblTabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
     }
 
     // Metodos
@@ -27,8 +59,10 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
     private void initComponents() {
 
         bg_panel = new javax.swing.JPanel();
-        roundPanel2 = new plantilla.swing.RoundPanel();
-        jLabel2 = new javax.swing.JLabel();
+        panelPrincipal = new plantilla.swing.RoundPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTabla = new javax.swing.JTable();
         headerUser1 = new plantilla.components.HeaderUser();
         menu_Docente2 = new plantilla.components.Menu_Docente();
 
@@ -42,17 +76,35 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
         bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Resumen");
-        roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 23)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("Cursos");
+        panelPrincipal.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
-        bg_panel.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 1030, 610));
+        tblTabla.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        tblTabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblTabla.setRowHeight(30);
+        jScrollPane1.setViewportView(tblTabla);
 
-        headerUser1.setBackground(new java.awt.Color(246, 246, 246));
-        bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, 60));
+        panelPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 950, 470));
+
+        bg_panel.add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
+
+        headerUser1.setBackground(new java.awt.Color(255, 255, 255));
+        bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, 50));
         bg_panel.add(menu_Docente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,9 +148,11 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg_panel;
     private plantilla.components.HeaderUser headerUser1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private plantilla.components.Menu_Docente menu_Docente2;
-    private plantilla.swing.RoundPanel roundPanel2;
+    private plantilla.swing.RoundPanel panelPrincipal;
+    private javax.swing.JTable tblTabla;
     // End of variables declaration//GEN-END:variables
 
 }

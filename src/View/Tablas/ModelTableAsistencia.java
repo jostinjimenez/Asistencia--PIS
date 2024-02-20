@@ -27,11 +27,7 @@ public class ModelTableAsistencia extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        switch (columnIndex) {
-            case 3:
-                return true;
-        }
-        return false;
+        return columnIndex == 3;
     }
 
     @Override
@@ -39,38 +35,34 @@ public class ModelTableAsistencia extends AbstractTableModel {
         if (!isCellEditable(rowIndex, columnIndex)) {
             return;
         }
-        switch (columnIndex) {
-            case 3:
-                if (aValue != null) {
-                    try {
-                        String faltaInput = aValue.toString().toUpperCase().trim();
+        if (columnIndex == 3) {
+            if (aValue != null) {
+                try {
+                    String faltaInput = aValue.toString().toUpperCase().trim();
 
-                        switch (faltaInput) {
-                            case "T":
-                                Asistencia asistenciaT = Asistencias.get(rowIndex);
-                                asistenciaT.setEstado_asistencia("ASISTIO");
-                                fireTableCellUpdated(rowIndex, columnIndex);
-                                break;
-                            case "J":
-                                Asistencia asistenciaJ = Asistencias.get(rowIndex);
-                                asistenciaJ.setEstado_asistencia("JUSTIFICADA");
-                                fireTableCellUpdated(rowIndex, columnIndex);
-                                break;
-                            case "I":
-                                Asistencia asistenciaI = Asistencias.get(rowIndex);
-                                asistenciaI.setEstado_asistencia("INJUSTIFICADA");
-                                fireTableCellUpdated(rowIndex, columnIndex);
-                                break;
-                            default:
-                                break;
-                        }
-                    } catch (VacioExceptions ex) {
-                        System.out.println("ERROR" + ex);
+                    switch (faltaInput) {
+                        case "T":
+                            Asistencia asistenciaT = Asistencias.get(rowIndex);
+                            asistenciaT.setEstado_asistencia("ASISTIO");
+                            fireTableCellUpdated(rowIndex, columnIndex);
+                            break;
+                        case "J":
+                            Asistencia asistenciaJ = Asistencias.get(rowIndex);
+                            asistenciaJ.setEstado_asistencia("JUSTIFICADA");
+                            fireTableCellUpdated(rowIndex, columnIndex);
+                            break;
+                        case "I":
+                            Asistencia asistenciaI = Asistencias.get(rowIndex);
+                            asistenciaI.setEstado_asistencia("INJUSTIFICADA");
+                            fireTableCellUpdated(rowIndex, columnIndex);
+                            break;
+                        default:
+                            break;
                     }
+                } catch (VacioExceptions ex) {
+                    System.out.println("ERROR" + ex);
                 }
-                break;
-            default:
-                break;
+            }
         }
     }
 
@@ -80,8 +72,7 @@ public class ModelTableAsistencia extends AbstractTableModel {
         Asistencia asistencia = null;
         try {
             persona = getLista().get(row);
-            if (getAsistencias() == null) {
-            } else {
+            if (getAsistencias() != null) {
                 asistencia = getAsistencias().get(row);
             }
         } catch (VacioExceptions e) {
@@ -123,24 +114,15 @@ public class ModelTableAsistencia extends AbstractTableModel {
     }
 
     public String getColumnName(int column) {
-        switch (column) {
-
-            case 0:
-                return "Nombre";
-
-            case 1:
-                return "Apellido";
-            case 2:
-                return "DNI";
-            case 3:
-                return "Falta";
-            case 4:
-                return "ID";
-            case 5:
-                return "ID_CURSA";
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> "Nombre";
+            case 1 -> "Apellido";
+            case 2 -> "DNI";
+            case 3 -> "Falta";
+            case 4 -> "ID";
+            case 5 -> "ID_CURSA";
+            default -> null;
+        };
     }
 
     public ListaEnlazada<Asistencia> getAsistencias() {

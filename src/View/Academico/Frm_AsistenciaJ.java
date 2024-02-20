@@ -231,7 +231,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblAsis);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 910, 320));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 910, 320));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {

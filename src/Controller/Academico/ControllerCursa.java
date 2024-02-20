@@ -5,6 +5,8 @@ import model.Cursa;
 import Controller.tda_listas.ListaEnlazada;
 import Controller.tda_listas.exceptions.VacioExceptions;
 
+import java.sql.*;
+
 /**
  * Controlador para la entidad Cursa.
  * Extiende de DataAccessObject para manejar operaciones de base de datos.
@@ -229,5 +231,35 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         return listaOrdenada;
     }
 
+    public ListaEnlazada<Cursa> buscarCursaPorDocente(Integer id) {
+        ListaEnlazada<Cursa> lista = new ListaEnlazada<>();
+        Cursa cursa = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = """
+                    SELECT
+                        C.ID, C.PARALELO, C.MATRICULA_ID, C.DOCENTE_ID, C.ASIGNATURA_ID
+                    FROM
+                        CURSA C JOIN DOCENTE D ON C.DOCENTE_ID = D.ID
+                    WHERE
+                        D.ID = ?""";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        cursa = new Cursa();
+                        cursa.setId(resultSet.getInt("ID"));
+                        cursa.setAsignatura_id(resultSet.getInt("ASIGNATURA_ID"));
+                        cursa.setParalelo(resultSet.getString("PARALELO"));
+                        cursa.setMatricula_id(resultSet.getInt("MATRICULA_ID"));
+                        cursa.setDocente_id(resultSet.getInt("DOCENTE_ID"));
+                        lista.add(cursa);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return lista;
+    }
 
 }
