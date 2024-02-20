@@ -41,12 +41,13 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
      */
     public void iniciarSesion() {
         String usuario = txtUsuario.getText();
-        String claveCifrada = cc.cifrar(txtClave.getText(), 10);
+        String clave = txtClave.getText();
+//        String claveCifrada = cc.cifrar(txtClave.getText(), 10);
 
-        if (usuario.isEmpty() || claveCifrada.isEmpty()) {
+        if (usuario.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         } else {
-            Cuenta cuenta = cc.validarCuenta(usuario, claveCifrada);
+            Cuenta cuenta = cc.validarCuenta(usuario, clave);
             cc.setCuenta(cuenta);
 //            if (cc.getFirstKey(claveCifrada, cuenta.getPersona_id()) == false) {
             UtilVista.setCc(cc);

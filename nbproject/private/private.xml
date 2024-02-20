@@ -25,15 +25,33 @@
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/view/FrmHorario.java</file>
         <file>file:/C:/Users/Usuario/Documents/GitHub/Asistencia--PIS/src/modelLuis/controller/ControllerMatricula.java</file>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Academico/Frm_AsistenciaJ.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Login/mainFrm/Frm_Main_Docente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Academico/AsistenciaPanel.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_HorarioAdmi.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Login/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/Controller/Administrativo/ControllerHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Login/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Academico/Frm_AsistenciaJ.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Academico/Frm_Prueba.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Academico/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_DocenteHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_PeriodosAcademicos.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Academico/Frm_AsistenciaJ.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Academico/modals/Frm_Prueba_Asis.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Login/mainFrm/Frm_Main_Docente.java</file>
-            <file>file:/C:/Users/Axlmd/Documents/NetBeansProjects/Asistencia--PIS/src/View/Academico/AsistenciaPanel.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_HorarioAdmi.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Login/Frm_Usuarios.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/Controller/Administrativo/ControllerHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Login/Frm_Inicio_Sesion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_HorarioEstudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Academico/Frm_AsistenciaJ.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Academico/Frm_Prueba.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Tablas/ModelTableHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Academico/FrmAgregarAsignatura.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Tablas/ModelTableHorarioEs.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_DocenteHorario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Tablas/ModelTableAsistenciaEstudiante.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Tablas/ModelTableAsistencia.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_Carrera.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Tablas/ModelTableAsistenciaDocente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ZZZ/Nuevo/Asistencia--PIS/src/View/Administrativo/Frm_PeriodosAcademicos.java</file>
         </group>
     </open-files>
 </project-private>
