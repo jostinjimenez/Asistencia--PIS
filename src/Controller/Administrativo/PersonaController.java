@@ -1,13 +1,13 @@
 package Controller.Administrativo;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import model.Persona;
-import tda_listas.ListaEnlazada;
+import Controller.tda_listas.ListaEnlazada;
 
 import java.lang.reflect.Field;
 
 import static Controller.Util.Utilidades.getField;
-import tda_listas.exceptions.VacioExceptions;
+import Controller.tda_listas.exceptions.VacioExceptions;
 
 public class PersonaController extends DataAccessObject<Persona> {
 

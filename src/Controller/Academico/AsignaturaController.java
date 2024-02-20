@@ -1,15 +1,12 @@
 package Controller.Academico;
 
-import DataBase.DataAccessObject;
-import model.Docente;
-import model.Matricula;
-import tda_listas.ListaEnlazada;
-import tda_listas.Nodo;
-import tda_listas.exceptions.VacioExceptions;
+import Controller.DataBase.DataAccessObject;
+import Controller.tda_listas.ListaEnlazada;
+import Controller.tda_listas.Nodo;
+import Controller.tda_listas.exceptions.VacioExceptions;
 
 import java.sql.*;
 import java.util.Comparator;
-import java.util.Iterator;
 
 import model.Asignatura;
 

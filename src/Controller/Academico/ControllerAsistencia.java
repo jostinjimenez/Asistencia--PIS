@@ -4,7 +4,7 @@
  */
 package Controller.Academico;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import model.Asignatura;
 import model.Asistencia;
 import model.Cursa;
 import model.Persona;
-import tda_listas.ListaEnlazada;
+import Controller.tda_listas.ListaEnlazada;
 
 /**
  * Controlador para la entidad Asistencia.

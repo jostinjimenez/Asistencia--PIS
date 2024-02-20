@@ -1,8 +1,8 @@
 package Controller.Administrativo;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import model.PeriodoAcademico;
-import tda_listas.ListaEnlazada;
+import Controller.tda_listas.ListaEnlazada;
 
 import java.lang.reflect.Field;
 

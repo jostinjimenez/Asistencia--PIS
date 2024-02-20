@@ -2,8 +2,8 @@ package Controller.Util;
 
 import model.Persona;
 import Controller.Administrativo.PersonaController;
-import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
+import Controller.tda_listas.ListaEnlazada;
+import Controller.tda_listas.exceptions.VacioExceptions;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

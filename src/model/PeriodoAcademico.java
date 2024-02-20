@@ -1,7 +1,5 @@
 package model;
 
-import tda_listas.ListaEnlazada;
-
 import java.util.Date;
 
 public class PeriodoAcademico {

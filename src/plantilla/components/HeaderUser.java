@@ -12,12 +12,12 @@ import javax.swing.ImageIcon;
 import model.Cuenta;
 import model.Persona;
 import Controller.Login.CuentaController;
-import modulo_1.inicio_sesion.view.util.Utiles;
+import View.Util.UtilVista;
 
 public class HeaderUser extends javax.swing.JPanel {
 
-    CuentaController cc = Utiles.getCc();
-    Cuenta cuentaUsu = Utiles.getCuentaUsu();
+    CuentaController cc = UtilVista.getCc();
+    Cuenta cuentaUsu = UtilVista.getCuentaUsu();
 
     public HeaderUser() {
         initComponents();

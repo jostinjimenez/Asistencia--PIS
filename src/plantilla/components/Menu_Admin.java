@@ -1,6 +1,10 @@
 package plantilla.components;
 
-import ModuloMatricula.Views.Frm_Cursas;
+import View.Academico.Frm_Cursas;
+import View.Academico.FrmAgregarAsignatura;
+import View.Academico.FrmDocente;
+import View.Academico.FrmEstudiante;
+import View.Administrativo.Frm_MallaAcademica;
 import plantilla.swing.ButtonMenu;
 
 import java.awt.*;
@@ -8,26 +12,24 @@ import java.util.Objects;
 import javax.swing.*;
 
 import model.Cuenta;
-import modelLuis.view.Frm_HorarioAdmi;
+import View.Administrativo.Frm_HorarioAdmi;
 import Controller.Login.CuentaController;
-import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
-import ModuloEstudianteDocente.vista.*;
-import ModuloMatricula.Views.Frm_Maatricula;
-import modulo_1.inicio_sesion.view.forms.Frm_Usuarios;
-import moduloAsignaturas.view.*;
+import View.Login.Frm_Inicio_Sesion;
+import View.Academico.Frm_Maatricula;
+import View.Login.Frm_Usuarios;
 
-import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Admin;
-import modulo_1.inicio_sesion.view.util.Utiles;
+import View.Login.mainFrm.Frm_Main_Admin;
+import View.Util.UtilVista;
 import Controller.Administrativo.PeriodoAcController;
-import modulo_1.periodo_academico.view.forms.Frm_PeriodosAcademicos;
-import modulo_carrera.view.forms.Frm_Carrera;
+import View.Administrativo.Frm_PeriodosAcademicos;
+import View.Administrativo.Frm_Carrera;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
 public class Menu_Admin extends javax.swing.JPanel {
 
-    CuentaController cc = Utiles.getCc();
-    Cuenta cuentaUsu = Utiles.getCuentaUsu();
+    CuentaController cc = UtilVista.getCc();
+    Cuenta cuentaUsu = UtilVista.getCuentaUsu();
     PeriodoAcController pac = new PeriodoAcController();
 
     public Menu_Admin() {
@@ -175,8 +177,8 @@ public class Menu_Admin extends javax.swing.JPanel {
         currentWindow.dispose();
 
         // Limpia los datos de la cuenta
-        Utiles.setCc(null);
-        Utiles.setCuentaUsu(null);
+        UtilVista.setCc(null);
+        UtilVista.setCuentaUsu(null);
 
         // Abre la ventana de inicio de sesión
         Frm_Inicio_Sesion inicioSesion = new Frm_Inicio_Sesion();

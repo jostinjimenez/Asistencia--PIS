@@ -1,13 +1,13 @@
 package Controller.Academico;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Tematica;
-import tda_listas.ListaEnlazada;
+import Controller.tda_listas.ListaEnlazada;
 
 /**
  * Controlador para la entidad Tematica.

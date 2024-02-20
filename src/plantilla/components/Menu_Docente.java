@@ -13,20 +13,20 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import model.Cuenta;
-import modelLuis.view.Frm_AsistenciaJ;
-import modelLuis.view.Frm_DocenteHorario;
+import View.Academico.Frm_AsistenciaJ;
+import View.Administrativo.Frm_DocenteHorario;
 import Controller.Login.CuentaController;
-import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Docente;
-import modulo_1.inicio_sesion.view.util.Utiles;
+import View.Login.Frm_Inicio_Sesion;
+import View.Login.mainFrm.Frm_Main_Docente;
+import View.Util.UtilVista;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
-import static modulo_1.inicio_sesion.view.util.Utiles.getCuentaUsu;
+import static View.Util.UtilVista.getCuentaUsu;
 
 public class Menu_Docente extends javax.swing.JPanel {
 
-    CuentaController cc = Utiles.getCc();
+    CuentaController cc = UtilVista.getCc();
     Cuenta cuentaUsu = new Cuenta();
 
     public Menu_Docente() {

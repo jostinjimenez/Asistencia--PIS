@@ -1,7 +1,5 @@
 package model;
 
-import tda_listas.ListaEnlazada;
-
 public class Rol {
     // Atributos
     private Integer id;

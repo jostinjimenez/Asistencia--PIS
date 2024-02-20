@@ -1,8 +1,8 @@
 package Controller.Academico;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import model.Docente;
-import tda_listas.ListaEnlazada;
+import Controller.tda_listas.ListaEnlazada;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

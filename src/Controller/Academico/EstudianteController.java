@@ -2,14 +2,14 @@ package Controller.Academico;
 
 import java.io.IOException;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 
 import java.lang.reflect.Field;
 
 import model.Estudiante;
 import model.Persona;
-import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
+import Controller.tda_listas.ListaEnlazada;
+import Controller.tda_listas.exceptions.VacioExceptions;
 
 import static Controller.Util.Utilidades.getField;
 

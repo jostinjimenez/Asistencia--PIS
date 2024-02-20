@@ -1,8 +1,8 @@
 package Controller.Administrativo;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import model.Rol;
-import tda_listas.ListaEnlazada;
+import Controller.tda_listas.ListaEnlazada;
 
 public class RolController extends DataAccessObject<Rol> {
     // Atributos

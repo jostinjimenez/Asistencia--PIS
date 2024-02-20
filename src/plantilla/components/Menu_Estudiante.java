@@ -13,18 +13,18 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import model.Cuenta;
-import modelLuis.view.Frm_HorarioEstudiante;
+import View.Administrativo.Frm_HorarioEstudiante;
 import Controller.Login.CuentaController;
-import modulo_1.inicio_sesion.view.forms.Frm_Inicio_Sesion;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Frm_Main_Estudiante;
-import modulo_1.inicio_sesion.view.util.Utiles;
+import View.Login.Frm_Inicio_Sesion;
+import View.Login.mainFrm.Frm_Main_Estudiante;
+import View.Util.UtilVista;
 import net.miginfocom.swing.MigLayout;
 import plantilla.swing.scrollbar.ScrollBarCustom;
 
 public class Menu_Estudiante extends javax.swing.JPanel {
 
-    CuentaController cc = Utiles.getCc();
-    Cuenta cuentaUsu = Utiles.getCuentaUsu();
+    CuentaController cc = UtilVista.getCc();
+    Cuenta cuentaUsu = UtilVista.getCuentaUsu();
 
     public Menu_Estudiante() {
 

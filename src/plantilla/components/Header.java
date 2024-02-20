@@ -12,15 +12,15 @@ import javax.swing.ImageIcon;
 import model.Cuenta;
 import model.Persona;
 import Controller.Login.CuentaController;
-import modulo_1.inicio_sesion.view.forms.mainFrm.Perfil_Modal;
-import modulo_1.inicio_sesion.view.util.Utiles;
+import View.Login.mainFrm.Perfil_Modal;
+import View.Util.UtilVista;
 
-import static modulo_1.inicio_sesion.view.util.Utiles.cargarPeriodo;
+import static View.Util.UtilVista.cargarPeriodo;
 
 public class Header extends javax.swing.JPanel {
 
-    CuentaController cc = Utiles.getCc();
-    Cuenta cuentaUsu = Utiles.getCuentaUsu();
+    CuentaController cc = UtilVista.getCc();
+    Cuenta cuentaUsu = UtilVista.getCuentaUsu();
 
     public Header() {
         initComponents();

@@ -1,9 +1,9 @@
 package Controller.Academico;
 
-import DataBase.DataAccessObject;
+import Controller.DataBase.DataAccessObject;
 import model.Matricula;
-import tda_listas.ListaEnlazada;
-import tda_listas.exceptions.VacioExceptions;
+import Controller.tda_listas.ListaEnlazada;
+import Controller.tda_listas.exceptions.VacioExceptions;
 
 import java.sql.*;
 
