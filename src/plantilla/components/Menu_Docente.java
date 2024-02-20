@@ -88,7 +88,6 @@ public class Menu_Docente extends javax.swing.JPanel {
                     currentWindow.dispose();
 
                     Frm_AsistenciaJ frm = new Frm_AsistenciaJ(cuentaUsu);
-                    //Frm_AsistenciaJ frm = new Frm_AsistenciaJ();
                     frm.setVisible(true);
                 });
             case "Horario Academico" ->
@@ -96,7 +95,7 @@ public class Menu_Docente extends javax.swing.JPanel {
                     Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Docente.this);
                     currentWindow.dispose();
 
-                    Frm_DocenteHorario frm = new Frm_DocenteHorario(); // Enviar el ID del docente
+                    Frm_DocenteHorario frm = new Frm_DocenteHorario(cuentaUsu); // Enviar el ID del docente
                     frm.setVisible(true);
                 });
         }

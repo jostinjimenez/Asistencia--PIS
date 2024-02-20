@@ -99,7 +99,7 @@ public class Frm_Main_Docente extends javax.swing.JFrame {
         tblTabla.setRowHeight(30);
         jScrollPane1.setViewportView(tblTabla);
 
-        panelPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 950, 470));
+        panelPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 830, 390));
 
         bg_panel.add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
 

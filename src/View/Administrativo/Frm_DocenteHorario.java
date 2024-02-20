@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.Objects;
 import javax.swing.UIManager;
 import model.Asignatura;
+import model.Cuenta;
 import model.Cursa;
 import model.Horario;
 import Controller.Academico.ControllerCursa;
@@ -22,10 +23,18 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
     private ListaEnlazada<Asignatura> listaAsis = new ListaEnlazada<>();
     private ControllerHorario controlHorario = new ControllerHorario();
     private ModelTableAsistenciaDocente a = new ModelTableAsistenciaDocente();
-    private Integer id = 1;
+    Cuenta cuentaUsu;
 
     public Frm_DocenteHorario() {
         initComponents();
+        cargarTabla();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+    }
+
+    public Frm_DocenteHorario(Cuenta cuenta) {
+        initComponents();
+        cuentaUsu = cuenta;
         cargarTabla();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -43,7 +52,7 @@ public class Frm_DocenteHorario extends javax.swing.JFrame {
     }
 
     public void getCursa() throws VacioExceptions {
-        String idd = id.toString();
+        String idd = cuentaUsu.getPersona_id().toString();
         cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), idd, "id_docente", "quicksort", 0);
         for (Cursa cursa : cursas) {
             String iden = cursa.getAsignatura_id().toString();
