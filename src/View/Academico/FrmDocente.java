@@ -131,6 +131,7 @@ public class FrmDocente extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(225, 233, 243));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblDocente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -158,8 +159,8 @@ public class FrmDocente extends javax.swing.JFrame {
         roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 560, 50, 43));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel2.setText("Docentes");
+        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
+        jLabel2.setText("Docentes:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         btnNuevo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -197,7 +198,6 @@ public class FrmDocente extends javax.swing.JFrame {
         });
         roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 280, -1));
 
-        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,7 +209,7 @@ public class FrmDocente extends javax.swing.JFrame {
         jPanel1.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
-        header2.setBackground(new java.awt.Color(246, 246, 246));
+        header2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 700));

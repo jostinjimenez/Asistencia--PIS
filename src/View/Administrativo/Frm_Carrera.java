@@ -18,8 +18,8 @@ import View.Tablas.ModeloTablaCarrera;
 public class Frm_Carrera extends javax.swing.JFrame {
 
     /**
-     * Constructor de Frm_Usuarios.
-     * Inicializa los componentes del formulario y establece su ubicación.
+     * Constructor de Frm_Usuarios. Inicializa los componentes del formulario y
+     * establece su ubicación.
      */
     public Frm_Carrera() {
         initComponents();
@@ -32,7 +32,6 @@ public class Frm_Carrera extends javax.swing.JFrame {
             btnEditar.setEnabled(true);
             btnEliminar.setEnabled(true);
         });
-
 
 //        txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
 //            @Override
@@ -55,33 +54,27 @@ public class Frm_Carrera extends javax.swing.JFrame {
     ModeloTablaCarrera mtc = new ModeloTablaCarrera();
     CarreraController carrC = new CarreraController();
 
-//    private void buscar() {
-//        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
-//        String texto = txtBuscar.getText();
-//
-//        try {
-//            if (texto.isEmpty()) {
-//                mtp.setPersonas(pc.getPersonas());
-//            } else {
-//                if (criterio.equalsIgnoreCase("nombre")) {
-//                    mtp.setPersonas(pc.buscarNombre(pc.list_All(), texto));
-//                } else if (criterio.equalsIgnoreCase("apellido")) {
-//                    mtp.setPersonas(pc.buscarApellido(pc.list_All(), texto));
-//                } else if (criterio.equalsIgnoreCase("dni")) {
-//                    mtp.setPersonas(pc.buscarDni(pc.list_All(), texto));
-//                } else if (criterio.equalsIgnoreCase("id")) {
-//                    Integer id = Integer.parseInt(texto);
-//                    mtp.setPersonas(pc.buscarId(pc.list_All(), id));
-//                }
-//            }
-//            mtp.fireTableDataChanged();
-//            jTable1.setModel(mtp);
-//            jTable1.updateUI();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBuscar.getText();
+        
+        try {
+            if (texto.isEmpty()) {
+                mtc.setLista(carrC.list_All());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    mtc.setLista(carrC.buscarPorNombre(texto));
+                } else if (criterio.equalsIgnoreCase("codigo")) {
+                    mtc.setLista(carrC.buscarPorCodigo(texto));
+                }
+            }
+            mtc.fireTableDataChanged();
+            jTable1.setModel(mtc);
+            jTable1.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 //    public void eliminarRegistro() {
 //        int selectedRow = jTable1.getSelectedRow();
@@ -103,7 +96,6 @@ public class Frm_Carrera extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
     /**
      * Este método se encarga de cargar la tabla con los datos de las personas.
      */
@@ -127,7 +119,6 @@ public class Frm_Carrera extends javax.swing.JFrame {
         }
     }
 
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -143,7 +134,7 @@ public class Frm_Carrera extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         cbxCriterio = new javax.swing.JComboBox<>();
-        cbxRol = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         menu_Admin2 = new plantilla.components.Menu_Admin();
         header2 = new plantilla.components.Header();
 
@@ -170,7 +161,7 @@ public class Frm_Carrera extends javax.swing.JFrame {
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 130, 240, 20));
+        roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 130, 240, 30));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -218,22 +209,20 @@ public class Frm_Carrera extends javax.swing.JFrame {
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 110, 30));
 
         cbxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Rol", "Nombre", "Apellido", "DNI" }));
+        cbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nombre", "codigo" }));
         cbxCriterio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxCriterioItemStateChanged(evt);
             }
         });
-        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 180, 160, -1));
+        roundPanel1.add(cbxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 180, 160, -1));
 
-        cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxRol.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxRolItemStateChanged(evt);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        roundPanel1.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 160, -1));
+        roundPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 130, 30, 30));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
@@ -256,21 +245,21 @@ public class Frm_Carrera extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cbxCriterioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCriterioItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            if (Objects.equals(cbxCriterio.getSelectedItem(), "Rol")) {
-                cbxRol.setVisible(true);
-                txtBuscar.setVisible(false);
-            } else {
-                cbxRol.setVisible(false);
-                txtBuscar.setVisible(true);
-            }
-
-        }
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//            if (Objects.equals(cbxCriterio.getSelectedItem(), "Rol")) {
+//                cbxRol.setVisible(true);
+//                txtBuscar.setVisible(false);
+//            } else {
+//                cbxRol.setVisible(false);
+//                txtBuscar.setVisible(true);
+//            }
+//
+//        }
     }//GEN-LAST:event_cbxCriterioItemStateChanged
 
-    private void cbxRolItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxRolItemStateChanged
-        //buscarRol();
-    }//GEN-LAST:event_cbxRolItemStateChanged
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        buscar();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {
         Modal_Carrera nu = new Modal_Carrera(this, true);
@@ -297,8 +286,8 @@ public class Frm_Carrera extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbxCriterio;
-    private javax.swing.JComboBox<String> cbxRol;
     private plantilla.components.Header header2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

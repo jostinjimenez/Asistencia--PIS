@@ -27,10 +27,12 @@ public class AsistenciaPanel extends javax.swing.JPanel {
         roundPanel1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 0, 220, 620));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 153, 255));
         jLabel1.setText("Ciclo y Carrera");
         roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
         jLabel2.setText("Asignatura");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, -1, -1));
 

@@ -271,7 +271,7 @@ public class Frm_Maatricula extends javax.swing.JFrame {
         roundPanel1.add(txtIdCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 50, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel7.setForeground(new java.awt.Color(102, 153, 255));
         jLabel7.setText("Agregar Matriculas");
         roundPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 

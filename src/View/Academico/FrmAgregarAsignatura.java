@@ -2,6 +2,7 @@ package View.Academico;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import Controller.Academico.AsignaturaController;
+import Controller.tda_listas.ListaEnlazada;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,11 +18,15 @@ import Controller.tda_listas.exceptions.VacioExceptions;
 
 import static View.Util.Utiles.cargarMalla;
 import static View.Util.Utiles.getComboMalla;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import model.Asignatura;
 
 public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
     private AsignaturaController ac = new AsignaturaController();
     private ModeloTablaAsignaturas mta = new ModeloTablaAsignaturas();
+    private Integer i;
 
     /**
      * Creates new form Frm_AgregarAsistencia
@@ -32,15 +37,14 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         setResizable(false);
         setupListeners();
 
-
         ac = new AsignaturaController();
         mta = new ModeloTablaAsignaturas();
 
         limpiar();
     }
 
-    public void cargarTabla() {
-        mta.setAsignaturas(ac.list_All());
+    public void cargarTabla(ListaEnlazada<Asignatura> lista) {
+        mta.setAsignaturas(lista);
         tablaAsignaturas.setModel(mta);
         mta.fireTableDataChanged();
         tablaAsignaturas.updateUI();
@@ -58,6 +62,8 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         for (int i = 0; i < tablaAsignaturas.getColumnCount(); i++) {
             tablaAsignaturas.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
+        TableColumnModel tcm = tablaAsignaturas.getColumnModel();
+        tcm.removeColumn(tablaAsignaturas.getColumn("ID"));
     }
 
     public Boolean validar() {
@@ -78,7 +84,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
                 if (ac.save() > 0) {
                     limpiar();
-                    cargarTabla();
+                    cargarTabla(ac.list_All());
                     JOptionPane.showMessageDialog(null, "Se guardo correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
@@ -144,45 +150,43 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 //                    JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
     public void limpiar() {
         txtNombreAsignatura.setText("");
         txtCodigoAsigntura.setText("");
         txtHorasTotales.setText("");
-        cargarTabla();
+        cargarTabla(ac.list_All());
         cargarMalla(cbxMalla);
     }
 
     public void modificar() {
         if (validar()) {
             // Obtener el índice de la fila seleccionada
-            int filaSeleccionada = tablaAsignaturas.getSelectedRow();
 
             // Verificar si se ha seleccionado alguna fila
-            if (filaSeleccionada >= 0) {
-                // Obtener los datos del formulario
-                String nombre = txtNombreAsignatura.getText();
-                String codigoStr = txtCodigoAsigntura.getText();
-                String horasTotalesStr = txtHorasTotales.getText();
+            // Obtener los datos del formulario
+            String nombre = txtNombreAsignatura.getText();
+            String codigoStr = txtCodigoAsigntura.getText();
+            int horasTotalesStr = Integer.parseInt(txtHorasTotales.getText());
 
-                // Convertir a los tipos de datos apropiados
-                Integer horasTotales = Integer.parseInt(horasTotalesStr);
+            // Configurar los datos en el controlador
+            ac.getAsignatura().setNombre(nombre);
+            ac.getAsignatura().setCodigo_materia(codigoStr);
+            ac.getAsignatura().setHoras_Totales(horasTotalesStr);
+            if (i <= 0) {
 
-                // Configurar los datos en el controlador
-                ac.getAsignatura().setNombre(nombre);
-                ac.getAsignatura().setCodigo_materia(codigoStr);
-                ac.getAsignatura().setHoras_Totales(horasTotales);
-
+                System.out.println("No se puede");
+            } else {
+                ac.getAsignatura().setId(i);
                 // Actualizar la información en la lista y en la tabla
                 if (ac.update()) {
+
                     limpiar();
-                    cargarTabla();
+                    cargarTabla(ac.list_All());
+                    System.out.println("Se ha modificado");
                     JOptionPane.showMessageDialog(null, "Se modificó correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo modificar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
@@ -195,11 +199,13 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 
         // Verificar si se ha seleccionado alguna fila
         if (filaSeleccionada >= 0) {
+            TableModel model = tablaAsignaturas.getModel();
             // Obtener los datos de la fila seleccionada desde el modelo de la tabla
-            String id = tablaAsignaturas.getValueAt(filaSeleccionada, 0).toString();
-            String nombre = tablaAsignaturas.getValueAt(filaSeleccionada, 1).toString();
-            String codigo = tablaAsignaturas.getValueAt(filaSeleccionada, 2).toString();
-            String horasTotales = tablaAsignaturas.getValueAt(filaSeleccionada, 3).toString();
+            String codigo = model.getValueAt(filaSeleccionada, 0).toString();
+            i = (Integer) model.getValueAt(filaSeleccionada, 4);
+            String nombre = model.getValueAt(filaSeleccionada, 1).toString();
+            // String codigo = tablaAsignaturas.getValueAt(filaSeleccionada, 2).toString();
+            String horasTotales = model.getValueAt(filaSeleccionada, 2).toString();
 
             // Mostrar los datos en los campos de texto
             txtNombreAsignatura.setText(nombre);
@@ -209,37 +215,28 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     }
 
     private void buscar() throws VacioExceptions {
-//        // Obtener el criterio ingresado en el campo de búsqueda
-//        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
-//
-//        // Obtener el criterio de búsqueda seleccionado en el combobox
-//        String criterio = comboBoxCriterio.getSelectedItem().toString();  // No convertir a minúsculas
-//
-//        // Verificar si se ingresó un criterio válido
-//        if (!criterio.isEmpty()) {
-//            // Seleccionar el comparador adecuado según el criterio de búsqueda
-//            Comparator<Asignatura> comparador = (criterio.equals("nombre"))
-//                    ? Comparator.comparing(Asignatura::getNombre) // Comparar directamente sin convertir a minúsculas
-//                    : Comparator.comparing(Asignatura::getCodigo_materia);  // Comparar directamente sin convertir a minúsculas
-//
-//            // Realizar la búsqueda en el modelo de la tabla
-//            int indice = mta.buscar(criterioBusqueda, comparador, criterio);
-//
-//            // Verificar si se encontró la asignatura
-//            if (indice >= 0) {
-//                // Seleccionar la fila encontrada
-//                tablaAsignaturas.setRowSelectionInterval(indice, indice);
-//                // Cargar los datos seleccionados en los campos de texto
-//                cargarDatosSeleccionados();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "No se encontró ninguna asignatura con ese criterio", "Información", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+
+        ListaEnlazada<Asignatura> lista = new ListaEnlazada<>();
+        // Obtener el criterio ingresado en el campo de búsqueda
+        String criterioBusqueda = txtBuscar.getText();  // No convertir a minúsculas
+
+        // Obtener el criterio de búsqueda seleccionado en el combobox
+        String criterio = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
+        System.out.println(criterio);// No convertir a minúsculas
+
+        // Verificar si se ingresó un criterio válido
+        if (!criterio.isEmpty()) {
+            Asignatura asignatura = ac.busquedaBinaria2(ac.list_All(), criterioBusqueda, criterio);
+            System.out.println(asignatura);
+            asignatura.toString();
+            lista.add(asignatura);
+            cargarTabla(lista);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un criterio (Nombre o Código) para buscar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private void ordenar() throws VacioExceptions {
+//    private void ordenar() throws VacioExceptions {
 //        // Obtener el campo de orden del ComboBox
 //        String campoOrden = comboBoxCriterio.getSelectedItem().toString().toLowerCase();
 //        // Obtener el tipo de orden del ComboBox
@@ -251,7 +248,7 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
 //        } else {
 //            JOptionPane.showMessageDialog(null, "Campo de orden inválido", "Error", JOptionPane.ERROR_MESSAGE);
 //        }
-    }
+//    }
 
     private void setupListeners() {
         txtCodigoAsigntura.addKeyListener(new KeyAdapter() {
@@ -309,8 +306,6 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setForeground(new java.awt.Color(0, 0, 0));
-
         tablaAsignaturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tablaAsignaturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -333,7 +328,6 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 980, 220));
 
         btnOrdenar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btnOrdenar.setForeground(new java.awt.Color(0, 0, 0));
         btnOrdenar.setText("Ordenar");
         btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,12 +337,15 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(btnOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 300, -1, -1));
 
         ComboBoxOrdenar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        ComboBoxOrdenar.setForeground(new java.awt.Color(0, 0, 0));
         ComboBoxOrdenar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascendente", "Descendente" }));
         roundPanel1.add(ComboBoxOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 130, -1));
 
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
         roundPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 240, 175, -1));
 
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
@@ -361,12 +358,15 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 230, -1, -1));
 
         comboBoxCriterio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        comboBoxCriterio.setForeground(new java.awt.Color(0, 0, 0));
-        comboBoxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Codigo" }));
+        comboBoxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nombre", "codigo" }));
+        comboBoxCriterio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxCriterioActionPerformed(evt);
+            }
+        });
         roundPanel1.add(comboBoxCriterio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 120, -1));
 
         btnGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -376,7 +376,6 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         });
         roundPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
 
-        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,7 +384,6 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         });
         roundPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 560, -1, -1));
 
-        btnModificar.setForeground(new java.awt.Color(0, 0, 0));
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -395,25 +393,21 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 560, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Malla Academica:");
         roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Horas totales:");
         roundPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         txtCodigoAsigntura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtCodigoAsigntura.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtCodigoAsigntura, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 110, 250, -1));
 
         txtHorasTotales.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtHorasTotales.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtHorasTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 250, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel5.setForeground(new java.awt.Color(102, 153, 255));
         jLabel5.setText("Asignaturas");
         roundPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
@@ -421,16 +415,13 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
         roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 510, 10));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre de la Asignatura:");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
         txtNombreAsignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtNombreAsignatura.setForeground(new java.awt.Color(0, 0, 0));
         roundPanel1.add(txtNombreAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 250, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Codigo de la Asignatura:");
         roundPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, -1, -1));
 
@@ -465,20 +456,27 @@ public class FrmAgregarAsignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaAsignaturasMouseClicked
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
-        try {
-            ordenar();
-        } catch (VacioExceptions ex) {
-            Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            ordenar();
+//        } catch (VacioExceptions ex) {
+//            Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_btnOrdenarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
             buscar();
         } catch (VacioExceptions ex) {
-            Logger.getLogger(FrmAgregarAsignatura.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            System.out.println(ex +"Error");    }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void comboBoxCriterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCriterioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxCriterioActionPerformed
 
     /**
      * @param args the command line arguments

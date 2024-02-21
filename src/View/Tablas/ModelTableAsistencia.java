@@ -35,7 +35,7 @@ public class ModelTableAsistencia extends AbstractTableModel {
         if (!isCellEditable(rowIndex, columnIndex)) {
             return;
         }
-        if (columnIndex == 3) {
+        if (columnIndex == 4) {
             if (aValue != null) {
                 try {
                     String faltaInput = aValue.toString().toUpperCase().trim();
@@ -87,11 +87,11 @@ public class ModelTableAsistencia extends AbstractTableModel {
                 case 2:
                     return persona.getDni();
                 case 3:
-                    if (asistencia != null) {
-                        return asistencia.getEstado_asistencia();
-                    } else {
-                        return "ASISTIO";
-                    }
+//                    if (asistencia != null) {
+//                        return asistencia.getEstado_asistencia();
+//                    } else {
+//                        return "";
+//                    }
                 case 4:
                     if (asistencia != null) {
                         return asistencia.getId();

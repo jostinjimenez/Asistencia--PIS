@@ -99,6 +99,7 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblHorario.setModel(new javax.swing.table.DefaultTableModel(
@@ -114,12 +115,12 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblHorario);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 980, 300));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 980, 300));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 210, 680));
 
-        headerUser1.setBackground(new java.awt.Color(246, 246, 246));
+        headerUser1.setBackground(new java.awt.Color(255, 255, 255));
         bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

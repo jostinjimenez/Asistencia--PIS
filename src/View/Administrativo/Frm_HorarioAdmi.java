@@ -235,7 +235,7 @@ public class Frm_HorarioAdmi extends javax.swing.JFrame {
         roundPanel1.add(txtIdAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 110, 50, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
         jLabel2.setText("Administracion de Horarios");
         roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 

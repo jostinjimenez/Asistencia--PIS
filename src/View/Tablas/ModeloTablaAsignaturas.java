@@ -24,7 +24,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     public void setAsignaturas(ListaEnlazada<Asignatura> asignaturas) {
@@ -52,6 +52,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
                 case 1 -> (asignatura != null) ? asignatura.getNombre() : "";
                 case 2 -> (asignatura != null) ? asignatura.getHoras_Totales() : "";
                 case 3 -> (malla != null) ? malla.getDescripcion() : "";
+                case 4 -> (asignatura != null) ? asignatura.getId() : "";
                 default -> null;
             };
         } catch (Exception e) {
@@ -66,6 +67,7 @@ public class ModeloTablaAsignaturas extends AbstractTableModel {
             case 1 -> "Nombre";
             case 2 -> "Horas Totales";
             case 3 -> "Malla";
+            case 4 -> "ID";
             default -> null;
         };
     }

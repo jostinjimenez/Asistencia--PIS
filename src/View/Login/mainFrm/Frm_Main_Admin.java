@@ -2,6 +2,7 @@ package View.Login.mainFrm;
 
 import com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme;
 import Controller.Login.CuentaController;
+import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
 import javax.swing.*;
 
 
@@ -47,13 +48,14 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         bg_panel.add(menu_Admin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
-        header1.setBackground(new java.awt.Color(246, 246, 246));
+        header1.setBackground(new java.awt.Color(255, 255, 255));
         bg_panel.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
+        roundPanel2.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
         jLabel2.setText("Area Personal");
         roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
@@ -74,7 +76,7 @@ public class Frm_Main_Admin extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatDarkFlatIJTheme());
+            UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }

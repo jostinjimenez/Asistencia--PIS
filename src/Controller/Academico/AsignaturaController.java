@@ -175,7 +175,7 @@ public class AsignaturaController extends DataAccessObject<Asignatura> {
                 Integer.toString(asignatura.getId()).equalsIgnoreCase(text);
             case "nombre" ->
                 asignatura.getNombre().toLowerCase().contains(text);
-            case "codigo_materia" ->
+            case "codigo" ->
                 asignatura.getCodigo_materia().toLowerCase().contains(text);
             default ->
                 throw new IllegalArgumentException("Campo de comparación no válido");

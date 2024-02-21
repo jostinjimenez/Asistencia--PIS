@@ -87,17 +87,24 @@ public class Asignatura {
         return Objects.hash(id);
     }
 
-
     public Boolean comparar(Asignatura as, String field, Integer type) {
 
         switch (type) {
             case 1:
                 if (field.equalsIgnoreCase("id")) {
                     return getId() > as.getId();
+                } else if (field.equalsIgnoreCase("codigo")) {
+                    return getCodigo_materia().compareTo(as.getCodigo_materia()) > 0;
+                } else if (field.equalsIgnoreCase("nombre")) {
+                    return getNombre().compareTo(as.getNombre()) > 0;
                 }
             case 0:
                 if (field.equalsIgnoreCase("id")) {
                     return getId() < as.getId();
+                } else if (field.equalsIgnoreCase("codigo")) {
+                    return getCodigo_materia().compareTo(as.getCodigo_materia()) < 0;
+                } else if (field.equalsIgnoreCase("nombre")) {
+                    return getNombre().compareTo(as.getNombre()) < 0;
                 }
             default:
                 return false;
@@ -106,10 +113,14 @@ public class Asignatura {
 
     public int comparar(Asignatura asignatura, String text, String campo) {
         return switch (campo.toLowerCase()) {
-            case "id" -> Integer.compare(Integer.parseInt(text), asignatura.getId());
-            case "nombre" -> asignatura.getNombre().compareToIgnoreCase(text);
-            case "codigo_materia" -> asignatura.getCodigo_materia().compareToIgnoreCase(text);
-            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+            case "id" ->
+                Integer.compare(Integer.parseInt(text), asignatura.getId());
+            case "nombre" ->
+                asignatura.getNombre().compareToIgnoreCase(text);
+            case "codigo" ->
+                asignatura.getCodigo_materia().compareToIgnoreCase(text);
+            default ->
+                throw new IllegalArgumentException("Campo de comparación no válido");
         };
     }
 }

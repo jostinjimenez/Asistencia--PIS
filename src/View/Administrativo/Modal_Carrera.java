@@ -20,7 +20,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
         carrerC.setIndex(-1);
 
         cargarVista(mtp, jTable1);
-        btnGuardar.addActionListener(e -> guardar());
+        btnGuardar.addActionListener(e ->updateCarrera());
         btnCancelar.addActionListener(e -> this.dispose());
     }
 
@@ -52,6 +52,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
                 txtArea.setText(carrerC.getCarrera().getArea_estudio());
                 cbxModalidad.setSelectedItem(carrerC.getCarrera().getModalidad());
                 txtTitulo.setText(carrerC.getCarrera().getTitulo_otorgado());
+                txtCodigo.setText(carrerC.getCarrera().getCodigo());
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

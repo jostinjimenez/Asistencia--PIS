@@ -48,16 +48,17 @@ public class Frm_Main_Estudiante extends javax.swing.JFrame {
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 680));
 
+        roundPanel2.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
         jLabel2.setText("Resumen");
         roundPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         bg_panel.add(roundPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
 
-        headerUser1.setBackground(new java.awt.Color(246, 246, 246));
+        headerUser1.setBackground(new java.awt.Color(255, 255, 255));
         bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

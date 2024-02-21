@@ -126,6 +126,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(menu_Admin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
 
+        roundPanel5.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblEstudiante.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -154,8 +155,8 @@ public class FrmEstudiante extends javax.swing.JFrame {
         roundPanel5.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 180, 30));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel2.setText("Estudiantes");
+        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
+        jLabel2.setText("Estudiantes:");
         roundPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         btnEliminar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -206,7 +207,7 @@ public class FrmEstudiante extends javax.swing.JFrame {
 
         jPanel1.add(roundPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1040, 620));
 
-        header2.setBackground(new java.awt.Color(246, 246, 246));
+        header2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1040, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -4, 1290, 700));

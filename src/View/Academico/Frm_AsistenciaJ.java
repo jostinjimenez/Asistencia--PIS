@@ -303,7 +303,7 @@ public class Frm_AsistenciaJ extends javax.swing.JFrame {
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 1030, 620));
         bg_panel.add(menu_Docente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 680));
 
-        headerUser1.setBackground(new java.awt.Color(246, 246, 246));
+        headerUser1.setBackground(new java.awt.Color(255, 255, 255));
         bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 1030, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

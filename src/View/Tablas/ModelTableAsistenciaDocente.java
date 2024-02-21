@@ -14,7 +14,7 @@ public class ModelTableAsistenciaDocente extends AbstractTableModel {
     private ListaEnlazada<Asignatura> listaAsis = new ListaEnlazada<>();
     private AsignaturaController controlerAsignatura = new AsignaturaController();
     private ControllerHorario conHor = new ControllerHorario();
-    private String dia;
+
 
     @Override
     public int getRowCount() {
@@ -23,7 +23,7 @@ public class ModelTableAsistenciaDocente extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 1;
+        return 3;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class ModelTableAsistenciaDocente extends AbstractTableModel {
         if (horario != null) {
 
             switch (col) {
-//                case 0:
-//                   // return horario.getDia();
                 case 0:
+                    return horario.getDia();
+                case 1:
                     return obtenerNombreAsignatura(horario);
-//                case 2:
-//                   // return horario.getHoraInicio() + "-" + horario.getHoraFin();
+                case 2:
+                    return horario.getHoraInicio() + "-" + horario.getHoraFin();
                 default:
                     break;
             }
@@ -70,56 +70,32 @@ public class ModelTableAsistenciaDocente extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return dia;
-//            case 1:
-//                return "Nombre Asignatura";
-//            case 2:
-//                return "Hora Clase";
+                return "Dia";
+            case 1:
+             return "Nombre Asignatura";
+            case 2:
+              return "Hora Clase";
             default:
                 return null;
         }
     }
 
-    /**
-     * @return the horarios
-     */
     public ListaEnlazada<Horario> getHorarios() {
         return horarios;
     }
 
-    /**
-     * @param horarios the horarios to set
-     */
+
     public void setHorarios(ListaEnlazada<Horario> horarios) {
         this.horarios = horarios;
     }
 
-    /**
-     * @return the listaAsis
-     */
     public ListaEnlazada<Asignatura> getListaAsis() {
         return listaAsis;
     }
 
-    /**
-     * @param listaAsis the listaAsis to set
-     */
     public void setListaAsis(ListaEnlazada<Asignatura> listaAsis) {
         this.listaAsis = listaAsis;
     }
 
-    /**
-     * @return the dia
-     */
-    public String getDia() {
-        return dia;
-    }
-
-    /**
-     * @param dia the dia to set
-     */
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
 
 }
