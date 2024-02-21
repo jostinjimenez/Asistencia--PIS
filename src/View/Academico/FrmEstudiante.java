@@ -18,6 +18,10 @@ import Controller.Login.CuentaController;
 import View.Util.HeaderRenderer;
 
 import static Controller.Util.Utilidades.ajustarColumnas;
+import Controller.tda_listas.ListaEnlazada;
+import java.util.Objects;
+import model.Docente;
+import model.Estudiante;
 
 /**
  *
@@ -78,7 +82,6 @@ public class FrmEstudiante extends javax.swing.JFrame {
         }
     }
 
-
     public void eliminar() {
         int fila = tblEstudiante.getSelectedRow();
         if (fila < 0) {
@@ -98,6 +101,38 @@ public class FrmEstudiante extends javax.swing.JFrame {
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
+        }
+
+    }
+
+    private void buscar() {
+        String criterio = Objects.requireNonNull(cbxCriterio.getSelectedItem()).toString().toLowerCase();
+        String texto = txtBuscar.getText();
+
+        try {
+            if (texto.isEmpty()) {
+                modeloEstudiante.setEstudiantes(estudianteControlador.list_All());
+            } else {
+                if (criterio.equalsIgnoreCase("nombre")) {
+                    modeloEstudiante.setEstudiantes(estudianteControlador.buscarPorNombre(texto));
+                } else if (criterio.equalsIgnoreCase("apellido")) {
+                    modeloEstudiante.setEstudiantes(estudianteControlador.buscarPorApellido(texto));
+                } else if (criterio.equalsIgnoreCase("dni")) {
+                    Estudiante estuadiante = estudianteControlador.buscarPorDni(texto);
+                    if (estuadiante != null) {
+                        ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
+                        estudiantes.add(estuadiante);
+                        modeloEstudiante.setEstudiantes(estudiantes);
+                    } else {
+                        modeloEstudiante.setEstudiantes(new ListaEnlazada<>());
+                    }
+                }
+            }
+            modeloEstudiante.fireTableDataChanged();
+            tblEstudiante.setModel(modeloEstudiante);
+            tblEstudiante.updateUI();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

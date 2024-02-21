@@ -60,7 +60,7 @@ public class Frm_Inicio_Sesion extends javax.swing.JFrame {
                         this.dispose();
                     }
                     case 2 -> {
-                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cc);
+                        Frm_Main_Estudiante fme = new Frm_Main_Estudiante(cuenta);
                         fme.setVisible(true);
                         this.dispose();
                     }

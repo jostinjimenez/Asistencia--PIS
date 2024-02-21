@@ -231,4 +231,70 @@ public class ControllerAsistencia extends DataAccessObject<Asistencia> {
         return lista;
     }
 
+    public ListaEnlazada<Asistencia>  asistenciasPorEstudiante(Integer id_estudiante, Integer id_cursa) {
+        ListaEnlazada<Asistencia> lista = new ListaEnlazada<>();
+        Asistencia asis = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = """
+                    SELECT
+                        A.ID, A.OBSERVACION, A.ESTADO_ASISTENCIA, A.TEMATICA_ID, A.HORARIO_ID, A.CURSA_ID
+                    FROM
+                        ASISTENCIA A JOIN CURSA C ON A.CURSA_ID = C.ID JOIN MATRICULA M ON C.MATRICULA_ID = M.ID JOIN ESTUDIANTE E ON M.ESTUDIANTE_ID = E.ID JOIN ASIGNATURA ASIG ON C.ASIGNATURA_ID = ASIG.ID
+                    WHERE
+                        E.ID = ? AND CURSA_ID = ?""";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id_estudiante);
+                preparedStatement.setInt(2, id_cursa);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        asis = new Asistencia();
+                        asis.setId(resultSet.getInt("ID"));
+                        asis.setObservacion(resultSet.getString("OBSERVACION"));
+                        asis.setEstado_asistencia(resultSet.getString("ESTADO_ASISTENCIA"));
+                        asis.setTematica_id(resultSet.getInt("TEMATICA_ID"));
+                        asis.setHorario_id(resultSet.getInt("HORARIO_ID"));
+                        asis.setCursa_id(resultSet.getInt("CURSA_ID"));
+                        lista.add(asis);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public ListaEnlazada<Asistencia> buscarAsistidos(Integer id_estudiante, Integer id_cursa) {
+        ListaEnlazada<Asistencia> lista = new ListaEnlazada<>();
+        Asistencia asis = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = """
+                    SELECT
+                        A.ID, A.OBSERVACION, A.ESTADO_ASISTENCIA, A.TEMATICA_ID, A.HORARIO_ID, A.CURSA_ID
+                    FROM
+                        ASISTENCIA A JOIN CURSA C ON A.CURSA_ID = C.ID JOIN MATRICULA M ON C.MATRICULA_ID = M.ID JOIN ESTUDIANTE E ON M.ESTUDIANTE_ID = E.ID JOIN ASIGNATURA ASIG ON C.ASIGNATURA_ID = ASIG.ID
+                    WHERE
+                         A.ESTADO_ASISTENCIA = 'ASISTIO'""";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id_estudiante);
+                preparedStatement.setInt(2, id_cursa);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        asis = new Asistencia();
+                        asis.setId(resultSet.getInt("ID"));
+                        asis.setObservacion(resultSet.getString("OBSERVACION"));
+                        asis.setEstado_asistencia(resultSet.getString("ESTADO_ASISTENCIA"));
+                        asis.setTematica_id(resultSet.getInt("TEMATICA_ID"));
+                        asis.setHorario_id(resultSet.getInt("HORARIO_ID"));
+                        asis.setCursa_id(resultSet.getInt("CURSA_ID"));
+                        lista.add(asis);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return lista;
+    }
+
 }

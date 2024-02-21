@@ -4,10 +4,8 @@ import Controller.Academico.ControllerMatricula;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.Objects;
 import javax.swing.UIManager;
-import model.Asignatura;
-import model.Cursa;
-import model.Horario;
-import model.Matricula;
+
+import model.*;
 import Controller.Academico.ControllerCursa;
 import Controller.Administrativo.ControllerHorario;
 import View.Tablas.ModelTableAsistenciaEstudiante;
@@ -20,7 +18,6 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
     ModelTableAsistenciaEstudiante a = new ModelTableAsistenciaEstudiante();
 
     private ListaEnlazada<Horario> horarios = new ListaEnlazada<>();
-    private ListaEnlazada<Integer> ids;
     private AsignaturaController controlerAsignatura = new AsignaturaController();
     private ControllerMatricula controlMatricula = new ControllerMatricula();
     private ControllerCursa controlCursa = new ControllerCursa();
@@ -28,11 +25,21 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
     private ListaEnlazada<Asignatura> listaAsis = new ListaEnlazada<>();
     private ControllerHorario controlHorario = new ControllerHorario();
     private Integer id_Matricula;
-    private Integer id = 1;
+    Cuenta cuenta;
+    Integer id = null;
 
     public Frm_HorarioEstudiante() {
         initComponents();
 
+        cargarTabla();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+    }
+
+    public Frm_HorarioEstudiante(Cuenta cuenta) {
+        initComponents();
+        this.cuenta = cuenta;
+        id = cuenta.getPersona_id();
         cargarTabla();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -51,18 +58,17 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
 
     public void getMatricula() throws VacioExceptions {
         String idd = id.toString();
-        Matricula matricula = controlMatricula.busquedaBinaria2(controlMatricula.list_All(), idd, "id_estudiante");
+        Matricula matricula = controlMatricula.busquedaBinaria2(controlMatricula.list_All(), idd, "estudiante_id");
         id_Matricula = matricula.getId();
     }
 
     public void getAsignaturas() throws VacioExceptions {
         getMatricula();
         String ident = id_Matricula.toString();
-        cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), ident, "id_matricula", "quicksort", 0);
+        cursas = controlCursa.busquedaBinaria(controlCursa.list_All(), ident, "matricula_id", "quicksort", 0);
         for (Cursa cursa : cursas) {
             String iden = cursa.getAsignatura_id().toString();
             Asignatura asi = controlerAsignatura.busquedaBinaria2(controlerAsignatura.list_All(), iden, "id");
-            System.out.println(asi.getId());
             if (Objects.equals(cursa.getAsignatura_id(), asi.getId())) {
                 listaAsis.add(asi);
             }
@@ -99,7 +105,6 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         bg_panel.setBackground(new java.awt.Color(225, 233, 243));
         bg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblHorario.setModel(new javax.swing.table.DefaultTableModel(
@@ -115,12 +120,12 @@ public class Frm_HorarioEstudiante extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblHorario);
 
-        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 980, 300));
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 980, 300));
 
         bg_panel.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 1040, 620));
         bg_panel.add(menu_Estudiante1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, 210, 680));
 
-        headerUser1.setBackground(new java.awt.Color(255, 255, 255));
+        headerUser1.setBackground(new java.awt.Color(246, 246, 246));
         bg_panel.add(headerUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 1040, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

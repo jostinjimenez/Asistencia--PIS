@@ -1,4 +1,5 @@
 package View.Administrativo;
+
 import javax.swing.*;
 
 import Controller.Administrativo.CarreraController;
@@ -20,7 +21,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
         carrerC.setIndex(-1);
 
         cargarVista(mtp, jTable1);
-        btnGuardar.addActionListener(e ->updateCarrera());
+        btnGuardar.addActionListener(e -> updateCarrera());
         btnCancelar.addActionListener(e -> this.dispose());
     }
 
@@ -53,7 +54,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
                 cbxModalidad.setSelectedItem(carrerC.getCarrera().getModalidad());
                 txtTitulo.setText(carrerC.getCarrera().getTitulo_otorgado());
                 txtCodigo.setText(carrerC.getCarrera().getCodigo());
-
+                lbl1.setText(String.valueOf(carrerC.getCarrera().getId()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
@@ -105,6 +106,11 @@ public class Modal_Carrera extends javax.swing.JDialog {
     }
 
     private void updateCarrera() {
+        carrerC.getCarrera().setArea_estudio(txtArea.getText());
+        carrerC.getCarrera().setModalidad(Objects.requireNonNull(cbxModalidad.getSelectedItem()).toString());
+        carrerC.getCarrera().setNombre(txtNombre.getText());
+        carrerC.getCarrera().setTitulo_otorgado(txtTitulo.getText());
+        carrerC.getCarrera().setCodigo(txtCodigo.getText());
         if (carrerC.update()) {
             JOptionPane.showMessageDialog(null, "Se actualizó correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
@@ -124,7 +130,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
             }
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,6 +148,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
         txtTitulo = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
+        lbl1 = new javax.swing.JLabel();
         txtArea = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -173,27 +180,22 @@ public class Modal_Carrera extends javax.swing.JDialog {
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 290, 100, 30));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Nombre: ");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Area de estudio:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Titulo:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Codigo:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Modalidad");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
@@ -224,6 +226,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
             }
         });
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 250, 30));
+        jPanel1.add(lbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(537, 170, 20, 10));
 
         txtArea.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtArea.addActionListener(new java.awt.event.ActionListener() {
@@ -321,6 +324,7 @@ public class Modal_Carrera extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbl1;
     public javax.swing.JTextField txtArea;
     public javax.swing.JTextField txtCodigo;
     public javax.swing.JTextField txtNombre;

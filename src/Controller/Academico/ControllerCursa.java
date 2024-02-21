@@ -262,4 +262,34 @@ public class ControllerCursa extends DataAccessObject<Cursa> {
         return lista;
     }
 
+    public ListaEnlazada<Cursa> buscarCursaPorMatricula(Integer id) {
+        ListaEnlazada<Cursa> lista = new ListaEnlazada<>();
+        Cursa cursa = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = """
+                    SELECT
+                        C.ID, C.PARALELO, C.MATRICULA_ID, C.DOCENTE_ID, C.ASIGNATURA_ID
+                    FROM
+                        CURSA C JOIN MATRICULA M ON C.MATRICULA_ID = M.ID JOIN PERIODOACADEMICO P ON M.PERIODOACADEMICO_ID = P.ID
+                    WHERE
+                        M.ESTUDIANTE_ID = ?""";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        cursa = new Cursa();
+                        cursa.setId(resultSet.getInt("ID"));
+                        cursa.setAsignatura_id(resultSet.getInt("ASIGNATURA_ID"));
+                        cursa.setParalelo(resultSet.getString("PARALELO"));
+                        cursa.setMatricula_id(resultSet.getInt("MATRICULA_ID"));
+                        cursa.setDocente_id(resultSet.getInt("DOCENTE_ID"));
+                        lista.add(cursa);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return lista;
+    }
 }

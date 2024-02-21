@@ -68,14 +68,14 @@ public class Menu_Estudiante extends javax.swing.JPanel {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Estudiante.this);
                 currentWindow.dispose();
 
-                Frm_Main_Estudiante frm = new Frm_Main_Estudiante();
+                Frm_Main_Estudiante frm = new Frm_Main_Estudiante(cuentaUsu);
                 frm.setVisible(true);
             });
             case "Horario" -> menu.addActionListener(e -> {
                 Window currentWindow = SwingUtilities.getWindowAncestor(Menu_Estudiante.this);
                 currentWindow.dispose();
 
-                Frm_HorarioEstudiante frm = new Frm_HorarioEstudiante();    // Enviar el id del estudiante
+                Frm_HorarioEstudiante frm = new Frm_HorarioEstudiante(cuentaUsu);    // Enviar el id del estudiante
                 frm.setVisible(true);
             });
 

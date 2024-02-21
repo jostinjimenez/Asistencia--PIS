@@ -12,8 +12,14 @@ import Controller.tda_listas.ListaEnlazada;
 import Controller.tda_listas.exceptions.VacioExceptions;
 
 import static Controller.Util.Utilidades.getField;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class EstudianteController extends DataAccessObject<Estudiante> {
+
     // Atributos
     private ListaEnlazada<Estudiante> estudiantes;
     private Estudiante estudiante = new Estudiante();
@@ -151,7 +157,7 @@ public class EstudianteController extends DataAccessObject<Estudiante> {
     }
 
     public Estudiante busquedaBinaria2(ListaEnlazada<Estudiante> lista, String text, String campo) throws Exception {
-        ListaEnlazada<Estudiante> listaOrdenada = ordenarQS(lista,0, campo);
+        ListaEnlazada<Estudiante> listaOrdenada = ordenarQS(lista, 0, campo);
         int index = busquedaBinaria1(listaOrdenada, text.toLowerCase(), campo);
 
         if (index != -1) {
@@ -164,11 +170,84 @@ public class EstudianteController extends DataAccessObject<Estudiante> {
 
     private boolean getForm(Estudiante est, String text, String campo) {
         return switch (campo.toLowerCase()) {
-            case "id" -> Integer.toString(est.getId()).equalsIgnoreCase(text);
-            case "nombre" -> est.getNombre().equalsIgnoreCase(text);
-            case "apellido" -> est.getApellido().equalsIgnoreCase(text);
-            case "dni" -> est.getDni().equalsIgnoreCase(text);
-            default -> throw new IllegalArgumentException("Campo de comparación no válido");
+            case "id" ->
+                Integer.toString(est.getId()).equalsIgnoreCase(text);
+            case "nombre" ->
+                est.getNombre().equalsIgnoreCase(text);
+            case "apellido" ->
+                est.getApellido().equalsIgnoreCase(text);
+            case "dni" ->
+                est.getDni().equalsIgnoreCase(text);
+            default ->
+                throw new IllegalArgumentException("Campo de comparación no válido");
         };
+    }
+
+    public ListaEnlazada<Estudiante> buscarPorNombre(String dniONombre) {
+        ListaEnlazada<Estudiante> docentess = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN ESTUDIANTE ON PERSONA.ID = ESTUDIANTE.ID WHERE PERSONA.NOMBRE = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Estudiante estudiante = new Estudiante();
+                        estudiante.setId(resultSet.getInt("ID"));
+                        estudiante.setCanton(resultSet.getString("CANTON"));
+                        estudiante.setEtnia(resultSet.getString("ETNIA"));
+                        estudiante.setNacionalidad(resultSet.getString("NACIONALIDAD"));
+                        docentess.add(estudiante);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentess;
+    }
+
+    public ListaEnlazada<Estudiante> buscarPorApellido(String dniONombre) {
+        ListaEnlazada<Estudiante> docentess = new ListaEnlazada<>();
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN ESTUDIANTE ON PERSONA.ID = ESTUDIANTE.ID WHERE PERSONA.APELLIDO = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Estudiante estudiante = new Estudiante();
+                        estudiante.setId(resultSet.getInt("ID"));
+                        estudiante.setCanton(resultSet.getString("CANTON"));
+                        estudiante.setEtnia(resultSet.getString("ETNIA"));
+                        estudiante.setNacionalidad(resultSet.getString("NACIONALIDAD"));
+                        docentess.add(estudiante);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentess;
+    }
+
+    public Estudiante buscarPorDni(String dniONombre) {
+        Estudiante docentee = null;
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AXLMD", "AXLMD")) {
+            String sql = "SELECT * FROM PERSONA JOIN DOCENTE ON PERSONA.ID = DOCENTE.ID WHERE PERSONA.DNI = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, dniONombre);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        docentee = new Estudiante();
+                        docentee.setId(resultSet.getInt("ID"));
+                        docentee.setCanton(resultSet.getString("CANTON"));
+                        docentee.setEtnia(resultSet.getString("ETNIA"));
+                        docentee.setNacionalidad(resultSet.getString("NACIONALIDAD"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar la consulta: " + e.getMessage());
+        }
+        return docentee;
     }
 }

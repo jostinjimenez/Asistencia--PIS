@@ -41,7 +41,7 @@ public class ModelTableAsistencia extends AbstractTableModel {
                     String faltaInput = aValue.toString().toUpperCase().trim();
 
                     switch (faltaInput) {
-                        case "T":
+                        case "A":
                             Asistencia asistenciaT = Asistencias.get(rowIndex);
                             asistenciaT.setEstado_asistencia("ASISTIO");
                             fireTableCellUpdated(rowIndex, columnIndex);
@@ -87,11 +87,11 @@ public class ModelTableAsistencia extends AbstractTableModel {
                 case 2:
                     return persona.getDni();
                 case 3:
-//                    if (asistencia != null) {
-//                        return asistencia.getEstado_asistencia();
-//                    } else {
-//                        return "";
-//                    }
+                    if (asistencia != null) {
+                        return asistencia.getEstado_asistencia();
+                    } else {
+                        return "";
+                    }
                 case 4:
                     if (asistencia != null) {
                         return asistencia.getId();
@@ -115,13 +115,20 @@ public class ModelTableAsistencia extends AbstractTableModel {
 
     public String getColumnName(int column) {
         return switch (column) {
-            case 0 -> "Nombre";
-            case 1 -> "Apellido";
-            case 2 -> "DNI";
-            case 3 -> "Falta";
-            case 4 -> "ID";
-            case 5 -> "ID_CURSA";
-            default -> null;
+            case 0 ->
+                "Nombre";
+            case 1 ->
+                "Apellido";
+            case 2 ->
+                "DNI";
+            case 3 ->
+                "Falta";
+            case 4 ->
+                "ID";
+            case 5 ->
+                "ID_CURSA";
+            default ->
+                null;
         };
     }
 
